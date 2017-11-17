@@ -37,8 +37,9 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc) =
     body: data
   };
   console.log(scope, data);
-  // let url = `http://localhost:8000${serverMethod}`
-  let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+  let url = `http://192.168.1.11:8000${serverMethod}`
+  // let url = `http://ec2-13-229-110-40.ap-southeast-1.compute.amazonaws.com:8000${serverMethod}`
+  // let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
   console.log(url);
   fetch(url, init)
   .then(res => {
@@ -112,7 +113,7 @@ export default class App extends Component<{}> {
     // }
     pc.createOffer(sessionDescription => {
       pc.setLocalDescription(sessionDescription, () => {
-        fetchRequest(`/call?peerid=${peerid}&url=${encodeURIComponent('rtsp://188773sc14.iask.in:554/live/sub')}`, null, sessionDescription, onReceiveCall, null, 'setDesc', pc)
+        fetchRequest(`/call?peerid=${peerid}&url=${encodeURIComponent('rtsp://188773sc14.iask.in:554/live/main')}`, null, sessionDescription, onReceiveCall, null, 'setDesc', pc)
       } , err => console.log('setDesc', err))
     }, err => console.log('createOffer', err));
   
