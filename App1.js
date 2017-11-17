@@ -37,8 +37,8 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc) =
     body: data
   };
   console.log(scope, data);
-  let url = `http://192.168.1.11:8000${serverMethod}`
-  // let url = `http://ec2-13-229-110-40.ap-southeast-1.compute.amazonaws.com:8000${serverMethod}`
+  //let url = `http://192.168.1.11:8000${serverMethod}`
+	let url = `http://ec2-13-229-110-40.ap-southeast-1.compute.amazonaws.com:8000${serverMethod}`
   // let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
   console.log(url);
   fetch(url, init)
@@ -138,9 +138,9 @@ export default class App extends Component<{}> {
       if(this.pc){
         console.warn(this.pc);
         fetchRequest(`/hangup?peerid=${peerid}`)
-        //this.pc.close();
+				this.pc.close();
       } 
-    }, 40000)
+    }, 4000000)
   }
 
   // componentWillUnmount(){
