@@ -3,6 +3,7 @@ package com.mobile_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativenavigation.NavigationReactPackage;
 import com.pili.rnpili.PiliPackage;
 import com.oney.WebRTCModule.WebRTCModulePackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new NavigationReactPackage(),
             new PiliPackage(),
             new WebRTCModulePackage()
       );

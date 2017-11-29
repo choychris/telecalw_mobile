@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-navigation')
     compile project(':react-native-pili')
     compile project(':react-native-webrtc')
     compile fileTree(dir: "libs", include: ["*.jar"])

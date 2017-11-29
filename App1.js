@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import React, { Component } from 'react';
 import {
   Platform,
@@ -37,10 +32,10 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc) =
     body: data
   };
   console.log(scope, data);
-	let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
+	//let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
   //let url = `http://192.168.1.11:8000${serverMethod}`
 	//let url = `http://ec2-13-229-110-40.ap-southeast-1.compute.amazonaws.com:8000${serverMethod}`
-	 //let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+ 	let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
   console.log(url);
   fetch(url, init)
   .then(res => {

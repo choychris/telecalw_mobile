@@ -38,6 +38,9 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */; };
+		D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
+		D6217A251FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
 		D64874641FB8360D00ABC458 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; };
 		D64874651FB8360D00ABC458 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D64874A81FB83B8E00ABC458 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A41FB83B5E00ABC458 /* AVFoundation.framework */; };
@@ -249,6 +252,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		D6217A1E1FCE737000556338 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
+			remoteInfo = ReactNativeNavigation;
+		};
 		D64874441FB8336200ABC458 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -348,6 +358,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE382A15034E4EA2B07D4F2C /* libRCTWebRTC.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWebRTC.a; sourceTree = "<group>"; };
+		D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
+		D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bauhaus-93_6274.ttf"; path = "../assets/fonts/Bauhaus-93_6274.ttf"; sourceTree = "<group>"; };
 		D64874631FB8351E00ABC458 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
 		D64874A41FB83B5E00ABC458 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -375,6 +387,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */,
 				D64874B71FB83BF200ABC458 /* VideoToolbox.framework in Frameworks */,
 				D64874B61FB83BEA00ABC458 /* CoreAudio.framework in Frameworks */,
 				D64874B51FB83BE400ABC458 /* CoreVideo.framework in Frameworks */,
@@ -510,6 +523,7 @@
 		13B07FAE1A68108700A75B9A /* mobile_app */ = {
 			isa = PBXGroup;
 			children = (
+				D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -561,6 +575,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */,
 				D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -619,6 +634,14 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				D64874451FB8336200ABC458 /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D62179F91FCE736E00556338 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -823,6 +846,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = D62179F91FCE736E00556338 /* Products */;
+					ProjectRef = D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1017,6 +1044,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeNavigation.a;
+			remoteRef = D6217A1E1FCE737000556338 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D64874451FB8336200ABC458 /* libRCTBlob-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1080,6 +1114,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6217A251FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1087,6 +1122,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -1271,9 +1307,9 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/**",
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/RCTWebRTC/**",
-					"$(SRCROOT)/../node_modules/react-native-pili/ios/RCTPili/RCTPili",
 				);
 				INFOPLIST_FILE = mobile_app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1303,9 +1339,9 @@
 					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/**",
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/RCTWebRTC/**",
-					"$(SRCROOT)/../node_modules/react-native-pili/ios/RCTPili/RCTPili",
 				);
 				INFOPLIST_FILE = mobile_app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
