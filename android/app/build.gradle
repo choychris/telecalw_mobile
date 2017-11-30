@@ -137,6 +137,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
+    compile project(':react-native-fbsdk')
     compile project(':react-native-navigation')
     compile project(':react-native-pili')
     compile project(':react-native-webrtc')

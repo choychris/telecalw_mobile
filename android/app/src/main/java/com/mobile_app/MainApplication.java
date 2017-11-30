@@ -3,6 +3,8 @@ package com.mobile_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.pili.rnpili.PiliPackage;
 import com.oney.WebRTCModule.WebRTCModulePackage;
@@ -26,6 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
+            new FBSDKPackage(),
             new NavigationReactPackage(),
             new PiliPackage(),
             new WebRTCModulePackage()

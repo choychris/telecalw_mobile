@@ -6,6 +6,26 @@
 	<array>
 		<string>Bauhaus-93_6274.ttf</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>fb243917092810071</string>
+		</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>243917092810071</string>
+	<key>FacebookDisplayName</key>
+	<string>teleclaw_dev</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
