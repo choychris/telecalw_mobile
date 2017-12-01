@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StatusBar , StyleSheet ,TouchableOpacity } from 'react-native';
+import { View , StatusBar , StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginFacebook , accessTokenChecking } from '../actions';
@@ -11,18 +11,19 @@ class Login extends Component {
 	componentWillMount(){
 		const { languageChecking ,accessTokenChecking } = this.props;
 		// Acess Token Checking
+		accessTokenChecking();
 		// User Language Checking
 		languageChecking();	
 	}
 	render() {
-		const { loginFacebook , navigator , string } = this.props;
+		const { loginFacebook , navigator } = this.props;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'auth'}/>
 				<View style={styles.bottom}>
 					<Button 
-						text={string['facebookLogin']}
+						text={'facebookLogin'}
 						textColor={'white'}
 						btnColor={'#3B5998'}
 						borderColor={'black'}
@@ -56,10 +57,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-function mapStateToProps(state) {
-	return {
-		string : state.preference.language.string
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

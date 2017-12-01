@@ -4,15 +4,20 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MaterialIcons.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>Silom.ttf</string>
 		<string>Bauhaus-93_6274.ttf</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-		<key>CFBundleURLSchemes</key>
-		<array>
-			<string>fb243917092810071</string>
-		</array>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb243917092810071</string>
+			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>

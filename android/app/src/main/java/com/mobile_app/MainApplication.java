@@ -3,6 +3,7 @@ package com.mobile_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.reactnativenavigation.NavigationReactPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new RNDeviceInfo(),
             new FBSDKPackage(),
             new NavigationReactPackage(),

@@ -3,6 +3,7 @@ import { Image , StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const telebotImages = {
+	normal : require('../../../assets/telebuddies/telebot/telebot.png'),
 	sick : require('../../../assets/telebuddies/telebot/telebot_sick.png')
 }
 

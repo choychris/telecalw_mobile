@@ -9,12 +9,13 @@ class Button extends Component {
 		this.state = { pressIn : false };
 	}
 	render(){
-		const { text , textColor , btnColor , borderColor , onPressFunction } = this.props;
+		const { text , textColor , btnColor , borderColor , onPressFunction , string } = this.props;
 		const { pressIn } = this.state;
 		const btnTextColor = { color : textColor };
 		const btnBackgroundColor = { backgroundColor : btnColor };
 		const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
 		const btnBorderColor = (pressIn === false && borderColor) ? { borderColor : borderColor  } : {};
+		const displayText = (string[text]) ? string[text] : text;
 		return(
 			<TouchableHighlight
 				onPressIn={()=>this.setState({ pressIn : true })}
@@ -23,10 +24,8 @@ class Button extends Component {
 				style={[styles.container,btnBorder,btnBackgroundColor,btnBorderColor]}
 				underlayColor={btnColor}
 			>
-				<Text 
-					style={[styles.text,btnTextColor]}
-				>
-					{text}
+				<Text style={[styles.text,btnTextColor]}>
+					{displayText}
 				</Text>
 			</TouchableHighlight>
 		)
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
 	},
 	text : {
 		margin : 10,
-		paddingVertical : 5,
 		paddingHorizontal : 20,
 		textAlign :'center',
 		fontSize : 25,
@@ -53,4 +51,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null, null)(Button);
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
+
+export default connect(mapStateToProps, null)(Button);
