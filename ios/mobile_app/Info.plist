@@ -16,14 +16,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb243917092810071</string>
+				<string>fb144167082893443</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>243917092810071</string>
+	<string>144167082893443</string>
 	<key>FacebookDisplayName</key>
-	<string>teleclaw_dev</string>
+	<string>TeleClaw</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

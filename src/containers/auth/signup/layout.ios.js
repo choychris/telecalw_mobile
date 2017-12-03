@@ -2,20 +2,39 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , StatusBar , StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { fillSignUpForm , confirmSignUp } from '../actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import Telebot from '../../../components/telebuddies/telebot';
 import MessageBox from '../../../components/messageBox/container';
 import AddressForm from '../../../components/form/address';
+import PhoneForm from '../../../components/form/phone';
+import DeviceInfo from 'react-native-device-info';
 
 class Signup extends Component {
+	componentDidMount(){
+		const { fillSignUpForm } = this.props;
+		fillSignUpForm('SIGNUP_COUNTRY_CODE',DeviceInfo.getDeviceCountry().toLowerCase())
+	}
 	_renderForm(){
+		const { fillSignUpForm } = this.props;
 		return(
 			<View style={styles.form}>
-				<AddressForm/>	
+				<AddressForm 
+					dispatchFunction={fillSignUpForm} 
+					action={{
+						countryCode : 'SIGNUP_COUNTRY_CODE',
+						address : 'SIGNUP_ADDRESS'
+					}}
+				/>	
+				<PhoneForm
+					dispatchFunction={fillSignUpForm} 
+					action='SIGNUP_PHONE'
+				/>
 			</View>
 		)
 	}
 	render(){
+		const { confirmSignUp , navigator } = this.props;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -30,9 +49,7 @@ class Signup extends Component {
 							textColor : 'white',
 							btnColor : '#E63946',
 							borderColor : 'black',
-							onPressFunction : ()=>{
-								alert("hi")
-							}
+							onPressFunction : ()=>confirmSignUp(navigator)
 						}		
 					]}
 				/>
@@ -66,4 +83,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(Signup);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		fillSignUpForm,
+		confirmSignUp
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(Signup);

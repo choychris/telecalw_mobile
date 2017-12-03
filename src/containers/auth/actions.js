@@ -1,27 +1,52 @@
-import { LoginManager } from 'react-native-fbsdk';
-import { errorMessage } from '../utilities/actions';
+import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
+import { errorMessage ,loading } from '../utilities/actions';
 
 export function loginFacebook(navigator){
 	return (dispatch,getState)=>{
-		LoginManager.logInWithReadPermissions(['public_profile']).then(
+		LoginManager.logInWithReadPermissions(['public_profile','email']).then(
 			(result)=>{
-				// ***** Temp logic for development , please move this to new user callback ****
-				navigator.resetTo({
-					screen : 'app.Signup',
-					navigatorStyle : {
-						navBarHidden : true
-					}
-				});
-				// ***** Temp logic for development , please move this to new user callback ****
 				if (result.isCancelled) {
+					// *** For development purpose only , please remove this code when deploy to production
+					navigator.resetTo({
+						screen : 'app.Signup',
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+					// *** For development purpose only , please remove this code when deploy to production
 					dispatch(authError(navigator,'facebookCancel','tryAgain'));
 				} else {
-					// Sucessful Facebook Login Callback
-					console.warn(JSON.stringify(result));
-					alert('Login success with permissions: '+result.grantedPermissions.toString());
-					// Success UI callback :
-					// 1. If new user , navigate to Signup Page
-					// 2. In user exist , navigate to Gameplay Page
+					//console.warn(JSON.stringify(result));
+					// Use Grpah Api Request to Get User Info	
+					const infoRequest = new GraphRequest(
+						'/me',
+						{
+							httpMethod: 'GET',
+							version: 'v2.5',
+							parameters: {
+								'fields': {
+									'string' : 'email,name'						        
+								}	    
+							}
+						},
+						(err,res)=>{
+							if(err){
+								dispatch(authError(navigator,'facebookErr','tryAgain'));
+							} else {
+								console.warn(JSON.stringify(res));
+								// Success UI callback :
+								// 1. If new user , navigate to Signup Page
+								// 2. In user exist , get access token , navigate to Gameplay Page
+								navigator.resetTo({
+									screen : 'app.Signup',
+									navigatorStyle : {
+										navBarHidden : true
+									}
+								});
+							}
+						}
+					);
+					new GraphRequestManager().addRequest(infoRequest).start();	
 				}
 			},
 			(error)=>{
@@ -50,5 +75,35 @@ export function authError(navigator,title,message){
 				message : string[message]
 			}
 		);
+	}
+}
+
+export function fillSignUpForm(action,value){
+	return (dispatch,getState)=>{
+		// Filter Incorrect value
+		return dispatch({ type : action , value });
+	}
+}
+
+export function confirmSignUp(navigator){
+	return (dispatch,getState)=>{
+		const user = getState()['auth']['user'];
+		if(
+			user.address &&
+			user.phone &&
+			user.countryCode
+		){
+			// Handle the Signup Procedure to Backend
+			loading('show',navigator);
+			//console.warn(JSON.stringify(user));
+			navigator.resetTo({
+				screen : 'app.GamePlayList',
+				navigatorStyle : {
+					navBarHidden : true
+				}
+			});
+		} else {
+			dispatch(authError(navigator,'formError','doubleCheckForm'));
+		}
 	}
 }

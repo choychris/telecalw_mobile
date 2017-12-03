@@ -9,7 +9,9 @@ const en = {
 	phone : 'Phone',
 	selectCountry : 'Select Your Home Country',
 	inputAddress : 'What is Your Home Address ?',
-	inputPhone : 'What is your Phone Number ?'
+	inputPhone : 'What is your Phone Number ?',
+	formError : 'Fill in Error',
+	doubleCheckForm : 'Please double check all the form is filled'
 }
 
 export default en;

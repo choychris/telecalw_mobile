@@ -10,7 +10,7 @@ class Error extends Component {
 		const { message, title , navigator } = this.props;
 		return(
 			<TouchableWithoutFeedback onPress={()=>errorMessage('hide',navigator)}>
-				<View>
+				<View style={styles.container}>
 					<Text style={styles.title}>Opps...</Text>
 					<Text style={styles.title}>{title}</Text>
 					<View style={styles.image}>
@@ -30,6 +30,10 @@ class Error extends Component {
 }
 
 const styles = StyleSheet.create({
+	container : {
+		alignItems : 'center',
+		justifyContent : 'center'
+	},
 	title : {
 		textAlign : 'center',
 		fontFamily : 'Bauhaus 93',
@@ -37,6 +41,7 @@ const styles = StyleSheet.create({
 		fontSize : 25
 	},
 	message : {
+		width : 200,
 		textAlign : 'center',
 		fontFamily : 'Bauhaus 93',
 		color : 'white',

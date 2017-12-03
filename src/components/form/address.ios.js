@@ -3,42 +3,35 @@ import { View , TextInput , StyleSheet , Picker , Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DeviceInfo from 'react-native-device-info';
 var countries = require('country-list')();
 
 class AddressForm extends Component {
 	_renderCountryPicker(){
+		const { user , dispatchFunction , action } = this.props;
 		const countriesList = countries.getCodeList();
 		return(
 			<Picker
-				itemStyle={{ height: 50 , color : '#008CFF', fontSize : 15 }}
-				selectedValue={DeviceInfo.getDeviceCountry().toLowerCase()}
+				itemStyle={styles.pickerItem}
+				onValueChange={(value)=>dispatchFunction(action.countryCode,value)}
+				selectedValue={(user.countryCode) ? user.countryCode : 'us'}
 			>
 				{Object.keys(countriesList).map((countryCode)=><Picker.Item key={countryCode} label={countriesList[countryCode]} value={countryCode} />)}
 			</Picker>
 		)
 	}
 	render(){
-		const { string } = this.props;
+		const { string , dispatchFunction , action } = this.props;
 		return (
 			<View>
 				<View style={styles.header}>
-					<Icon name="rocket" size={30} />
+					<Icon name="rocket" size={30}/>
 					<Text style={styles.headerText}>{string['address']}</Text>
 				</View>
 				{this._renderCountryPicker()}
 				<TextInput
 					style={styles.input}
 					placeholder={string['inputAddress']}
-				/>
-				<View style={styles.header}>
-					<Icon name="phone" size={35} />
-					<Text style={styles.headerText}>{string['phone']}</Text>
-				</View>
-				<TextInput
-					style={styles.input}
-					placeholder={string['inputPhone']}
-					keyboardType={'numeric'}
+					onChangeText={(text)=>dispatchFunction(action.address,text)}
 				/>
 			</View>	
 		)
@@ -63,12 +56,18 @@ const styles = StyleSheet.create({
 		marginTop : 5,
 		marginBottom : 10,
 		paddingHorizontal : 10
+	},
+	pickerItem : { 
+		height: 50 , 
+		color : '#008CFF', 
+		fontSize : 15 
 	}
 });
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		user : state.auth.user
 	}
 }
 
