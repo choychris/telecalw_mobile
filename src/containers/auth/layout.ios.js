@@ -2,10 +2,10 @@ import React, { PropTypes, Component } from 'react';
 import { View , StatusBar , StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loginFacebook , accessTokenChecking } from '../actions';
-import { languageChecking } from '../../../utils/language';
-import BackgroundImage from '../../../components/utilities/backgroundImage';
-import Button from '../../../components/utilities/buttons';
+import { loginFacebook , accessTokenChecking } from './actions';
+import { languageChecking } from '../../utils/language';
+import BackgroundImage from '../../components/utilities/backgroundImage';
+import Button from '../../components/utilities/buttons';
 
 class Login extends Component {
 	componentWillMount(){

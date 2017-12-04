@@ -11,7 +11,11 @@ const en = {
 	inputAddress : 'What is Your Home Address ?',
 	inputPhone : 'What is your Phone Number ?',
 	formError : 'Fill in Error',
-	doubleCheckForm : 'Please double check all the form is filled'
+	doubleCheckForm : 'Please double check all the form is filled',
+	earth : 'Earth',
+	online : 'Online',
+	offline : 'Offline',
+	internetProblem : 'Internet Connection Error, please check your wifi or cellular network'
 }
 
 export default en;

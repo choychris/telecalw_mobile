@@ -7,46 +7,67 @@ export function loginFacebook(navigator){
 			(result)=>{
 				if (result.isCancelled) {
 					// *** For development purpose only , please remove this code when deploy to production
-					navigator.resetTo({
-						screen : 'app.Signup',
-						navigatorStyle : {
-							navBarHidden : true
-						}
-					});
+					//navigator.resetTo({
+						//screen : 'app.GamePlayList',
+						//navigatorStyle : {
+							//navBarHidden : true
+						//}
+					//});
 					// *** For development purpose only , please remove this code when deploy to production
 					dispatch(authError(navigator,'facebookCancel','tryAgain'));
 				} else {
-					//console.warn(JSON.stringify(result));
-					// Use Grpah Api Request to Get User Info	
-					const infoRequest = new GraphRequest(
-						'/me',
-						{
-							httpMethod: 'GET',
-							version: 'v2.5',
-							parameters: {
-								'fields': {
-									'string' : 'email,name'						        
-								}	    
-							}
-						},
-						(err,res)=>{
-							if(err){
-								dispatch(authError(navigator,'facebookErr','tryAgain'));
-							} else {
-								console.warn(JSON.stringify(res));
-								// Success UI callback :
-								// 1. If new user , navigate to Signup Page
-								// 2. In user exist , get access token , navigate to Gameplay Page
-								navigator.resetTo({
-									screen : 'app.Signup',
-									navigatorStyle : {
-										navBarHidden : true
+					console.warn(JSON.stringify(result));
+					function getFbAccessToken(){
+						return AccessToken.getCurrentAccessToken().then((data)=>data);
+					}
+					function getFbUserInfo(){
+						return new Promise((resolve,reject)=>{
+							const infoRequest = new GraphRequest(
+								'/me',
+								{
+									httpMethod: 'GET',
+									version: 'v2.5',
+									parameters: {
+										'fields': {
+											'string' : 'email,name'						        
+										}	    
 									}
-								});
-							}
+								},
+								(err,res)=>{
+									(err) ? reject(err) : resolve(res);
+								}
+							);
+							new GraphRequestManager().addRequest(infoRequest).start();	
+						})
+					}
+					async function authentication(url) {
+						try {
+							// Step 1 : Get Facebook Access Token
+							const fbAccessTokenObj = await getFbAccessToken();
+							console.warn(JSON.stringify(fbAccessTokenObj));
+							// Step 2 : Use Grpah Api Request to Get User Info	
+							const fbUserInfo = await getFbUserInfo();
+							console.warn(JSON.stringify(fbUserInfo));
+							// Step 3 : Form request object
+							const now = new Date().getTime();	
+							//const ttl = Math.round(face)
+							console.warn(now);
+							console.warn(fbAccessTokenObj.expirationTime);
+							console.warn((fbAccessTokenObj.expirationTime) - now);
+							// Step 4 : Post User Info to Loopback Backend
+							navigator.resetTo({
+								screen : 'app.GamePlayList',
+								navigatorStyle : {
+									navBarHidden : true
+								}
+							});
 						}
-					);
-					new GraphRequestManager().addRequest(infoRequest).start();	
+						catch(e){
+							console.warn(JSON.stringify(e));
+							dispatch(authError(navigator,'facebookErr','tryAgain'));
+						}
+					}
+					authentication();
 				}
 			},
 			(error)=>{
@@ -94,7 +115,7 @@ export function confirmSignUp(navigator){
 			user.countryCode
 		){
 			// Handle the Signup Procedure to Backend
-			loading('show',navigator);
+			//loading('show',navigator);
 			//console.warn(JSON.stringify(user));
 			navigator.resetTo({
 				screen : 'app.GamePlayList',

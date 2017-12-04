@@ -20,9 +20,9 @@ class Loading extends Component {
 
 const styles = StyleSheet.create({
 	image : {
-		width : 80 ,
-		height : 80,
-		margin : 10
+		width : 50 ,
+		height : 50,
+		margin : 20
 	},
 	container : {
 		alignItems : 'center',

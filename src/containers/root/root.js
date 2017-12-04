@@ -9,7 +9,7 @@ registerScreens(store, Provider);
 
 Navigation.startSingleScreenApp({
 	screen: {
-		screen: 'app.Login',
+		screen: 'app.Auth',
 		navigatorStyle: {
 			navBarHidden: true
 		}
