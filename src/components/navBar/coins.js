@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , ActivityIndicator } from 'react-native';
+import { View , Text , Image , ActivityIndicator , TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getUserWallet } from '../../containers/auth/actions';
 import styles from './styles';
 const coins = {
 	single : require('../../../assets/utilities/coins/telecoins_single.png'),
@@ -9,24 +10,41 @@ const coins = {
 };
 
 class Coins extends Component {
+	componentDidMount(){
+		const { getUserWallet , navigator } = this.props;
+		getUserWallet(navigator);
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
-	_renderDisplay(){
-		return <Text style={styles.text}>90</Text>
+	_renderDisplay(balance){
+		return <Text style={styles.text}>{balance}</Text>
 	}
 	render(){
+		const { wallet } = this.props;
 		return (
-			<View style={styles.container}>
+			<TouchableOpacity style={styles.container}>
 				<Image
 					style={styles.image}
 					source={coins.single}
 					resizeMode={'contain'}
 				/>
-				{this._renderDisplay()}
-			</View>
+				{(wallet.balance) ? this._renderDisplay(wallet.balance) : this._renderLoading()}
+			</TouchableOpacity>
 		)
 	}
 }
 
-export default connect(null,null)(Coins);
+function mapStateToProps(state) {
+	return {
+		wallet : state.auth.wallet
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		getUserWallet
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Coins);

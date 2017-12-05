@@ -11,7 +11,7 @@ class NavBar extends Component {
 		const { back , coins , location , signal , timer , navigator } = this.props;
 		return(
 			<View style={styles.container}>	
-				{(coins === true) ? <Coins/>  : null}
+				{(coins === true) ? <Coins navigator={navigator}/>  : null}
 				{(location === true) ? <Location/> : null}
 				{(signal === true) ? <Signal navigator={navigator}/> : null}
 			</View>

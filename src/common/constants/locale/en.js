@@ -15,7 +15,8 @@ const en = {
 	earth : 'Earth',
 	online : 'Online',
 	offline : 'Offline',
-	internetProblem : 'Internet Connection Error, please check your wifi or cellular network'
+	internetProblem : 'Internet Connection Error, please check your wifi or cellular network',
+	error : 'Error'
 }
 
 export default en;
