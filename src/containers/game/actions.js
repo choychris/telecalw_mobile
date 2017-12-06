@@ -54,15 +54,20 @@ export function getTagsList(navigator){
 
 export function getProductList(tag){
 	return (dispatch,getState)=>{
+		const tags = getState()['game']['tags'];
 		const smapleList = [
 			{  
 				
 			}
-		];
+		]
 		dispatch({
 			type : 'STORE_PRODUCT_LIST',
-			keys : [tag],
+			keys : ['earth'],
 			value : smapleList
+		});
+		dispatch({
+			type : 'SELECT_TAG',
+			value : tags[1]
 		});
 	}
 }

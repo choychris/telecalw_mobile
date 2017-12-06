@@ -9,9 +9,9 @@ import Button from '../../components/utilities/buttons';
 
 class Login extends Component {
 	componentWillMount(){
-		const { languageChecking ,accessTokenChecking } = this.props;
+		const { languageChecking ,accessTokenChecking , navigator } = this.props;
 		// Acess Token Checking
-		accessTokenChecking();
+		accessTokenChecking(navigator);
 		// User Language Checking
 		languageChecking();	
 	}

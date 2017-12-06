@@ -28,3 +28,24 @@ export function userWallet(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+// Get User Status
+export function userStatus(params,request){
+	const { userId , id } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.users.root+'/'+userId+'?filter[fields][status]=true&access_token='+id,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}
+
+// User Logout
+export function userLogout(params,request){
+	const { id } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.users.logout+'?access_token='+id,'POST')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}
+

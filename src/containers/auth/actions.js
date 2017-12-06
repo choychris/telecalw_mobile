@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userInfoRequest, userWallet } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout } from '../../common/api/request/user';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -63,23 +63,17 @@ async function authenticationFlow(dispatch,getState,navigator) {
 		const userObj = formUserObj(fbAccessTokenObj,fbUserInfo,getState);
 		//console.warn(JSON.stringify(userObj)); 
 		
-		// Step 4 : Post User Info to Loopback Backend , dispatch response to local store
+		// Step 4 : Post User Info to Loopback Backend 
 		const authRes = await authRequest(userObj,Request);
-		//console.warn(JSON.stringify(res));
 		const { result } = authRes;
+		//console.warn(JSON.stringify(res));
 		//console.warn(JSON.stringify(result));
-		dispatch({ type : 'STORE_AUTH_TOKEN' , value : result });
 		
 		// Step 5 : Save in Local Storage of the Movile Device
 		await AsyncStorage.setItem('token', JSON.stringify(result));	
 		
-		// Step 6 : Navigate to Gameplay List UI
-		navigator.resetTo({
-			screen : 'app.GamePlayList',
-			navigatorStyle : {
-				navBarHidden : true
-			}
-		});
+		// Step 6 : Dispatch response to local store , Navigate to Gameplay List UI
+		dispatch(dispatchTokenAndNavigate(result,navigator));
 	}
 	catch(e){
 		//console.warn(JSON.stringify(e));
@@ -106,37 +100,91 @@ export function loginFacebook(navigator){
 	}
 }
 
-function checkTokenExpire(token){
-
+function dispatchTokenAndNavigate(token,navigator){
+	return (dispatch,getState)=>{
+		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
+		navigator.resetTo({
+			screen : 'app.GamePlayList',
+			navigatorStyle : {
+				navBarHidden : true
+			}
+		});
+	}
 }
 
-export function accessTokenChecking(){
+function checkTokenExpire(token){
+	const now = new Date().getTime();
+	const tokenExpireDate = new Date(token.lbToken.created).getTime()+(token.lbToken.ttl*1000);
+	//console.warn(now);
+	//console.warn(tokenExpireDate);
+	return (tokenExpireDate > now) ? true : false;
+}
+
+
+export function accessTokenChecking(navigator){
 	return (dispatch,getState)=>{
-		async function checkLocalToken(){
+		async function checkTokenFlow(){
 			try {
+				// Access Token Mechanism
+				// 1. If accessToken exist and valid , navigate to Gameplay Page
+				// a. Check Token Expirations
+				// b. Check User Latest Status from Loopback Backend API
+				// 2. If accessToken not valid , navigate to login page
+			
+				loading('show',navigator);
+				
 				const localToken = await AsyncStorage.getItem('token');
 				const checkToken = JSON.parse(localToken);
-				console.warn(localToken);
-				console.warn(checkToken);
-				const tokeIsExpired = checkTokenExpire(checkToken);				
-			}
-			catch(e){
+				const tokenIsNotExpired = checkTokenExpire(checkToken);				
+				//console.warn(localToken);
+				//console.warn(checkToken);
+				//console.warn(tokenIsNotExpired);
+
+				const userStatusRes = await userStatus(checkToken.lbToken,Request);
+				//console.warn(JSON.stringify(userStatusRes));
+
+				(tokenIsNotExpired === true && userStatusRes.status === true) ? 
+					dispatch(dispatchTokenAndNavigate(checkToken,navigator)) : 
+					dispatch(logout(checkToken.lbToken,navigator));
 
 			}
+			catch(e){
+				loading('hide',navigator);
+				dispatch(authError(navigator,'error','tryAgain'));
+			}
 		}
-		checkLocalToken();
-		// Access Token Mechanism
-		// 1. If accessToken exist and valid , navigate to Gameplay Page
-		// a. Check Token Expirations
-		// b. Check User Latest Status from Loopback Backend API
-		// 2. If accessToken not valid , navigate to login page
+		checkTokenFlow();
+	}
+}
+
+export function logout(token,navigator){
+	return (dispatch,getState)=>{
+		async function logoutFlow(){
+			try {
+				// Step 1 : Clear Local Storage
+				await AsyncStorage.clear();	
+				// Step 2 : Deprecate Remote Backend Access Token
+				userLogout(token,Request);				
+				// Step 3 : Navigate to Login UI
+				navigator.resetTo({
+					screen : 'app.Login',
+					navigatorStyle : {
+						navBarHidden : true
+					}
+				});
+			}
+			catch(e){
+				dispatch(authError(navigator,'error','tryAgain'));
+			}
+		}	
+		logoutFlow();	
 	}
 }
 
 export function getUserWallet(navigator){
 	return (dispatch,getState)=>{
 		const token = getState()['auth']['token'];
-		async function walletRequest(){
+		async function walletRequestFlow(){
 			try {
 				const walletRes = await userWallet(token.lbToken,Request);
 				//console.warn(JSON.stringify(walletRes));
@@ -146,7 +194,7 @@ export function getUserWallet(navigator){
 				dispatch(authError(navigator,'error','tryAgain'));
 			}
 		}		
-		walletRequest();
+		walletRequestFlow();
 	}
 }
 
