@@ -12,3 +12,12 @@ export function baseApi(){
 	return (__DEV__) ? backendApi[devMode] : backendApi['production'];
 }
 
+export function firebaseCredentials(){
+	return (__DEV__) ? {
+		apiKey : "AIzaSyDuJdlpnxs8NUbJFBqgOcuet7iGB-c-Z-8",
+		databaseURL : "https://teleclaw-dev.firebaseio.com/"
+	} : {
+		apiKey : "AIzaSyDuJdlpnxs8NUbJFBqgOcuet7iGB-c-Z-8",
+		databaseURL : "https://teleclaw-dev.firebaseio.com/"
+	};
+}

@@ -9,13 +9,14 @@ import ItemContainer from './itemContainer';
 class ListContainer extends Component {
 	_renderItems(){
 		const screenWidth = Dimensions.get('window').width;
+		const screenHeight = Dimensions.get('window').height;
 		const sampleList = [
-			{ position : { x : -screenWidth/3 , y : -100 } },
-			{ position : { x : 0 , y : -180 } },
-			{ position : { x : screenWidth/3 , y : -140 } },
+			{ position : { x : -screenWidth/3 , y : -screenHeight*0.1 } },
+			{ position : { x : 0 , y : -screenHeight*0.24 } },
+			{ position : { x : screenWidth/3 , y : -screenHeight*0.2 } },
 			{ position : { x : -screenWidth/3 , y : 0 } },
-			{ position : { x : 0 , y : 45 } },
-			{ position : { x : screenWidth/3 , y : -40 } },
+			{ position : { x : 0 , y : screenHeight*0.07 } },
+			{ position : { x : screenWidth/3 , y : -screenHeight*0.1 } },
 		];
 		return sampleList.map((item,key)=><ItemContainer position={item.position} key={key}/>)
 	}

@@ -8,12 +8,25 @@ import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import LocationBar from './location/bar';
 import ListContainer from './gameList/listContainer';
+import BarContainer from './bottomBar/barContainer';
+import { firebaseCredentials } from '../../../config/env';
+import * as firebase from 'firebase';
 
 class GamePlayList extends Component {
 	componentDidMount(){
 		const { navigator , loadGameList } = this.props;
 		// Initial Function of Game Play List
 		loadGameList(navigator);
+		// Initiate Firsbase Product Status Listener
+		firebase.initializeApp(firebaseCredentials());
+		let initialData = false;
+		const productStatus = firebase.database().ref('messages/product');
+		productStatus
+			.limitToLast(1)
+			.on('child_added', (snapshot)=>{
+				if(initialData === true) console.warn(JSON.stringify(snapshot.val()));
+			});
+		productStatus.once('value',()=>initialData = true);
 	}
 	render(){
 		const { navigator } = this.props;
@@ -29,6 +42,7 @@ class GamePlayList extends Component {
 				/>
 				<LocationBar/>
 				<ListContainer/>
+				<BarContainer/>
 			</View>
 		)
 	}

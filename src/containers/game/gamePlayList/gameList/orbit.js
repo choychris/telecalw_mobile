@@ -43,8 +43,8 @@ class Orbit extends Component {
 const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
-		height : 400,
-		width : 400
+		height : Dimensions.get('window').width,
+		width : Dimensions.get('window').width
 	}
 });
 

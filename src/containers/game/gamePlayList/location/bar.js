@@ -38,7 +38,7 @@ class LocationBar extends Component {
 const styles = StyleSheet.create({
 	container : {
 		width : Dimensions.get('window').width * 0.95,
-		paddingVertical : 5,
+		paddingVertical : 2,
 		borderRadius : 30,
 		flexDirection : 'row',
 		backgroundColor : 'black',
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
 		overflow : 'hidden'
 	},
 	image : {
-		width : 30,
-		height : 30,
+		width : 25,
+		height : 25,
 		marginHorizontal : 10
 	}
 });

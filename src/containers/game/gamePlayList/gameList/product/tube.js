@@ -20,12 +20,12 @@ class Tube extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		top : 10,
+		top : Dimensions.get('window').height * 0.01,
 		position : 'absolute'
 	},
 	image : {
-		width : 170,
-		height : 170
+		width : Dimensions.get('window').width * 0.45,
+		height : Dimensions.get('window').width * 0.45
 	}
 });
 

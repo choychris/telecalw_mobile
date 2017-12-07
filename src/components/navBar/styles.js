@@ -9,7 +9,7 @@ export default StyleSheet.create({
 		opacity : 0.8,
 		borderRadius : 30,
 		paddingHorizontal : 10,
-		paddingVertical : 5,
+		paddingVertical : 3,
 		marginHorizontal : 5
 	},
 	image : {
