@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import ProductInfo from './product/info';
+import ProductImage from './product/image';
+import Tube from './product/tube';
 
 class ItemContainer extends Component {
 	componentWillMount(){
@@ -16,9 +19,9 @@ class ItemContainer extends Component {
 		return(
 			<Animated.View style={this._itemPosition.getLayout()}>
 				<View style={styles.container}>
-					<TouchableOpacity>
-						<Text>{'Little Bear'}</Text>
-					</TouchableOpacity>
+					<Tube/>
+					<ProductImage/>
+					<ProductInfo/>
 				</View>
 			</Animated.View>
 		)

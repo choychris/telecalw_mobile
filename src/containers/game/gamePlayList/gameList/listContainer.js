@@ -10,12 +10,12 @@ class ListContainer extends Component {
 	_renderItems(){
 		const screenWidth = Dimensions.get('window').width;
 		const sampleList = [
-			{ position : { x : -screenWidth/3 - 10 , y : -80 } },
-			{ position : { x : 0 , y : -150 } },
-			{ position : { x : screenWidth/3 + 10 , y : -80 } },
-			{ position : { x : -screenWidth/3 - 10 , y : 80 } },
-			{ position : { x : 0 , y : 150 } },
-			{ position : { x : screenWidth/3 + 10 , y : 80 } },
+			{ position : { x : -screenWidth/3 , y : -100 } },
+			{ position : { x : 0 , y : -180 } },
+			{ position : { x : screenWidth/3 , y : -140 } },
+			{ position : { x : -screenWidth/3 , y : 0 } },
+			{ position : { x : 0 , y : 45 } },
+			{ position : { x : screenWidth/3 , y : -40 } },
 		];
 		return sampleList.map((item,key)=><ItemContainer position={item.position} key={key}/>)
 	}
