@@ -7,7 +7,11 @@ export const api = {
 		root : base+'/users',
 		auth : base+'/users/auth',
 		logout : base+'/users/logout'
+	},
+	tags : {
+		root : base+'/tags'
 	}
 }
+
 
 

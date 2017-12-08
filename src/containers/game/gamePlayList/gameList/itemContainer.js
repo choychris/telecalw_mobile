@@ -16,16 +16,31 @@ class ItemContainer extends Component {
 		}).start();
 	}
 	render(){
-		const { navigator , onPressFunction } = this.props;
-		return(
+		const { navigator , onPressFunction , name , status , gamePlayRate , id } = this.props;
+		const disableStyle = (status.maintainStatus === true) ? { opacity : 0.3 } : null;
+		return (status.visible === true) ?(
 			<Animated.View style={this._itemPosition.getLayout()}>
-				<View style={styles.container}>
-					<Tube onPressFunction={onPressFunction}/>
-					<ProductImage onPressFunction={onPressFunction}/>
-					<ProductInfo onPressFunction={onPressFunction}/>
+				<View style={[styles.container,disableStyle]}>
+					<Tube 
+						id={id}
+						status={status}
+						onPressFunction={onPressFunction}
+					/>
+					<ProductImage 
+						id={id}
+						status={status}
+						onPressFunction={onPressFunction}
+					/>
+					<ProductInfo 
+						id={id}
+						name={name}
+						status={status}
+						gamePlayRate={gamePlayRate}
+						onPressFunction={onPressFunction}
+					/>
 				</View>
 			</Animated.View>
-		)
+		) : null ;
 	}
 }
 

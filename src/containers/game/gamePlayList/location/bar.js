@@ -2,16 +2,18 @@ import React, { PropTypes, Component } from 'react';
 import { ScrollView , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { getPlanetImageSource } from '../../actions';
 
 class LocationBar extends Component {
 	_renderPlanets(planets){
+		const { tag } = this.props;
 		return planets.map((planet,index)=>{
 			let imageStyle = [styles.image];
-			if(index !== 0) imageStyle.push({ opacity : 0.4 })
+			if(planet.id !== tag.id) imageStyle.push({ opacity : 0.4 })
 			return (
 				<Image
 					key={index}
-					source={planet.picture}	
+					source={getPlanetImageSource(planet.name.en.toLowerCase(),planet.picture)}
 					style={imageStyle}
 					resizeMode={'contain'}
 				/>
@@ -22,11 +24,11 @@ class LocationBar extends Component {
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	render(){
-		const { tags } = this.props;
+		const { tags, tag } = this.props;
 		return(
 			<View style={styles.container}>
 				<ScrollView horizontal={true}>
-					{(tags.length > 0) ? 
+					{(tags.length > 0 && tag !== null) ? 
 						this._renderPlanets(tags) : 
 						this._renderLoading()}
 				</ScrollView>
@@ -55,7 +57,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		tags : state.game.tags
+		tags : state.game.tags,
+		tag : state.game.tag
 	}
 }
 

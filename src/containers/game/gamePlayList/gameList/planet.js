@@ -2,35 +2,26 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getProductList } from '../../actions';
+import { switchTag , getPlanetImageSource } from '../../actions';
 
 class Planet extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			spinAnimation : new Animated.Value(0)
-		};
-	}
 	componentWillMount(){
-		const { getProductList } = this.props;
 		this._position = new Animated.ValueXY();
+		this._spinAnimation = new Animated.Value(0);
 		this._panResponder = PanResponder.create({
 			onStartShouldSetPanResponder: (evt, gestureState) =>true,
 			onPanResponderMove: (evt, gestureState) => {
-				//console.log(evt);
-				//console.log(gestureState);
 				const { dx , dy } = gestureState
 				this._position.setValue({ x : dx , y : dy });
 			},
 			onPanResponderRelease: (evt, gestureState) => {
-				//console.log(evt);
-				//console.log(gestureState);
 				const swipeThreshold = Dimensions.get('window').width * 0.2;
 				const { dx , dy } = gestureState;
 				if(dx > swipeThreshold){
+					this._forceSwipe('right');
 					this._resetPosition();
 				} else if(dx < -swipeThreshold){
-					this._forceSwipeRight(getProductList);
+					this._forceSwipe('left');
 					//console.warn('Left');
 					this._resetPosition();
 				} else {
@@ -41,10 +32,9 @@ class Planet extends Component {
 		});
 	}
 	componentDidMount(){
-		const { spinAnimation } = this.state;
 		Animated.loop(
 			Animated.timing(
-				spinAnimation,
+				this._spinAnimation,
 				{
 					toValue: 1,
 					duration: 80000,
@@ -53,12 +43,15 @@ class Planet extends Component {
 			)
 		).start();
 	}
-	_forceSwipeRight(getProductList){
+	_forceSwipe(direction){
+		const action = (direction === 'left') ? 'next' : 'back' ;
+		const { switchTag } = this.props;
 		const screenWidth = Dimensions.get('window').width;
+		switchTag(action);
 		Animated.timing(this._position,{
 			toValue : { x : screenWidth , y : 0 },
 			duration : 200
-		}).start(()=>getProductList());
+		}).start();
 	}
 	_resetPosition(){
 		Animated.spring(this._position,{
@@ -67,12 +60,11 @@ class Planet extends Component {
 	}
 	_planetStyle(){
 		const screenWidth = Dimensions.get('window').width;
-		const { spinAnimation } = this.state;
 		const rotate = this._position.x.interpolate({
 			inputRange: [-screenWidth * 1.5, 0 , screenWidth *1.5],
 			outputRange: ['-120deg', '0deg' , '120deg']
 		});
-		const spin = spinAnimation.interpolate({
+		const spin = this._spinAnimation.interpolate({
 			inputRange: [0, 1],
 			outputRange: ['0deg', '360deg']
 		})
@@ -89,7 +81,7 @@ class Planet extends Component {
 		return (
 			<Animated.Image
 				{...this._panResponder.panHandlers}
-				source={tag.picture}
+				source={getPlanetImageSource(tag.name.en.toLowerCase(),tag.picture)}
 				style={[styles.image,this._planetStyle()]}
 				resizeMode={'contain'}
 			/>
@@ -123,7 +115,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		getProductList
+		switchTag
 	}, dispatch)
 }
 

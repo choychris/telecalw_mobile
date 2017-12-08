@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 class Signal extends Component {
 	_signalColor(status){
 		switch(status){
-			case 'maintain':
+			case false:
 				return '#E63946'
 			break;
-			case 'avaliable':
+			case true:
 				return '#7ED881'
 			break;
 			default:
@@ -18,8 +18,9 @@ class Signal extends Component {
 		}
 	}
 	render(){
-		const { status } = this.props;
-		const signalColor = this._signalColor(status);
+		let { machineStatus , maintainStatus } = this.props;
+		if(maintainStatus === true) machineStatus = null ;
+		const signalColor = this._signalColor(machineStatus);
 		return (
 			<View style={[styles.container,{ backgroundColor : signalColor }]}>
 			</View>

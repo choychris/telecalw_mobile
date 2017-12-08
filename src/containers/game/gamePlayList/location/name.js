@@ -5,11 +5,19 @@ import { connect } from 'react-redux';
 import styles from '../../../../components/navBar/styles';
 
 class Location extends Component {
+	_renderLoading(){
+		return <ActivityIndicator size="small" color={'white'}/>
+	}
+	_renderDisplay(tag){
+		const { locale } = this.props;
+		const { name } = tag;
+		return <Text style={styles.text}>{(name[locale]) ? name[locale] : name['en']}</Text>
+	}
 	render(){
-		const { string } = this.props;
+		const { string , tag } = this.props;
 		return(
 			<View	style={styles.container}>
-				<Text style={styles.text}>{string['earth']}</Text>
+				{(tag && tag !== null) ? this._renderDisplay(tag) : this._renderLoading()}
 			</View>
 		)
 	}
@@ -17,7 +25,8 @@ class Location extends Component {
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		locale : state.preference.language.locale,
+		tag : state.game.tag
 	}
 }
 

@@ -6,13 +6,27 @@ const coinImage = require('../../../../../../assets/utilities/coins/telecoins_si
 import Signal from './signal';
 
 class ProductInfo extends Component {
+	_productName(){
+		const { locale , name } = this.props;
+		return (name[locale]) ? name['locale'] : name['en'];
+	}
 	render(){
-		const { onPressFunction } = this.props;
+		const { 
+			onPressFunction ,
+			status,
+			gamePlayRate
+		} = this.props;
+		const { maintainStatus } = status;
 		return (
-			<TouchableOpacity onPress={()=>onPressFunction()}>
+			<TouchableOpacity 
+				onPress={()=>onPressFunction()}
+				disabled={maintainStatus}
+			>
 				<View style={styles.row}>
-					<Signal status={'avaliable'}/>
-					<Text style={styles.text}>{'Little Bear'}</Text>
+					<Signal {...status}/>
+					<Text style={styles.text}>
+						{this._productName()}
+					</Text>
 				</View>
 				<View style={styles.row}>
 					<Image
@@ -20,7 +34,9 @@ class ProductInfo extends Component {
 						source={coinImage}
 						resizeMode={'contain'}
 					/>
-					<Text style={styles.text}>{'19'}</Text>
+					<Text style={styles.text}>
+						{gamePlayRate}
+					</Text>
 				</View>
 			</TouchableOpacity>
 		)	
@@ -43,5 +59,11 @@ const styles = StyleSheet.create({
 		marginHorizontal : 5
 	}
 });
+
+function mapStateToProps(state) {
+	return {
+		locale : state.preference.language.locale,
+	}
+}
 
 export default connect(null,null)(ProductInfo)

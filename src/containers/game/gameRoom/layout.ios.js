@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import GameContainer from '../components/gameContainer';
-import ControlPanel from '../components/controlPanel/container';
 
 class GameRoom extends Component {
 	render(){
@@ -30,7 +29,8 @@ class GameRoom extends Component {
 const styles = StyleSheet.create({
 	container : {
 		flex : 1,
-		alignItems : 'center'
+		alignItems : 'center',
+		backgroundColor : '#263E50'
 	}
 });
 

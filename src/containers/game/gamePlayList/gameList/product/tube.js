@@ -6,9 +6,10 @@ const tubeImage = require('../../../../../../assets/utilities/tube.png');
 
 class Tube extends Component {
 	render(){
-		const { onPressFunction } = this.props;
+		const { onPressFunction , status } = this.props;
 		return (
 			<TouchableOpacity 
+				disabled={status.maintainStatus}
 				style={styles.container}
 				onPress={()=>onPressFunction()}
 			>

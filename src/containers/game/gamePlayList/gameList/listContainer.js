@@ -2,48 +2,44 @@ import React, { PropTypes, Component } from 'react';
 import { FlatList , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { positioningItems } from '../../actions';
 import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
 
 class ListContainer extends Component {
-	_navigateToGameRoom(productId){
+	_navigateToGameRoom(productId,status){
 		const { navigator } = this.props;
 		//console.warn(productId);
-		navigator.push({
-			screen : 'app.GameRoom',
-			navigatorStyle : {
-				navBarHidden : true
-			}
-		});
+		if(status === true){
+
+		} else {
+			navigator.push({
+				screen : 'app.GameRoom',
+				navigatorStyle : {
+					navBarHidden : true
+				}
+			});
+		}
 	}
-	_renderItems(){
+	_renderLoading(){
+		return <ActivityIndicator size="small" color={'white'}/>
+	}
+	_renderItems(list){
 		const { navigator } = this.props;
-		const screenWidth = Dimensions.get('window').width;
-		const screenHeight = Dimensions.get('window').height;
-		const sampleList = [
-			{ position : { x : -screenWidth/3 , y : -screenHeight*0.1 } },
-			{ position : { x : 0 , y : -screenHeight*0.24 } },
-			{ position : { x : screenWidth/3 , y : -screenHeight*0.2 } },
-			{ position : { x : -screenWidth/3 , y : 0 } },
-			{ position : { x : 0 , y : screenHeight*0.07 } },
-			{ position : { x : screenWidth/3 , y : -screenHeight*0.1 } },
-		];
-		return sampleList.map((item,key)=>
+		return positioningItems(list).map((item,key)=>
 			<ItemContainer 
-				position={item.position} 
+				{...item}
 				key={key}
-				onPressFunction={(productId)=>this._navigateToGameRoom(productId)}
+				onPressFunction={(productId,status)=>this._navigateToGameRoom(productId,status)}
 			/>)
 	}
 	render(){
-		const { tag , list } = this.props;
-		//console.warn(JSON.stringify(tag));
-		//console.warn(JSON.stringify(list));
+		const { list , tag } = this.props;
 		return (
 			<View style={styles.container}>
 				<Orbit/>
-				{this._renderItems()}
+				{(tag !== null && list[tag.id]) ? this._renderItems(list[tag.id]) : null }
 				<Planet/>
 			</View>
 		)
@@ -61,8 +57,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		tag : state.game.tag,
-		list : state.game.list
+		list : state.game.list,
+		tag : state.game.tag
 	}
 }
 

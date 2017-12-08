@@ -183,10 +183,10 @@ export function logout(token,navigator){
 
 export function getUserWallet(navigator){
 	return (dispatch,getState)=>{
-		const token = getState()['auth']['token'];
+		const token = getState()['auth']['token']['lbToken'];
 		async function walletRequestFlow(){
 			try {
-				const walletRes = await userWallet(token.lbToken,Request);
+				const walletRes = await userWallet(token,Request);
 				//console.warn(JSON.stringify(walletRes));
 				dispatch({ type : 'STORE_WALLET_INFO' , value : walletRes  });
 			}
