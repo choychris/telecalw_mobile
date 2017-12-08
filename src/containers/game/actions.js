@@ -1,4 +1,5 @@
 import { errorMessage , loading } from '../utilities/actions';
+import { NetInfo } from 'react-native';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -69,5 +70,19 @@ export function getProductList(tag){
 			type : 'SELECT_TAG',
 			value : tags[1]
 		});
+	}
+}
+
+export function networkChecking(navigator){
+	return (dispatch,getState)=>{
+		const { string } = getState()['preference']['language'];
+		NetInfo.isConnected.addEventListener(
+			'connectionChange',
+			(isConnected)=>{
+				dispatch({ type : 'CHANGE_NETWORK_STATUS' , value : isConnected });
+				if(isConnected === false) 
+					errorMessage('show',navigator,{ title : string['offline'] , message : string['internetProblem'] }) ;
+			}
+		);
 	}
 }

@@ -5,14 +5,26 @@ import { connect } from 'react-redux';
 import Coins from './coins';
 import Signal from './signal';
 import Location from '../../containers/game/gamePlayList/location/name';
+import Back from './back';
+import Viewers from './viewers';
 
 class NavBar extends Component {
 	render(){
-		const { back , coins , location , signal , timer , navigator } = this.props;
+		const { 
+			back , 
+			coins , 
+			location , 
+			signal , 
+			timer , 
+			viewers ,
+			navigator 
+		} = this.props;
 		return(
 			<View style={styles.container}>	
+				{(back === true) ? <Back navigator={navigator}/> : null }
 				{(coins === true) ? <Coins navigator={navigator}/>  : null}
 				{(location === true) ? <Location/> : null}
+				{(viewers === true) ? <Viewers/> : null}
 				{(signal === true) ? <Signal navigator={navigator}/> : null}
 			</View>
 		)

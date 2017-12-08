@@ -7,20 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { errorMessage } from '../../containers/utilities/actions';
 
 class Signal extends Component {
-	constructor(props){
-		super(props);
-		this.state = { status : null };
-	}
-	componentDidMount(){
-		const { navigator , string } = this.props;
-		NetInfo.isConnected.addEventListener(
-			'connectionChange',
-			(isConnected)=>{
-				this.setState({ status : isConnected });
-				if(isConnected === false) errorMessage('show',navigator,{ title : string['offline'] , message : string['internetProblem'] }) ;
-			}
-		);
-	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
@@ -34,8 +20,7 @@ class Signal extends Component {
 		)
 	}
 	render(){
-		const { string } = this.props;
-		const { status } = this.state;
+		const { string , status } = this.props;
 		const signalIcon = (status === true) ? 
 			{ color : '#2ECC71' , name : 'signal' } :
 		 	{ color : '#E63946' , name : 'times' }
@@ -55,7 +40,8 @@ class Signal extends Component {
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		status : state.game.network
 	}
 }
 

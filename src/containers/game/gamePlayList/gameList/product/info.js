@@ -7,8 +7,9 @@ import Signal from './signal';
 
 class ProductInfo extends Component {
 	render(){
+		const { onPressFunction } = this.props;
 		return (
-			<TouchableOpacity>
+			<TouchableOpacity onPress={()=>onPressFunction()}>
 				<View style={styles.row}>
 					<Signal status={'avaliable'}/>
 					<Text style={styles.text}>{'Little Bear'}</Text>

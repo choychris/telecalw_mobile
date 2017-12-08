@@ -16,12 +16,13 @@ class ItemContainer extends Component {
 		}).start();
 	}
 	render(){
+		const { navigator , onPressFunction } = this.props;
 		return(
 			<Animated.View style={this._itemPosition.getLayout()}>
 				<View style={styles.container}>
-					<Tube/>
-					<ProductImage/>
-					<ProductInfo/>
+					<Tube onPressFunction={onPressFunction}/>
+					<ProductImage onPressFunction={onPressFunction}/>
+					<ProductInfo onPressFunction={onPressFunction}/>
 				</View>
 			</Animated.View>
 		)

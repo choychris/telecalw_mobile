@@ -8,7 +8,7 @@ export default StyleSheet.create({
 		backgroundColor : '#5AA1AD',
 		opacity : 0.8,
 		borderRadius : 30,
-		paddingHorizontal : 10,
+		paddingHorizontal : 5,
 		paddingVertical : 3,
 		marginHorizontal : 5
 	},
@@ -19,7 +19,7 @@ export default StyleSheet.create({
 		opacity : 1
 	},
 	text : {
-		fontSize : 20,
+		fontSize : 18,
 		color : 'white',
 		fontFamily : 'Silom',
 		marginHorizontal : 5,

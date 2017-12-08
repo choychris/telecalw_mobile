@@ -3,7 +3,8 @@ import { fromJS , toJS } from 'immutable';
 const initialState = {
 	tag : null,
 	tags : [],
-	list : {}
+	list : {},
+	network : null
 }
 
 function gameReducer (state = initialState, action){
@@ -22,6 +23,11 @@ function gameReducer (state = initialState, action){
 		case 'SELECT_TAG':
 			return state
 				.setIn(['tag'],action.value)
+				.toJS();
+		break;
+		case 'CHANGE_NETWORK_STATUS':
+			return state
+				.setIn(['network'],action.value)
 				.toJS();
 		break;
 		default:

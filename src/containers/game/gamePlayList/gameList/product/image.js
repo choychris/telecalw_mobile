@@ -6,8 +6,12 @@ const testProductImage = require('../../../../../../assets/utilities/bear.png');
 
 class ProductImage extends Component {
 	render(){
+		const { navigator , onPressFunction } = this.props;
 		return (
-			<TouchableOpacity style={styles.container}>
+			<TouchableOpacity 
+				style={styles.container}
+				onPress={()=>onPressFunction()}
+			>
 				<Image
 					style={styles.image}
 					source={testProductImage}
