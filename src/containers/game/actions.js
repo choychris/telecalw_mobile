@@ -54,17 +54,41 @@ export function loadGameList(navigator){
 
 export function switchTag(action){
 	return (dispatch,getState)=>{
+		const token = getState()['auth']['token']['lbToken'];
 		const tags = getState()['game']['tags'];
 		const currentTag = getState()['game']['tag'];
 		const { index } = currentTag;
 		const targetIndex = (action === 'next') ? index + 1 : index - 1;
 		if(tags[targetIndex]){
+			// Step 1 : Dispatch Selected Tag
 			let targetTag = tags[targetIndex];
 			targetTag.index = targetIndex;
-			return dispatch({
+			dispatch({
 				type : 'SELECT_TAG',
 				value :	targetTag 
 			});
+			// Step 2 : Update the Gameplay List
+			getTagProduct({  
+				token : token.id,
+				tagId : targetTag.id
+			},Request).then((res,err)=>{
+				if(!err){
+					dispatch({
+						type : 'STORE_PRODUCT_LIST',
+						keys : [targetTag.id],
+						value : res
+					});
+				} else {
+					errorMessage(
+						'show',
+						navigator,
+						{
+							title : string['error'],
+							message : string['tryAgain']
+						}
+					);
+				}
+			});			
 		}
 	}
 }
