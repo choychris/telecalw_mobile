@@ -4,31 +4,46 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const tubeImage = require('../../../../assets/utilities/sific_tube.png');
 import FastImage from 'react-native-fast-image'
-import ControlPanel from './controlPanel/container';
+import RoomPanel from './controlPanel/roomPanel';
+import WatchView from './view/watchView';
 
 class GameContainer extends Component {
 	componentWillMount(){
 		const { height , width } = Dimensions.get('window');
 		this._itemPosition = new Animated.ValueXY({ x : 0 , y : height });
+		this._slideDownAnimation();
+	}
+	_slideDownAnimation(){
 		Animated.spring(this._itemPosition,{
 			toValue : { x : 0 , y : 0  }
 		}).start();
 	}
+	_slideUpAnimation(){
+		Animated.spring(this._itemPosition,{
+			toValue : { x : 0 , y : -Dimensions.get('window').height }
+		}).start();
+	}
 	_renderUpperTube(){
 		return (
-			<Animated.Image 
+			<Image 
 				source={tubeImage}
-				style={[styles.image,this._itemPosition.getLayout()]}
-				resizeMode={'contain'}	
+				style={styles.image}
+				resizeMode={'stretch'}	
 			/>
 		)
 	}
 	render(){
+		const { navigator } = this.props;
 		return (
-			<View style={styles.container}>
+			<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
 				{this._renderUpperTube()}	
-				<ControlPanel mode={'room'}/>
-			</View>
+				<WatchView/>
+				<RoomPanel 
+					navigator={navigator} 
+					slideUpAnimation={()=>this._slideUpAnimation()}
+					slideDownAnimation={()=>this._slideDownAnimation()}
+				/>
+			</Animated.View>
 		)
 	}
 }
@@ -41,10 +56,9 @@ const styles = StyleSheet.create({
 		justifyContent : 'flex-end'
 	},
 	image : {
-		top : 0,
 		position : 'absolute',
-		width	: Dimensions.get('window').width,
-		height : Dimensions.get('window').height
+		width	: Dimensions.get('window').width + 1,
+		height : Dimensions.get('window').height - 60
 	}
 });
 

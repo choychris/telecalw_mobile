@@ -24,9 +24,18 @@ class Login extends Component {
 				<View style={styles.bottom}>
 					<Button 
 						text={'facebookLogin'}
-						textColor={'white'}
-						btnColor={'#3B5998'}
-						borderColor={'black'}
+						textStyle={{ 
+							color : 'white' , 
+							fontSize : 25 , 
+							fontFamily : 'Bauhaus 93' ,
+							fontWeight : 'bold'
+						}}
+						btnStyle={{ 
+							backgroundColor : '#3B5998',
+							paddingVertical : 10,
+							paddingHorizontal : 20
+						}}
+						borderColor={'#203559'}
 						onPressFunction={()=>loginFacebook(navigator)}
 					/>
 				</View>

@@ -2,17 +2,28 @@ import React, { PropTypes, Component } from 'react';
 import { View , Image , StyleSheet , TouchableHighlight , Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Button extends Component {
 	constructor(props){
 		super(props);
 		this.state = { pressIn : false };
 	}
+	_renderIcon(){
+		const { icon } = this.props;
+		return <Icon {...icon}/>
+	}
 	render(){
-		const { text , textColor , btnColor , borderColor , onPressFunction , string } = this.props;
+		const { 
+			textStyle,
+			btnStyle,
+			borderColor , 
+			onPressFunction , 
+			text, 
+			string , 
+			icon
+		} = this.props;
 		const { pressIn } = this.state;
-		const btnTextColor = { color : textColor };
-		const btnBackgroundColor = { backgroundColor : btnColor };
 		const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
 		const btnBorderColor = (pressIn === false && borderColor) ? { borderColor : borderColor  } : {};
 		const displayText = (string[text]) ? string[text] : text;
@@ -21,12 +32,15 @@ class Button extends Component {
 				onPressIn={()=>this.setState({ pressIn : true })}
 				onPressOut={()=>this.setState({ pressIn : false })}
 				onPress={()=>(onPressFunction) ? onPressFunction() : null}
-				style={[styles.container,btnBorder,btnBackgroundColor,btnBorderColor]}
-				underlayColor={btnColor}
+				style={[styles.container,btnBorder,btnStyle,btnBorderColor]}
+				underlayColor={borderColor}
 			>
-				<Text style={[styles.text,btnTextColor]}>
-					{displayText}
-				</Text>
+				<View style={styles.innerContainer}>
+					{(icon) ? this._renderIcon() : null}
+					<Text style={[styles.text,textStyle]}>
+						{displayText}
+					</Text>
+				</View>
 			</TouchableHighlight>
 		)
 	}
@@ -37,17 +51,19 @@ const styles = StyleSheet.create({
 		alignSelf : 'center',
 		borderRadius : 30
 	},
+	innerContainer : {
+		flexDirection : 'row',
+		alignItems : 'center',
+		justifyContent : 'center'
+	},
 	nonPressBorder : {
 		borderBottomWidth : 3,
-		borderRightWidth : 6
+		borderRightWidth : 1,
+		borderLeftWidth : 1
 	},
 	text : {
-		margin : 10,
-		paddingHorizontal : 20,
+		marginHorizontal : 5,
 		textAlign :'center',
-		fontSize : 25,
-		fontWeight : 'bold',
-		fontFamily : 'Bauhaus 93'
 	}
 });
 

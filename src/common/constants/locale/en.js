@@ -17,7 +17,10 @@ const en = {
 	offline : 'Offline',
 	internetProblem : 'Internet Connection Error, please check your wifi or cellular network',
 	error : 'Error',
-	viewers : 'Viewers'
+	viewers : 'Viewers',
+	play : 'Play',
+	switch : 'Switch',
+	topUp : 'TopUp'
 }
 
 export default en;

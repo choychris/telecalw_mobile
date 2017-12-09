@@ -5,6 +5,7 @@ import { firebaseCredentials } from '../../config/env';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
+import Pusher from 'pusher-js/react-native';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -95,19 +96,22 @@ export function switchTag(action){
 
 export function productStatus(){
 	return (dispatch,getState)=>{
-		firebase.initializeApp(firebaseCredentials());
-		let initialData = false;
-		const productStatus = firebase.database().ref('messages/product');
-		productStatus
-			.orderByChild("time")
-			.on('child_added', (snapshot)=>{
-				if(initialData === true) {
-					console.warn(JSON.stringify(snapshot.val()));
-					const statusMsg = snapshot.val();
-					const { productId , status } = statusMsg;
-					const currentTag = getState()['game']['tag'];
-					const list = getState()['game']['list'];
-					if(currentTag !== null && list[currentTag.id]){
+		Pusher.logToConsole = true;
+
+		var pusher = new Pusher('0094cc321ae56ee8aa56', {
+			  cluster: 'ap1',
+				 encrypted: true
+		});
+
+		var channel = pusher.subscribe('my-channel');
+		channel.bind('my-event', function(data) {
+			 console.warn(JSON.stringify(data));
+				const { productId , status } = data;
+				const currentTag = getState()['game']['tag'];
+				const list = getState()['game']['list'];
+
+
+				if(currentTag !== null && list[currentTag.id]){
 						let updateProductIndex = null
 						list[currentTag.id].map((item,index)=>{
 							if(item.id === productId) updateProductIndex = index;
@@ -119,16 +123,49 @@ export function productStatus(){
 								value : status 
 							});
 						}
-					}
-				};
-			});
-		productStatus.once('value',()=>initialData = true);
+				}
+
+		});
+
+
+		//firebase.initializeApp(firebaseCredentials());
+		//let initialData = false;
+		//const productStatus = firebase.database().ref('messages/product');
+		//productStatus
+			//.orderByChild("time")
+			//.on('child_added', (snapshot)=>{
+				//if(initialData === true) {
+					//console.warn(JSON.stringify(snapshot.val()));
+					//const statusMsg = snapshot.val();
+					//const { productId , status } = statusMsg;
+					//const currentTag = getState()['game']['tag'];
+					//const list = getState()['game']['list'];
+					//if(currentTag !== null && list[currentTag.id]){
+						//let updateProductIndex = null
+						//list[currentTag.id].map((item,index)=>{
+							//if(item.id === productId) updateProductIndex = index;
+						//});
+						//if(updateProductIndex !== null){
+							//dispatch({ 
+								//type : 'STORE_PRODUCT_LIST',
+								//keys : [currentTag.id,updateProductIndex,'status'],
+								//value : status 
+							//});
+						//}
+					//}
+				//};
+			//});
+		//productStatus.once('value',()=>initialData = true);
 	}
 }
 
 export function networkChecking(navigator){
 	return (dispatch,getState)=>{
 		const { string } = getState()['preference']['language'];
+		NetInfo.getConnectionInfo().then((connectionInfo) => {
+			if(connectionInfo.type !== null) 
+				dispatch({ type : 'CHANGE_NETWORK_STATUS' , value : true });
+		});
 		NetInfo.isConnected.addEventListener(
 			'connectionChange',
 			(isConnected)=>{

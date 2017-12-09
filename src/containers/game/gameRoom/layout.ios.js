@@ -20,7 +20,7 @@ class GameRoom extends Component {
 					viewers={true}
 					navigator={navigator}
 				/>
-				<GameContainer/>
+				<GameContainer navigator={navigator}/>
 			</View>
 		)
 	}
