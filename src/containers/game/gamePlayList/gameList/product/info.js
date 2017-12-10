@@ -14,12 +14,13 @@ class ProductInfo extends Component {
 		const { 
 			onPressFunction ,
 			status,
-			gamePlayRate
+			gamePlayRate,
+			id
 		} = this.props;
 		const { maintainStatus } = status;
 		return (
 			<TouchableOpacity 
-				onPress={()=>onPressFunction()}
+				onPress={()=>onPressFunction(id,status.maintainStatus)}
 				disabled={maintainStatus}
 			>
 				<View style={styles.row}>

@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { filterFrontCamera } from '../../actions';
 import Video from 'react-native-video';
 
 class WatchView extends Component {
@@ -12,11 +13,11 @@ class WatchView extends Component {
 	_renderLoading(){
 		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>
 	}
-	_renderDisplay(balance){
+	_renderDisplay(frontCamera){
 		return (
 			<Video 
 				style={styles.video}
-				source={{uri: "http://live3.teleclaw.win/teleclaw_dev/camera1.m3u8?auth_key=1512795242-0-0-615a68d8adbf2e491f5e1cf9560e1243"}}
+				source={{uri: frontCamera.alibabaSetting.m3u8}}
 				rate={1.0}                              
 				volume={0}                            
 				muted={true}                           
@@ -32,13 +33,15 @@ class WatchView extends Component {
 		)
 	}
 	render(){
+		const { machine } = this.props;
 		const { onBuffer } = this.state;
-		return (
+		const frontCamera = filterFrontCamera(machine.cameras);
+		return (machine.cameras && machine.cameras.length > 0 && frontCamera) ? (
 			<View style={styles.container}>
-				{this._renderDisplay()}
+				{this._renderDisplay(frontCamera)}
 				{(onBuffer === true) ? this._renderLoading() : null }
 			</View>
-		)
+		) : null ;
 	}
 }
 
@@ -61,4 +64,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(WatchView)
+function mapStateToProps(state) {
+	return {
+		machine : state.game.machine
+	}
+}
+
+export default connect(mapStateToProps,null)(WatchView)

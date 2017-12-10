@@ -2,13 +2,18 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { loading } from '../../utilities/actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import GameContainer from '../components/gameContainer';
 
 class GameRoom extends Component {
-	render(){
+	componentDidMount(){
 		const { navigator } = this.props;
+		loading('hide',navigator);
+	}
+	render(){
+		const { navigator , machine } = this.props;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -20,7 +25,10 @@ class GameRoom extends Component {
 					viewers={true}
 					navigator={navigator}
 				/>
-				<GameContainer navigator={navigator}/>
+				{(machine !== null) ? <GameContainer 
+					mode={'room'} 
+					navigator={navigator}
+				/> : null }
 			</View>
 		)
 	}
@@ -34,4 +42,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(GameRoom);
+function mapStateToProps(state) {
+	return {
+		machine : state.game.machine
+	}
+}
+
+export default connect(mapStateToProps,null)(GameRoom);

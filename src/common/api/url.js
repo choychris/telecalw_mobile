@@ -10,6 +10,9 @@ export const api = {
 	},
 	tags : {
 		root : base+'/tags'
+	},
+	products : {
+		root : base+'/products'
 	}
 }
 

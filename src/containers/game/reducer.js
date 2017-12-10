@@ -3,21 +3,24 @@ import { fromJS , toJS } from 'immutable';
 const initialState = {
 	tag : null,
 	tags : [],
-	list : {},
+	product : null,
+	products : {},
+	machine : null,
+	machines : [],
 	network : null
 }
 
 function gameReducer (state = initialState, action){
 	state = fromJS(state);
 	switch(action.type){
+		case 'CHANGE_NETWORK_STATUS':
+			return state
+				.setIn(['network'],action.value)
+				.toJS();
+		break;
 		case 'STORE_GAME_TAGS':
 			return state
 				.setIn(['tags'],action.value)
-				.toJS();
-		break;
-		case 'STORE_PRODUCT_LIST':
-			return state
-				.setIn(['list'].concat(action.keys),action.value)
 				.toJS();
 		break;
 		case 'SELECT_TAG':
@@ -25,10 +28,25 @@ function gameReducer (state = initialState, action){
 				.setIn(['tag'],action.value)
 				.toJS();
 		break;
-		case 'CHANGE_NETWORK_STATUS':
+		case 'STORE_PRODUCT_LIST':
 			return state
-				.setIn(['network'],action.value)
+				.setIn(['products'].concat(action.keys),action.value)
 				.toJS();
+		break;
+		case 'SELECT_PRODUCT':
+			return state
+				.setIn(['product'],action.value)
+				.toJS();
+		break;
+		case 'STORE_MACHINE_LIST':
+			return state
+				.setIn(['machines'],action.value)
+				.toJS();
+		break;
+		case 'SELECT_MACHINE':
+			return state
+				.setIn(['machine'],action.value)
+				.toJS()
 		break;
 		default:
 			return state.toJS();

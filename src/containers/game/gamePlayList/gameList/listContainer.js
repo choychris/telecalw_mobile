@@ -2,44 +2,30 @@ import React, { PropTypes, Component } from 'react';
 import { FlatList , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { positioningItems } from '../../actions';
+import { positioningItems , navigateToGameRoom } from '../../actions';
 import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
 
 class ListContainer extends Component {
-	_navigateToGameRoom(productId,status){
-		const { navigator } = this.props;
-		//console.warn(productId);
-		if(status === true){
-
-		} else {
-			navigator.push({
-				screen : 'app.GameRoom',
-				navigatorStyle : {
-					navBarHidden : true
-				}
-			});
-		}
-	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
-	_renderItems(list){
-		const { navigator } = this.props;
-		return positioningItems(list).map((item,key)=>
+	_renderItems(products){
+		const { navigator , navigateToGameRoom } = this.props;
+		return positioningItems(products).map((item,key)=>
 			<ItemContainer 
 				{...item}
 				key={key}
-				onPressFunction={(productId,status)=>this._navigateToGameRoom(productId,status)}
+				onPressFunction={(productId,status)=>navigateToGameRoom(productId,status,navigator)}
 			/>)
 	}
 	render(){
-		const { list , tag } = this.props;
+		const { products , tag } = this.props;
 		return (
 			<View style={styles.container}>
 				<Orbit/>
-				{(tag !== null && list[tag.id]) ? this._renderItems(list[tag.id]) : null }
+				{(tag !== null && products[tag.id]) ? this._renderItems(products[tag.id]) : null }
 				<Planet/>
 			</View>
 		)
@@ -57,9 +43,15 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		list : state.game.list,
+		products : state.game.products,
 		tag : state.game.tag
 	}
 }
 
-export default connect(mapStateToProps,null)(ListContainer)
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		navigateToGameRoom
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ListContainer)

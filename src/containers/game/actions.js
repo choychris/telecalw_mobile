@@ -1,11 +1,11 @@
 import { NetInfo , Dimensions } from 'react-native';
-import * as firebase from 'firebase';
 import { errorMessage , loading } from '../utilities/actions';
-import { firebaseCredentials } from '../../config/env';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
+import { machineList } from '../../common/api/request/product';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
+import { pusherConfig } from '../../config/env';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -13,31 +13,34 @@ async function loadGameListFlow(dispatch,getState,navigator){
 		const { string } = getState()['preference']['language'];
 		// Step 1 : Get Tag List From backend API
 		const tags = await tagList(token,Request);	
-		let initiatedTag = tags[0];
-		initiatedTag.index = 0;
-		dispatch({ 
-			type : 'STORE_GAME_TAGS',
-			value : tags
-		});
-		dispatch({
-			type : 'SELECT_TAG',
-			value : initiatedTag
-		});
+		if(tags.length > 0){
+			let initiatedTag = tags[0];
+			initiatedTag.index = 0;
+			dispatch({ 
+				type : 'STORE_GAME_TAGS',
+				value : tags
+			});
+			dispatch({
+				type : 'SELECT_TAG',
+				value : initiatedTag
+			});
 		// Step 2 : Get the Gamplay List ( Product List ) from the first tag
-		const productList = await getTagProduct(
-			{ 
-				token : token.id ,   
-				tagId : initiatedTag.id
-			},Request);	
-		dispatch({
-			type : 'STORE_PRODUCT_LIST',
-			keys : [initiatedTag.id],
-			value : productList
-		});
+			const productList = await getTagProduct(
+				{ 
+					token : token.id ,   
+					tagId : initiatedTag.id
+				},Request);	
+			dispatch({
+				type : 'STORE_PRODUCT_LIST',
+				keys : [initiatedTag.id],
+				value : productList
+			});
+		}
 		// Step 3 : Hide Loading Lightbox
 		loading('hide',navigator);
 	}
 	catch(e){
+		loading('hide',navigator);
 		errorMessage(
 			'show',
 			navigator,
@@ -96,66 +99,35 @@ export function switchTag(action){
 
 export function productStatus(){
 	return (dispatch,getState)=>{
+
 		Pusher.logToConsole = true;
-
-		var pusher = new Pusher('0094cc321ae56ee8aa56', {
-			  cluster: 'ap1',
-				 encrypted: true
+		const { key , cluster , encrypted } = pusherConfig();
+		var pusher = new Pusher(key, {
+			cluster: cluster,
+			encrypted: encrypted
 		});
 
-		var channel = pusher.subscribe('my-channel');
-		channel.bind('my-event', function(data) {
-			 console.warn(JSON.stringify(data));
-				const { productId , status } = data;
-				const currentTag = getState()['game']['tag'];
-				const list = getState()['game']['list'];
-
-
-				if(currentTag !== null && list[currentTag.id]){
-						let updateProductIndex = null
-						list[currentTag.id].map((item,index)=>{
-							if(item.id === productId) updateProductIndex = index;
-						});
-						if(updateProductIndex !== null){
-							dispatch({ 
-								type : 'STORE_PRODUCT_LIST',
-								keys : [currentTag.id,updateProductIndex,'status'],
-								value : status 
-							});
-						}
+		var channel = pusher.subscribe('products');
+		channel.bind('statusChange', function(data) {
+			console.warn(JSON.stringify(data));
+			const { productId , status } = data;
+			const currentTag = getState()['game']['tag'];
+			const products = getState()['game']['products'];
+			if(currentTag !== null && products[currentTag.id]){
+				let updateProductIndex = null
+				products[currentTag.id].map((item,index)=>{
+					if(item.id === productId) updateProductIndex = index;
+				});
+				if(updateProductIndex !== null){
+					dispatch({ 
+						type : 'STORE_PRODUCT_LIST',
+						keys : [currentTag.id,updateProductIndex,'status'],
+						value : status 
+					});
 				}
-
+			}
 		});
 
-
-		//firebase.initializeApp(firebaseCredentials());
-		//let initialData = false;
-		//const productStatus = firebase.database().ref('messages/product');
-		//productStatus
-			//.orderByChild("time")
-			//.on('child_added', (snapshot)=>{
-				//if(initialData === true) {
-					//console.warn(JSON.stringify(snapshot.val()));
-					//const statusMsg = snapshot.val();
-					//const { productId , status } = statusMsg;
-					//const currentTag = getState()['game']['tag'];
-					//const list = getState()['game']['list'];
-					//if(currentTag !== null && list[currentTag.id]){
-						//let updateProductIndex = null
-						//list[currentTag.id].map((item,index)=>{
-							//if(item.id === productId) updateProductIndex = index;
-						//});
-						//if(updateProductIndex !== null){
-							//dispatch({ 
-								//type : 'STORE_PRODUCT_LIST',
-								//keys : [currentTag.id,updateProductIndex,'status'],
-								//value : status 
-							//});
-						//}
-					//}
-				//};
-			//});
-		//productStatus.once('value',()=>initialData = true);
 	}
 }
 
@@ -201,4 +173,86 @@ export function positioningItems(productList){
 	productList.map((item,index)=>item.position = positions[index]);
 	//console.warn(JSON.stringify(productList));
 	return productList;
+}
+
+export function navigateToGameRoom(productId,status,navigator){
+	return (dispatch,getState)=>{
+		const token = getState()['auth']['token']['lbToken'];
+		const tag = getState()['game']['tag'];
+		const products = getState()['game']['products'];
+		if(status === true){
+			errorMessage(
+				'show',
+				navigator,
+				{
+					title : string['maintenance'],
+					message : string['tryAgainLater']
+				}
+			);	
+		} else {
+			// Step 1 : Initiate Loading UI
+			loading('show',navigator);
+			// Step 2 : Dispatch Selected Product to Store
+			let targetProduct = null;
+			products[tag.id].map((product)=>{
+				if(product.id == productId)	targetProduct = product;
+			});
+			dispatch({ 
+				type : 'SELECT_PRODUCT' , 
+				value : targetProduct
+			});
+			// Step 3 : Get Product Machine
+			machineList(
+				{ 
+					productId : productId,
+					token : token
+				},
+				Request
+			).then((res,err)=>{
+				if(!err){
+					// Step 4 : Dispatch Machine List to Store
+					dispatch({
+						type : 'STORE_MACHINE_LIST',
+						keys : [productId],
+						value : res
+				 	});	
+					// Step 5 : Randomly Select a Target Machine
+					const randomIndex = Math.floor(Math.random() * ((res.length - 1) - 0 + 1)) + 0;
+					let targetMachine = res[randomIndex];
+					res.map((machine)=>{
+						if(machine.status === 'open') targetMachine = machine;
+					});
+					dispatch({
+						type : 'SELECT_MACHINE',
+						value : targetMachine
+					});
+					// Step 6 : Navigate tp Game Room UI
+					navigator.push({
+						screen : 'app.GameRoom',
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+				} else {
+					loading('hide',navigator);
+					errorMessage(
+						'show',
+						navigator,
+						{
+							title : string['error'],
+							message : string['tryAgain']
+						}
+					);
+				}
+			});
+		}
+	}
+}
+
+export function filterFrontCamera(cameras){
+	let targetCamera = null;
+	cameras.map((camera)=>{
+		if(camera.position === 'front') targetCamera = camera;
+	});
+	return targetCamera;
 }

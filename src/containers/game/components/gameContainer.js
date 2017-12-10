@@ -32,17 +32,25 @@ class GameContainer extends Component {
 			/>
 		)
 	}
+	_renderVideoView(mode){
+		return (mode === 'room') ? <WatchView/> : null;
+	}
+	_renderPanel(mode,navigator){
+		return (mode === 'room') ? (
+			<RoomPanel 
+				navigator={navigator} 
+				slideUpAnimation={()=>this._slideUpAnimation()}
+				slideDownAnimation={()=>this._slideDownAnimation()}
+			/>
+		) : null ;
+	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , mode } = this.props;
 		return (
 			<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
 				{this._renderUpperTube()}	
-				<WatchView/>
-				<RoomPanel 
-					navigator={navigator} 
-					slideUpAnimation={()=>this._slideUpAnimation()}
-					slideDownAnimation={()=>this._slideDownAnimation()}
-				/>
+				{this._renderVideoView(mode)}
+				{this._renderPanel(mode,navigator)}
 			</Animated.View>
 		)
 	}
