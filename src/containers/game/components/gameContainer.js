@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { machineStatus } from '../actions';
 const tubeImage = require('../../../../assets/utilities/sific_tube.png');
 import FastImage from 'react-native-fast-image'
 import RoomPanel from './controlPanel/roomPanel';
@@ -9,9 +10,21 @@ import WatchView from './view/watchView';
 
 class GameContainer extends Component {
 	componentWillMount(){
+		const { mode , machineStatus } = this.props;
 		const { height , width } = Dimensions.get('window');
 		this._itemPosition = new Animated.ValueXY({ x : 0 , y : height });
 		this._slideDownAnimation();
+		if(mode === 'room'){
+			// Initiate Machine Status Listner
+			machineStatus('start');
+		}
+	}
+	componentWillUnmount(){
+		const { machineStatus , mode } = this.props;
+		if(mode === 'room'){
+			// Leave Machine Channel
+			machineStatus('leave');
+		}
 	}
 	_slideDownAnimation(){
 		Animated.spring(this._itemPosition,{
@@ -70,4 +83,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(GameContainer);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		machineStatus
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(GameContainer);

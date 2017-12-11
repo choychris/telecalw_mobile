@@ -9,7 +9,8 @@ class ProductImage extends Component {
 		const { 
 			status , 
 			id , 
-			onPressFunction 
+			onPressFunction ,
+			images
 		} = this.props;
 		return (
 			<TouchableOpacity 
@@ -18,7 +19,7 @@ class ProductImage extends Component {
 			>
 				<Image
 					style={styles.image}
-					source={testProductImage}
+					source={(images && images.thumbnail) ? { uri : images.thumbnail } : testProductImage}
 					resizeMode={'contain'}
 				/>
 			</TouchableOpacity>

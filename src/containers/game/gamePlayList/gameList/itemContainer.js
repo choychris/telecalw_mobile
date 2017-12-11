@@ -16,7 +16,7 @@ class ItemContainer extends Component {
 		}).start();
 	}
 	render(){
-		const { navigator , onPressFunction , name , status , gamePlayRate , id } = this.props;
+		const { navigator , onPressFunction , name , status , gamePlayRate , id , images } = this.props;
 		const disableStyle = (status.maintainStatus === true) ? { opacity : 0.3 } : null;
 		return (status.visible === true) ?(
 			<Animated.View style={this._itemPosition.getLayout()}>
@@ -29,6 +29,7 @@ class ItemContainer extends Component {
 					<ProductImage 
 						id={id}
 						status={status}
+						images={images}
 						onPressFunction={onPressFunction}
 					/>
 					<ProductInfo 

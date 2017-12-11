@@ -36,12 +36,16 @@ class WatchView extends Component {
 		const { machine } = this.props;
 		const { onBuffer } = this.state;
 		const frontCamera = filterFrontCamera(machine.cameras);
-		return (machine.cameras && machine.cameras.length > 0 && frontCamera) ? (
+		const frontCameraExist = (machine.cameras && machine.cameras.length > 0 && frontCamera) ? true : false;
+		return (
 			<View style={styles.container}>
-				{this._renderDisplay(frontCamera)}
-				{(onBuffer === true) ? this._renderLoading() : null }
+				{(frontCameraExist === true) ? this._renderDisplay(frontCamera) : null}
+				{(frontCameraExist === true && onBuffer === true) ? this._renderLoading() : null }
+				<View style={styles.infoBoard}>
+					<Text style={styles.text}>{machine.name}</Text>
+				</View>
 			</View>
-		) : null ;
+		);
 	}
 }
 
@@ -57,10 +61,27 @@ const styles = StyleSheet.create({
 	},
 	video : {
 		backgroundColor : 'transparent',
-		top : Dimensions.get('window').height * 0.11,
+		top : Dimensions.get('window').height * 0.09,
 		position : 'absolute',
 		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.62
+		height : Dimensions.get('window').height * 0.65
+	},
+	infoBoard : {
+		position : 'absolute',
+		backgroundColor : 'black',
+		paddingVertical : 15,
+		paddingHorizontal : 30,
+		borderRadius : 3,
+		borderColor : '#95989A',
+		borderTopWidth : 5,
+		borderRightWidth : 3,
+		borderLeftWidth : 3,
+		top : Dimensions.get('window').height * 0.01
+	},
+	text : {
+		fontFamily : 'Silom',
+		backgroundColor : 'transparent',
+		color : '#FCFFB4'
 	}
 });
 

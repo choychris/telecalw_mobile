@@ -9,7 +9,8 @@ const initialPrefernece = {
 	preference : {
 		sound : true,
 		vibration : true
-	}
+	},
+	pusher : null
 };
 
 function preferenceReducer(state = initialPrefernece , action){
@@ -20,6 +21,11 @@ function preferenceReducer(state = initialPrefernece , action){
 					.setIn(['language','locale'],action.value)
 					.setIn(['language','string'],languageSetting(action.value))
 					.toJS()
+			break;
+			case 'STORE_PUSHER':
+				return state
+					.setIn(['pusher'],action.value)
+					.toJS();
 			break;
 			default:
 				return state.toJS();

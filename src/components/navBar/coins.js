@@ -18,7 +18,7 @@ class Coins extends Component {
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	_renderDisplay(balance){
-		return <Text style={styles.text}>{balance}</Text>
+		return <Text style={styles.text}>{Math.round(balance)}</Text>
 	}
 	render(){
 		const { wallet } = this.props;

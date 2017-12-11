@@ -19,6 +19,7 @@ const en = {
 	error : 'Error',
 	viewers : 'Viewers',
 	play : 'Play',
+	reserve : 'Reserve',
 	switch : 'Switch',
 	topUp : 'TopUp'
 }

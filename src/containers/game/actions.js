@@ -6,6 +6,7 @@ import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
 import { pusherConfig } from '../../config/env';
+import { api } from '../../common/api/url';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -97,19 +98,32 @@ export function switchTag(action){
 	}
 }
 
+export function initiatePusher(userId,dispatch){
+	Pusher.logToConsole = true;
+	const { key , cluster , encrypted } = pusherConfig();
+	// Dispatch Pusher to Local Store
+	const pusher = new Pusher(key, {
+		cluster: cluster,
+		encrypted: encrypted,
+		authEndpoint : api.users.root+'/'+userId+'/pusherAuth' 
+	});
+
+	dispatch({ type : 'STORE_PUSHER' , value : pusher });
+	return pusher;
+}
+
 export function productStatus(){
 	return (dispatch,getState)=>{
 
-		Pusher.logToConsole = true;
-		const { key , cluster , encrypted } = pusherConfig();
-		var pusher = new Pusher(key, {
-			cluster: cluster,
-			encrypted: encrypted
-		});
+		// Step 1 : Initiate and Authenticate Pusher
+		const userId = getState()['auth']['token']['lbToken']['userId'];
+		const pusher = initiatePusher(userId,dispatch);
+		console.log(userId);
 
+		// Step 2 : Initiate Product Status Channel
 		var channel = pusher.subscribe('products');
 		channel.bind('statusChange', function(data) {
-			console.warn(JSON.stringify(data));
+			//console.warn(JSON.stringify(data));
 			const { productId , status } = data;
 			const currentTag = getState()['game']['tag'];
 			const products = getState()['game']['products'];
@@ -128,6 +142,43 @@ export function productStatus(){
 			}
 		});
 
+	}
+}
+
+export function machineStatus(action){
+	return(dispatch,getState)=>{
+
+		const machine = getState()['game']['machine'];
+		const pusher = getState()['preference']['pusher'];
+
+		if(action === 'start'){
+			// Initiate Machine Status Channel
+			var channel = pusher.subscribe('presence-machine-'+machine.id);
+			channel.bind('machine_event', (data)=>{
+				//console.warn(JSON.stringify(data));
+				dispatch({ 
+					type : 'UPDATE_MACHINE_STATUS' , 
+					value : { status : data.status  , reservation : data.reservation }  
+				});	
+			});
+
+			channel.bind('pusher:subscription_succeeded',(members)=>{
+				dispatch({ type : 'UPDATE_VIEWS' , value : members.count });
+			});
+
+			channel.bind('pusher:member_added',(members)=>{
+				const count = channel.members.count;
+				dispatch({ type : 'UPDATE_VIEWS' , value : count });
+			});
+
+			channel.bind('pusher:member_removed', (member)=>{
+				const count = channel.members.count;
+				dispatch({ type : 'UPDATE_VIEWS' , value : count });
+			});
+		} else if (action === 'leave'){
+			pusher.unsubscribe('presence-machine-'+machine.id);
+		}
+		
 	}
 }
 
@@ -255,4 +306,15 @@ export function filterFrontCamera(cameras){
 		if(camera.position === 'front') targetCamera = camera;
 	});
 	return targetCamera;
+}
+
+export function navigateToGamePlay(navigator){
+	return (dispatch,getState)=>{
+		navigator.resetTo({
+			screen : 'app.GamePlay',
+			navigatorStyle : {
+				navBarHidden : true
+			}
+		});
+	}
 }

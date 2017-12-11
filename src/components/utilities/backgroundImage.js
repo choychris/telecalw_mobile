@@ -7,7 +7,6 @@ const backgroundImages = [
 	require('../../../assets/background/background2.png') , 
 	require('../../../assets/background/background3.png')
 ];
-import FastImage from 'react-native-fast-image';
 
 class BackgroundImage extends Component {
 	render() {
@@ -17,10 +16,10 @@ class BackgroundImage extends Component {
 			backgroundImages[Math.floor(Math.random() * (2 - 0 + 1)) + 0];
 		return(
 			<View style={styles.container}>
-				<FastImage 
+				<Image
 					source={backgroundSetting}
 					style={styles.image}
-					resizeMode={FastImage.resizeMode.cover}
+					resizeMode={'cover'}
 				/>
 			</View>																				      
 		)

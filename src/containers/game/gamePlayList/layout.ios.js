@@ -22,7 +22,7 @@ class GamePlayList extends Component {
 		loadGameList(navigator);
 		// Initial Netwrok Checking Listener
 		networkChecking(navigator);	
-		// Initiate Firsbase Product Status Listener
+		// Initiate Firsbase Status Listener
 		productStatus();
 	}
 	render(){

@@ -18,7 +18,7 @@ class Viewers extends Component {
 		)
 	}
 	render(){
-		const viewers = '10';
+		const { machine } = this.props;
 		return (
 			<View	style={styles.container}>
 				<Icon 
@@ -27,7 +27,7 @@ class Viewers extends Component {
 					color={'white'}
 					style={styles.icon}
 				/>
-				{(viewers !== null) ? this._renderDisplay(viewers) : this._renderLoading()}
+				{(machine && machine.views) ? this._renderDisplay(machine.views) : this._renderLoading()}
 			</View>
 		)
 	}
@@ -35,7 +35,8 @@ class Viewers extends Component {
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		machine :state.game.machine
 	}
 }
 
