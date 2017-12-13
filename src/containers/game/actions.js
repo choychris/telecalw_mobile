@@ -318,3 +318,48 @@ export function navigateToGamePlay(navigator){
 		});
 	}
 }
+
+export function navigateToGamePlayList(navigator){
+	navigator.resetTo({
+		screen : 'app.GamePlayList',
+		navigatorStyle : {
+			navBarHidden : true
+		}
+	});
+}
+
+export function timer(playTime){
+	return(dispatch,getState)=>{
+		const countDown = setInterval(()=>{
+			const time = getState()['game']['play']['timer'];
+			const nextTime = (time !== null) ? time - 1 : playTime;
+			dispatch({ 
+				type : 'UPDATE_TIMER',
+				value : nextTime
+			});
+			if(nextTime === 0) {
+				dispatch({ 
+					type : 'UPDATE_TIMER',
+					value :	null
+				});
+				clearInterval(countDown)
+			};
+		},1000);
+	}
+}
+
+export function loadGamePlay(navigator){
+	return(dispatch,getState)=>{
+		/* For Development Purpose */
+		/* For Development Purpose */
+		// Start Timer
+		dispatch(timer(10));
+
+	}
+}
+
+export function saveWebrtcUrl(url){
+	return(dispatch,getState)=>{
+		dispatch({ type : 'STORE_WEBRTC_URL' , value : url });
+	}
+}

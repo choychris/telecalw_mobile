@@ -23,3 +23,8 @@ export function pusherConfig(){
 		encrypted : true
 	};
 }
+
+export function webrtcUrl(){
+   //let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+	return 'http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com'
+}

@@ -7,6 +7,7 @@ const tubeImage = require('../../../../assets/utilities/sific_tube.png');
 import FastImage from 'react-native-fast-image'
 import RoomPanel from './controlPanel/roomPanel';
 import WatchView from './view/watchView';
+import LiveView from './view/liveView';
 
 class GameContainer extends Component {
 	componentWillMount(){
@@ -45,8 +46,8 @@ class GameContainer extends Component {
 			/>
 		)
 	}
-	_renderVideoView(mode){
-		return (mode === 'room') ? <WatchView/> : null;
+	_renderVideoView(mode,navigator){
+		return (mode === 'room') ? <WatchView/> : <LiveView navigator={navigator}/>;
 	}
 	_renderPanel(mode,navigator){
 		return (mode === 'room') ? (
@@ -62,7 +63,7 @@ class GameContainer extends Component {
 		return (
 			<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
 				{this._renderUpperTube()}	
-				{this._renderVideoView(mode)}
+				{this._renderVideoView(mode,navigator)}
 				{this._renderPanel(mode,navigator)}
 			</Animated.View>
 		)

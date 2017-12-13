@@ -7,7 +7,11 @@ const initialState = {
 	products : {},
 	machine : null,
 	machines : [],
-	network : null
+	network : null,
+	play : { 
+		timer : null,
+		webrtcUrl : null
+	}
 }
 
 function gameReducer (state = initialState, action){
@@ -57,6 +61,16 @@ function gameReducer (state = initialState, action){
 		case 'UPDATE_VIEWS':
 			return state
 				.setIn(['machine','views'],action.value)
+				.toJS();
+		break;
+		case 'UPDATE_TIMER':
+			return state
+				.setIn(['play','timer'],action.value)
+				.toJS();
+		break;
+		case 'STORE_WEBRTC_URL':
+			return state
+				.setIn(['play','webrtcUrl'],action.value)
 				.toJS();
 		break;
 		default:

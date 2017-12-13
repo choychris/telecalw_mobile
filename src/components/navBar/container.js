@@ -7,6 +7,7 @@ import Signal from './signal';
 import Location from '../../containers/game/gamePlayList/location/name';
 import Back from './back';
 import Viewers from './viewers';
+import Timer from './timer';
 
 class NavBar extends Component {
 	render(){
@@ -19,10 +20,12 @@ class NavBar extends Component {
 			viewers ,
 			navigator 
 		} = this.props;
+		const spaceStyle = (timer === true) ? { justifyContent : 'space-between' } : null;
 		return(
-			<View style={styles.container}>	
+			<View style={[styles.container,spaceStyle]}>	
 				{(back === true) ? <Back navigator={navigator}/> : null }
 				{(coins === true) ? <Coins navigator={navigator}/>  : null}
+				{(timer === true) ? <Timer/> : null}
 				{(location === true) ? <Location/> : null}
 				{(viewers === true) ? <Viewers/> : null}
 				{(signal === true) ? <Signal navigator={navigator}/> : null}
