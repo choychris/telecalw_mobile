@@ -353,7 +353,7 @@ export function loadGamePlay(navigator){
 		/* For Development Purpose */
 		/* For Development Purpose */
 		// Start Timer
-		dispatch(timer(10));
+		dispatch(timer(30));
 
 	}
 }
