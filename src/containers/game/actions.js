@@ -7,6 +7,7 @@ import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
 import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
+import { control , initiate } from '../../common/api/request/gizwits';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -300,10 +301,10 @@ export function navigateToGameRoom(productId,status,navigator){
 	}
 }
 
-export function filterFrontCamera(cameras){
+export function filterCamera(cameras,mode){
 	let targetCamera = null;
 	cameras.map((camera)=>{
-		if(camera.position === 'front') targetCamera = camera;
+		if(camera.position === mode) targetCamera = camera;
 	});
 	return targetCamera;
 }
@@ -351,15 +352,40 @@ export function timer(playTime){
 export function loadGamePlay(navigator){
 	return(dispatch,getState)=>{
 		/* For Development Purpose */
+		setTimeout(()=>{
+			navigator.resetTo({
+				screen : 'app.GamePlayList',
+				navigatorStyle : {
+					navBarHidden : true
+				}
+			});
+		}, 40000);
 		/* For Development Purpose */
 		// Start Timer
 		dispatch(timer(30));
-
 	}
 }
 
-export function saveWebrtcUrl(url){
-	return(dispatch,getState)=>{
-		dispatch({ type : 'STORE_WEBRTC_URL' , value : url });
+export function switchMode(){
+	return (dispatch,getState)=>{
+		const cameraMode = getState()['game']['play']['cameraMode'];
+		const mode = (cameraMode === 'top' ) ? 'front': 'top' ;
+		dispatch({ type : 'SWITCH_CAMERA_MODE' , value : mode  })
 	}
 }
+
+export function controlMachine(direction,value){
+	return (state,getState)=>{
+		control(
+			{
+				did : 'bnyXLPJWNpoumbKUYKA78V',
+				appId : '20a365a7564142d3a342916f6d6df937',
+				userToken : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
+				direction : direction,
+				value : value
+			},
+			Request
+		)
+	}
+}
+

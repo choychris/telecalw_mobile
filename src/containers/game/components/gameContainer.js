@@ -6,6 +6,7 @@ import { machineStatus } from '../actions';
 const tubeImage = require('../../../../assets/utilities/sific_tube.png');
 import FastImage from 'react-native-fast-image'
 import RoomPanel from './controlPanel/roomPanel';
+import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';
 import LiveView from './view/liveView';
 
@@ -47,7 +48,13 @@ class GameContainer extends Component {
 		)
 	}
 	_renderVideoView(mode,navigator){
-		return (mode === 'room') ? <WatchView/> : <LiveView navigator={navigator}/>;
+		const { switchMode } = this.props;
+		return (mode === 'room') ? 
+			<WatchView mode={'front'}/> : 
+			<View style={styles.viewContainer}>
+				<LiveView mode={'front'} navigator={navigator}/>
+				<LiveView mode={'top'} navigator={navigator}/>
+			</View>;
 	}
 	_renderPanel(mode,navigator){
 		return (mode === 'room') ? (
@@ -56,7 +63,9 @@ class GameContainer extends Component {
 				slideUpAnimation={()=>this._slideUpAnimation()}
 				slideDownAnimation={()=>this._slideDownAnimation()}
 			/>
-		) : null ;
+		) : (<PlayPanel 
+			navigator={navigator}
+		/>)
 	}
 	render(){
 		const { navigator , mode } = this.props;
@@ -81,6 +90,12 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		width	: Dimensions.get('window').width + 1,
 		height : Dimensions.get('window').height - 60
+	},
+	viewContainer : {
+		flex : 1 , 
+		alignSelf : 'stretch' , 
+		alignItems : 'center' , 
+		justifyContent : 'center'
 	}
 });
 

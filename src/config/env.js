@@ -28,3 +28,7 @@ export function webrtcUrl(){
    //let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
 	return 'http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com'
 }
+
+export function gizwitsUrl(){
+	return 'https://api.gizwits.com/app/';
+}

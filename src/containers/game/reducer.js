@@ -10,7 +10,8 @@ const initialState = {
 	network : null,
 	play : { 
 		timer : null,
-		webrtcUrl : null
+		cameraMode : 'front',
+		webrtcUrl : {}
 	}
 }
 
@@ -68,9 +69,14 @@ function gameReducer (state = initialState, action){
 				.setIn(['play','timer'],action.value)
 				.toJS();
 		break;
+		case 'SWITCH_CAMERA_MODE':
+			return state
+				.setIn(['play','cameraMode'],action.value)
+				.toJS();
+		break;
 		case 'STORE_WEBRTC_URL':
 			return state
-				.setIn(['play','webrtcUrl'],action.value)
+				.setIn(['play','webrtcUrl'].concat(action.keys),action.value)
 				.toJS();
 		break;
 		default:

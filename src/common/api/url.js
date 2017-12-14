@@ -1,19 +1,22 @@
-import { baseApi } from '../../config/env';
+import { baseApi , gizwitsUrl } from '../../config/env';
 
-const base = baseApi();
+const apiBase = baseApi();
+const gizwitsBase = gizwitsUrl();
 
 export const api = {
 	users : {
-		root : base+'/users',
-		auth : base+'/users/auth',
-		logout : base+'/users/logout'
+		root : apiBase+'/users',
+		auth : apiBase+'/users/auth',
+		logout : apiBase+'/users/logout'
 	},
 	tags : {
-		root : base+'/tags'
+		root : apiBase+'/tags'
 	},
 	products : {
-		root : base+'/products'
+		root : apiBase+'/products'
+	},
+	gizwits : {
+		control : gizwitsBase+'/control'	
 	}
 }
-
 

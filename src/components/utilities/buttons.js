@@ -13,12 +13,21 @@ class Button extends Component {
 		const { icon } = this.props;
 		return <Icon {...icon}/>
 	}
+	_renderText(displayText,textStyle){
+		return(
+			<Text style={[styles.text,textStyle]}>
+				{displayText}
+			</Text>
+		)
+	}
 	render(){
 		const { 
 			textStyle,
 			btnStyle,
 			borderColor , 
 			onPressFunction , 
+			onPressInFunction,
+			onPressOutFunction,
 			text, 
 			string , 
 			icon
@@ -29,17 +38,21 @@ class Button extends Component {
 		const displayText = (string[text]) ? string[text] : text;
 		return(
 			<TouchableHighlight
-				onPressIn={()=>this.setState({ pressIn : true })}
-				onPressOut={()=>this.setState({ pressIn : false })}
+				onPressIn={()=>{
+					if(onPressInFunction) onPressInFunction();
+					this.setState({ pressIn : true });
+				}}
+				onPressOut={()=>{
+					if(onPressOutFunction) onPressOutFunction();
+					this.setState({ pressIn : false });
+				}}
 				onPress={()=>(onPressFunction) ? onPressFunction() : null}
 				style={[styles.container,btnBorder,btnStyle,btnBorderColor]}
 				underlayColor={borderColor}
 			>
 				<View style={styles.innerContainer}>
 					{(icon) ? this._renderIcon() : null}
-					<Text style={[styles.text,textStyle]}>
-						{displayText}
-					</Text>
+					{(text) ? this._renderText(displayText,textStyle) : null}
 				</View>
 			</TouchableHighlight>
 		)

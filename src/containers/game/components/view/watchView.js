@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { filterFrontCamera } from '../../actions';
+import { filterCamera } from '../../actions';
 import Video from 'react-native-video';
 
 class WatchView extends Component {
@@ -33,9 +33,9 @@ class WatchView extends Component {
 		)
 	}
 	render(){
-		const { machine } = this.props;
+		const { machine , mode } = this.props;
 		const { onBuffer } = this.state;
-		const frontCamera = filterFrontCamera(machine.cameras);
+		const frontCamera = filterCamera(machine.cameras,mode);
 		const frontCameraExist = (machine.cameras && machine.cameras.length > 0 && frontCamera) ? true : false;
 		return (
 			<View style={styles.container}>
