@@ -9,6 +9,8 @@ import RoomPanel from './controlPanel/roomPanel';
 import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';
 import LiveView from './view/liveView';
+import RefreshButton from './controlPanel/refreshButton';
+import Indicator from './view/indicator';
 
 class GameContainer extends Component {
 	componentWillMount(){
@@ -52,8 +54,10 @@ class GameContainer extends Component {
 		return (mode === 'room') ? 
 			<WatchView mode={'front'}/> : 
 			<View style={styles.viewContainer}>
+				<Indicator/>
 				<LiveView mode={'front'} navigator={navigator}/>
 				<LiveView mode={'top'} navigator={navigator}/>
+				<RefreshButton/>
 			</View>;
 	}
 	_renderPanel(mode,navigator){

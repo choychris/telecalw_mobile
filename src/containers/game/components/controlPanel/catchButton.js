@@ -2,25 +2,30 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { switchMode } from '../../actions';
+import { controlMachine } from '../../actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
-class SwitchCameraButton extends Component {
+class CatchButton extends Component {
 	render(){
-		const { string , switchMode } = this.props;
+		const { string , controlMachine } = this.props;
 		return (
 			<Button
+				text={'catch'}
+				textStyle={{
+					color : 'white',
+					fontSize : 20,
+					fontFamily : 'Silom',
+					fontWeight : 'bold'
+				}}
 				btnStyle={{
 					backgroundColor : '#D10B9D',
-					paddingVertical : 15,
-					paddingHorizontal : 15,
-					right : 40,
-					bottom : 10
+					paddingVertical : 18,
+					top : 10,
+					left : 20
 				}}
 				borderColor={'#890E6F'}
-				icon={{ name : 'camera' , size : 20 , color : 'white' }}
-				onPressFunction={()=>switchMode()}
+				onPressFunction={()=>controlMachine('CatchGift',true)}
 			/>
 		)
 	}
@@ -34,8 +39,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		switchMode
+		controlMachine
 	}, dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SwitchCameraButton)
+export default connect(mapStateToProps,mapDispatchToProps)(CatchButton)

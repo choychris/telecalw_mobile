@@ -329,23 +329,12 @@ export function navigateToGamePlayList(navigator){
 	});
 }
 
-export function timer(playTime){
+export function resetTimer(playTime){
 	return(dispatch,getState)=>{
-		const countDown = setInterval(()=>{
-			const time = getState()['game']['play']['timer'];
-			const nextTime = (time !== null) ? time - 1 : playTime;
-			dispatch({ 
-				type : 'UPDATE_TIMER',
-				value : nextTime
-			});
-			if(nextTime === 0) {
-				dispatch({ 
-					type : 'UPDATE_TIMER',
-					value :	null
-				});
-				clearInterval(countDown)
-			};
-		},1000);
+		dispatch({ 
+			type : 'UPDATE_TIMER',
+			value :	null
+		});
 	}
 }
 
@@ -353,6 +342,7 @@ export function loadGamePlay(navigator){
 	return(dispatch,getState)=>{
 		/* For Development Purpose */
 		setTimeout(()=>{
+			loading('show',navigator);
 			navigator.resetTo({
 				screen : 'app.GamePlayList',
 				navigatorStyle : {
@@ -362,7 +352,7 @@ export function loadGamePlay(navigator){
 		}, 40000);
 		/* For Development Purpose */
 		// Start Timer
-		dispatch(timer(30));
+		 dispatch({ type : 'UPDATE_TIMER' , value : 30 });
 	}
 }
 

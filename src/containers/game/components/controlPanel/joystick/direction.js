@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { controlMachine } from '../../../actions';
@@ -7,9 +6,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../../components/utilities/buttons';
 
 class Direction extends Component {
+	shouldComponentUpdate(){
+		return false
+	}
 	render(){
 		const { 
-			string , 
 			controlMachine ,
 			icon,
 			action,
@@ -18,7 +19,7 @@ class Direction extends Component {
 		return (
 			<Button
 				btnStyle={btnStyle}
-				borderColor={'#890E6F'}
+				borderColor={'#212121'}
 				icon={{ 
 					name : icon , 
 					size : 20 , 
@@ -31,16 +32,10 @@ class Direction extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		string : state.preference.language.string
-	}
-}
-
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		controlMachine
 	}, dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Direction)
+export default connect(null,mapDispatchToProps)(Direction)

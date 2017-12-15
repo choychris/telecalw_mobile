@@ -47,7 +47,7 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	})
 }
 
-export const initiatewebRTC = (userId,mode,rtsp)=>{
+export const initiatewebRTC = (mode,rtsp)=>{
 	return(dispatch,getState)=>{
 		const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
@@ -70,7 +70,7 @@ export const initiatewebRTC = (userId,mode,rtsp)=>{
 		pc.onaddstream = (evt)=>dispatch({  
 			type : 'STORE_WEBRTC_URL',
 			keys : [mode],
-			value :	{ stream : evt.stream.toURL() , pc : pc }
+			value :	{ stream : evt.stream.toURL() , pc : pc , rtsp : rtsp }
 		});
 
 		pc.oniceconnectionstatechange = function(evt) {  
@@ -81,8 +81,8 @@ export const initiatewebRTC = (userId,mode,rtsp)=>{
 				setTimeout(()=>{
 					if(pc.iceConnectionState !== 'connected'){
 						console.warn('Trigger Restart Mechanism');
-						closeWebrtc(userId,pc,rtsp);
-						return initiatewebRTC(userId,mode,rtsp);
+						closeWebrtc(pc,rtsp);
+						return initiatewebRTC(mode,rtsp);
 					}
 				},3000)
 			}
@@ -120,8 +120,16 @@ export const initiatewebRTC = (userId,mode,rtsp)=>{
 	}
 }
 
-export const closeWebrtc = (userId,pc,rtsp)=>{
+export const closeWebrtc = (pc,rtsp)=>{
 	fetchRequest(`/hangup?peerid=${rtsp}`)
 	pc.close();
 }
 
+export const restartWebrtc = ()=>{
+	return(dispatch,getState)=>{
+		const mode = getState()['game']['play']['cameraMode'];
+		const { pc ,rtsp }= getState()['game']['play']['webrtcUrl'][mode];
+		closeWebrtc(pc,rtsp);
+		dispatch(initiatewebRTC(mode,rtsp));
+	}
+}

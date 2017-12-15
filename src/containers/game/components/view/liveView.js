@@ -33,7 +33,6 @@ class LiveView extends Component {
 	//}
   componentDidMount(){
 		const { 
-			userId , 
 			initiatewebRTC , 
 			mode ,
 			machine
@@ -41,18 +40,17 @@ class LiveView extends Component {
 		const { rtsp } = this.state;
 		if(mode === 'top'){
 			setTimeout(()=>{
-				this.pc = initiatewebRTC(userId,mode,rtsp);
+				this.pc = initiatewebRTC(mode,rtsp);
 			},2000)
 		} else {
 			setTimeout(()=>{
-				this.pc = initiatewebRTC(userId,mode,rtsp);
+				this.pc = initiatewebRTC(mode,rtsp);
 			},3000)
 		}
   }
 	componentWillUnmount(){
-		const {	userId , mode } = this.props;
 		const { rtsp } = this.state;
-		closeWebrtc(userId,this.pc,rtsp);
+		closeWebrtc(this.pc,rtsp);
 	}
 	//<TouchableOpacity
 		//onPress={()=>{
@@ -63,7 +61,7 @@ class LiveView extends Component {
 		//<Text>{'Restart'}</Text>
 	//</TouchableOpacity>
   render() {
-		const { webrtcUrl , userId , mode , cameraMode } = this.props;
+		const { webrtcUrl , mode , cameraMode } = this.props;
 		const opacity = (mode !== cameraMode) ? { opacity : 0 } : {} ;
 		return (webrtcUrl[mode]) ? <RTCView style={[styles.video,opacity]} streamURL={webrtcUrl[mode]['stream']}/>	: null 
   }
@@ -72,7 +70,7 @@ class LiveView extends Component {
 const styles = StyleSheet.create({
 	video : {
 		backgroundColor : 'transparent',
-		top : Dimensions.get('window').height * 0.09,
+		top : Dimensions.get('window').height * 0.12,
 		position : 'absolute',
 		width	: Dimensions.get('window').width * 0.82,
 		height : Dimensions.get('window').height * 0.65
@@ -81,7 +79,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		userId : state.auth.token.lbToken.userId,
 		webrtcUrl : state.game.play.webrtcUrl,
 		machine : state.game.machine,
 		cameraMode : state.game.play.cameraMode
