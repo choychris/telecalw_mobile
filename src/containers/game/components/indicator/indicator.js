@@ -3,8 +3,12 @@ import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , Activi
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const telebuddies = require('../../../../../assets/telebuddies/telebot/telebot_without_eyes.png');
+import Eyes from './eyes';
 
 class Indicator extends Component{
+	shouldComponentUpdate(){
+		return false
+	}
 	render(){
 		return(
 			<View style={styles.container}>
@@ -13,6 +17,7 @@ class Indicator extends Component{
 					style={styles.image}
 					resizeMode={'contain'}
 				/>
+				<Eyes/>
 			</View>
 		)
 	}
@@ -20,13 +25,15 @@ class Indicator extends Component{
 
 const styles = StyleSheet.create({
 	container : {
-		position : 'absolute',
-		top : -16,
-		left : Dimensions.get('window').height * 0.16
+		alignItems : 'center',
+		justifyContent : 'center',
+		top : -Dimensions.get('window').height * 0.35,
+		right : Dimensions.get('window').width * 0.09
 	},
 	image : {
-		height : 80,
-		width : 80
+		position : 'absolute',
+		height : 90,
+		width : 90
 	}
 })
 

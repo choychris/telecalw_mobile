@@ -6,7 +6,8 @@ import {
   View,
   WebView,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	ActivityIndicator
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,9 +29,6 @@ class LiveView extends Component {
 		const { webrtcUrl , mode , cameraMode } = this.props;
 		return (nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
 	}
-	//componentWillMount(){
-		//const { navigator } = this.props;
-	//}
   componentDidMount(){
 		const { 
 			initiatewebRTC , 
@@ -52,26 +50,31 @@ class LiveView extends Component {
 		const { rtsp } = this.state;
 		closeWebrtc(this.pc,rtsp);
 	}
-	//<TouchableOpacity
-		//onPress={()=>{
-			 //closeWebrtc(userId,this.pc);
-			//this.pc = initiatewebRTC(userId,saveWebrtcUrl);
-		//}}
-	//>
-		//<Text>{'Restart'}</Text>
-	//</TouchableOpacity>
+	_renderLoading(){
+		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>
+	}
   render() {
 		const { webrtcUrl , mode , cameraMode } = this.props;
 		const opacity = (mode !== cameraMode) ? { opacity : 0 } : {} ;
-		return (webrtcUrl[mode]) ? <RTCView style={[styles.video,opacity]} streamURL={webrtcUrl[mode]['stream']}/>	: null 
+		return (
+			<View style={[opacity,styles.container]}>
+				{(webrtcUrl[mode]) ? <RTCView style={styles.video} streamURL={webrtcUrl[mode]['stream']}/>	: this._renderLoading()}
+			</View>
+		)
   }
 }
 
 const styles = StyleSheet.create({
+	container : {
+		position : 'absolute',
+		alignItems : 'center',
+		justifyContent : 'center',
+		top : Dimensions.get('window').height * 0.12,
+		width	: Dimensions.get('window').width * 0.82,
+		height : Dimensions.get('window').height * 0.65
+	},
 	video : {
 		backgroundColor : 'transparent',
-		top : Dimensions.get('window').height * 0.12,
-		position : 'absolute',
 		width	: Dimensions.get('window').width * 0.82,
 		height : Dimensions.get('window').height * 0.65
 	}

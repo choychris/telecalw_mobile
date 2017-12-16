@@ -82,7 +82,7 @@ export const initiatewebRTC = (mode,rtsp)=>{
 					if(pc.iceConnectionState !== 'connected'){
 						console.warn('Trigger Restart Mechanism');
 						closeWebrtc(pc,rtsp);
-						return initiatewebRTC(mode,rtsp);
+						return dispatch(initiatewebRTC(mode,rtsp));
 					}
 				},3000)
 			}

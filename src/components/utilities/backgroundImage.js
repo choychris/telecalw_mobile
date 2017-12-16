@@ -9,6 +9,9 @@ const backgroundImages = [
 ];
 
 class BackgroundImage extends Component {
+	shouldComponentUpdate(){
+		return false
+	}
 	render() {
 		const { type } = this.props;
 		const backgroundSetting = (type === 'auth') ? 

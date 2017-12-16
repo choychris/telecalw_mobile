@@ -7,7 +7,6 @@ import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
 import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
-import { control , initiate } from '../../common/api/request/gizwits';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -343,6 +342,7 @@ export function loadGamePlay(navigator){
 		/* For Development Purpose */
 		setTimeout(()=>{
 			loading('show',navigator);
+			dispatch(lastMachineMove(null));
 			navigator.resetTo({
 				screen : 'app.GamePlayList',
 				navigatorStyle : {
@@ -364,18 +364,12 @@ export function switchMode(){
 	}
 }
 
-export function controlMachine(direction,value){
-	return (state,getState)=>{
-		control(
-			{
-				did : 'bnyXLPJWNpoumbKUYKA78V',
-				appId : '20a365a7564142d3a342916f6d6df937',
-				userToken : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
-				direction : direction,
-				value : value
-			},
-			Request
-		)
+export function lastMachineMove(action){
+	return (dispatch,getState)=>{
+		dispatch({
+			type : 'LAST_PLAY_ACTION',
+			value : action
+		});
 	}
 }
 

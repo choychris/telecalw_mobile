@@ -45,3 +45,81 @@ export function control(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+// WebScoket Initialize
+export function websockeInitialize(params,ws){
+	const { 
+		appid , 
+		uid , 
+		token , 
+		heartbeat_interval , 
+		did ,
+		machine_init
+	} = params;
+	const loginData = JSON.stringify({
+		cmd: "login_req",
+		data: {
+			appid : appid,
+			uid : uid,
+			token : token,
+			p0_type: "attrs_v4",
+			heartbeat_interval : heartbeat_interval,
+			auto_subscribe : false
+		}
+	});
+	ws.send(loginData);
+	const subData = JSON.stringify({
+		cmd: "subscribe_req",
+		data:[{
+			did : did
+		}]
+	});
+	const initData = JSON.stringify({
+		cmd: "c2s_write",
+		data : {
+			did : did ,
+			attrs : {
+				InitCatcher : machine_init
+			}
+		}
+	});
+	ws.onmessage = e =>{
+		const { data , cmd } = JSON.parse(e.data);	
+		//console.warn(JSON.stringify(data));
+		//console.warn(JSON.stringify(cmd));
+		if(cmd === 'login_res' && data.success === true){
+			ws.send(subData);
+			ws.send(initData);
+		} else {
+			//login(params,ws);
+		}
+	 	if(cmd === 's2c_noti' && data.attrs.GameResult !== 0){
+			console.warn(e.data);
+		}
+	}
+	ws.onerror = e => {
+		// an error occurred
+		//console.warn(e.message);
+	};
+
+	ws.onclose = e => {
+		// connection closed
+		//console.warn(e.code, e.reason);
+	};
+}
+
+// WebSocket Control 
+export function websocketControl(params,ws){
+	const { direction , value , did } = params;
+	const controlData = JSON.stringify({
+		cmd: "c2s_write",
+		data : {
+			did : did ,
+			attrs : {
+				[direction] : value
+			}
+		}
+	});
+	ws.send(controlData);
+}
+

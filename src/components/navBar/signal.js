@@ -7,6 +7,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { errorMessage } from '../../containers/utilities/actions';
 
 class Signal extends Component {
+	shouldComponentUpdate(nextProps,nextState){
+		const { status } = this.props;
+		return status !== nextProps.status
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}

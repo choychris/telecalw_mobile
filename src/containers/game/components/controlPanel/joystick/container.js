@@ -3,76 +3,19 @@ import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Direction from './direction';
-import Request from '../../../../../utils/fetch';
-import { initiate } from '../../../../../common/api/request/gizwits';
 
 class JoyStick extends Component {
 	shouldComponentUpdate(){
 		return false
 	}
-	componentDidMount(){
-		initiate(
-			{
-				did : 'bnyXLPJWNpoumbKUYKA78V',
-				appId : '20a365a7564142d3a342916f6d6df937',
-				userToken : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
-				value : '1E200202020404040C000001'
-			},
-			Request
-		);
-		var ws = new WebSocket('wss://sandbox.gizwits.com:8880/ws/app/v1');
-		ws.onopen = () => {
-			ws.send(
-				JSON.stringify({
-					cmd: "login_req",
-					data: {
-						appid : "20a365a7564142d3a342916f6d6df937",
-						uid : "a0d461f5c7e34a8ea96f13c87888a4fd",
-						token : "db7e4ed6c30849cabaeb0207ba5a5e5c",
-						p0_type: "attrs_v4",
-						heartbeat_interval : 40,
-						auto_subscribe : false
-					}
-				})
-			)
-		};
-		ws.onmessage = e => {
-			  // a message was received
-			 if(JSON.parse(e.data).cmd === 'login_res' && JSON.parse(e.data).data.success === true){
-				 ws.send(
-					 JSON.stringify({
-							cmd: "subscribe_req",
-							data:[{
-								did : "bnyXLPJWNpoumbKUYKA78V"
-							}]
-					 })
-				 )
-			 }
-			 if(JSON.parse(e.data).cmd === 's2c_noti' && JSON.parse(e.data).data.attrs.GameResult !== 0){
-
-					 console.warn(e.data);
-			 }
-		};
-
-		ws.onerror = e => {
-			  // an error occurred
-					 console.warn(e.message);
-				//
-		};
-
-		ws.onclose = e => {
-			  // connection closed
-					 console.warn(e.code, e.reason);
-				//
-		};
-	}
 	render(){
-		const { string } = this.props;
+		const { string , ws } = this.props;
 		return (
 			<View style={styles.container}>
 				<Direction 
 					action={'MoveUp'} 
 					icon={'caret-up'}
+					ws={ws}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -88,6 +31,7 @@ class JoyStick extends Component {
 				<Direction 
 					action={'MoveDown'} 
 					icon={'caret-down'}
+					ws={ws}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -103,6 +47,7 @@ class JoyStick extends Component {
 				<Direction 
 					action={'MoveLeft'} 
 					icon={'caret-left'}
+					ws={ws}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -118,6 +63,7 @@ class JoyStick extends Component {
 				<Direction 
 					action={'MoveRight'} 
 					icon={'caret-right'}
+					ws={ws}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						position : 'absolute',

@@ -7,6 +7,9 @@ import Button from '../../../../components/utilities/buttons';
 import { restartWebrtc } from '../../../../utils/webrtc';
 
 class RefreshButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { string ,restartWebrtc } = this.props;
 		return (
@@ -16,8 +19,8 @@ class RefreshButton extends Component {
 					paddingVertical : 5,
 					paddingHorizontal : 5,
 					position : 'absolute',
-					top : Dimensions.get('window').height * 0.12,
-					left : 35
+					top : Dimensions.get('window').height * 0.14,
+					left : 38
 				}}
 				borderColor={'grey'}
 				icon={{ name : 'refresh' , size : 20 , color : 'black' }}

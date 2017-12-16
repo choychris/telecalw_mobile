@@ -6,7 +6,7 @@ export function baseApi(){
 	// 3. Development Server
 	const backendApi = {
 		production : "https://www.teleclawapi.com/api",
-		local : "http://192.168.2.100:3000/api",
+		local : "http://192.168.1.174:3000/api",
 		development : "https://kiostech-pos-dev.herokuapp.com/api"
 	};
 	return (__DEV__) ? backendApi[devMode] : backendApi['production'];

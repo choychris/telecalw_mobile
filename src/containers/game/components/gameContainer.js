@@ -10,7 +10,7 @@ import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';
 import LiveView from './view/liveView';
 import RefreshButton from './controlPanel/refreshButton';
-import Indicator from './view/indicator';
+import Indicator from './indicator/indicator';
 
 class GameContainer extends Component {
 	componentWillMount(){

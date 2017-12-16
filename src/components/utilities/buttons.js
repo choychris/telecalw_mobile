@@ -9,6 +9,11 @@ class Button extends Component {
 		super(props);
 		this.state = { pressIn : false };
 	}
+	shouldComponentUpdate(nextProps,nextState){
+		const { disable } = this.props;
+		const { pressIn } = this.state;
+		return (disable !== nextProps.disable ||pressIn !== nextState.pressIn)
+	}
 	_renderIcon(){
 		const { icon } = this.props;
 		return <Icon {...icon}/>
@@ -30,7 +35,8 @@ class Button extends Component {
 			onPressOutFunction,
 			text, 
 			string , 
-			icon
+			icon ,
+			disable
 		} = this.props;
 		const { pressIn } = this.state;
 		const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
@@ -38,6 +44,7 @@ class Button extends Component {
 		const displayText = (string[text]) ? string[text] : text;
 		return(
 			<TouchableHighlight
+				disabled={disable}
 				onPressIn={()=>{
 					if(onPressInFunction) onPressInFunction();
 					this.setState({ pressIn : true });
