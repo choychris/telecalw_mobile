@@ -47,7 +47,7 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	})
 }
 
-export const initiatewebRTC = (mode,rtsp)=>{
+export const initiatewebRTC = (mode,rtsp,times)=>{
 	return(dispatch,getState)=>{
 		const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
@@ -78,13 +78,11 @@ export const initiatewebRTC = (mode,rtsp)=>{
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
 			if(pc.iceConnectionState === 'checking'){
-				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected'){
+					if(pc.iceConnectionState !== 'connected' && times < 3){
 						console.warn('Trigger Restart Mechanism');
 						closeWebrtc(pc,rtsp);
-						return dispatch(initiatewebRTC(mode,rtsp));
+						return dispatch(initiatewebRTC(mode,rtsp,times+1));
 					}
-				},3000)
 			}
 		}
 
@@ -130,6 +128,6 @@ export const restartWebrtc = ()=>{
 		const mode = getState()['game']['play']['cameraMode'];
 		const { pc ,rtsp }= getState()['game']['play']['webrtcUrl'][mode];
 		closeWebrtc(pc,rtsp);
-		dispatch(initiatewebRTC(mode,rtsp));
+		dispatch(initiatewebRTC(mode,rtsp,0));
 	}
 }

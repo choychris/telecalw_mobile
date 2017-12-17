@@ -5,12 +5,34 @@ import { connect } from 'react-redux';
 import SwitchCameraButton from './swicthCameraButton';
 import CatchButton from './catchButton';
 import JoyStick from './joystick/container';
+import { lastMachineMove , switchMode } from '../../actions';
 import { websockeInitialize } from '../../../../common/api/request/gizwits';
 
 class PlayPanel extends Component {
 	constructor(props){
 		super(props);
 		this.ws = new WebSocket('wss://sandbox.gizwits.com:8880/ws/app/v1');
+	}
+	_displayGameResult(result){
+		const { navigator , lastMachineMove , switchMode } = this.props;
+		navigator.showLightBox({
+			screen : 'app.GameResult',
+			animationType : 'fade',
+			navigatorStyle: {
+				navBarHidden: true
+			},
+			style: {
+				backgroundBlur: "dark",
+				backgroundColor : 'rgba(52, 52, 52, 0.2)',
+				tapBackgroundToDismiss: false
+			},
+			passProps : {
+				result : result,
+				navigator : navigator
+			}
+		});
+		lastMachineMove(null);
+		switchMode('front');
 	}
 	shouldComponentUpdate(){
 		return false;
@@ -22,8 +44,8 @@ class PlayPanel extends Component {
 			uid : 'a0d461f5c7e34a8ea96f13c87888a4fd',
 			heartbeat_interval : 40,
 			did : "bnyXLPJWNpoumbKUYKA78V",
-			machine_init : [0x1E,0x20,0x02,0x02,0x02,0x04,0x04,0x04,0x0C,0x00,0x00,0x01]
-		},this.ws);
+			machine_init : [0x1E,0x20,0x02,0x02,0x02,0x04,0x04,0x04,0x0C,0x00,0x01,0x01]
+		},this.ws,(result)=>this._displayGameResult(result));
 	}
 	componentWillUnmount(){
 		this.ws.close();
@@ -68,4 +90,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(PlayPanel);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		lastMachineMove,
+		switchMode
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(PlayPanel);

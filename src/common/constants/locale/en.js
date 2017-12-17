@@ -21,7 +21,9 @@ const en = {
 	play : 'Play',
 	reserve : 'Reserve',
 	switch : 'Switch',
-	topUp : 'TopUp'
+	topUp : 'TopUp',
+	congratulations : 'CONGRATULATIONS',
+	fail : 'OPPs … You FAIL'
 }
 
 export default en;

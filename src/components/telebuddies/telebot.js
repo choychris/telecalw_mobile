@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 const telebotImages = {
 	normal : require('../../../assets/telebuddies/telebot/telebot.png'),
 	sick : require('../../../assets/telebuddies/telebot/telebot_sick.png'),
-	setting : require('../../../assets/telebuddies/telebot/telebot_spanner.png')
+	setting : require('../../../assets/telebuddies/telebot/telebot_spanner.png'),
+	happy : require('../../../assets/telebuddies/telebot/telebot_happy.png'),
+	sad : require('../../../assets/telebuddies/telebot/telebot_sad.png')
 }
 
 class Telebot extends Component {

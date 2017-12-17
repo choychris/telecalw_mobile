@@ -47,7 +47,7 @@ export function control(params,request){
 }
 
 // WebScoket Initialize
-export function websockeInitialize(params,ws){
+export function websockeInitialize(params,ws,callback){
 	const { 
 		appid , 
 		uid , 
@@ -94,7 +94,8 @@ export function websockeInitialize(params,ws){
 			//login(params,ws);
 		}
 	 	if(cmd === 's2c_noti' && data.attrs.GameResult !== 0){
-			console.warn(e.data);
+			//console.warn(e.data);
+			if(callback) callback(data.attrs.GameResult);
 		}
 	}
 	ws.onerror = e => {

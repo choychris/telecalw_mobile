@@ -18,7 +18,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "base64-js": "^1.2.1",
     "country-list": "^1.1.0",
     "deepstream.io-client-js": "^2.3.0",
     "immutable": "^3.8.2",

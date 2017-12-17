@@ -339,27 +339,15 @@ export function resetTimer(playTime){
 
 export function loadGamePlay(navigator){
 	return(dispatch,getState)=>{
-		/* For Development Purpose */
-		setTimeout(()=>{
-			loading('show',navigator);
-			dispatch(lastMachineMove(null));
-			navigator.resetTo({
-				screen : 'app.GamePlayList',
-				navigatorStyle : {
-					navBarHidden : true
-				}
-			});
-		}, 40000);
-		/* For Development Purpose */
 		// Start Timer
 		 dispatch({ type : 'UPDATE_TIMER' , value : 30 });
 	}
 }
 
-export function switchMode(){
+export function switchMode(setMode){
 	return (dispatch,getState)=>{
 		const cameraMode = getState()['game']['play']['cameraMode'];
-		const mode = (cameraMode === 'top' ) ? 'front': 'top' ;
+		const mode = (setMode) ? setMode : ((cameraMode === 'top' ) ? 'front': 'top');
 		dispatch({ type : 'SWITCH_CAMERA_MODE' , value : mode  })
 	}
 }
