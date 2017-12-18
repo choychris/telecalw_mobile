@@ -11,6 +11,9 @@ const telebotImages = {
 }
 
 class Telebot extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { status , height , width } = this.props;
 		const imageStyle= { width : width , height : height };

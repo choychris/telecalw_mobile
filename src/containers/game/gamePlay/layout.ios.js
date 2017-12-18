@@ -13,6 +13,9 @@ class GamePlay extends Component {
 		const { loadGamePlay , navigator } = this.props;
 		loadGamePlay(navigator);
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { navigator } = this.props;
 		return(

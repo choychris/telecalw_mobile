@@ -14,6 +14,9 @@ class CatchButton extends Component {
 			disable : false
 		};
 	}
+	componentDidMount(){
+		this.disableTimer = setTimeout(()=>this.setState({ disable : true  }),36000);
+	}
 	shouldComponentUpdate(nextProps,nextState){
 		const { disable } = this.state;
 		return disable !== nextState.disable;
@@ -47,6 +50,7 @@ class CatchButton extends Component {
 				borderColor={borderColor}
 				onPressFunction={()=>{
 					this.setState({ disable : true });
+					clearInterval(this.btnDisableTimer);
 					websocketControl({
 						direction : 'CatchGift',
 						value : true,

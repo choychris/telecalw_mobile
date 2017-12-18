@@ -22,7 +22,7 @@ class PlayPanel extends Component {
 				navBarHidden: true
 			},
 			style: {
-				backgroundBlur: "dark",
+				backgroundBlur: "x-light",
 				backgroundColor : 'rgba(52, 52, 52, 0.2)',
 				tapBackgroundToDismiss: false
 			},
@@ -44,7 +44,7 @@ class PlayPanel extends Component {
 			uid : 'a0d461f5c7e34a8ea96f13c87888a4fd',
 			heartbeat_interval : 40,
 			did : "bnyXLPJWNpoumbKUYKA78V",
-			machine_init : [0x1E,0x20,0x02,0x02,0x02,0x04,0x04,0x04,0x0C,0x00,0x01,0x01]
+			machine_init : [30,28,2,2,2,4,4,4,12,0,0,1]
 		},this.ws,(result)=>this._displayGameResult(result));
 	}
 	componentWillUnmount(){

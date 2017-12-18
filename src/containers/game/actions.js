@@ -7,6 +7,7 @@ import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
 import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
+import { closeWebrtc } from '../../utils/webrtc';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -330,17 +331,31 @@ export function navigateToGamePlayList(navigator){
 
 export function resetTimer(playTime){
 	return(dispatch,getState)=>{
+		const time = (playTime) ? playTime : null;
 		dispatch({ 
 			type : 'UPDATE_TIMER',
-			value :	null
+			value :	time
 		});
 	}
 }
 
 export function loadGamePlay(navigator){
 	return(dispatch,getState)=>{
+		
+		navigator.showLightBox({
+			screen : 'app.GameCountDown',
+			animationType : 'fade',
+			navigatorStyle: {
+				navBarHidden: true
+			},
+			style: {
+				backgroundBlur: "dark",
+				backgroundColor : 'rgba(52, 52, 52, 0.1)',
+				tapBackgroundToDismiss: false
+			}
+		});
 		// Start Timer
-		 dispatch({ type : 'UPDATE_TIMER' , value : 30 });
+		//dispatch({ type : 'UPDATE_TIMER' , value : 30 });
 	}
 }
 
@@ -358,6 +373,16 @@ export function lastMachineMove(action){
 			type : 'LAST_PLAY_ACTION',
 			value : action
 		});
+	}
+}
+
+export function closeAllWebrtc(){
+	return(dispatch,getState)=>{
+		const { webrtcUrl } = getState()['game']['play'];
+		const { front , top } = webrtcUrl;		
+		closeWebrtc(front.pc,front.rtsp);
+		closeWebrtc(top.pc,top.rtsp);
+		dispatch({ type : 'CLEAR_WEBRTC_URL' });
 	}
 }
 

@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , StatusBar , StyleSheet , TouchableOpacity , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { resetTimer } from '../../containers/game/actions';
+import { resetTimer , lastMachineMove } from '../../containers/game/actions';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -24,18 +24,20 @@ class Timer extends Component {
 	componentWillUnmount(){
 		const { resetTimer } = this.props;
 		resetTimer();
+		clearInterval(this.countDownFunction);
 	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	_countDown(){
-		const countDownFunction = setInterval(()=>{
+		const { lastMachineMove } = this.props;
+		this.countDownFunction = setInterval(()=>{
 			const { time } = this.state;
 			const { timer } = this.props;
 			const nextTime = (time !== null) ? time - 1 : timer;
-			this.setState({ time : nextTime });
+			if(nextTime >= 0) this.setState({ time : nextTime });
 			if(nextTime === 0) {
-				clearInterval(countDownFunction)
+				clearInterval(this.countDownFunction)
 			};
 		},1000);
 	}
@@ -47,17 +49,6 @@ class Timer extends Component {
 		} else {
 			return 'hourglass-start';
 		}
-		//switch(time){
-			//case 0 :
-				//return 'hourglass-end';
-			//break;
-			//case :
-				//return 'hourglass-half';
-			//break;
-			//default:
-				//return 'hourglass-start';
-			//break;
-		//}	
 	}
 	_renderDisplay(time){
 		return (
@@ -93,7 +84,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		resetTimer
+		resetTimer,
+		lastMachineMove
 	}, dispatch)
 }
 

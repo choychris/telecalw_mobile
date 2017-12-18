@@ -23,7 +23,11 @@ const en = {
 	switch : 'Switch',
 	topUp : 'TopUp',
 	congratulations : 'CONGRATULATIONS',
-	fail : 'OPPs … You FAIL'
+	fail : 'OPPs … You FAIL',
+	congratulationsSlogan : 'LET’S BRING IT BACK TO HOME',
+	failSlogan : "DON'T COME BACK EMPTY-HANDED",
+	playAgain : 'TRY AGAIN',
+	leaving : 'LEAVING'
 }
 
 export default en;

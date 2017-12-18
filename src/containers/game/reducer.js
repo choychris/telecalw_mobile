@@ -80,6 +80,11 @@ function gameReducer (state = initialState, action){
 				.setIn(['play','webrtcUrl'].concat(action.keys),action.value)
 				.toJS();
 		break;
+		case 'CLEAR_WEBRTC_URL':
+			return state
+				.setIn(['play','webrtcUrl'],{})
+				.toJS();
+		break;
 		case 'LAST_PLAY_ACTION':
 			return state
 				.setIn(['play','lastAction'],action.value)

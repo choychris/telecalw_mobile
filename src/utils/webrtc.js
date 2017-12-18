@@ -78,11 +78,13 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
 			if(pc.iceConnectionState === 'checking'){
+				setTimeout(()=>{
 					if(pc.iceConnectionState !== 'connected' && times < 3){
 						console.warn('Trigger Restart Mechanism');
 						closeWebrtc(pc,rtsp);
 						return dispatch(initiatewebRTC(mode,rtsp,times+1));
 					}
+				},3000)
 			}
 		}
 
