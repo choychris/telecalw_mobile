@@ -354,8 +354,7 @@ export function loadGamePlay(navigator){
 				tapBackgroundToDismiss: false
 			}
 		});
-		// Start Timer
-		//dispatch({ type : 'UPDATE_TIMER' , value : 30 });
+
 	}
 }
 

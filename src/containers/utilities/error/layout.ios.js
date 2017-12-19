@@ -6,6 +6,9 @@ import { errorMessage } from '../actions';
 import Telebot from '../../../components/telebuddies/telebot';
 
 class Error extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { message, title , navigator } = this.props;
 		return(

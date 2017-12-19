@@ -17,6 +17,9 @@ class BarContainer extends Component {
 			]
 		};
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	_renderTabItems(menu){
 		return (
 			<FlatList

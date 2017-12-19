@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { switchTag , getPlanetImageSource } from '../../actions';
 
 class Planet extends Component {
+	shouldComponentUpdate(nextProps){
+		const { tag } = this.props;
+		return nextProps.tag !== tag;
+	}
 	componentWillMount(){
 		this._position = new Animated.ValueXY();
 		this._spinAnimation = new Animated.Value(0);

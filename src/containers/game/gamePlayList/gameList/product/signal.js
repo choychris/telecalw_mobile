@@ -4,6 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class Signal extends Component {
+	shouldComponentUpdate(nextProps){
+		const { machineStatus , maintainStatus } = this.props;
+		return nextProps.machineStatus !== machineStatus || nextProps.maintainStatus !== maintainStatus;
+	}
 	_signalColor(status){
 		switch(status){
 			case false:

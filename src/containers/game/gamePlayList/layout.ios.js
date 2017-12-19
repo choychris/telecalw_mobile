@@ -11,6 +11,9 @@ import ListContainer from './gameList/listContainer';
 import BarContainer from './bottomBar/barContainer';
 
 class GamePlayList extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	componentDidMount(){
 		const { 
 			navigator , 

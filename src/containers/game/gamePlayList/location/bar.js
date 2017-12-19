@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { getPlanetImageSource } from '../../actions';
 
 class LocationBar extends Component {
+	shouldComponentUpdate(nextProps){
+		const { tag , tags } = this.props;
+		return tag !== nextProps.tag || tags !== nextProps.tags;
+	}
 	_renderPlanets(planets){
 		const { tag } = this.props;
 		return planets.map((planet,index)=>{

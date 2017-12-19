@@ -23,6 +23,10 @@ class GameContainer extends Component {
 			machineStatus('start');
 		}
 	}
+	shouldComponentUpdate(nextProps){
+		const { timer } = this.props;
+		return nextProps.timer !== null && timer === null || nextProps.timer === null && timer !== null
+	}
 	componentWillUnmount(){
 		const { machineStatus , mode } = this.props;
 		if(mode === 'room'){
@@ -50,26 +54,25 @@ class GameContainer extends Component {
 		)
 	}
 	_renderVideoView(mode,navigator){
-		const { switchMode } = this.props;
+		const { switchMode , timer } = this.props;
 		return (mode === 'room') ? 
 			<WatchView mode={'front'}/> : 
 			<View style={styles.viewContainer}>
-				<Indicator/>
+				{(timer !== null) ? <Indicator/> : null}
 				<LiveView mode={'front'} navigator={navigator}/>
 				<LiveView mode={'top'} navigator={navigator}/>
 				<RefreshButton/>
 			</View>;
 	}
 	_renderPanel(mode,navigator){
+		const { timer } = this.props;
 		return (mode === 'room') ? (
 			<RoomPanel 
 				navigator={navigator} 
 				slideUpAnimation={()=>this._slideUpAnimation()}
 				slideDownAnimation={()=>this._slideDownAnimation()}
 			/>
-		) : (<PlayPanel 
-			navigator={navigator}
-		/>)
+		) : ((timer !== null) ? <PlayPanel navigator={navigator}/> : null)
 	}
 	render(){
 		const { navigator , mode } = this.props;
@@ -109,4 +112,10 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(GameContainer);
+function mapStateToProps(state) {
+	return { 
+		timer : state.game.play.timer
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(GameContainer);

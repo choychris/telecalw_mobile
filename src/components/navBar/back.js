@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Back extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { navigator } = this.props;
 		return (

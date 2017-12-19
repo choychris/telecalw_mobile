@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
 class TopUpButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		return (
 			<Button

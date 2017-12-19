@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { name , icon } = this.props;
 		return (

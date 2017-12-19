@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
 class DetailButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { mode , navigator , slideUpAnimation , slideDownAnimation } = this.props;
 		return(

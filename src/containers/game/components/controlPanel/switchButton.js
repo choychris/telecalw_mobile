@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
 class SwitchButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		return (
 			<Button

@@ -6,6 +6,10 @@ const coinImage = require('../../../../../../assets/utilities/coins/telecoins_si
 import Signal from './signal';
 
 class ProductInfo extends Component {
+	shouldComponentUpdate(nextProps){
+		const { name , status } = this.props;	
+		return name !== nextProps.name || status !== nextProps.status;
+	}
 	_productName(){
 		const { locale , name } = this.props;
 		return (name[locale]) ? name['locale'] : name['en'];

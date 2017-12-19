@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 const testProductImage = require('../../../../../../assets/utilities/bear.png');
 
 class ProductImage extends Component {
+	shouldComponentUpdate(nextProps){
+		const { images , status } = this.props;
+		return images !== nextProps.images || status !== nextProps.status;
+	}
 	render(){
 		const { 
 			status , 

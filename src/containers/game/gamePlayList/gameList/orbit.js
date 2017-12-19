@@ -20,6 +20,9 @@ class Orbit extends Component {
 			)
 		).start();
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	_orbitSpinAnimation(){
 		const spin = this._spinAnimation.interpolate({
 			inputRange : [0,1],

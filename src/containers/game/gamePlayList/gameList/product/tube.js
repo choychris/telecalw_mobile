@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 const tubeImage = require('../../../../../../assets/utilities/tube.png');
 
 class Tube extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { 
 			onPressFunction , 

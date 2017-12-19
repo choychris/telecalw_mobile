@@ -36,7 +36,8 @@ class GameResult extends Component {
 	_exitGame(){
 		const { 
 			navigator ,
-			closeAllWebrtc
+			closeAllWebrtc,
+			resetTimer
 		} = this.props;
 		navigator.resetTo({
 			screen : 'app.GamePlayList',
@@ -61,6 +62,7 @@ class GameResult extends Component {
 		closeAllWebrtc();
 		navigator.dismissLightBox();
 		navigateToGamePlay(navigator);
+		resetTimer(null);
 		setTimeout(()=>{
 			loadGamePlay(navigator);
 		},2000);
@@ -75,12 +77,12 @@ class GameResult extends Component {
 		return  actionButtons.map((btn,key)=>(
 			<View key={key}>
 				<Button
-				disable={btnDisable}
+					disable={btnDisable}
 					btnStyle={{
 						backgroundColor : '#545555',
 						borderRadius : 10,
-						paddingHorizontal : 25,
-						paddingVertical : 10,
+						paddingHorizontal : 30,
+						paddingVertical : 12,
 						marginVertical : 5
 					}}
 					borderColor={'#2D2D2E'}
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
 		textAlign : 'center',
 		color : '#4A6CFF',
 		fontFamily : 'Silom',
-		fontSize : 15
+		fontSize : 20
 	}
 });
 function mapStateToProps(state) {

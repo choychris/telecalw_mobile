@@ -8,6 +8,10 @@ import Orbit from './orbit';
 import ItemContainer from './itemContainer';
 
 class ListContainer extends Component {
+	shouldComponentUpdate(nextProps){
+		const { tag , products } = this.props;
+		return tag !== nextProps.tag || products !== nextProps.products;
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}

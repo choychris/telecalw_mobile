@@ -12,6 +12,9 @@ class GameRoom extends Component {
 		const { navigator } = this.props;
 		loading('hide',navigator);
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { navigator , machine } = this.props;
 		return(

@@ -7,6 +7,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
 class SwitchCameraButton extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { string , switchMode } = this.props;
 		return (
@@ -19,7 +22,7 @@ class SwitchCameraButton extends Component {
 					bottom : 10
 				}}
 				borderColor={'#890E6F'}
-				icon={{ name : 'camera' , size : 20 , color : 'white' }}
+				icon={{ name : 'eye' , size : 20 , color : 'white' }}
 				onPressFunction={()=>switchMode()}
 			/>
 		)

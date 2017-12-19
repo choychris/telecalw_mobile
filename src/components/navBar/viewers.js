@@ -6,6 +6,10 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Viewers extends Component {
+	shouldComponentUpdate(nextProps){
+		const { machine } = this.props;
+		return nextProps.machine !== machine;
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
