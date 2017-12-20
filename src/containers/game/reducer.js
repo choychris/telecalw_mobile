@@ -12,7 +12,8 @@ const initialState = {
 		timer : null,
 		cameraMode : 'front',
 		webrtcUrl : {},
-		lastAction : null
+		lastAction : null,
+		config : null
 	}
 }
 
@@ -58,6 +59,7 @@ function gameReducer (state = initialState, action){
 			return state
 				.setIn(['machine','status'],action.value.status)
 				.setIn(['machine','reservation'],action.value.reservation)
+				.setIn(['machine','currentUser'],action.value.currentUser)
 				.toJS()
 		break;
 		case 'UPDATE_VIEWS':
@@ -88,6 +90,11 @@ function gameReducer (state = initialState, action){
 		case 'LAST_PLAY_ACTION':
 			return state
 				.setIn(['play','lastAction'],action.value)
+				.toJS();
+		break;
+		case 'STORE_PLAY_CONFIG':
+			return state
+				.setIn(['play','config'],action.value)
 				.toJS();
 		break;
 		default:

@@ -10,9 +10,9 @@ class Button extends Component {
 		this.state = { pressIn : false };
 	}
 	shouldComponentUpdate(nextProps,nextState){
-		const { disable } = this.props;
+		const { disable , btnStyle } = this.props;
 		const { pressIn } = this.state;
-		return (disable !== nextProps.disable ||pressIn !== nextState.pressIn)
+		return (disable !== nextProps.disable ||pressIn !== nextState.pressIn || btnStyle !== nextProps.btnStyle)
 	}
 	_renderIcon(){
 		const { icon } = this.props;

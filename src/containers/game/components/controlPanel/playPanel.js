@@ -5,16 +5,18 @@ import { connect } from 'react-redux';
 import SwitchCameraButton from './swicthCameraButton';
 import CatchButton from './catchButton';
 import JoyStick from './joystick/container';
-import { lastMachineMove , switchMode } from '../../actions';
+import { sendGameResult , webSocketUrl } from '../../actions';
 import { websockeInitialize } from '../../../../common/api/request/gizwits';
+import { errorMessage } from '../../../utilities/actions';
 
 class PlayPanel extends Component {
 	constructor(props){
 		super(props);
-		this.ws = new WebSocket('wss://sandbox.gizwits.com:8880/ws/app/v1');
+		const { webSocketUrl , config } = this.props;
+		this.ws = new WebSocket(webSocketUrl(config));
 	}
 	_displayGameResult(result){
-		const { navigator , lastMachineMove , switchMode } = this.props;
+		const { navigator , sendGameResult } = this.props;
 		navigator.showLightBox({
 			screen : 'app.GameResult',
 			animationType : 'fade',
@@ -31,22 +33,26 @@ class PlayPanel extends Component {
 				navigator : navigator
 			}
 		});
-		lastMachineMove(null);
-		switchMode('front');
+		sendGameResult(result);
 	}
 	shouldComponentUpdate(){
 		return false;
 	}
 	componentDidMount(){
-		this.ws.onopen = () => websockeInitialize({ 
-			appid : '20a365a7564142d3a342916f6d6df937',
-			token : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
-			uid : 'a0d461f5c7e34a8ea96f13c87888a4fd',
-			heartbeat_interval : 40,
-			did : "bnyXLPJWNpoumbKUYKA78V",
-			machine_init : [35,28,2,2,2,4,4,4,12,0,0,1]
-		},this.ws,(result)=>this._displayGameResult(result));
+		const { config } = this.props;
+		this.ws.onopen = () => websockeInitialize(
+			config.gizwits,
+			this.ws,
+			(result)=>this._displayGameResult(result),
+			()=>errorMessage('show',navigator,{ title : 'error'})
+		);
 	}
+	//appid : '20a365a7564142d3a342916f6d6df937',
+	//token : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
+	//uid : 'a0d461f5c7e34a8ea96f13c87888a4fd',
+	//heartbeat_interval : 40,
+	//did : "bnyXLPJWNpoumbKUYKA78V",
+	//InitCatcher : [35,28,2,2,2,4,4,4,12,0,0,1]
 	componentWillUnmount(){
 		this.ws.close();
 	}
@@ -90,11 +96,17 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return { 
+		config : state.game.play.config
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		lastMachineMove,
-		switchMode
+		sendGameResult,
+		webSocketUrl
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(PlayPanel);
+export default connect(mapStateToProps,mapDispatchToProps)(PlayPanel);

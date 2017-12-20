@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userWallet , userStatus , userLogout } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout , userReservation } from '../../common/api/request/user';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -103,6 +103,7 @@ export function loginFacebook(navigator){
 function dispatchTokenAndNavigate(token,navigator){
 	return (dispatch,getState)=>{
 		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
+		dispatch(getUserReservation());
 		navigator.resetTo({
 			screen : 'app.GamePlayList',
 			navigatorStyle : {
@@ -195,6 +196,33 @@ export function getUserWallet(navigator){
 			}
 		}		
 		walletRequestFlow();
+	}
+}
+
+export function getUserReservation(){
+	return (dispatch,getState)=>{
+		const lbToken = getState()['auth']['token']['lbToken'];
+		const { id , userId } = lbToken;
+		//console.warn(JSON.stringify(lbToken));
+		userReservation({
+			token : id,
+			userId : userId
+		},Request)
+		.then((res,err)=>{
+			delete res['id'];
+			delete res['userId'];
+			delete res['created'];
+			//console.warn(JSON.stringify(res));
+			//console.warn(JSON.stringify(err));
+			if(!err){
+				dispatch({
+					type : 'UPDATE_RESERVATION',
+					value : res
+				})			
+			} else {
+
+			}
+		});
 	}
 }
 

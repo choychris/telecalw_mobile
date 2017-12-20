@@ -8,7 +8,11 @@ function request(url, method, body, header) {
 			}			    
 		}
 		if(header) config.headers = header;
-		if(method == 'POST' || method == 'PUT'){
+		if(
+				method == 'POST' || 
+				method == 'PUT' || 
+				method == 'PATCH'
+		){
 			config.body = JSON.stringify(body);			    
 		}
 		fetch(url, config)

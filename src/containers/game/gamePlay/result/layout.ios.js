@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
 import Button from '../../../../components/utilities/buttons';
 import Timer from './timer';
-import { navigateToGamePlay , resetTimer , loadGamePlay , closeAllWebrtc } from '../../actions';
+import { initGamePlay , resetTimer , loadGamePlay , closeAllWebrtc , endGamePlay } from '../../actions';
 
 class GameResult extends Component {
 	constructor(props){
@@ -17,62 +17,41 @@ class GameResult extends Component {
 	}
 	componentDidMount(){
 		const { navigator } = this.props;
-		this.gameResultTimer = setTimeout(()=>this._exitGame(),8000);
-		this.btnDisableTimer = setTimeout(()=>this.setState({ btnDisable : true }),5000);
+		this.gameResultTimer = setTimeout(()=>this._endGame('exit'),5500);
+		//this.btnDisableTimer = setTimeout(()=>this.setState({ btnDisable : true }),5000);
 	}
 	componentWillUnmount(){
-		clearInterval(this.btnDisableTimer);
+		//clearInterval(this.btnDisableTimer);
 	}
 	_renderProductImage(result){
 		const { product } = this.props;
-		return (result === 1 && product.images && product.images.thumbnail) ? (
+		return (
+			result === 1 && 
+			product.images && 
+			product.images.thumbnail
+		) ? (
 			<Image
-				style={{ width : 100 , height : 100 , marginHorizontal : 5 }}
+				style={styles.image}
 				source={{ uri : product.images.thumbnail}}
 				resizeMode={'contain'}
 			/>
 		) : null;
 	}
-	_exitGame(){
-		const { 
-			navigator ,
-			closeAllWebrtc,
-			resetTimer
+	_endGame(action){
+		const {
+			navigator,
+			endGamePlay
 		} = this.props;
-		navigator.resetTo({
-			screen : 'app.GamePlayList',
-			navigatorStyle : {
-				navBarHidden : true
-			}
-		});
-		closeAllWebrtc();
+		endGamePlay(action,navigator);
 		this.setState({ btnDisable : true });
 		clearInterval(this.gameResultTimer);
-	}
-	_replay(){
-		const { 
-			navigator , 
-			navigateToGamePlay , 
-			resetTimer , 
-			loadGamePlay ,
-			closeAllWebrtc
-		} = this.props;
-		this.setState({ btnDisable : true });
-		clearInterval(this.gameResultTimer);
-		closeAllWebrtc();
-		navigator.dismissLightBox();
-		navigateToGamePlay(navigator);
-		resetTimer(null);
-		setTimeout(()=>{
-			loadGamePlay(navigator);
-		},2000);
 	}
 	_renderActionButton(){
 		const { string } = this.props;
 		const { btnDisable } = this.state;
 		const actionButtons = [
-			{ text : 'playAgain' , function : ()=>this._replay() },
-			{ text : 'leaving' , function : ()=>this._exitGame() }
+			{ text : 'playAgain' , function : ()=>this._endGame('replay') },
+			{ text : 'leaving' , function : ()=>this._endGame('exit') }
 		]
 		return  actionButtons.map((btn,key)=>(
 			<View key={key}>
@@ -149,8 +128,14 @@ const styles = StyleSheet.create({
 		color : '#4A6CFF',
 		fontFamily : 'Silom',
 		fontSize : 20
+	},
+	image : { 
+		width : 100 , 
+		height : 100 , 
+		marginHorizontal : 5 
 	}
 });
+
 function mapStateToProps(state) {
 	return {
 		string : state.preference.language.string,
@@ -158,13 +143,9 @@ function mapStateToProps(state) {
 	}
 }
 
-
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		navigateToGamePlay,
-		resetTimer,
-		loadGamePlay,
-		closeAllWebrtc
+		endGamePlay
 	}, dispatch)
 }
 

@@ -3,7 +3,8 @@ import { fromJS , toJS } from 'immutable';
 const initialState = {
 	user : {},
 	token : {},
-	wallet : {}
+	wallet : {},
+	reservation : {}
 }
 
 function authReducer(state = initialState, action){
@@ -22,6 +23,16 @@ function authReducer(state = initialState, action){
 		case 'STORE_WALLET_INFO':
 			return state
 				.setIn(['wallet'],action.value)
+				.toJS();
+		break;
+		case 'UPDATE_WALLET_BALANCE':
+			return state
+				.setIn(['wallet','balance'],action.value)
+				.toJS();
+		break;
+		case 'UPDATE_RESERVATION':
+			return state
+				.setIn(['reservation'],action.value)
 				.toJS();
 		break;
 		//case 'SIGNUP_ADDRESS':

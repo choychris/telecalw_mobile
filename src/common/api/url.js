@@ -15,6 +15,15 @@ export const api = {
 	products : {
 		root : apiBase+'/products'
 	},
+	machines : {
+		root : apiBase+'/machines'
+	},
+	plays : {
+		root : apiBase+'/plays'
+	},
+	reservations : {
+		root : apiBase+'/reservations'
+	},
 	gizwits : {
 		control : gizwitsBase+'/control'	
 	}

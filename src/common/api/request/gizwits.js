@@ -47,25 +47,15 @@ export function control(params,request){
 }
 
 // WebScoket Initialize
-export function websockeInitialize(params,ws,callback){
+export function websockeInitialize(params,ws,callback,errCallback){
 	const { 
-		appid , 
-		uid , 
-		token , 
-		heartbeat_interval , 
-		did ,
-		machine_init
+		init,
+		control
 	} = params;
+	const { did , InitCatcher } = control;
 	const loginData = JSON.stringify({
 		cmd: "login_req",
-		data: {
-			appid : appid,
-			uid : uid,
-			token : token,
-			p0_type: "attrs_v4",
-			heartbeat_interval : heartbeat_interval,
-			auto_subscribe : false
-		}
+		data: init
 	});
 	ws.send(loginData);
 	const subData = JSON.stringify({
@@ -74,12 +64,13 @@ export function websockeInitialize(params,ws,callback){
 			did : did
 		}]
 	});
+	//console.warn(JSON.stringify(params));
 	const initData = JSON.stringify({
 		cmd: "c2s_write",
 		data : {
 			did : did ,
 			attrs : {
-				InitCatcher : machine_init
+				InitCatcher : InitCatcher
 			}
 		}
 	});
@@ -101,6 +92,7 @@ export function websockeInitialize(params,ws,callback){
 	ws.onerror = e => {
 		// an error occurred
 		//console.warn(e.message);
+		if(errCallback) errCallback();
 	};
 
 	ws.onclose = e => {

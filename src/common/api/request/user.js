@@ -49,3 +49,12 @@ export function userLogout(params,request){
 	});
 }
 
+// Get User Reservation
+export function userReservation(params,request){
+	const { token , userId } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.users.root+'/'+userId+'/reservation?access_token='+token,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}

@@ -2,6 +2,9 @@ import { NetInfo , Dimensions } from 'react-native';
 import { errorMessage , loading } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList } from '../../common/api/request/product';
+import { engageGamePlay } from '../../common/api/request/machine';
+import { gameResult } from '../../common/api/request/play';
+import { endGameEngage } from '../../common/api/request/reservation';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
@@ -159,7 +162,11 @@ export function machineStatus(action){
 				//console.warn(JSON.stringify(data));
 				dispatch({ 
 					type : 'UPDATE_MACHINE_STATUS' , 
-					value : { status : data.status  , reservation : data.reservation }  
+					value : { 
+						status : data.status  , 
+						reservation : data.reservation ,
+						currentUser : data.currentUser
+					}  
 				});	
 			});
 
@@ -180,6 +187,21 @@ export function machineStatus(action){
 			pusher.unsubscribe('presence-machine-'+machine.id);
 		}
 		
+	}
+}
+
+export function reserveStatus(){
+	return(dispatch,getState)=>{
+		
+		const { userId } = getState()['auth']['token']['lbToken'];
+		const pusher = getState()['preference']['pusher'];
+
+		var channel = pusher.subscribe('reservation-'+userId);
+		channel.bind('your_turn', (data)=>{
+			console.warn(JSON.stringify(data));
+			dispatch({ type : 'UPDATE_RESERVATION' , value : data  });
+		});
+
 	}
 }
 
@@ -309,14 +331,86 @@ export function filterCamera(cameras,mode){
 	return targetCamera;
 }
 
-export function navigateToGamePlay(navigator){
+export function initGamePlay(navigator){
 	return (dispatch,getState)=>{
-		navigator.resetTo({
-			screen : 'app.GamePlay',
-			navigatorStyle : {
-				navBarHidden : true
-			}
-		});
+
+		// Step 1 : Check Wallet Balance
+		const { balance } = getState()['auth']['wallet'];
+		const { gamePlayRate } = getState()['game']['product'];
+		//console.warn(balance);
+		//console.warn(gamePlayRate)
+		if(balance >= gamePlayRate){
+	
+			// Step 2 : Get GamePlay Configuration from Backend
+			const { id , userId } = getState()['auth']['token']['lbToken'];
+			const machineId = getState()['game']['machine']['id'];
+			const productId = getState()['game']['product']['id'];
+			const params = {
+				token : id,
+				machineId : machineId,
+				data : {
+					productId : productId,
+					userId : userId
+				}
+			};
+			//console.warn(JSON.stringify(params));
+			engageGamePlay(params,Request)
+				.then((res,err)=>{
+					//console.warn(JSON.stringify(res));
+					//console.warn(JSON.stringify(err));
+					if(!err){
+						// Step 3 : Success Callback				
+						const { result } = res;
+						if(result.gizwits){
+							const { 
+								newWalletBalance , 
+								gizwits ,
+								playId
+							} = result;
+							// Store Gizwits Configure
+							dispatch({ 
+								type : 'STORE_PLAY_CONFIG' , 
+								value : { gizwits : gizwits , playId : playId }
+							});
+							// Navigate to GamePlay
+							navigator.resetTo({
+								screen : 'app.GamePlay',
+								navigatorStyle : {
+									navBarHidden : true
+								}
+							});
+							// Update Wallet Balance
+							dispatch({ 
+								type : 'UPDATE_WALLET_BALANCE' , 
+								value : newWalletBalance 
+							});
+						} else if(result === 'reservation_made'){
+							dispatch({
+								type : 'UPDATE_RESERVATION',
+								value : { 
+									status : 'open',
+									machineId : machineId	 
+						 		}
+							});
+						} else if(result === 'insufficient_balance'){
+
+						}
+					} else {
+						loading('hide',navigator);
+						errorMessage(
+							'show',
+							navigator,
+							{
+								title : string['error'],
+								message : string['tryAgain']
+							}
+						);
+					}
+				});
+		} else {
+			// Insufficient Fund
+		}
+
 	}
 }
 
@@ -385,3 +479,96 @@ export function closeAllWebrtc(){
 	}
 }
 
+export function webSocketUrl(config){
+	return (dispatch,getState)=>{
+		if(config.websocket){
+			const { host , wss_port } = config.websocket;
+			return 'wss://'+host+':'+wss_port+'/ws/app/v1';
+		} else {
+			const { iotPlatform } = getState()['game']['machine'];
+			const { gizwits } = iotPlatform;
+			const { host , wss_port } = gizwits;
+			return 'wss://'+host+':'+wss_port+'/ws/app/v1';
+		}
+	}
+}
+
+export function sendGameResult(result){
+	return(dispatch,getState)=>{
+
+		// Send Game Result to Backend
+		const finalResult = (result === 1) ? true : false;
+		const { playId } = getState()['game']['play']['config'];
+		const token = getState()['auth']['token']['lbToken']['id'];
+		const params = {
+			token : token,
+			result : {
+				ended : new Date().getTime(),
+				finalResult : finalResult
+			},
+			playId : playId
+		}
+		//console.warn(JSON.stringify(params));
+		gameResult(params,Request)		
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				if(err){
+					const { string } = getState()['preference']['language'];
+					errorMessage(
+						'show',
+						navigator,
+						{
+							title : string['error'],
+							message : string['tryAgain']
+						}
+					);
+				}
+			});
+	}
+}
+
+export function endGamePlay(action,navigator){
+	return (dispatch,getState)=>{
+		const token = getState()['auth']['token']['lbToken']['id'];
+
+		// Step 0 : Close All WebRTC
+		dispatch(closeAllWebrtc());
+
+		// Step 1 : Reset All Parametes
+		dispatch(resetTimer(null));
+		dispatch(lastMachineMove(null));
+		dispatch(switchMode('front'));
+
+		// Step 2 : Navigate to Related Page
+		if(action === 'replay'){
+
+			navigator.dismissLightBox();
+			setTimeout(()=>{
+				dispatch(initGamePlay(navigator));
+				loadGamePlay(navigator);
+			},2000);
+
+		} else if(action == 'exit'){
+			
+			const machineId = getState()['game']['machine']['id'];
+			//console.warn(machineId);
+			endGameEngage({ 
+				token : token  ,
+				machineId : machineId
+			},Request)
+			//.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+			//});
+
+			navigator.resetTo({
+				screen : 'app.GamePlayList',
+				navigatorStyle : {
+					navBarHidden : true
+				}
+			});
+
+		}
+	}
+}

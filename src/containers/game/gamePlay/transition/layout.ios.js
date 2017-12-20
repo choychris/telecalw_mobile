@@ -54,8 +54,7 @@ class GameCountDown extends Component {
 			toValue : { 
 				x : 0  , 
 				y : -height - 100
-			},
-			tension : 50
+			}
 		}).start();
 	}
 	_slideDownAnimation(){
@@ -63,22 +62,25 @@ class GameCountDown extends Component {
 			toValue : { 
 				x : -width/2.2 , 
 				y : -height/1.6
-			},
-			tension : 50
+			}
 		}).start();
 	}
 	_renderLoading(){
 		return <ActivityIndicator style={{ position : 'absolute'  }} size="small" color={'white'}/>
 	}
 	_countDown(){
-		const { navigator , resetTimer } = this.props;
+		const { 
+			navigator , 
+			resetTimer ,
+			config
+		} = this.props;
 		this.countDownFunction = setInterval(()=>{
 			const { time } = this.state;
 			const nextTime = (time) ? time - 1 : 5 ;
 			this.setState({ time : nextTime });
 			if(nextTime === 0) {
 				this._slideUpAnimation();
-				resetTimer(35);
+				resetTimer(config.gizwits.control.InitCatcher[0]);
 				navigator.dismissLightBox();
 				clearInterval(this.countDownFunction);
 			};
@@ -105,7 +107,7 @@ class GameCountDown extends Component {
 		})
 		return(
 			<View style={styles.container}>
-				<Animated.View style={[{ position : 'absolute' , alignItems : 'center' , justifyContent : 'center' },this._position.getLayout()]}>
+				<Animated.View style={[styles.trafficLighContainer,this._position.getLayout()]}>
 					<TrafficLight time={time}/>
 					<View style={styles.lightContainer}>
 						{lightBulbs.map((bulb,index)=><LightBulb key={index} {...bulb} time={time}/>)}
@@ -123,6 +125,11 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		justifyContent : 'center'	
 	},
+	trafficLighContainer : {
+		position : 'absolute' , 
+		alignItems : 'center' , 
+		justifyContent : 'center'
+	},
 	text : {
 		position : 'absolute',
 		textAlign : 'center',
@@ -138,7 +145,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return { 
-		webrtcUrl : state.game.play.webrtcUrl
+		webrtcUrl : state.game.play.webrtcUrl,
+		config : state.game.play.config
 	}
 }
 

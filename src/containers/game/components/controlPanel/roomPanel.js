@@ -9,23 +9,28 @@ import SwitchButton from './switchButton';
 import TopUpButton from './topUpButton';
 
 class RoomPanel extends Component {
-	_renderActionButton(status){
-		switch(status){
-			case 'open':
-				return <PlayButton {...this.props}/>
-			break;
-			case 'playing':
-				return <ReserveButton {...this.props}/>
-			break;
+	_renderActionButton(status,currentUser){
+		if(status === 'open' && currentUser === null){
+			return <PlayButton {...this.props}/>
+		} else {
+			return <ReserveButton {...this.props}/>
 		}
+		//switch(status){
+			//case 'open' && :
+				//return <PlayButton {...this.props}/>
+			//break;
+			//case 'playing':
+				//return <ReserveButton {...this.props}/>
+			//break;
+		//}
 	}
 	render(){
 		const { machine } = this.props;
-		const { status } = machine;
+		const { status , currentUser } = machine;
 		return (status !== 'close') ? (
 			<View style={styles.container}>
 				<View style={styles.column}>
-					{this._renderActionButton(status)}
+					{this._renderActionButton(status,currentUser)}
 					<DetailButton {...this.props}/>
 				</View>
 				<View style={styles.column}>

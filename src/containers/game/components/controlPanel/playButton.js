@@ -2,13 +2,17 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { navigateToGamePlay } from '../../actions';
+import { initGamePlay } from '../../actions';
 import Button from '../../../../components/utilities/buttons';
 
 
 class PlayButton extends Component {
+	constructor(props){
+		super(props);
+		this.state = { loading : false };
+	}
 	render(){
-		const { navigator , navigateToGamePlay } = this.props;
+		const { navigator , initGamePlay } = this.props;
 		return (
 			<Button
 				text={'play'}
@@ -25,7 +29,9 @@ class PlayButton extends Component {
 				}}
 				borderColor={'#31845C'}
 				icon={{ name : 'play' , size : 18 , color : 'white' }}
-				onPressFunction={()=>navigateToGamePlay(navigator)}
+				onPressFunction={()=>{
+					initGamePlay(navigator);
+				}}
 			/>
 		)
 	}
@@ -33,7 +39,7 @@ class PlayButton extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		navigateToGamePlay
+		initGamePlay
 	}, dispatch)
 }
 
