@@ -10,10 +10,10 @@ class BarContainer extends Component {
 		super(props);
 		this.state = { 
 			menu : [
-				{ icon : 'rocket' , name : 'delivery'},
-				{ icon : 'share' , name : 'reward' },
-				{ icon : 'money' , name : 'topUp' },
-				{ icon : 'question-circle' , name : 'support' }
+				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+				{ icon : 'share' , name : 'reward' , navigator : 'app.Reward' },
+				{ icon : 'money' , name : 'topUp' , navigate : 'app.TopUp' },
+				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
 			]
 		};
 	}
@@ -21,12 +21,16 @@ class BarContainer extends Component {
 		return false;
 	}
 	_renderTabItems(menu){
+		const { navigator } = this.props;
 		return (
 			<FlatList
 				horizontal={true}
 				data={menu}
 				renderItem={({item})=>
-					<ItemButton name={item.name} icon={item.icon}/>}
+					<ItemButton 
+						{...item}
+						navigator={navigator}
+					/>}
 				keyExtractor={(item, index) => index}
 			/>
 		)

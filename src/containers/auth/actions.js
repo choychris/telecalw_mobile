@@ -209,7 +209,6 @@ export function getUserReservation(){
 			userId : userId
 		},Request)
 		.then((res,err)=>{
-			delete res['id'];
 			delete res['userId'];
 			delete res['created'];
 			//console.warn(JSON.stringify(res));

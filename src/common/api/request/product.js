@@ -14,3 +14,13 @@ export function machineList(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+//Get Product
+export function getProduct(params,request){
+	const { token , productId } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.products.root+'/'+productId+'?access_token='+token,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}

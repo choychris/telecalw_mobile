@@ -9,9 +9,19 @@ class ItemButton extends Component {
 		return false;
 	}
 	render(){
-		const { name , icon } = this.props;
+		const { name , icon , navigate , navigator } = this.props;
 		return (
-			<TouchableOpacity style={styles.container}>
+			<TouchableOpacity 
+				style={styles.container}
+				onPress={()=>{
+					navigator.push({
+						screen : navigate,
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+				}}
+			>
 				<Icon name={icon} size={25} color='white'/>
 				<Text style={styles.text}>{name}</Text>
 			</TouchableOpacity>	

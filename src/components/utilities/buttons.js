@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Image , StyleSheet , TouchableHighlight , Text } from 'react-native';
+import { View , Image , StyleSheet , TouchableHighlight , Text , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,9 +10,12 @@ class Button extends Component {
 		this.state = { pressIn : false };
 	}
 	shouldComponentUpdate(nextProps,nextState){
-		const { disable , btnStyle } = this.props;
+		const { disable , btnStyle , loading } = this.props;
 		const { pressIn } = this.state;
-		return (disable !== nextProps.disable ||pressIn !== nextState.pressIn || btnStyle !== nextProps.btnStyle)
+		return (disable !== nextProps.disable ||pressIn !== nextState.pressIn || btnStyle !== nextProps.btnStyle || loading !== nextProps.loading)
+	}
+	_renderLoading(){
+		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	_renderIcon(){
 		const { icon } = this.props;
@@ -23,6 +26,14 @@ class Button extends Component {
 			<Text style={[styles.text,textStyle]}>
 				{displayText}
 			</Text>
+		)
+	}
+	_renderInnerContainer(icon,text,displayText,textStyle){
+		return(
+			<View style={styles.innerContainer}>
+				{(icon) ? this._renderIcon() : null}
+				{(text) ? this._renderText(displayText,textStyle) : null}
+			</View>
 		)
 	}
 	render(){
@@ -36,7 +47,8 @@ class Button extends Component {
 			text, 
 			string , 
 			icon ,
-			disable
+			disable,
+			loading
 		} = this.props;
 		const { pressIn } = this.state;
 		const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
@@ -57,10 +69,7 @@ class Button extends Component {
 				style={[styles.container,btnBorder,btnStyle,btnBorderColor]}
 				underlayColor={borderColor}
 			>
-				<View style={styles.innerContainer}>
-					{(icon) ? this._renderIcon() : null}
-					{(text) ? this._renderText(displayText,textStyle) : null}
-				</View>
+				{(loading === true) ? this._renderLoading() : this._renderInnerContainer(icon,text,displayText,textStyle)}
 			</TouchableHighlight>
 		)
 	}

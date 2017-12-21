@@ -1,9 +1,10 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { ScrollView , Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const boardImg = require('../../../../../assets/utilities/board.png');
+import ProductImage from './itemContainer';
 
 class ProductDetailContainer extends Component {
 	componentWillMount(){
@@ -15,6 +16,9 @@ class ProductDetailContainer extends Component {
 			toValue : { x : 0 , y : 0  }
 		}).start();
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	_renderBoard(){
 		return (
 			<Image
@@ -24,8 +28,28 @@ class ProductDetailContainer extends Component {
 			/>
 		)
 	}
+	_renderProductImage(images){
+		return(
+			<ScrollView style={styles.scrollView}>
+				{images.map((image,index)=><ProductImage image={image} key={index}/>)}
+			</ScrollView>
+		) 
+	}
 	render(){
-		const { navigator , slideDownAnimation } = this.props;
+		const { 
+			navigator , 
+			slideDownAnimation ,
+			product,
+			locale,
+			string
+		} = this.props;
+		const { 
+			name ,
+			description ,
+			size ,
+			weight,
+			images
+		} = product;
 		return (
 			<View style={styles.container}>
 				<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
@@ -42,6 +66,22 @@ class ProductDetailContainer extends Component {
 							{'Product Detail'}
 						</Text>
 					</TouchableOpacity>
+					<View style={styles.detailContainer}>
+						<Text style={styles.title}>{(name[locale]) ? name[locale] : name['en']}</Text>
+						<Text style={styles.desc}>{description}</Text>
+						<View style={styles.infoContainer}>
+							<Text style={styles.info}>
+								{`${string['width']}:${size.width}${size.unit}`}
+							</Text>
+							<Text style={styles.info}>
+								{`${string['height']}:${size.height}${size.unit}`}
+							</Text>
+							<Text style={styles.info}>
+								{`${string['weight']}:${weight.weight}${weight.unit}`}
+							</Text>
+						</View>
+						{(images && images.product) ? this._renderProductImage(images.product) : null}
+					</View>
 				</Animated.View>
 			</View>
 		)
@@ -55,6 +95,20 @@ const styles = StyleSheet.create({
 		alignItems : 'center',
 		backgroundColor : '#263E50'
 	},
+	detailContainer : {
+		flex : 1,
+		backgroundColor : 'transparent',
+		alignSelf : 'stretch',
+		alignItems : 'center',
+		paddingVertical : 10
+	},
+	infoContainer : {
+		flexDirection : 'row',
+		backgroundColor : 'transparent'
+	},
+	scrollView : {
+		flex : 1
+	},
 	image : {
 		position : 'absolute',
 		width	: Dimensions.get('window').width * 0.95,
@@ -64,14 +118,40 @@ const styles = StyleSheet.create({
 		flexDirection : 'row',
 		alignItems : 'center',
 		justifyContent : 'center',
-		marginVertical : 15,
-		backgroundColor : 'transparent'
+		alignSelf : 'stretch',
+		marginVertical : 5,
+		backgroundColor : 'transparent',
+		paddingVertical : 10
 	},
 	btnText : {
 		marginHorizontal : 5,
 		fontFamily : 'Silom',
 		fontSize : 20
+	},
+	title : {
+		marginVertical : 10,
+		fontFamily : 'Silom',
+		fontSize : 30
+	},
+	desc : {
+		fontFamily : 'Silom',
+		fontSize : 18
+	},
+	info : {
+		marginVertical : 5,
+		marginHorizontal : 8,
+		fontFamily : 'Silom',
+		fontSize : 16,
+		color : 'grey'
 	}
 });
 
-export default connect(null,null)(ProductDetailContainer);
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string,
+		locale : state.preference.language.locale,
+		product : state.game.product
+	}
+}
+
+export default connect(mapStateToProps,null)(ProductDetailContainer);

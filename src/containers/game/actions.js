@@ -1,10 +1,10 @@
 import { NetInfo , Dimensions } from 'react-native';
 import { errorMessage , loading } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
-import { machineList } from '../../common/api/request/product';
+import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
 import { gameResult } from '../../common/api/request/play';
-import { endGameEngage } from '../../common/api/request/reservation';
+import { endGameEngage , cancelReserve } from '../../common/api/request/reservation';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
@@ -190,7 +190,7 @@ export function machineStatus(action){
 	}
 }
 
-export function reserveStatus(){
+export function reserveStatus(navigator){
 	return(dispatch,getState)=>{
 		
 		const { userId } = getState()['auth']['token']['lbToken'];
@@ -198,8 +198,26 @@ export function reserveStatus(){
 
 		var channel = pusher.subscribe('reservation-'+userId);
 		channel.bind('your_turn', (data)=>{
-			console.warn(JSON.stringify(data));
+			//console.warn(JSON.stringify(data));
 			dispatch({ type : 'UPDATE_RESERVATION' , value : data  });
+
+			navigator.showLightBox({
+				screen : 'app.Reservation',
+				animationType : 'fade',
+				navigatorStyle: {
+					navBarHidden: true
+				},
+				style: {
+					backgroundBlur: "x-light",
+					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					tapBackgroundToDismiss: false
+				},
+				passProps : {
+					data : data,
+					navigator : navigator
+				}
+			});
+
 		});
 
 	}
@@ -384,13 +402,10 @@ export function initGamePlay(navigator){
 								type : 'UPDATE_WALLET_BALANCE' , 
 								value : newWalletBalance 
 							});
-						} else if(result === 'reservation_made'){
+						} else if(result.reservation){
 							dispatch({
 								type : 'UPDATE_RESERVATION',
-								value : { 
-									status : 'open',
-									machineId : machineId	 
-						 		}
+								value : result.reservation
 							});
 						} else if(result === 'insufficient_balance'){
 
@@ -552,10 +567,12 @@ export function endGamePlay(action,navigator){
 		} else if(action == 'exit'){
 			
 			const machineId = getState()['game']['machine']['id'];
+			const userId = getState()['auth']['token']['lbToken']['userId'];
 			//console.warn(machineId);
 			endGameEngage({ 
 				token : token  ,
-				machineId : machineId
+				machineId : machineId,
+				userId : userId
 			},Request)
 			//.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
@@ -570,5 +587,93 @@ export function endGamePlay(action,navigator){
 			});
 
 		}
+	}
+}
+
+export function cancelReservation(){
+	return(dispatch,getState)=>{
+		const { reservation } = getState()['auth'];
+		const token = getState()['auth']['token']['lbToken']['id'];
+		//console.warn(JSON.stringify(reservation));
+		const params = {
+			token : token,
+			reservationId : reservation.id,
+			data : { status : 'cancel' }
+		};
+		cancelReserve(params,Request)
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				if(!err){
+					dispatch({
+						type : 'UPDATE_RESERVATION',
+						value : res
+					})
+				} else {
+
+				}
+			});
+	}
+}
+
+export function rejectReserve(machineId,navigator){
+	return(dispatch,getState)=>{
+		const token = getState()['auth']['token']['lbToken']['id'];
+			const userId = getState()['auth']['token']['lbToken']['userId'];
+		endGameEngage({ 
+			token : token  ,
+			machineId : machineId,
+			userId : userId
+		},Request)
+		navigator.dismissLightBox()
+	}
+}
+
+export function acceptReserve(data,navigator){
+	return(dispatch,getState)=>{
+		//console.warn(JSON.stringify(data));
+		const token = getState()['auth']['token']['lbToken']['id'];
+		const { machineId , productId } = data;
+		async function acceptFlow(){
+			try {
+				// Step 1 : Get Product
+				const targetProduct = await getProduct({
+					token : token,
+					productId : productId
+				},Request);
+				//console.warn(JSON.stringify(targetProduct));
+				dispatch({
+					type : 'SELECT_PRODUCT',
+					value : targetProduct
+				});
+				// Setp 2 : Get Machine
+				const machineRes =  await machineList({
+					token : token ,
+					productId : productId
+				},Request);
+				//console.warn(JSON.stringify(machineRes));
+				let targetMachine;
+				machineRes.map((machine)=>{
+					if(machine.id === machineId) targetMachine = machine;
+				});
+				//console.warn(JSON.stringify(targetMachine));
+				dispatch({
+					type : 'SELECT_MACHINE',
+					value : targetMachine
+				});
+				navigator.dismissModal({
+					animationType : 'slide-down'
+				});
+				navigator.dismissLightBox();
+				// Step 3 : Initiate Game Play
+				setTimeout(()=>{
+					dispatch(initGamePlay(navigator));
+				},1000);
+			}
+			catch(e){
+
+			}
+		}
+		acceptFlow();
 	}
 }

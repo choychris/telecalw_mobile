@@ -12,7 +12,7 @@ class ProductInfo extends Component {
 	}
 	_productName(){
 		const { locale , name } = this.props;
-		return (name[locale]) ? name['locale'] : name['en'];
+		return (name[locale]) ? name[locale] : name['en'];
 	}
 	render(){
 		const { 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		locale : state.preference.language.locale,
+		locale : state.preference.language.locale
 	}
 }
 

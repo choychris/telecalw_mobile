@@ -9,12 +9,19 @@ import Button from '../../../../components/utilities/buttons';
 class PlayButton extends Component {
 	constructor(props){
 		super(props);
-		this.state = { loading : false };
+		this.state = { loading : false  , disable : false };
+	}
+	shouldComponentUpdate(nextProps,nextState){
+		const { loading , disable } = this.state;
+		return nextState.loading !== loading || nextState.disable !== disable;	
 	}
 	render(){
+		const { loading , disable } = this.state;
 		const { navigator , initGamePlay } = this.props;
 		return (
 			<Button
+				disable={disable}
+				loading={loading}
 				text={'play'}
 				textStyle={{
 					color : 'white',
@@ -30,6 +37,7 @@ class PlayButton extends Component {
 				borderColor={'#31845C'}
 				icon={{ name : 'play' , size : 18 , color : 'white' }}
 				onPressFunction={()=>{
+					this.setState({ loading : true , disable : true });
 					initGamePlay(navigator);
 				}}
 			/>

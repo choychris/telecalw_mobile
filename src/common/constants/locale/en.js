@@ -19,6 +19,7 @@ const en = {
 	error : 'Error',
 	viewers : 'Viewers',
 	play : 'Play',
+	leave : 'Leave',
 	reserve : 'Reserve',
 	switch : 'Switch',
 	topUp : 'TopUp',
@@ -27,7 +28,11 @@ const en = {
 	congratulationsSlogan : 'LET’S BRING IT BACK TO HOME',
 	failSlogan : "DON'T COME BACK EMPTY-HANDED",
 	playAgain : 'TRY AGAIN',
-	leaving : 'LEAVING'
+	leaving : 'LEAVING',
+	yourTurn : 'YOUR TURN',
+	width : 'Width',
+	height : 'Height',
+	weight : 'Weight'
 }
 
 export default en;

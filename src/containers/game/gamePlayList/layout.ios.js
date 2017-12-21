@@ -29,7 +29,7 @@ class GamePlayList extends Component {
 		// Initiate Pusher Product Status Listener
 		productStatus();
 		// Initiate Pusher Reservation Listener 
-		reserveStatus();
+		reserveStatus(navigator);
 	}
 	render(){
 		const { navigator } = this.props;
@@ -45,7 +45,7 @@ class GamePlayList extends Component {
 				/>
 				<LocationBar/>
 				<ListContainer navigator={navigator}/>
-				<BarContainer/>
+				<BarContainer navigator={navigator}/>
 			</View>
 		)
 	}
