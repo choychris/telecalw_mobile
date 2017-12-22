@@ -23,6 +23,8 @@ const en = {
 	reserve : 'Reserve',
 	switch : 'Switch',
 	topUp : 'TopUp',
+	purchase : 'Purchase',
+	transactions : 'Transactions',
 	congratulations : 'CONGRATULATIONS',
 	fail : 'OPPs … You FAIL',
 	congratulationsSlogan : 'LET’S BRING IT BACK TO HOME',
@@ -32,7 +34,8 @@ const en = {
 	yourTurn : 'YOUR TURN',
 	width : 'Width',
 	height : 'Height',
-	weight : 'Weight'
+	weight : 'Weight',
+	topUpPrompt : 'Telebot : You can purchase more signal coins to play different games or check the transaction record of your account'
 }
 
 export default en;

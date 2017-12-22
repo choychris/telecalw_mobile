@@ -269,7 +269,7 @@ export function positioningItems(productList){
 
 export function navigateToGameRoom(productId,status,navigator){
 	return (dispatch,getState)=>{
-		const token = getState()['auth']['token']['lbToken'];
+		const token = getState()['auth']['token']['lbToken']['id'];
 		const tag = getState()['game']['tag'];
 		const products = getState()['game']['products'];
 		if(status === true){
