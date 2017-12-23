@@ -10,6 +10,7 @@ const initialPrefernece = {
 		sound : true,
 		vibration : true
 	},
+	currency : 'usd',
 	pusher : null
 };
 

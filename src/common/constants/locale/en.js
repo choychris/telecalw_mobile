@@ -35,7 +35,8 @@ const en = {
 	width : 'Width',
 	height : 'Height',
 	weight : 'Weight',
-	topUpPrompt : 'Telebot : You can purchase more signal coins to play different games or check the transaction record of your account'
+	topUpPrompt : 'Telebot : You can purchase more signal coins to play different games or check the transaction record of your account',
+	coins : 'Coins'
 }
 
 export default en;

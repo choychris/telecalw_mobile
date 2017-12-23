@@ -31,7 +31,7 @@ class RateListContainer extends Component{
 					justifyContent : 'center'
 				}}
 				dataSource={dataSource}
-				renderRow={(rowData)=><RateItem {...rowData}/>}
+				renderRow={(rowData,index)=><RateItem {...rowData} index={index}/>}
 			/>
 		)
 	}

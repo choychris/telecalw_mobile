@@ -22,7 +22,7 @@ const initialState = {
 			}  
 		},
 		{ 
-			coins : 60 , 
+			coins : 300 , 
 			bonus : 0 , 
 			currency : { 
 				usd : {   
@@ -31,7 +31,7 @@ const initialState = {
 			}  
 		},
 		{ 
-			coins : 60 , 
+			coins : 400 , 
 			bonus : 0 , 
 			currency : { 
 				usd : {   
@@ -47,6 +47,11 @@ const initialState = {
 function transactionReducer (state = initialState, action){
 	state = fromJS(state);
 	switch(action.type){
+		case 'SELECT_RATE':
+			return state
+				.setIn(['rate'],action.value)
+				.toJS();
+			break;
 		default:
 			return state.toJS();
 		break;

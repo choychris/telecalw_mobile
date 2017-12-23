@@ -75,6 +75,7 @@ class MessageBox extends Component {
 					{(content) ? content : null }
 					{(tabs && tabs[selectedTab] && tabs[selectedTab]['content']) ? tabs[selectedTab]['content'] : null}
 					{(buttons) ? <Buttons buttons={buttons}/> : null }
+					{(tabs[selectedTab]['buttons']) ? <Buttons buttons={tabs[selectedTab]['buttons']}/> : null }
 				</KeyboardAvoidingView>
 			</View>
 		)

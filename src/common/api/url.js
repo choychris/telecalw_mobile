@@ -24,6 +24,9 @@ export const api = {
 	reservations : {
 		root : apiBase+'/reservations'
 	},
+	transactions : {
+		root : apiBase+'/transactions'
+	},
 	gizwits : {
 		control : gizwitsBase+'/control'	
 	}

@@ -12,11 +12,7 @@ class Buttons extends Component {
 				{buttons.map((button,index)=>
 					<Button
 						key={index}
-						text={button.text}
-						textColor={button.textColor}
-						btnColor={button.btnColor}
-						borderColor={button.borderColor}
-						onPressFunction={()=>button.onPressFunction()}
+						{...button}
 					/>
 				)}
 			</View>

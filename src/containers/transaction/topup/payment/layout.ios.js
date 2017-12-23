@@ -3,12 +3,43 @@ import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndica
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../../utilities/actions';
+import { payment } from '../../actions';
 import BackgroundImage from '../../../../components/utilities/backgroundImage';
 import NavBar from '../../../../components/navBar/container';
 import MessageBox from '../../../../components/messageBox/container';
 import RateListContainer from './listContainer';
 
 class TopUp extends Component {
+	constructor(props){
+		super(props);
+		const { payment } = props;
+		this.state = {
+			tabs : [
+				{ 
+					name : 'purchase' , 
+					content : <RateListContainer/> ,
+					buttons : [
+						{
+							text : 'confirmText',
+							textStyle : {
+								color : 'white',
+								fontSize : 25,
+								fontFamily : 'Silom',
+								fontWeight : 'bold'
+							},
+							btnStyle : {
+								backgroundColor : '#4C4C4C',
+								paddingVertical : 15,
+								paddingHorizontal : 20
+							},
+							onPressFunction : ()=>payment()
+						}
+					]
+				},
+				{ name : 'transactions' }
+			]
+		}
+	}
 	shouldComponentUpdate(){
 		return false;
 	}
@@ -19,6 +50,7 @@ class TopUp extends Component {
 		const { 
 			navigator 
 		} = this.props;
+		const { tabs } = this.state;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -30,13 +62,8 @@ class TopUp extends Component {
 				/>
 				<MessageBox 
 					type={'right'}
-					tabs={[
-						{ name : 'purchase' , content : <RateListContainer/> },
-						{ name : 'transactions' }
-					]}
+					tabs={tabs}
 					promptString={'topUpPrompt'}
-					buttons={[
-					]}
 				/>
 			</View>
 		)
@@ -56,4 +83,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(null,null)(TopUp);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		payment
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(TopUp);
