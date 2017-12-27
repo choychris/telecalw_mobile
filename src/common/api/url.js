@@ -27,6 +27,9 @@ export const api = {
 	transactions : {
 		root : apiBase+'/transactions'
 	},
+	exchangeRates : {
+		root : apiBase+'/exchangeRates'
+	},
 	gizwits : {
 		control : gizwitsBase+'/control'	
 	}

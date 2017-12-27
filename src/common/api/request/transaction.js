@@ -9,3 +9,13 @@ export function getPaymentToken(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+// Engage Transaction Sales
+export function createSales(params,request){
+	const { token , userId , data } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.transactions.root+'/'+userId+'/createSale?access_token='+token,'POST',{ data : data })
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}

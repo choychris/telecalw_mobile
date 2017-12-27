@@ -25,7 +25,7 @@ export function pusherConfig(){
 }
 
 export function webrtcUrl(){
-   //let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+	//return 'https://webrtc-streamer.herokuapp.com';
 	return 'http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com'
 }
 

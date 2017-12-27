@@ -3,7 +3,7 @@ import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndica
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../../utilities/actions';
-import { payment } from '../../actions';
+import { payment , exchangeRate } from '../../actions';
 import BackgroundImage from '../../../../components/utilities/backgroundImage';
 import NavBar from '../../../../components/navBar/container';
 import MessageBox from '../../../../components/messageBox/container';
@@ -39,6 +39,10 @@ class TopUp extends Component {
 				{ name : 'transactions' }
 			]
 		}
+	}
+	componentWillMount(){
+		const { exchangeRate } = this.props;
+		exchangeRate();
 	}
 	shouldComponentUpdate(){
 		return false;
@@ -85,7 +89,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		payment
+		payment,
+		exchangeRate
 	}, dispatch)
 }
 

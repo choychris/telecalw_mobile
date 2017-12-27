@@ -9,6 +9,7 @@ const configuration = {
 		{"url": "stun:stun.l.google.com:19302"}
 	]
 };
+import { webrtcUrl } from '../config/env.js';
 
 const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, restart) => {
   let method = 'GET';
@@ -25,9 +26,10 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
     body: data
   };
   console.log(scope, data);
-	let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
+	//let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
 	//let url = `http://default-environment.25k6y4yfum.us-west-2.elasticbeanstalk.com${serverMethod}`
 	//let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+	let url = `${webrtcUrl()}${serverMethod}`;
   console.log(url);
   fetch(url, init)
   .then(res => {

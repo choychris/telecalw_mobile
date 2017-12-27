@@ -34,11 +34,9 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,pc) => {
     mode:'cors',
     body: data
   };
-  //console.log(scope, data);
-	let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
-   //let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
-  console.log(url);
-  fetch(url, init)
+	//let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
+ 	//let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
+  fetch(`${webrtcUrl()}${serverMethod}`, init)
   .then(res => {
     if(res.status === 200 && onSuccess){
       console.log(res._bodyText);

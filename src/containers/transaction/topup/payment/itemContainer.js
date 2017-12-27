@@ -18,13 +18,16 @@ class RateItem extends Component {
 			currency,
 			userCurrency,
 			selectRate,
-			index
+			id
 		} = this.props;
 		const rateImg = (coins >= 300) ? coinsImg['multi'] : coinsImg['single'];
+		const selected = (rate === id) ? styles.selectedBorder : null;
+		//console.warn(rate);
+		//console.warn(id);
 		return (
 			<TouchableOpacity
-				style={styles.container}
-				onPress={()=>selectRate(index)}
+				style={[styles.container,selected]}
+				onPress={()=>selectRate(id)}
 			>
 				<Image
 					source={rateImg}
@@ -36,7 +39,7 @@ class RateItem extends Component {
 						{`${coins} ${string['coins']}`}
 					</Text>
 					<Text style={styles.text}>
-						{`${currency[userCurrency]['value']} ${userCurrency}`}
+						{`${currency[userCurrency]} ${userCurrency}`}
 					</Text>
 				</View>
 			</TouchableOpacity>	
@@ -65,6 +68,10 @@ const styles = StyleSheet.create({
 		width : 30,
 		height : 30,
 		marginRight : 10
+	},
+	selectedBorder : {
+		borderColor : '#CF333F',
+		borderWidth : 5
 	}
 });
 
