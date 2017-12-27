@@ -12,7 +12,7 @@ class BarContainer extends Component {
 			menu : [
 				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
 				{ icon : 'share' , name : 'reward' , navigator : 'app.Reward' },
-				{ icon : 'money' , name : 'topUp' , navigate : 'app.TopUp' },
+				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' },
 				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
 			]
 		};

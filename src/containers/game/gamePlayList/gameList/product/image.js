@@ -18,6 +18,7 @@ class ProductImage extends Component {
 		} = this.props;
 		return (
 			<TouchableOpacity 
+				disabled={status.maintainStatus}
 				style={styles.container}
 				onPress={()=>onPressFunction(id,status.maintainStatus)}
 			>

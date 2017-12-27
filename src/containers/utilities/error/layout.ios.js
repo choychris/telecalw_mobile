@@ -10,15 +10,24 @@ class Error extends Component {
 		return false;
 	}
 	render(){
-		const { message, title , navigator } = this.props;
+		const { 
+			message, 
+			title , 
+			navigator ,
+			type,
+			header
+		} = this.props;
+		const botStatus = (type) ? type : 'sick';
 		return(
-			<TouchableWithoutFeedback onPress={()=>errorMessage('hide',navigator)}>
+			<TouchableWithoutFeedback 
+				onPress={()=>errorMessage('hide',navigator)}
+			>
 				<View style={styles.container}>
-					<Text style={styles.title}>Opps...</Text>
+					<Text style={styles.title}>{(header) ? header : 'Opps...'}</Text>
 					<Text style={styles.title}>{title}</Text>
 					<View style={styles.image}>
 						<Telebot 
-							status={'sick'} 
+							status={botStatus} 
 							height={200} 
 							width={200}
 						/>

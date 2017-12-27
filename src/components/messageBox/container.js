@@ -10,6 +10,7 @@ const messageBoxImage = {
 import Prompt from './promopt';
 import Buttons from './buttons';
 import Tab from './tab';
+const height = Dimensions.get('window').height;
 
 class MessageBox extends Component {
 	constructor(props){
@@ -91,12 +92,12 @@ const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
 		width : '100%',
-		height : '95%'
+		height : height * 0.77
 	},
 	formView : { 
 		backgroundColor : '#EAEAEA' , 
 		borderRadius : 30 , 
-		alignItems : 'flex-start'
+		alignItems : 'center'
 	},
 	title : {
 		color : '#011627',

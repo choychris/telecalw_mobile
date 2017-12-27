@@ -14,11 +14,12 @@ class RateItem extends Component {
 		const { 
 			coins , 
 			rate , 
+			id,
+			bonus,
 			string ,
 			currency,
 			userCurrency,
-			selectRate,
-			id
+			selectRate
 		} = this.props;
 		const rateImg = (coins >= 300) ? coinsImg['multi'] : coinsImg['single'];
 		const selected = (rate === id) ? styles.selectedBorder : null;
@@ -37,6 +38,9 @@ class RateItem extends Component {
 				<View>
 					<Text style={styles.text}>
 						{`${coins} ${string['coins']}`}
+					</Text>
+					<Text style={styles.text}>
+						{`${bonus} ${string['bonus']}`}
 					</Text>
 					<Text style={styles.text}>
 						{`${currency[userCurrency]} ${userCurrency}`}

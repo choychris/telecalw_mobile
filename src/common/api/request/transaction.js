@@ -19,3 +19,13 @@ export function createSales(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+// Get User Transactions
+export function getTransactions(params,request){
+	const { token , userId } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.transactions.root+'?filter[where][userId]='+userId+'&filter[order]=created%20DESC&access_token='+token,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}

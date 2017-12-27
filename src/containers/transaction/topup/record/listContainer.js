@@ -2,11 +2,11 @@ import React, { PropTypes, Component } from 'react';
 import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { exchangeRate } from '../../actions';
-import RateItem from './itemContainer';
+import { transactions } from '../../actions';
+import TransactionItem from './itemContainer';
 const height = Dimensions.get('window').height;
 
-class RateListContainer extends Component{
+class TransactionListContainer extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -14,9 +14,9 @@ class RateListContainer extends Component{
 		};
 	}
 	componentDidMount(){
-		// Fetch Remote Backend API to Get List of Exchage Rate
-		const { exchangeRate } = this.props;
-		exchangeRate();
+		// Fetch Remote Backend API to Get List of Transactions
+		const { transactions } = this.props;
+		transactions();
 	}
 	_renderLoading(){
 		return (
@@ -25,21 +25,21 @@ class RateListContainer extends Component{
 			</View>
 		)
 	}
-	_renderList(rates){
+	_renderList(transactions){
 		const { ds } = this.state;
-		const dataSource =  ds.cloneWithRows(rates);
+		const dataSource =  ds.cloneWithRows(transactions);
 		return (
 			<ListView
 				style={styles.listWrapper}
 				contentContainerStyle={styles.listContainer}
 				dataSource={dataSource}
-				renderRow={(rowData)=><RateItem {...rowData}/>}
+				renderRow={(rowData)=><TransactionItem {...rowData}/>}
 			/>
 		)
 	}
 	render(){
-		const { rates } = this.props;
-		return (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading();
+		const { transactionsData } = this.props;
+		return (transactionsData &&  transactionsData.length > 0) ? this._renderList(transactionsData) : this._renderLoading();
 	}
 }
 
@@ -52,13 +52,12 @@ const styles = StyleSheet.create({
 	},
 	listWrapper : {
 		alignSelf : 'stretch',
-		height : height * 0.4
+		height : height * 0.4,
+		marginVertical : 10
 	},
 	listContainer : {
 		paddingVertical : 10,
 		alignSelf : 'stretch',
-		flexDirection: 'row',
-		flexWrap: 'wrap',
 		alignItems : 'center',
 		justifyContent : 'center'
 	}
@@ -66,13 +65,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		rates : state.transaction.rates
+		transactionsData : state.transaction.transactions
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		exchangeRate
+		transactions
 	}, dispatch)
 }
-export default connect(mapStateToProps,mapDispatchToProps)(RateListContainer);
+
+export default connect(mapStateToProps,mapDispatchToProps)(TransactionListContainer);

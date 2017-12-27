@@ -36,7 +36,18 @@ const en = {
 	height : 'Height',
 	weight : 'Weight',
 	topUpPrompt : 'Telebot : You can purchase more signal coins to play different games or check the transaction record of your account',
-	coins : 'Coins'
+	coins : 'Coins',
+	bonus : 'Bonus',
+	selectRate : 'Please select your target purchase bundle',
+	successPurchase : 'Purchase Success',
+	thankyou : 'Thank You Very Much',
+	newBalance : 'Your new wallet balance is',
+	date : 'Date',
+	topUp : 'Top Up',
+	wallet : 'Wallet',
+	delivery : 'Delivery',
+	reward : 'Reward',
+	support : 'Support'
 }
 
 export default en;

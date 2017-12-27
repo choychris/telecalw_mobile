@@ -9,7 +9,13 @@ class ItemButton extends Component {
 		return false;
 	}
 	render(){
-		const { name , icon , navigate , navigator } = this.props;
+		const { 
+			name , 
+			icon , 
+			navigate , 
+			navigator ,
+			string
+		} = this.props;
 		return (
 			<TouchableOpacity 
 				style={styles.container}
@@ -23,7 +29,7 @@ class ItemButton extends Component {
 				}}
 			>
 				<Icon name={icon} size={25} color='white'/>
-				<Text style={styles.text}>{name}</Text>
+				<Text style={styles.text}>{string[name]}</Text>
 			</TouchableOpacity>	
 		)
 	}
@@ -45,4 +51,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(ItemButton);
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
+
+export default connect(mapStateToProps,null)(ItemButton);

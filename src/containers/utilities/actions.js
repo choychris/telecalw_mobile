@@ -1,23 +1,29 @@
-export function errorMessage(action,navigator,data){
+export function errorMessage(action,navigator,data,time){
+	let callback;
 	if(action === 'show'){
-		navigator.showLightBox({
-			screen : 'app.Error',
-			animationType : 'slide-up',
-			navigatorStyle: {
-				navBarHidden: true
-			},
-			passProps : data,
-			style: {
-				backgroundBlur: "dark",
-				backgroundColor : 'rgba(52, 52, 52, 0.2)',
-				tapBackgroundToDismiss: true
-			}
-		});
+		callback = ()=>{
+			navigator.showLightBox({
+				screen : 'app.Error',
+				animationType : 'slide-up',
+				navigatorStyle: {
+					navBarHidden: true
+				},
+				passProps : data,
+				style: {
+					backgroundBlur: "dark",
+					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					tapBackgroundToDismiss: true
+				}
+			});
+		};
 	} else {
-		navigator.dismissLightBox({
-			animationType : 'slide-down'
-		})
+		callback = ()=>{
+			navigator.dismissLightBox({
+				animationType : 'slide-down'
+			})
+		}
 	}
+	(time) ? setTimeout(()=>callback(),time) : callback();
 }
 
 export function loading (action,navigator){
@@ -40,4 +46,32 @@ export function loading (action,navigator){
 			animationType : 'fade'
 		})
 	}
+}
+
+export function message(action,navigator,data,time){
+	let callback;
+	if(action === 'show'){
+		callback = ()=>{
+			navigator.showLightBox({
+				screen : 'app.Error',
+				animationType : 'slide-up',
+				navigatorStyle: {
+					navBarHidden: true
+				},
+				passProps : data,
+				style: {
+					backgroundBlur: "dark",
+					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					tapBackgroundToDismiss: true
+				}
+			});
+		};
+	} else {
+		callback = ()=>{
+			navigator.dismissLightBox({
+				animationType : 'slide-down'
+			})
+		}
+	}
+	(time) ? setTimeout(()=>callback(),time) : callback();
 }
