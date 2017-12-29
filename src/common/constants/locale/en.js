@@ -47,7 +47,9 @@ const en = {
 	wallet : 'Wallet',
 	delivery : 'Delivery',
 	reward : 'Reward',
-	support : 'Support'
+	support : 'Support',
+	deliveryPrompt : 'Telebot : You can ship your pending prize home with different method',
+	ship : 'Ship'
 }
 
 export default en;

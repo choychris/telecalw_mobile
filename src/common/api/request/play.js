@@ -9,3 +9,14 @@ export function gameResult(params,request){
 			.catch((error)=>reject(error));	  
 	});
 }
+
+// Get Winning Game Play Result
+export function getWinResult(params,request){
+	const { token , filter } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.plays.root+'?filter='+JSON.stringify(filter)+'&access_token='+token,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+
+}

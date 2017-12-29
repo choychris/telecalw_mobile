@@ -22,6 +22,8 @@ class MessageBox extends Component {
 			} else {
 				this.state = { selectedTab : 0 };
 			}
+		} else {
+			this.state = { selectedTab : null }
 		}
 	}
 	_renderTabs(tabs){
@@ -76,7 +78,7 @@ class MessageBox extends Component {
 					{(content) ? content : null }
 					{(tabs && tabs[selectedTab] && tabs[selectedTab]['content']) ? tabs[selectedTab]['content'] : null}
 					{(buttons) ? <Buttons buttons={buttons}/> : null }
-					{(tabs[selectedTab]['buttons']) ? <Buttons buttons={tabs[selectedTab]['buttons']}/> : null }
+					{(tabs && tabs[selectedTab]['buttons']) ? <Buttons buttons={tabs[selectedTab]['buttons']}/> : null }
 				</KeyboardAvoidingView>
 			</View>
 		)
