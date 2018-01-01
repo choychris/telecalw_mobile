@@ -2,12 +2,14 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , StatusBar , StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-//import { fillSignUpForm , confirmSignUp } from '../actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import Telebot from '../../../components/telebuddies/telebot';
 import MessageBox from '../../../components/messageBox/container';
 import NavBar from '../../../components/navBar/container';
-import GamePlaySelect from '../delivery/play/listContainer';
+import GamePlaySelect from './play/listContainer';
+import LogisticForm from './logistic/layout';
+import { getUserInfo } from '../../auth/actions';
+import { getLogisticQuote , resetLogistic  } from '../actions';
 
 class Delivery extends Component {
 	constructor(props){
@@ -19,39 +21,67 @@ class Delivery extends Component {
 		this.state = { display : 'gamePlaySelect' };
 	}
 	componentDidMount(){
-		//const { fillSignUpForm } = this.props;
-		//fillSignUpForm('SIGNUP_COUNTRY_CODE',DeviceInfo.getDeviceCountry().toLowerCase())
+		const { getUserInfo } = this.props;
+		getUserInfo();
 	}
-	//_renderForm(){
-		//const { fillSignUpForm } = this.props;
-		//return(
-			//<View style={styles.form}>
-				//<AddressForm 
-					//dispatchFunction={fillSignUpForm} 
-					//action={{
-						//countryCode : 'SIGNUP_COUNTRY_CODE',
-						//address : 'SIGNUP_ADDRESS'
-					//}}
-				///>	
-				//<PhoneForm
-					//dispatchFunction={fillSignUpForm} 
-					//action='SIGNUP_PHONE'
-				///>
-			//</View>
-		//)
-	//}
+	componentWillUnmount(){
+		// Clear Selected Play / Reset 
+		const { resetLogistic } = this.props;
+		resetLogistic();
+	}
 	_renderContent(display){
 		switch(display){
 			case 'gamePlaySelect':
 				return <GamePlaySelect/>
 			break;
+			case 'logisticForm':
+				return <LogisticForm/>
+			break;
 		}
 	}
 	_renderBtn(display){
+		const { play , getLogisticQuote } = this.props;
 		switch(display){
 			case 'gamePlaySelect':
-				return [{
-					text : 'ship',
+				return [
+					{
+						text : 'ship',
+						textStyle : {
+							color : 'white',
+							fontSize : 25,
+							fontFamily : 'Silom',
+							fontWeight : 'bold'
+						},
+						btnStyle : {
+							backgroundColor : '#4C4C4C',
+							paddingVertical : 15,
+							paddingHorizontal : 20
+						},
+						onPressFunction : ()=>(play.length > 0) ? this.setState({ display : 'logisticForm'  }) : null
+					}
+				]
+			break;
+			case 'logisticForm':
+			return [
+				{
+					text : 'back',
+					textStyle : {
+						color : '#4C4C4C',
+						fontSize : 25,
+						fontFamily : 'Silom',
+						fontWeight : 'bold'
+					},
+					borderColor : '#AFAFAF',
+					btnStyle : {
+						backgroundColor : '#EFEFEF',
+						paddingVertical : 15,
+						paddingHorizontal : 20,
+						marginHorizontal : 5
+					},
+					onPressFunction : ()=>this.setState({ display : 'gamePlaySelect' })
+				},
+				{
+					text : 'confirm',
 					textStyle : {
 						color : 'white',
 						fontSize : 25,
@@ -61,10 +91,15 @@ class Delivery extends Component {
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 15,
-						paddingHorizontal : 20
+						paddingHorizontal : 20,
+						marginHorizontal : 5
 					},
-					onPressFunction : ()=>{}
+					onPressFunction : ()=>{
+						getLogisticQuote(()=>this.setState({ display : 'quoteSelect' }))
+					}	
 				}]
+			break;
+			case 'quoteSelect':
 			break;
 		}
 	}
@@ -84,22 +119,23 @@ class Delivery extends Component {
 				/>
 				<MessageBox 
 					title={'delivery'}
-					type={'right'}
+					type={'left'}
 					promptString={'deliveryPrompt'}
 					content={displayContent}
 					buttons={displayBtn}
 				/>
 				<View style={styles.telebot}>
-					<Telebot 
-						status={'normal'} 
-						height={100} 
-						width={100}
-					/>
 				</View>
 			</View>
 		)
 	}
 }
+
+					//<Telebot 
+						//status={'normal'} 
+						//height={100} 
+						//width={100}
+					///>
 
 const styles = StyleSheet.create({
 	container : {
@@ -109,21 +145,23 @@ const styles = StyleSheet.create({
 	telebot : {
 		position : 'absolute',
 		bottom : 0,
-		right : 0,
+		left : 0,
 		padding : 5
-	},
-	form : {
-		backgroundColor : 'transparent',
-		marginVertical : 5,
-		alignSelf : 'stretch'
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		play : state.mis.play
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		//fillSignUpForm,
-		//confirmSignUp
+		getUserInfo,
+		getLogisticQuote,
+		resetLogistic
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(Delivery);
+export default connect(mapStateToProps,mapDispatchToProps)(Delivery);

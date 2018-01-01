@@ -11,9 +11,9 @@ export function authRequest(userObj,request){
 
 // Get User Basic Info request
 export function userInfoRequest(params,request){
-	const { userId , id } = params;
+	const { userId , token } = params;
 	return new Promise((resolve,reject)=>{
-		request(api.users.root+'/'+userId+'?access_token='+id,'GET')
+		request(api.users.root+'/'+userId+'?access_token='+token,'GET')
 			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
 			.catch((error)=>reject(error));	  
 	});

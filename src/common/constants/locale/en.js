@@ -10,6 +10,7 @@ const en = {
 	selectCountry : 'Select Your Home Country',
 	inputAddress : 'What is Your Home Address ?',
 	inputPhone : 'What is your Phone Number ?',
+	inputPostalCode : 'What is your Postal Code ?',
 	formError : 'Fill in Error',
 	doubleCheckForm : 'Please double check all the form is filled',
 	earth : 'Earth',

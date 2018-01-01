@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userWallet , userStatus , userLogout , userReservation } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout , userReservation ,userInfoRequest } from '../../common/api/request/user';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -225,6 +225,25 @@ export function getUserReservation(){
 	}
 }
 
+export function getUserInfo(){
+	return (dispatch,getState)=>{
+		const lbToken = getState()['auth']['token']['lbToken'];
+		const { id , userId } = lbToken;
+		userInfoRequest({
+			token : id,
+			userId : userId
+		},Request).then((res,err)=>{
+			if(!err){
+				//console.warn(JSON.stringify(res))
+				dispatch({
+					type : 'STORE_USER_INFO',
+					value : res
+				});
+			}
+		});
+	}
+}
+
 export function authError(navigator,title,message){
 	return (dispatch,getState)=>{
 		const { string } = getState()['preference']['language'];
@@ -239,33 +258,3 @@ export function authError(navigator,title,message){
 	}
 }
 
-
-//export function fillSignUpForm(action,value){
-	//return (dispatch,getState)=>{
-		//// Filter Incorrect value
-		//return dispatch({ type : action , value });
-	//}
-//}
-
-//export function confirmSignUp(navigator){
-	//return (dispatch,getState)=>{
-		//const user = getState()['auth']['user'];
-		//if(
-			//user.address &&
-			//user.phone &&
-			//user.countryCode
-		//){
-			//// Handle the Signup Procedure to Backend
-			////loading('show',navigator);
-			////console.warn(JSON.stringify(user));
-			//navigator.resetTo({
-				//screen : 'app.GamePlayList',
-				//navigatorStyle : {
-					//navBarHidden : true
-				//}
-			//});
-		//} else {
-			//dispatch(authError(navigator,'formError','doubleCheckForm'));
-		//}
-	//}
-//}

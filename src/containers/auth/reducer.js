@@ -35,23 +35,28 @@ function authReducer(state = initialState, action){
 				.setIn(['reservation'],action.value)
 				.toJS();
 		break;
-		//case 'SIGNUP_ADDRESS':
-			//return state
-				//.setIn(['user','address'],action.value)
-				//.toJS()
-		//break;
-		//case 'SIGNUP_PHONE':
-			//return state
-				//.setIn(['user','phone'],action.value)
-				//.toJS()
-		//break;
-		//case 'SIGNUP_COUNTRY_CODE':
-			//return state
-				//.setIn(['user','countryCode'],action.value)
-				//.toJS()
-		//break;
+		case 'USER_ADDRESS':
+			return state
+				.setIn(['user','address'],action.value)
+				.toJS()
+		break;
+		case 'USER_PHONE':
+			return state
+				.setIn(['user','phone'],action.value)
+				.toJS()
+		break;
+		case 'USER_COUNTRY_CODE':
+			return state
+				.setIn(['user','countryCode'],action.value)
+				.toJS()
+		break;
+		case 'USER_POSTAL_CODE':
+			return state	
+				.setIn(['user','postalCode'],action.value)
+				.toJS()
+		break;
 		default:
-		return state.toJS();
+			return state.toJS();
 		break;
 	}
 }
