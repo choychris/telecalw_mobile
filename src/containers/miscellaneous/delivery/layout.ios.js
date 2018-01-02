@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StatusBar , StyleSheet , Dimensions } from 'react-native';
+import { View , Text , StatusBar , StyleSheet , Dimensions , KeyboardAvoidingView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
@@ -9,7 +9,8 @@ import NavBar from '../../../components/navBar/container';
 import GamePlaySelect from './play/listContainer';
 import LogisticForm from './logistic/layout';
 import { getUserInfo } from '../../auth/actions';
-import { getLogisticQuote , resetLogistic  } from '../actions';
+import { getLogisticQuote , resetLogistic , confirmDelivery } from '../actions';
+import QuoteSelect from './quote/listContainer';
 
 class Delivery extends Component {
 	constructor(props){
@@ -37,10 +38,17 @@ class Delivery extends Component {
 			case 'logisticForm':
 				return <LogisticForm/>
 			break;
+			case 'quoteSelect':
+				return <QuoteSelect/>
+			break;
 		}
 	}
 	_renderBtn(display){
-		const { play , getLogisticQuote } = this.props;
+		const { 
+			play , 
+			getLogisticQuote ,
+			confirmDelivery
+		} = this.props;
 		switch(display){
 			case 'gamePlaySelect':
 				return [
@@ -97,9 +105,45 @@ class Delivery extends Component {
 					onPressFunction : ()=>{
 						getLogisticQuote(()=>this.setState({ display : 'quoteSelect' }))
 					}	
-				}]
+				}
+			]
 			break;
 			case 'quoteSelect':
+			return [
+				{
+					text : 'back',
+					textStyle : {
+						color : '#4C4C4C',
+						fontSize : 25,
+						fontFamily : 'Silom',
+						fontWeight : 'bold'
+					},
+					borderColor : '#AFAFAF',
+					btnStyle : {
+						backgroundColor : '#EFEFEF',
+						paddingVertical : 15,
+						paddingHorizontal : 20,
+						marginHorizontal : 5
+					},
+					onPressFunction : ()=>this.setState({ display : 'logisticForm'  })
+				},
+				{
+					text : 'confirm',
+					textStyle : {
+						color : 'white',
+						fontSize : 25,
+						fontFamily : 'Silom',
+						fontWeight : 'bold'
+					},
+					btnStyle : {
+						backgroundColor : '#4C4C4C',
+						paddingVertical : 15,
+						paddingHorizontal : 20,
+						marginHorizontal : 5
+					},
+					onPressFunction : ()=>confirmDelivery()
+				}
+			]
 			break;
 		}
 	}
@@ -117,36 +161,45 @@ class Delivery extends Component {
 					coins={true} 
 					navigator={navigator}
 				/>
-				<MessageBox 
-					title={'delivery'}
-					type={'left'}
-					promptString={'deliveryPrompt'}
-					content={displayContent}
-					buttons={displayBtn}
-				/>
-				<View style={styles.telebot}>
-				</View>
+				<KeyboardAvoidingView 
+					behavior="position" 
+					style={styles.keyboardView}
+				>
+					<MessageBox 
+						title={'delivery'}
+						type={'left'}
+						promptString={'deliveryPrompt'}
+						content={displayContent}
+						buttons={displayBtn}
+					/>
+					<Telebot 
+						style={styles.telebot}
+						status={'normal'} 
+						height={100} 
+						width={100}
+					/>
+				</KeyboardAvoidingView>
 			</View>
 		)
 	}
 }
 
-					//<Telebot 
-						//status={'normal'} 
-						//height={100} 
-						//width={100}
-					///>
 
 const styles = StyleSheet.create({
 	container : {
 		flex : 1,
 		alignItems : 'center'
 	},
+	keyboardView: {
+		alignSelf : 'stretch' , 
+		justifyContent : 'flex-start' , 
+		alignItems : 'center' , 
+		flex : 1
+	},
 	telebot : {
 		position : 'absolute',
-		bottom : 0,
-		left : 0,
-		padding : 5
+		bottom : -40,
+		left : 0
 	}
 });
 
@@ -160,7 +213,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		getUserInfo,
 		getLogisticQuote,
-		resetLogistic
+		resetLogistic,
+		confirmDelivery
 	}, dispatch)
 }
 

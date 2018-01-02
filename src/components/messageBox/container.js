@@ -67,11 +67,7 @@ class MessageBox extends Component {
 					style={styles.image}
 					resizeMode='stretch'
 				/>	
-				<KeyboardAvoidingView 
-					behavior="padding" 
-					style={styles.formView}
-					keyboardVerticalOffset={35}
-				>
+				<View style={styles.innerView}>
 					{(title) ? <Text style={styles.title}>{string[title]}</Text> : null}
 					{(tabs) ? this._renderTabs(tabs) : null }
 					{(promptString) ? <Prompt promptString={promptString}/> : null }
@@ -79,7 +75,7 @@ class MessageBox extends Component {
 					{(tabs && tabs[selectedTab] && tabs[selectedTab]['content']) ? tabs[selectedTab]['content'] : null}
 					{(buttons) ? <Buttons buttons={buttons}/> : null }
 					{(tabs && tabs[selectedTab]['buttons']) ? <Buttons buttons={tabs[selectedTab]['buttons']}/> : null }
-				</KeyboardAvoidingView>
+				</View>
 			</View>
 		)
 	}
@@ -88,7 +84,7 @@ class MessageBox extends Component {
 const styles = StyleSheet.create({
 	container : {
 		height: Dimensions.get('window').height * 0.85 ,
-		width: Dimensions.get('window').width * 0.9 ,
+		width: Dimensions.get('window').width * 0.92 ,
 		marginVertical : 5
 	},
 	image : {
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
 		width : '100%',
 		height : height * 0.77
 	},
-	formView : { 
+	innerView : { 
 		backgroundColor : '#EAEAEA' , 
 		borderRadius : 30 , 
 		alignItems : 'center'

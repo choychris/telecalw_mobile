@@ -11,7 +11,7 @@ class BarContainer extends Component {
 		this.state = { 
 			menu : [
 				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-				{ icon : 'gift' , name : 'reward' , navigator : 'app.Reward' },
+				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
 				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' },
 				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
 			]

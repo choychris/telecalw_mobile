@@ -16,12 +16,12 @@ class Telebot extends Component {
 		return false;
 	}
 	render(){
-		const { status , height , width } = this.props;
+		const { status , height , width , style } = this.props;
 		const imageStyle= { width : width , height : height };
 		return(
 			<Image
 			 source={telebotImages[status]}
-			 style={imageStyle}
+			 style={[imageStyle,style]}
 			 resizeMode="contain"
 			/>
 		)

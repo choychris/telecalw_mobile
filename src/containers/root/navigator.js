@@ -10,7 +10,9 @@ import GameCountDown from '../game/gamePlay/transition/layout';
 import Reservation from '../game/reservation/layout';
 import TopUp from '../transaction/topup/payment/layout';
 import ProductDetailContainer from '../game/gameRoom/product/listContainer';
-import Delivery from '../miscellaneous/delivery/layout.ios';
+import Delivery from '../miscellaneous/delivery/layout';
+import Reward from '../transaction/reward/layout';
+import CustomerSupport from '../miscellaneous/cs/layout';
 
 // register all screens of the app (including internal ones)
  export function registerScreens(store , Provider) {
@@ -25,5 +27,7 @@ import Delivery from '../miscellaneous/delivery/layout.ios';
 	 Navigation.registerComponent('app.GameCountDown', () => GameCountDown,store,Provider);
 	 Navigation.registerComponent('app.ProductDetail', () => ProductDetailContainer,store,Provider);
 	 Navigation.registerComponent('app.TopUp', () => TopUp,store,Provider);
+	 Navigation.registerComponent('app.Reward', () => Reward,store,Provider);
 	 Navigation.registerComponent('app.Delivery', () => Delivery,store,Provider);
+	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
 }

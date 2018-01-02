@@ -50,7 +50,22 @@ const en = {
 	reward : 'Reward',
 	support : 'Support',
 	deliveryPrompt : 'Telebot : You can ship your pending prize home with different method',
-	ship : 'Ship'
+	ship : 'Ship',
+	rewardPrompt : 'Telebot : You can earn 60 free coins each time by referring friends to play teleclaw',
+	referralCode : 'Referral Code',
+	referral : 'Referral',
+	redeem : 'Redeem',
+	inputRedeemCode : 'Please enter the Redeem Code',
+	issueReport : 'Issue Report',
+	issuePrompt : 'Telebot : What kind of issue do you face ? We will replay you asap in 3-5 working days',
+	gameAppeal : 'Game\nAppeal',
+	deliveryProblem : 'Delivery\nProblem',
+	coinsPurchase : 'Coins\nPurchase',
+	bugsReport : 'Bugs\nReport',
+	others : 'Others',
+	inputEmail : 'Your Email',
+	inputMsg : 'Message you want us to know …',
+	days : 'Day(s)'
 }
 
 export default en;

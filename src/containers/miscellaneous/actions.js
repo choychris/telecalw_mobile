@@ -1,6 +1,6 @@
 import Request from '../../utils/fetch';
 import { getWinResult } from '../../common/api/request/play';
-import { getDeliveryQuote } from '../../common/api/request/delivery';
+import { getDeliveryQuote , postDelivery } from '../../common/api/request/delivery';
 
 export function winResult(){
 	return(dispatch,getState)=>{
@@ -90,15 +90,14 @@ export function getLogisticQuote(nextState){
 			const user = getState()['auth']['user'];
 		  valid = (user.address && user.phone && user.countryCode && user.postalCode) ? true : false;
 			data.postalCode = user.postalCode;
-			data.countryCode = user.countryCode;
+			data.countryCode = user.countryCode.toUpperCase();
 		} else if (target === 'logistic'){
 		  valid = (logistic.address && logistic.phone && logistic.countryCode && logistic.postalCode) ? true : false;
 			data.postalCode = logistic.postalCode;
-			data.countryCode = logistic.countryCode;
+			data.countryCode = logistic.countryCode.toUpperCase();
 		}
 		//console.warn(valid);
 		if(valid === true){
-			nextState();
 			const play = getState()['mis']['play'];
 			const { id } = getState()['auth']['token']['lbToken'];
 			data.products = play;
@@ -109,9 +108,17 @@ export function getLogisticQuote(nextState){
 				data : data
 			},Request)
 				.then((res,err)=>{
-					console.warn(JSON.stringify(res));
-					console.warn(JSON.stringify(err));
+					//console.warn(JSON.stringify(res));
+					//console.warn(JSON.stringify(err));
 					if(!err){
+						const { result } = res;
+						dispatch({
+							type : 'STORE_QUOTES',
+							value : result
+						});
+						nextState();
+					} else {
+
 					}
 				});
 		} else {
@@ -122,7 +129,51 @@ export function getLogisticQuote(nextState){
 
 export function confirmDelivery(){
 	return (dispatch,getState)=>{
-		// Check Enough Coins Or Not
+		// Step 1 : Check Wallet Balance and Quote Method is Selected
+		const { balance } = getState()['auth']['wallet'];
+		const logistic = getState()['mis']['logistic'];
+		const { target , quote } = logistic
+		if(quote !== null && balance >= quote.coins_value){
+			const { id , userId } = getState()['auth']['token']['lbToken'];
+			const play = getState()['mis']['play'];
+			// Step 2 : Post Delivery Request to Backend
+			let data = {
+				address : {},
+				cost : quote.coins_value,
+				status : 'pending',
+				userId : userId,
+				products : play	,
+				courier : quote
+			};
+			const user = getState()['auth']['user'];
+			//console.warn(JSON.stringify(user));
+			//console.warn(JSON.stringify(logistic));
+			if(target === 'user'){
+				data.address.postalCode = user.postalCode;
+				data.address.countryCode = user.countryCode.toUpperCase();
+				data.address.line1 = user.address;
+				data.address.name = user.name;
+				data.address.phone = user.phone;
+			} else if(target === 'logistic'){
+				data.postalCode = logistic.postalCode;
+				data.countryCode = logistic.countryCode.toUpperCase();
+			}
+			console.warn(JSON.stringify(data));
+			postDelivery(
+				{  
+					token : id ,
+					data : data
+				},
+				Request
+			)
+				.then((res,err)=>{
+					console.warn(JSON.stringify(res));
+					console.warn(JSON.stringify(err));
+				})
+				.catch((err)=>{
+					console.warn(JSON.stringify(err));
+				});
+		}
 	}
 }
 
@@ -130,6 +181,24 @@ export function resetLogistic(){
 	return (dispatch,getState)=>{
 		return dispatch({
 			type : 'RESET_DELIVERY'
+		})
+	}
+}
+
+export function selectIssueType(value){
+	return(dispatch,getState)=>{
+		return dispatch({
+			type : 'SELECT_ISSUE_TYPE',
+			value : value
+		})
+	}
+}
+
+export function selectQuote(quote){
+	return(dispatch,getState)=>{
+		return dispatch({
+			type : 'SELECT_QUOTE',
+			value : quote
 		})
 	}
 }

@@ -4,6 +4,7 @@ import { userTransactions } from '../../common/api/request/user';
 import { getExchageRate } from '../../common/api/request/exchangeRate';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
+import { ShareDialog } from 'react-native-fbsdk';
 
 export function selectRate(rate){
 	return (dispatch,getState)=>{
@@ -150,5 +151,30 @@ export function transactions(){
 			.catch(function(err) {
 				console.warn(JSON.stringify(err));
 			});
+	}
+}
+
+export function shareToFacebook(shareLinkContent){
+	return (dispatch,getState)=>{
+		ShareDialog.canShow(shareLinkContent)
+			.then(
+				(canShow)=>{
+					if (canShow) ShareDialog.show(shareLinkContent);   
+				}	  
+			)
+			.then(
+				(result)=>{
+					console.warn(JSON.stringify(result));
+						//if (result.isCancelled) {
+							//alert('Share cancelled');
+						//} else {
+							//alert('Share success with postId: '
+							//+ result.postId);
+						//}	
+				},
+				(error)=>{
+
+				}
+			);
 	}
 }

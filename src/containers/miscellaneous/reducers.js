@@ -7,6 +7,9 @@ const initialState = {
 		target : 'user',
 		quotes : [],
 		quote : null
+	},
+	issue : {
+		type : 'gameAppeal'
 	}
 }
 
@@ -67,6 +70,21 @@ function misReducer (state = initialState, action){
 		case 'LOGISTIC_POSTAL_CODE':
 			return state	
 				.setIn(['logistic','postalCode'],action.value)
+				.toJS()
+		break;
+		case 'STORE_QUOTES':
+			return state
+				.setIn(['logistic','quotes'],action.value)
+				.toJS()
+		break;
+		case 'SELECT_ISSUE_TYPE':
+			return state
+				.setIn(['issue','type'],action.value)
+				.toJS()
+		break;
+		case 'SELECT_QUOTE':
+			return state
+				.setIn(['logistic','quote'],action.value)
 				.toJS()
 		break;
 		default:
