@@ -9,8 +9,9 @@ import NavBar from '../../../components/navBar/container';
 import GamePlaySelect from './play/listContainer';
 import LogisticForm from './logistic/layout';
 import { getUserInfo } from '../../auth/actions';
-import { getLogisticQuote , resetLogistic , confirmDelivery } from '../actions';
+import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect } from '../actions';
 import QuoteSelect from './quote/listContainer';
+import Receipt from './receipt/layout';
 
 class Delivery extends Component {
 	constructor(props){
@@ -25,15 +26,24 @@ class Delivery extends Component {
 		const { getUserInfo } = this.props;
 		getUserInfo();
 	}
+	shouldComponentUpdate(nextProps,nextState){
+		const { display , data } = this.state;
+		return display !== nextState.display || data !== nextState.data;
+	}
 	componentWillUnmount(){
 		// Clear Selected Play / Reset 
 		const { resetLogistic } = this.props;
 		resetLogistic();
 	}
 	_renderContent(display){
+		const { navigator } = this.props;
+		const { data } = this.state;
 		switch(display){
 			case 'gamePlaySelect':
-				return <GamePlaySelect/>
+				return <GamePlaySelect 
+					navigator={navigator}
+					nextState={(data)=>this.setState({ display : 'deliveryReceipt' , data : data })}
+				/>
 			break;
 			case 'logisticForm':
 				return <LogisticForm/>
@@ -41,13 +51,20 @@ class Delivery extends Component {
 			case 'quoteSelect':
 				return <QuoteSelect/>
 			break;
+			case 'deliveryReceipt':
+				return <Receipt 
+					{...data}
+					navigator={navigator}
+				/>
+			break;
 		}
 	}
 	_renderBtn(display){
 		const { 
-			play , 
+			confirmPlaySelect,
 			getLogisticQuote ,
-			confirmDelivery
+			confirmDelivery,
+			navigator
 		} = this.props;
 		switch(display){
 			case 'gamePlaySelect':
@@ -65,7 +82,7 @@ class Delivery extends Component {
 							paddingVertical : 15,
 							paddingHorizontal : 20
 						},
-						onPressFunction : ()=>(play.length > 0) ? this.setState({ display : 'logisticForm'  }) : null
+						onPressFunction : ()=>confirmPlaySelect(()=>this.setState({ display : 'logisticForm' }))
 					}
 				]
 			break;
@@ -103,7 +120,7 @@ class Delivery extends Component {
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>{
-						getLogisticQuote(()=>this.setState({ display : 'quoteSelect' }))
+						getLogisticQuote(navigator,()=>this.setState({ display : 'quoteSelect' }))
 					}	
 				}
 			]
@@ -141,7 +158,28 @@ class Delivery extends Component {
 						paddingHorizontal : 20,
 						marginHorizontal : 5
 					},
-					onPressFunction : ()=>confirmDelivery()
+					onPressFunction : ()=>confirmDelivery(navigator,()=>this.setState({ display : 'gamePlaySelect' }))
+				}
+			]
+			break;
+			case 'deliveryReceipt':
+			return [
+				{
+					text : 'back',
+					textStyle : {
+						color : '#4C4C4C',
+						fontSize : 25,
+						fontFamily : 'Silom',
+						fontWeight : 'bold'
+					},
+					borderColor : '#AFAFAF',
+					btnStyle : {
+						backgroundColor : '#EFEFEF',
+						paddingVertical : 15,
+						paddingHorizontal : 20,
+						marginHorizontal : 5
+					},
+					onPressFunction : ()=>this.setState({ display : 'gamePlaySelect'  })
 				}
 			]
 			break;
@@ -203,14 +241,15 @@ const styles = StyleSheet.create({
 	}
 });
 
-function mapStateToProps(state) {
-	return {
-		play : state.mis.play
-	}
-}
+//function mapStateToProps(state) {
+	//return {
+		//play : state.mis.play
+	//}
+//}
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
+		confirmPlaySelect,
 		getUserInfo,
 		getLogisticQuote,
 		resetLogistic,
@@ -218,4 +257,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Delivery);
+export default connect(null,mapDispatchToProps)(Delivery);

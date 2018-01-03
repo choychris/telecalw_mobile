@@ -13,6 +13,7 @@ import ProductDetailContainer from '../game/gameRoom/product/listContainer';
 import Delivery from '../miscellaneous/delivery/layout';
 import Reward from '../transaction/reward/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
+import Setting from '../miscellaneous/setting/layout';
 
 // register all screens of the app (including internal ones)
  export function registerScreens(store , Provider) {
@@ -30,4 +31,5 @@ import CustomerSupport from '../miscellaneous/cs/layout';
 	 Navigation.registerComponent('app.Reward', () => Reward,store,Provider);
 	 Navigation.registerComponent('app.Delivery', () => Delivery,store,Provider);
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
+	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
 }

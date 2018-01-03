@@ -7,6 +7,10 @@ import { formatTimeStamp } from '../../../../utils/format';
 import { selectPlay , unselectPlay } from '../../actions';
 
 class PlayItem extends Component {
+	shouldComponentUpdate(nextProps){
+		const { play , deliveryId } = this.props;
+		return JSON.stringify(play) !== JSON.stringify(nextProps.play) ||  (deliveryId == undefined && nextProps.deliveryId !== undefined);
+	}
 	_productName(name){
 		const { locale } = this.props;
 		return (name[locale]) ? name[locale] : name['en'];
@@ -21,15 +25,26 @@ class PlayItem extends Component {
 		(selected) ? unselectPlay(id) : selectPlay(id,productId);
 	}
 	render(){
-		const { product , created , ended , play , id } = this.props;
+		const { 
+			product , 
+			created , 
+			ended , 
+			play , 
+			id , 
+			deliveryId ,
+			nextState
+		} = this.props;
 		const { name , images } = product;
+		const send = (deliveryId !== undefined) ? true : false;
 		const selected = this._checkSelected(play,id);
-		const selectedBorder = (selected === true) ? styles.selectedBorder : null;
+		const selectedBorder = (send === false && selected === true) ? styles.selectedBorder : null;
+		const btnStyle = (send === true) ? styles.sendContainer : null;
 		//console.warn(JSON.stringify(images));
+		//console.warn(deliveryId);
 		return (
 			<TouchableOpacity
-				style={[styles.container,selectedBorder]}
-				onPress={()=>this._selectedAction(selected,id,product.id)}
+				style={[styles.container,btnStyle,selectedBorder]}
+				onPress={()=>(send === true) ? nextState({ id , created , product , ended , deliveryId }) : this._selectedAction(selected,id,product.id)}
 			>
 				<Text style={styles.text}>
 					{formatTimeStamp(ended)}
@@ -56,6 +71,9 @@ const styles = StyleSheet.create({
 		width : width / 2 - 35,
 		padding : 10,
 		margin : 5
+	},
+	sendContainer : {
+		opacity : 0.6
 	},
 	text : {
 		fontFamily : 'Silom',

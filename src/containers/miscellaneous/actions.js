@@ -1,8 +1,9 @@
 import Request from '../../utils/fetch';
 import { getWinResult } from '../../common/api/request/play';
-import { getDeliveryQuote , postDelivery } from '../../common/api/request/delivery';
+import { getDeliveryQuote , postDelivery , getDelivery } from '../../common/api/request/delivery';
+import { loading , message } from '../utilities/actions';
 
-export function winResult(){
+export function winResult(navigator){
 	return(dispatch,getState)=>{
 		const { userId , id } = getState()['auth']['token']['lbToken'];
 		const filter = {
@@ -17,13 +18,16 @@ export function winResult(){
 			token : id,
 			filter : filter
 		};
+		loading('show',navigator);
 		getWinResult(params,Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
 				return dispatch({ type : 'STORE_PLAYS' , value : res });
 			})
 			.catch((err)=>{
+				loading('hide',navigator);
 				console.warn(JSON.stringify(err));
 			})
 	}
@@ -71,6 +75,13 @@ export function fillLogisticForm(field,value){
 	}
 }
 
+export function confirmPlaySelect(nextState){
+	return(dispatch,getState)=>{
+		const play = getState()['mis']['play'];
+		if(play.length > 0) nextState();
+	}
+}
+
 export function changeLogisticTarget(value){
 	return (dispatch,getState)=>{
 		dispatch({
@@ -80,26 +91,19 @@ export function changeLogisticTarget(value){
 	}
 }
 
-export function getLogisticQuote(nextState){
+export function getLogisticQuote(navigator,nextState){
 	return (dispatch,getState)=>{
 		const logistic = getState()['mis']['logistic'];
 		const { target } = logistic;
 		let data = {};
-		let valid = false;
-		if(target === 'user'){
-			const user = getState()['auth']['user'];
-		  valid = (user.address && user.phone && user.countryCode && user.postalCode) ? true : false;
-			data.postalCode = user.postalCode;
-			data.countryCode = user.countryCode.toUpperCase();
-		} else if (target === 'logistic'){
-		  valid = (logistic.address && logistic.phone && logistic.countryCode && logistic.postalCode) ? true : false;
-			data.postalCode = logistic.postalCode;
-			data.countryCode = logistic.countryCode.toUpperCase();
-		}
-		//console.warn(valid);
+		let address = (target === 'user') ? getState()['auth']['user']['address'] : logistic.address;
+		const valid = (address.line1 && address.phone && address.countryCode && address.postalCode && address.city) ? true : false;
 		if(valid === true){
+			loading('show',navigator);
 			const play = getState()['mis']['play'];
 			const { id } = getState()['auth']['token']['lbToken'];
+			data.postalCode = address.postalCode;
+			data.countryCode = address.countryCode;
 			data.products = play;
 			//console.warn(JSON.stringify(play));
 			//console.warn(JSON.stringify(data));
@@ -108,6 +112,7 @@ export function getLogisticQuote(nextState){
 				data : data
 			},Request)
 				.then((res,err)=>{
+					loading('hide',navigator);
 					//console.warn(JSON.stringify(res));
 					//console.warn(JSON.stringify(err));
 					if(!err){
@@ -127,7 +132,7 @@ export function getLogisticQuote(nextState){
 	}
 }
 
-export function confirmDelivery(){
+export function confirmDelivery(navigator,nextState){
 	return (dispatch,getState)=>{
 		// Step 1 : Check Wallet Balance and Quote Method is Selected
 		const { balance } = getState()['auth']['wallet'];
@@ -138,27 +143,22 @@ export function confirmDelivery(){
 			const play = getState()['mis']['play'];
 			// Step 2 : Post Delivery Request to Backend
 			let data = {
-				address : {},
 				cost : quote.coins_value,
 				status : 'pending',
 				userId : userId,
 				products : play	,
-				courier : quote
+				courier : quote,
+				target : target
 			};
 			const user = getState()['auth']['user'];
+			let address = (target === 'user') ? getState()['auth']['user']['address'] : logistic.address;
+			address.countryCode = address.countryCode;
+			address.name = user.name;
+			data.address = address
 			//console.warn(JSON.stringify(user));
 			//console.warn(JSON.stringify(logistic));
-			if(target === 'user'){
-				data.address.postalCode = user.postalCode;
-				data.address.countryCode = user.countryCode.toUpperCase();
-				data.address.line1 = user.address;
-				data.address.name = user.name;
-				data.address.phone = user.phone;
-			} else if(target === 'logistic'){
-				data.postalCode = logistic.postalCode;
-				data.countryCode = logistic.countryCode.toUpperCase();
-			}
-			console.warn(JSON.stringify(data));
+			//console.warn(JSON.stringify(data));
+			loading('show',navigator);
 			postDelivery(
 				{  
 					token : id ,
@@ -167,13 +167,29 @@ export function confirmDelivery(){
 				Request
 			)
 				.then((res,err)=>{
-					console.warn(JSON.stringify(res));
-					console.warn(JSON.stringify(err));
+					//console.warn(JSON.stringify(res));
+					//console.warn(JSON.stringify(err));
+					loading('hide',navigator);
+					if(!err) {
+						dispatch({
+							type : 'CLEAR_PLAY'
+						});
+						nextState();
+					};
 				})
 				.catch((err)=>{
+					loading('hide',navigator);
 					console.warn(JSON.stringify(err));
 				});
 		}
+	}
+}
+
+export function clearPlays(){
+	return (dispatch,getState)=>{
+		return dispatch({
+			type : 'CLEAR_PLAYS'
+		})
 	}
 }
 
@@ -200,5 +216,27 @@ export function selectQuote(quote){
 			type : 'SELECT_QUOTE',
 			value : quote
 		})
+	}
+}
+
+export function getDeliveryData(navigator,deliveryId){
+	return(dispatch,getState)=>{
+		loading('show',navigator);
+		const { id } = getState()['auth']['token']['lbToken'];
+		getDelivery({
+			token : id,
+			deliveryId : deliveryId
+		},Request)
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
+				return dispatch({ type : 'STORE_DELIVERY' , value : res });
+			})
+			.catch((err)=>{
+				loading('hide',navigator);
+				console.warn(JSON.stringify(err));
+			})
+
 	}
 }

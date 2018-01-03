@@ -2,21 +2,23 @@ import React, { PropTypes, Component } from 'react';
 import { ListView , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { winResult } from '../../actions';
+import { winResult , clearPlays } from '../../actions';
 import PlayItem from './itemContainer';
 const height = Dimensions.get('window').height;
 
 class GamePlaySelect extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			ds :  new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-		};
+	shouldComponentUpdate(nextProps){
+		const { plays } = this.props;
+		return JSON.stringify(plays) !== JSON.stringify(nextProps.plays)
 	}
 	componentDidMount(){
-		const { winResult } = this.props;
+		const { winResult , navigator } = this.props;
 		// Fetch Play Result from Backend
-		winResult();
+		winResult(navigator);
+	}
+	componentWillUnmount(){
+		const { clearPlays } = this.props;
+		clearPlays();
 	}
 	_renderLoading(){
 		return (
@@ -26,19 +28,21 @@ class GamePlaySelect extends Component {
 		)
 	}
 	_renderList(plays){
-		const { ds } = this.state;
+		const { nextState } = this.props;
+		const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		const dataSource =  ds.cloneWithRows(plays);
 		return (
 			<ListView
 				style={styles.listWrapper}
 				contentContainerStyle={styles.listContainer}
 				dataSource={dataSource}
-				renderRow={(rowData)=><PlayItem {...rowData}/>}
+				renderRow={(rowData)=><PlayItem {...rowData} nextState={nextState}/>}
 			/>
 		)
 	}
 	render(){
 		const { plays } = this.props;
+		//console.warn(JSON.stringify(plays));
 		return (plays.length > 0) ? this._renderList(plays) : this._renderLoading();
 	}
 }
@@ -73,7 +77,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		winResult
+		winResult,
+		clearPlays
 	}, dispatch)
 }
 

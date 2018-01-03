@@ -37,22 +37,32 @@ function authReducer(state = initialState, action){
 		break;
 		case 'USER_ADDRESS':
 			return state
-				.setIn(['user','address'],action.value)
+				.setIn(['user','address','line1'],action.value)
+				.toJS()
+		break;
+		case 'USER_STATE':
+			return state
+				.setIn(['user','address','state'],action.value)
+				.toJS()
+		break;
+		case 'USER_CITY':
+			return state
+				.setIn(['user','address','city'],action.value)
 				.toJS()
 		break;
 		case 'USER_PHONE':
 			return state
-				.setIn(['user','phone'],action.value)
+				.setIn(['user','address','phone'],action.value)
 				.toJS()
 		break;
 		case 'USER_COUNTRY_CODE':
 			return state
-				.setIn(['user','countryCode'],action.value)
+				.setIn(['user','address','countryCode'],action.value)
 				.toJS()
 		break;
 		case 'USER_POSTAL_CODE':
 			return state	
-				.setIn(['user','postalCode'],action.value)
+				.setIn(['user','address','postalCode'],action.value)
 				.toJS()
 		break;
 		default:

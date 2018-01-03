@@ -36,12 +36,22 @@ class BarContainer extends Component {
 		)
 	}
 	render(){
+		const { navigator } = this.props;
 		const { menu } = this.state;
 		const screenWidth = Dimensions.get('window').width * 0.28;
 		return (
 			<View style={styles.container}>
 				{this._renderTabItems(menu)}
-				<TouchableOpacity>
+				<TouchableOpacity
+					onPress={()=>{
+						navigator.push({
+							screen : 'app.Setting',
+							navigatorStyle : {
+								navBarHidden : true
+							}
+						});
+					}}
+				>
 					<Telebot
 						status={'setting'}
 						height={screenWidth}

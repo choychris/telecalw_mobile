@@ -8,9 +8,11 @@ const en = {
 	address : 'Address',
 	phone : 'Phone',
 	selectCountry : 'Select Your Home Country',
+	inputState : 'State',
+	inputCity : 'Home City',
 	inputAddress : 'What is Your Home Address ?',
 	inputPhone : 'What is your Phone Number ?',
-	inputPostalCode : 'What is your Postal Code ?',
+	inputPostalCode : 'Postal Code',
 	formError : 'Fill in Error',
 	doubleCheckForm : 'Please double check all the form is filled',
 	earth : 'Earth',
@@ -65,7 +67,10 @@ const en = {
 	others : 'Others',
 	inputEmail : 'Your Email',
 	inputMsg : 'Message you want us to know …',
-	days : 'Day(s)'
+	days : 'Day(s)',
+	setting : 'Setting',
+	settingPrompt : 'Telebot : You can configure the gameplay environment according to your preference',
+	tracking : 'Tracking'
 }
 
 export default en;

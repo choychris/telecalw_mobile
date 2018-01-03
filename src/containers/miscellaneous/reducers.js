@@ -3,6 +3,7 @@ import { fromJS , toJS } from 'immutable';
 const initialState = {
 	plays : [],
 	play : [],
+	delivery : {},
 	logistic : {
 		target : 'user',
 		quotes : [],
@@ -21,6 +22,11 @@ function misReducer (state = initialState, action){
 				.setIn(['plays'],action.value)
 				.toJS();
 			break;
+		case 'CLEAR_PLAYS':
+			return state
+				.setIn(['plays'],[])
+				.toJS();
+			break;
 		case 'SELECT_PLAY':
 			return state
 				.updateIn(['play'],array=>array.push(action.value))
@@ -37,9 +43,15 @@ function misReducer (state = initialState, action){
 				})
 				.toJS();
 		break;
+		case 'CLEAR_PLAY':
+			return state
+				.setIn(['play'],[])
+				.toJS();
+		break;
 		case 'RESET_DELIVERY':
 			return state
 				.setIn(['play'],[])
+				.setIn(['delivery'],{})
 				.setIn(['logistic'],{   
 					target :'user',
 					quotes : [],
@@ -54,22 +66,32 @@ function misReducer (state = initialState, action){
 		break;
 		case 'LOGISTIC_ADDRESS':
 			return state
-				.setIn(['logistic','address'],action.value)
+				.setIn(['logistic','address','line1'],action.value)
+				.toJS()
+		break;
+		case 'LOGISTIC_CITY':
+			return state
+				.setIn(['logistic','address','city'],action.value)
+				.toJS()
+		break;
+		case 'LOGISTIC_STATE':
+			return state
+				.setIn(['logistic','address','state'],action.value)
 				.toJS()
 		break;
 		case 'LOGISTIC_PHONE':
 			return state
-				.setIn(['logistic','phone'],action.value)
+				.setIn(['logistic','address','phone'],action.value)
 				.toJS()
 		break;
 		case 'LOGISTIC_COUNTRY_CODE':
 			return state
-				.setIn(['logistic','countryCode'],action.value)
+				.setIn(['logistic','address','countryCode'],action.value)
 				.toJS()
 		break;
 		case 'LOGISTIC_POSTAL_CODE':
 			return state	
-				.setIn(['logistic','postalCode'],action.value)
+				.setIn(['logistic','address','postalCode'],action.value)
 				.toJS()
 		break;
 		case 'STORE_QUOTES':
@@ -85,6 +107,11 @@ function misReducer (state = initialState, action){
 		case 'SELECT_QUOTE':
 			return state
 				.setIn(['logistic','quote'],action.value)
+				.toJS()
+		break;
+		case 'STORE_DELIVERY':
+			return state
+				.setIn(['delivery'],action.value)
 				.toJS()
 		break;
 		default:

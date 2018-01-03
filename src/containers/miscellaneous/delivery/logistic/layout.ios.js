@@ -25,11 +25,11 @@ class LogisticForm extends Component {
 				/>
 				<AddressForm 
 					dispatchFunction={fillLogisticForm} 
-					value={this.props[target]}
+					value={(this.props[target]['address']) ? this.props[target]['address'] : {}}
 				/>	
 				<PhoneForm
 					dispatchFunction={fillLogisticForm} 
-					value={this.props[target]['phone']}
+					value={(this.props[target]['address']) ? this.props[target]['address']['phone'] : ''}
 				/>
 			</View>
 		)

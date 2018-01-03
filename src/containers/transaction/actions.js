@@ -83,7 +83,7 @@ export function payment(navigator){
 			loading('show',navigator);
 			getPaymentToken(params,Request)
 				.then((res,err)=>{
-					//console.warn(JSON.stringify(res.result));
+					console.warn(JSON.stringify(res.result));
 					//console.warn(JSON.stringify(err));
 					BTClient.setup(res.result[0]);
 					BTClient.showPaymentViewController({}).then((nonce)=>{
