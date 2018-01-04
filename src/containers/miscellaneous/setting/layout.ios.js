@@ -13,6 +13,9 @@ class Setting extends Component {
 		const { getUserInfo } = this.props;
 		getUserInfo();
 	}
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { navigator } = this.props;
 		return (
@@ -27,7 +30,7 @@ class Setting extends Component {
 				<MessageBox 
 					title={'setting'}
 					type={'right'}
-					content={<SettingForm/>}
+					content={<SettingForm navigator={navigator}/>}
 					promptString={'settingPrompt'}
 				/>
 			</View>

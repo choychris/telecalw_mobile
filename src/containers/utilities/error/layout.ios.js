@@ -15,7 +15,8 @@ class Error extends Component {
 			title , 
 			navigator ,
 			type,
-			header
+			header,
+			string
 		} = this.props;
 		const botStatus = (type) ? type : 'sick';
 		return(
@@ -24,7 +25,9 @@ class Error extends Component {
 			>
 				<View style={styles.container}>
 					<Text style={styles.title}>{(header) ? header : 'Opps...'}</Text>
-					<Text style={styles.title}>{title}</Text>
+					<Text style={styles.title}>
+						{(string[title]) ? string[title] : title}
+					</Text>
 					<View style={styles.image}>
 						<Telebot 
 							status={botStatus} 
@@ -33,7 +36,9 @@ class Error extends Component {
 						/>
 					</View>
 					<View>
-						<Text style={styles.message}>{message}</Text>
+						<Text style={styles.message}>
+							{(string[message]) ? string[message] : message}
+						</Text>
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
@@ -66,4 +71,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null ,null)(Error)
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
+
+export default connect(mapStateToProps ,null)(Error)

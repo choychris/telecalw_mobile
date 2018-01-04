@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 	text : {
 		color : '#30D64A',
 		fontFamily : 'Silom',
-		fontSize : 18
+		fontSize : 15
 	}
 })
 

@@ -1,7 +1,9 @@
 import Request from '../../utils/fetch';
 import { getWinResult } from '../../common/api/request/play';
 import { getDeliveryQuote , postDelivery , getDelivery } from '../../common/api/request/delivery';
+import { updateUser } from '../../common/api/request/user';
 import { loading , message } from '../utilities/actions';
+import { languageSetting } from '../../utils/language';
 
 export function winResult(navigator){
 	return(dispatch,getState)=>{
@@ -181,6 +183,15 @@ export function confirmDelivery(navigator,nextState){
 					loading('hide',navigator);
 					console.warn(JSON.stringify(err));
 				});
+		} else {
+			message(
+				'show',
+				navigator,
+				{
+					title : 'sorry',
+					message : 'insufficientFund'
+				}
+			)
 		}
 	}
 }
@@ -238,5 +249,68 @@ export function getDeliveryData(navigator,deliveryId){
 				console.warn(JSON.stringify(err));
 			})
 
+	}
+}
+
+export function setUserLanguage(locale,navigator){
+	return(dispatch,getState)=>{
+		const { id , userId } = getState()['auth']['token']['lbToken'];
+		const data = { language : locale };
+		const params = {
+			data : data,
+			token : id,
+			userId : userId
+		};
+		//console.warn(JSON.stringify(params));
+		loading('show',navigator);
+		updateUser(params,Request)	
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
+				if(!err){
+				 	dispatch(languageSetting(res.language));
+					return dispatch({
+						type : 'STORE_USER_INFO',
+						value : res
+					})
+				};
+			})
+			.catch((err)=>{
+				loading('hide',navigator);
+				console.warn(JSON.stringify(err));
+			})
+	}
+}
+
+export function showTracking(navigator){
+	return(dispatch,getState)=>{
+		const { delivery } = getState()['mis'];
+		if(delivery.tracking){
+			navigator.showLightBox({
+				screen : 'app.Tracking',
+				animationType : 'slide-up',
+				navigatorStyle: {
+					navBarHidden: true
+				},
+				passProps : {
+					tracking : delivery.tracking
+				},
+				style: {
+					backgroundBlur: "dark",
+					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					tapBackgroundToDismiss: true
+				}
+			});
+		} else {
+			message(
+				'show',
+				navigator,
+				{
+					title : 'sorry',
+					message : 'noTracking'
+				}
+			)
+		}
 	}
 }

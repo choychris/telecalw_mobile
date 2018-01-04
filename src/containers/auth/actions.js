@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userWallet , userStatus , userLogout , userReservation ,userInfoRequest } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userLanguage } from '../../common/api/request/user';
+import { languageSetting } from '../../utils/language';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -104,6 +105,12 @@ function dispatchTokenAndNavigate(token,navigator){
 	return (dispatch,getState)=>{
 		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
 		dispatch(getUserReservation());
+		userLanguage(token['lbToken'],Request)
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				if(!err) dispatch(languageSetting(res.language));
+			});
 		navigator.resetTo({
 			screen : 'app.GamePlayList',
 			navigatorStyle : {

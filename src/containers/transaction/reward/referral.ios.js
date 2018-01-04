@@ -4,9 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from '../../../components/utilities/buttons';
 import { shareToFacebook } from '../actions';
+import { getUserInfo } from '../../auth/actions';
 
 class Referral extends Component {
-	_renderReferralCode(){
+	componentDidMount(){
+		const { getUserInfo } = this.props;
+		getUserInfo();
+	}
+	_renderReferralCode(code){
 		const { string } = this.props;
 		return (
 			<View>
@@ -14,7 +19,7 @@ class Referral extends Component {
 					{string['referralCode']}
 				</Text>
 				<Text style={[styles.text,{ fontSize : 20  }]}>
-					{'xsed!452'}
+					{code}
 				</Text>
 			</View>
 		)
@@ -47,9 +52,10 @@ class Referral extends Component {
 		)
 	}
 	render(){
+		const { user } = this.props;
 		return (
 			<View style={styles.container}>
-				{this._renderReferralCode()}
+				{(user.referral) ? this._renderReferralCode(user.referral.code) : null}
 				{this._renderShareButton()}
 			</View>
 		)
@@ -78,13 +84,15 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		user : state.auth.user
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		shareToFacebook
+		shareToFacebook,
+		getUserInfo
 	}, dispatch)
 }
 

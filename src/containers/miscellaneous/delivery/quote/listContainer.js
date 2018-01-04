@@ -12,6 +12,9 @@ class QuoteSelect extends Component {
 			ds :  new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 		};
 	}
+	shouldComponentUpdate(nextProps){
+		return false;
+	}
 	_renderLoading(){
 		return (
 			<View style={styles.container}>
@@ -20,11 +23,7 @@ class QuoteSelect extends Component {
 		)
 	}
 	_renderList(quotes){
-		// Render Fixed Cost List
-		// Render Variable Cost List
-		// Render Total Price
 		const { ds } = this.state;
-		//console.warn(Array.isArray(quotes));
 		const dataSource = (Array.isArray(quotes) === true) ? ds.cloneWithRows(quotes) : ds.cloneWithRows([quotes]);
 		return(
 			<ListView
@@ -52,15 +51,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		height : height * 0.4,
 		marginVertical : 10
-	},
-	//listContainer : {
-		//paddingVertical : 10,
-		//alignSelf : 'stretch',
-		//flexDirection: 'row',
-		//flexWrap: 'wrap',
-		//alignItems : 'center',
-		//justifyContent : 'center'
-	//}
+	}
 });
 
 function mapStateToProps(state) {

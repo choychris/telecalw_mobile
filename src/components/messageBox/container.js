@@ -90,19 +90,20 @@ const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
 		width : '100%',
-		height : height * 0.77
+		height : height * 0.75
 	},
 	innerView : { 
-		backgroundColor : '#EAEAEA' , 
+		height : height * 0.70,
 		borderRadius : 30 , 
-		alignItems : 'center'
+		alignItems : 'center',
+		backgroundColor : 'transparent'
 	},
 	title : {
-		color : '#011627',
 		fontFamily : 'Silom',
 		fontSize : 20,
 		paddingVertical : 10,
-		textAlign : 'center'
+		textAlign : 'center',
+		backgroundColor : 'transparent'
 	},
 	tabContent : {
 		flex : 1,

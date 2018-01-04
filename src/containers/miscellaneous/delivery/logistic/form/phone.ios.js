@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class PhoneForm extends Component {
+	shouldComponentUpdate(nextProps){
+		const { value } = this.props;
+		return JSON.stringify(value) !== JSON.stringify(nextProps.value);
+	}
 	render(){
 		const { 
 			string , 

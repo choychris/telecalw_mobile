@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 	listWrapper : {
 		alignSelf : 'stretch',
 		height : height * 0.4,
-		marginVertical : 10
+		marginVertical : 5
 	},
 	listContainer : {
 		paddingVertical : 10,

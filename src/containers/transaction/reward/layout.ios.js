@@ -28,34 +28,29 @@ class Reward extends Component {
 					coins={true} 
 					navigator={navigator}
 				/>
-				<KeyboardAvoidingView 
-					behavior="position" 
-					style={styles.keyboardView}
-				>
-					<MessageBox 
-						title={'referral'}
-						type={'right'}
-						content={this._renderContainer()}
-						promptString={'rewardPrompt'}
-						buttons={[
-							{
-								text : 'confirm',
-								textStyle : {
-									color : 'white',
-									fontSize : 25,
-									fontFamily : 'Silom',
-									fontWeight : 'bold'
-								},
-								btnStyle : {
-									backgroundColor : '#4C4C4C',
-									paddingVertical : 15,
-									paddingHorizontal : 20
-								},
-								onPressFunction : ()=>{}
-							}
-						]}
-					/>
-				</KeyboardAvoidingView>
+				<MessageBox 
+					title={'referral'}
+					type={'right'}
+					content={this._renderContainer()}
+					promptString={'rewardPrompt'}
+					buttons={[
+						{
+							text : 'confirm',
+							textStyle : {
+								color : 'white',
+								fontSize : 25,
+								fontFamily : 'Silom',
+								fontWeight : 'bold'
+							},
+							btnStyle : {
+								backgroundColor : '#4C4C4C',
+								paddingVertical : 15,
+								paddingHorizontal : 20
+							},
+							onPressFunction : ()=>{}
+						}
+					]}
+				/>
 			</View>
 		)
 	}

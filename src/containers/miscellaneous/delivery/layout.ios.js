@@ -9,9 +9,10 @@ import NavBar from '../../../components/navBar/container';
 import GamePlaySelect from './play/listContainer';
 import LogisticForm from './logistic/layout';
 import { getUserInfo } from '../../auth/actions';
-import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect } from '../actions';
+import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect , showTracking } from '../actions';
 import QuoteSelect from './quote/listContainer';
 import Receipt from './receipt/layout';
+const { width } = Dimensions.get('window');
 
 class Delivery extends Component {
 	constructor(props){
@@ -20,6 +21,7 @@ class Delivery extends Component {
 		// 1. gamePlaySelect
 		// 2  logisticForm
 		// 3. quoteSelect
+		// 4. deliveryReceipt
 		this.state = { display : 'gamePlaySelect' };
 	}
 	componentDidMount(){
@@ -64,6 +66,7 @@ class Delivery extends Component {
 			confirmPlaySelect,
 			getLogisticQuote ,
 			confirmDelivery,
+			showTracking,
 			navigator
 		} = this.props;
 		switch(display){
@@ -79,8 +82,8 @@ class Delivery extends Component {
 						},
 						btnStyle : {
 							backgroundColor : '#4C4C4C',
-							paddingVertical : 15,
-							paddingHorizontal : 20
+							paddingVertical : 10,
+							paddingHorizontal : 15
 						},
 						onPressFunction : ()=>confirmPlaySelect(()=>this.setState({ display : 'logisticForm' }))
 					}
@@ -99,8 +102,8 @@ class Delivery extends Component {
 					borderColor : '#AFAFAF',
 					btnStyle : {
 						backgroundColor : '#EFEFEF',
-						paddingVertical : 15,
-						paddingHorizontal : 20,
+						paddingVertical : 10,
+						paddingHorizontal : 15,
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>this.setState({ display : 'gamePlaySelect' })
@@ -115,8 +118,8 @@ class Delivery extends Component {
 					},
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
-						paddingVertical : 15,
-						paddingHorizontal : 20,
+						paddingVertical : 10,
+						paddingHorizontal : 15,
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>{
@@ -138,8 +141,8 @@ class Delivery extends Component {
 					borderColor : '#AFAFAF',
 					btnStyle : {
 						backgroundColor : '#EFEFEF',
-						paddingVertical : 15,
-						paddingHorizontal : 20,
+						paddingVertical : 10,
+						paddingHorizontal : 15,
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>this.setState({ display : 'logisticForm'  })
@@ -154,8 +157,8 @@ class Delivery extends Component {
 					},
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
-						paddingVertical : 15,
-						paddingHorizontal : 20,
+						paddingVertical : 10,
+						paddingHorizontal : 15,
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>confirmDelivery(navigator,()=>this.setState({ display : 'gamePlaySelect' }))
@@ -167,19 +170,40 @@ class Delivery extends Component {
 				{
 					text : 'back',
 					textStyle : {
-						color : '#4C4C4C',
+						color : 'white',
 						fontSize : 25,
 						fontFamily : 'Silom',
 						fontWeight : 'bold'
 					},
-					borderColor : '#AFAFAF',
 					btnStyle : {
-						backgroundColor : '#EFEFEF',
-						paddingVertical : 15,
-						paddingHorizontal : 20,
+						backgroundColor : '#4C4C4C',
+						paddingVertical : 10,
+						paddingHorizontal : 15,
 						marginHorizontal : 5
 					},
 					onPressFunction : ()=>this.setState({ display : 'gamePlaySelect'  })
+				},
+				{
+					text : 'tracking',
+					textStyle : {
+						color : 'white',
+						fontSize : 25,
+						fontFamily : 'Silom',
+						fontWeight : 'bold'
+					},
+					btnStyle : {
+						backgroundColor : '#E63946',
+						paddingVertical : 10,
+						paddingHorizontal : 15,
+						marginHorizontal : 5
+					},
+					borderColor : '#8E2633',
+					icon : {
+						name : 'truck' , 
+						size : 20 , 
+						color : 'white' 
+					},
+					onPressFunction : ()=>showTracking(navigator)
 				}
 			]
 			break;
@@ -212,9 +236,9 @@ class Delivery extends Component {
 					/>
 					<Telebot 
 						style={styles.telebot}
-						status={'normal'} 
-						height={100} 
-						width={100}
+						status={'fly'} 
+						height={width*0.3} 
+						width={width*0.3}
 					/>
 				</KeyboardAvoidingView>
 			</View>
@@ -229,23 +253,16 @@ const styles = StyleSheet.create({
 		alignItems : 'center'
 	},
 	keyboardView: {
+		flex : 1,
 		alignSelf : 'stretch' , 
 		justifyContent : 'flex-start' , 
-		alignItems : 'center' , 
-		flex : 1
+		alignItems : 'center'
 	},
 	telebot : {
-		position : 'absolute',
-		bottom : -40,
+		bottom : 60,
 		left : 0
 	}
 });
-
-//function mapStateToProps(state) {
-	//return {
-		//play : state.mis.play
-	//}
-//}
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
@@ -253,7 +270,8 @@ function mapDispatchToProps(dispatch) {
 		getUserInfo,
 		getLogisticQuote,
 		resetLogistic,
-		confirmDelivery
+		confirmDelivery,
+		showTracking
 	}, dispatch)
 }
 

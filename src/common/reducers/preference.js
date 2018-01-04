@@ -1,10 +1,11 @@
 import { fromJS , toJS  } from 'immutable';
-import { languageSetting } from '../constants/string';
+import { languageSetting , avaLanguage } from '../constants/string';
 
 const initialPrefernece = {
 	language : { 
 		locale : 'en',
-		string : languageSetting('en')
+		string : languageSetting('en'),
+		avaLanguage : avaLanguage()
  	},
 	preference : {
 		sound : true,

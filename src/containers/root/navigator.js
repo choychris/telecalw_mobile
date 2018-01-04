@@ -11,6 +11,7 @@ import Reservation from '../game/reservation/layout';
 import TopUp from '../transaction/topup/payment/layout';
 import ProductDetailContainer from '../game/gameRoom/product/listContainer';
 import Delivery from '../miscellaneous/delivery/layout';
+import Tracking from '../miscellaneous/delivery/receipt/tracking';
 import Reward from '../transaction/reward/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
@@ -30,6 +31,7 @@ import Setting from '../miscellaneous/setting/layout';
 	 Navigation.registerComponent('app.TopUp', () => TopUp,store,Provider);
 	 Navigation.registerComponent('app.Reward', () => Reward,store,Provider);
 	 Navigation.registerComponent('app.Delivery', () => Delivery,store,Provider);
+	 Navigation.registerComponent('app.Tracking', () => Tracking,store,Provider);
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
 	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
 }

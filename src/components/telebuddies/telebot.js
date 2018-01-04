@@ -8,7 +8,8 @@ const telebotImages = {
 	setting : require('../../../assets/telebuddies/telebot/telebot_spanner.png'),
 	happy : require('../../../assets/telebuddies/telebot/telebot_happy.png'),
 	sad : require('../../../assets/telebuddies/telebot/telebot_sad.png'),
-	money : require('../../../assets/telebuddies/telebot/telebot_money.png')
+	money : require('../../../assets/telebuddies/telebot/telebot_money.png'),
+	fly : require('../../../assets/telebuddies/telebot/telebot_fly.png')
 }
 
 class Telebot extends Component {

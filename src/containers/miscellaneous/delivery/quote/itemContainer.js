@@ -6,6 +6,10 @@ import { selectQuote } from '../../actions';
 const coinsImg = require('../../../../../assets/utilities/coins/telecoins_single.png')
 
 class QuoteItem extends Component {
+	shouldComponentUpdate(nextProps){
+		const { quote } = this.props;
+		return JSON.stringify(quote) !== JSON.stringify(nextProps.quote);
+	}
 	render(){
 		const { 
 			courier_id,

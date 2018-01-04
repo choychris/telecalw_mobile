@@ -1,5 +1,5 @@
-const en = {
-	facebookLogin : 'Facebook Login',
+const zhHant = {
+	facebookLogin : 'Facebook 登入',
 	facebookCancel : 'Facebook Login Cancel',
 	facebookErr : 'Facebook Login Fail',
 	tryAgain : 'Please try again',
@@ -67,13 +67,13 @@ const en = {
 	others : 'Others',
 	inputEmail : 'Your Email',
 	inputMsg : 'Message you want us to know …',
-	days : 'Day(s)',
-	setting : 'Setting',
+	days : '日',
+	setting : '設定',
 	settingPrompt : 'Telebot : You can configure the gameplay environment according to your preference',
-	tracking : 'Tracking',
-	language : 'Language',
-	cancel : 'Cancel',
-	cost : 'Cost',
+	tracking : '追蹤',
+	language : '語言',
+	cancel : '取消',
+	cost : '費用',
 	sorry : 'Sorry',
 	noTracking : 'No Tacking Information Avaliable Yet',
 	back : 'Back',
@@ -81,4 +81,4 @@ const en = {
 	insufficientFund : 'Insufficient Fund'
 }
 
-export default en;
+export default zhHant;

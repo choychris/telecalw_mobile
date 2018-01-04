@@ -4,6 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class TargetForm extends Component { 
+	shouldComponentUpdate(nextProps){
+		const { target } = this.props;
+		return target !== nextProps.target;
+	}
 	render(){
 		const { 
 			target,

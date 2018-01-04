@@ -11,6 +11,10 @@ class AddressForm extends Component {
 		const { value , dispatchFunction } = this.props;
 		if(!value.countryCode) dispatchFunction('COUNTRY_CODE',DeviceInfo.getDeviceCountry().toLowerCase());
 	}
+	shouldComponentUpdate(nextProps){
+		const { value } = this.props;
+		return JSON.stringify(value) !== JSON.stringify(nextProps.value);
+	}
 	_renderCountryPicker(){
 		const { value , dispatchFunction } = this.props;
 		const countriesList = countries.getCodeList();
