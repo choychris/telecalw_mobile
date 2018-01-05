@@ -323,16 +323,25 @@ export function createIssue(){
 		if(issue.message && issue.message !== null){
 			issue.userId = userId;
 			console.warn(JSON.stringify(issue))
+			loading('show',navigator);
 			postIssue({
 				token : id,
 				data : issue
 			},Request)
 				.then((res,err)=>{
-					console.warn(JSON.stringify(res));
-					console.warn(JSON.stringify(err));
+					//console.warn(JSON.stringify(res));
+					//console.warn(JSON.stringify(err));
+					loading('hide',navigator);
+					//dispatch({
+						//type : 'AMEND_ISSUE',
+						//keys : ['message'],
+						//value : ''
+					//})
+					
 				})
 				.catch((err)=>{
-					console.warn(JSON.stringify(err));
+					//console.warn(JSON.stringify(err));
+					loading('hide',navigator);
 				});
 		}
 	}
