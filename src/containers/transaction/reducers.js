@@ -3,7 +3,8 @@ import { fromJS , toJS } from 'immutable';
 const initialState = {
 	rates : [],
 	rate : null,
-	transactions : []
+	transactions : [],
+	reward : null
 }
 
 function transactionReducer (state = initialState, action){
@@ -22,6 +23,11 @@ function transactionReducer (state = initialState, action){
 		case 'SELECT_RATE':
 			return state
 				.setIn(['rate'],action.value)
+				.toJS();
+			break;
+		case 'STORE_REDEEM_CODE':
+			return state
+				.setIn(['reward'],action.value)
 				.toJS();
 			break;
 		default:

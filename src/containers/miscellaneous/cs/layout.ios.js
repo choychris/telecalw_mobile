@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , ScrollView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
@@ -7,18 +7,23 @@ import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import IssueType from '../cs/issue/issueType';
 import IssueForm from '../cs/issue/issueForm';
+import { createIssue } from '../actions';
+const height = Dimensions.get('window').height;
 
 class CustomerSupport extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	_renderContainer(){
 		return(
-			<View style={styles.innerContainer}>
+			<ScrollView style={styles.innerContainer}>
 				<IssueType/>
 				<IssueForm/>
-			</View>
+			</ScrollView>
 		)
 	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , createIssue } = this.props;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -48,10 +53,10 @@ class CustomerSupport extends Component {
 								},
 								btnStyle : {
 									backgroundColor : '#4C4C4C',
-									paddingVertical : 15,
-									paddingHorizontal : 20
+									paddingVertical : 10,
+									paddingHorizontal : 15
 								},
-								onPressFunction : ()=>{}
+								onPressFunction : ()=>createIssue()
 							}
 						]}
 					/>
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
 		backgroundColor : '#263E50'
 	},
 	innerContainer : {
+		height : height * 0.4,
 		alignSelf : 'stretch'
 	},
 	keyboardView: {
@@ -84,4 +90,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(CustomerSupport);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		createIssue
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(CustomerSupport);

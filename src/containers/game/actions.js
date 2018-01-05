@@ -5,6 +5,7 @@ import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
 import { gameResult } from '../../common/api/request/play';
 import { endGameEngage , cancelReserve } from '../../common/api/request/reservation';
+import { checkinReward } from '../../common/api/request/reward';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
@@ -675,5 +676,34 @@ export function acceptReserve(data,navigator){
 			}
 		}
 		acceptFlow();
+	}
+}
+
+export function getCheckinReward(){
+	return (dispatch,getState)=>{
+		const { id , userId } = getState()['auth']['token']['lbToken'];
+		checkinReward(
+			{
+				token : id,
+				userId : userId
+			},
+			Request
+		)
+			.then((res,err)=>{
+				console.warn(JSON.stringify(err));
+				console.warn(JSON.stringify(res));
+				if(!err){
+					const { result } = res;
+					if(result.success === true){
+						dispatch({
+							type : 'UPDATE_WALLET_BALANCE',
+							value : result.newWalletBalance
+						});	
+					}
+				}
+			})
+			.catch((err)=>{
+				console.warn(JSON.stringify(err));
+			})
 	}
 }

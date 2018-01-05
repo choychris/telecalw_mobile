@@ -33,6 +33,12 @@ export const api = {
 	deliveries : {
 		root : apiBase+'/deliveries'
 	},
+	rewards : {
+		root : apiBase+'/rewards'
+	},
+	issues : {
+		root : apiBase+'/issues'
+	},
 	gizwits : {
 		control : gizwitsBase+'/control'	
 	}

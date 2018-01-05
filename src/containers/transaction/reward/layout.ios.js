@@ -7,8 +7,12 @@ import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import Referral from './referral';
 import Redeem from './redeem';
+import { confirmRedeem } from '../actions';
 
 class Reward extends Component {
+	shouldComponenetUpdate(nextProps){
+		return false;
+	}
 	_renderContainer(){
 		return(
 			<View style={styles.innerContainer}>
@@ -18,7 +22,7 @@ class Reward extends Component {
 		)
 	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , confirmRedeem } = this.props;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -47,7 +51,7 @@ class Reward extends Component {
 								paddingVertical : 15,
 								paddingHorizontal : 20
 							},
-							onPressFunction : ()=>{}
+							onPressFunction : ()=>confirmRedeem()
 						}
 					]}
 				/>
@@ -79,4 +83,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(Reward);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		confirmRedeem
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(Reward);

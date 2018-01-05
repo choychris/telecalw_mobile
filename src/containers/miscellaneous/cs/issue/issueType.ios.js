@@ -50,7 +50,7 @@ class IssueType extends Component {
 				contentContainerStyle={styles.listContainer}
 				data={types}
 				renderItem={({item})=>this._renderIssueType(item)}
-				numColumns={3}
+				numColumns={2}
 				keyExtractor={(item, index) => index}
 			/>
 		)
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
 		justifyContent : 'center',
 		flexDirection : 'row',
 		padding : 5,
-		margin : 5
+		marginVertical : 5,
+		marginHorizontal : 20
 	}
 });
 

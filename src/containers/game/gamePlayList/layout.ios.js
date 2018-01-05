@@ -3,7 +3,7 @@ import { View , Text , StatusBar , StyleSheet , Dimensions } from 'react-native'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../utilities/actions';
-import { loadGameList , networkChecking , productStatus ,reserveStatus } from '../actions';
+import { loadGameList , networkChecking , productStatus ,reserveStatus , getCheckinReward } from '../actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import LocationBar from './location/bar';
@@ -20,7 +20,8 @@ class GamePlayList extends Component {
 			loadGameList , 
 			networkChecking ,
 			productStatus,
-			reserveStatus
+			reserveStatus,
+			getCheckinReward
 		} = this.props;
 		// Initial Function of Game Play List
 		loadGameList(navigator);
@@ -30,6 +31,8 @@ class GamePlayList extends Component {
 		productStatus();
 		// Initiate Pusher Reservation Listener 
 		reserveStatus(navigator);
+		// Initiate Checkin Reward
+		//getCheckinReward();
 	}
 	render(){
 		const { navigator } = this.props;
@@ -63,7 +66,8 @@ function mapDispatchToProps(dispatch) {
 		loadGameList,
 		networkChecking,
 		productStatus,
-		reserveStatus
+		reserveStatus,
+		getCheckinReward
 	}, dispatch)
 }
 

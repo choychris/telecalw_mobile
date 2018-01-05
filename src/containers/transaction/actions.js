@@ -2,6 +2,7 @@ import Request from '../../utils/fetch';
 import { getPaymentToken , createSales, getTransactions } from '../../common/api/request/transaction';
 import { userTransactions } from '../../common/api/request/user';
 import { getExchageRate } from '../../common/api/request/exchangeRate';
+import { redeemReward } from '../../common/api/request/reward';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
 import { ShareDialog } from 'react-native-fbsdk';
@@ -31,26 +32,40 @@ export function sales(nonce,rate,navigator){
 		};
 		createSales(params,Request)
 			.then((res,err)=>{
-				//console.warn(JSON.stringify(res.result));
+				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));
 				loading('hide',navigator);
-				if(!err && res.result.success === true){
-					message(
-						'show',
-						navigator,
-						{ 
-							type : 'happy',
-							header : 'Ya!',
-							title : string['successPurchase'],
-							message : `${string['thankyou']}. ${string['newBalance']} : ${res.result.balance}`
-						},
-						500
-					);
-					dispatch(selectRate(null));
-					return dispatch({
-						type : 'UPDATE_WALLET_BALANCE',
-						value : res.result.balance
-					});
+				if(!err){
+					const { result } = res;
+					if(result.success === true){
+						message(
+							'show',
+							navigator,
+							{ 
+								type : 'happy',
+								header : 'Ya!',
+								title : string['successPurchase'],
+								message : `${string['thankyou']}. ${string['newBalance']} : ${res.result.balance}`
+							},
+							500
+						);
+						dispatch(selectRate(null));
+						return dispatch({
+							type : 'UPDATE_WALLET_BALANCE',
+							value : res.result.balance
+						});
+					} else {
+						message(
+							'show',
+							navigator,
+							{ 
+								type : 'sick',
+								title : string['error'],
+								message : result.message
+							},
+							500
+						);
+					}
 				}
 			})
 			.catch((err)=>{
@@ -85,7 +100,7 @@ export function payment(navigator){
 				.then((res,err)=>{
 					console.warn(JSON.stringify(res.result));
 					//console.warn(JSON.stringify(err));
-					BTClient.setup(res.result[0]);
+					BTClient.setup(res.result);
 					BTClient.showPaymentViewController({}).then((nonce)=>{
 					//payment succeeded, pass nonce to server
 					dispatch(sales(nonce,rate,navigator));	
@@ -178,3 +193,54 @@ export function shareToFacebook(shareLinkContent){
 			);
 	}
 }
+
+export function inputRedeemCode(value){
+	return (dispatch,getState)=>{
+		return dispatch({
+			type : 'STORE_REDEEM_CODE',
+			value : value
+		});
+	}
+}
+
+export function confirmRedeem(){
+	return(dispatch,getState)=>{
+		const { reward } = getState()['transaction'];
+		const { userId , id } = getState()['auth']['token']['lbToken'];
+		if(reward && reward !== null){
+			console.warn(reward);
+			const data = {
+				token : id,
+				data : {
+					userId : userId,
+					code : reward
+				}
+			};
+			redeemReward(data,Request)
+				.then((res,err)=>{
+					//console.warn(JSON.stringify(err));
+					//console.warn(JSON.stringify(res));
+					if(!err){
+						const { result } = res;
+						if(result.success === true){
+							dispatch({
+								type : 'STORE_REDEEM_CODE',
+								value : null
+							});
+							dispatch({
+								type : 'UPDATE_WALLET_BALANCE',
+								value : result.newWalletBalance
+							});
+						} else {
+
+						}
+					}
+				})
+				.catch((err)=>{
+					//console.warn(JSON.stringify(err));
+				});
+		}
+	}
+}
+
+

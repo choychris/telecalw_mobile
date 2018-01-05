@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userLanguage } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userLanguage , updateUser } from '../../common/api/request/user';
+import { checkinReward } from '../../common/api/request/reward';
 import { languageSetting } from '../../utils/language';
 import Request from '../../utils/fetch';
 
@@ -111,12 +112,53 @@ function dispatchTokenAndNavigate(token,navigator){
 				//console.warn(JSON.stringify(err));
 				if(!err) dispatch(languageSetting(res.language));
 			});
-		navigator.resetTo({
-			screen : 'app.GamePlayList',
-			navigatorStyle : {
-				navBarHidden : true
-			}
-		});
+		checkinReward(
+			{
+				userId : token['lbToken']['userId'],
+				token : token['lbToken']['id'],
+			},
+			Request
+		)
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(err));
+				//console.warn(JSON.stringify(res));
+				if(!err){
+					const { result } = res;
+					if(result.success === true){
+						dispatch({
+							type : 'UPDATE_WALLET_BALANCE',
+							value : result.newWalletBalance
+						});	
+					}
+				}
+			})
+			.catch((err)=>{
+				console.warn(JSON.stringify(err));
+			})
+		updateUser(
+			{
+				userId : token['lbToken']['userId'],
+				token : token['lbToken']['id'],
+				data : {
+					lastLogIn : new Date().getTime()
+				},
+			},
+			Request
+		)
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(err));
+				//console.warn(JSON.stringify(res));
+				navigator.resetTo({
+					screen : 'app.GamePlayList',
+					navigatorStyle : {
+						navBarHidden : true
+					}
+				});
+			})
+			.catch((err)=>{
+				console.warn(JSON.stringify(err));
+			});
+			
 	}
 }
 

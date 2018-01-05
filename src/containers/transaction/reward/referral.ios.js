@@ -11,6 +11,10 @@ class Referral extends Component {
 		const { getUserInfo } = this.props;
 		getUserInfo();
 	}
+	shouldComponenetUpdate(nextProps){
+		const { user } = this.props;
+		return JSON.stringify(user) !== JSON.stringify(nextProps.user);
+	}
 	_renderReferralCode(code){
 		const { string } = this.props;
 		return (

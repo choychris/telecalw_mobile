@@ -1,6 +1,7 @@
 import Request from '../../utils/fetch';
 import { getWinResult } from '../../common/api/request/play';
 import { getDeliveryQuote , postDelivery , getDelivery } from '../../common/api/request/delivery';
+import { postIssue } from '../../common/api/request/issue';
 import { updateUser } from '../../common/api/request/user';
 import { loading , message } from '../utilities/actions';
 import { languageSetting } from '../../utils/language';
@@ -312,5 +313,38 @@ export function showTracking(navigator){
 				}
 			)
 		}
+	}
+}
+
+export function createIssue(){
+	return (dispatch,getState)=>{
+		const { id , userId } = getState()['auth']['token']['lbToken'];
+		let { issue } = getState()['mis'];
+		if(issue.message && issue.message !== null){
+			issue.userId = userId;
+			console.warn(JSON.stringify(issue))
+			postIssue({
+				token : id,
+				data : issue
+			},Request)
+				.then((res,err)=>{
+					console.warn(JSON.stringify(res));
+					console.warn(JSON.stringify(err));
+				})
+				.catch((err)=>{
+					console.warn(JSON.stringify(err));
+				});
+		}
+	}
+}
+
+
+export function inputIssue(keys,value){
+	return (dispatch,getState)=>{
+		return dispatch({
+			type : 'AMEND_ISSUE',
+			keys : keys,
+			value : value
+		})
 	}
 }

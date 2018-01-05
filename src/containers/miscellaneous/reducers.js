@@ -104,6 +104,11 @@ function misReducer (state = initialState, action){
 				.setIn(['issue','type'],action.value)
 				.toJS()
 		break;
+		case 'AMEND_ISSUE':
+			return state
+				.setIn(['issue'].concat(action.keys),action.value)
+				.toJS()
+			break;
 		case 'SELECT_QUOTE':
 			return state
 				.setIn(['logistic','quote'],action.value)

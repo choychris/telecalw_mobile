@@ -2,10 +2,14 @@ import React, { PropTypes, Component } from 'react';
 import { TextInput , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator , TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { inputIssue } from '../../actions';
 
 class IssueForm extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
-		const { string } = this.props;
+		const { string , inputIssue } = this.props;
 		return(
 			<View>
 				<TextInput
@@ -13,14 +17,14 @@ class IssueForm extends Component {
 					placeholder={string['inputEmail']}
 					keyboardType={'email-address'}
 					autoCapitalize={'none'}
-					onChangeText={(text)=>{}}
+					onChangeText={(text)=>inputIssue(['email'],text)}
 				/>
 				<TextInput
 					multiline={true}
 					autoCorrect={false}
 					style={[styles.input,{ height : 100 }]}
 					placeholder={string['inputMsg']}
-					onChangeText={(text)=>{}}
+					onChangeText={(text)=>inputIssue(['message'],text)}
 				/>
 			</View>
 		)
@@ -55,6 +59,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
+		inputIssue
 	}, dispatch)
 }
 

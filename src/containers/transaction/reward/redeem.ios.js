@@ -2,10 +2,23 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , Easing , PanResponder , View , Text , TextInput , StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { inputRedeemCode } from '../actions';
 
 class Redeem extends Component {
+	componentWillUnmount(){
+		const { inputRedeemCode } = this.props;
+		inputRedeemCode(null);
+	}
+	shouldComponenetUpdate(nextProps){
+		const { reward } = this.props;
+		return reward !== nextProps.reward;
+	}
 	render(){
-		const { string } = this.props;
+		const { 
+			string , 
+			reward ,
+			inputRedeemCode
+		} = this.props;
 		return(
 			<View style={styles.container}>
 				<Text style={styles.title}>
@@ -13,8 +26,9 @@ class Redeem extends Component {
 				</Text>
 				<TextInput
 					style={styles.input}
+					value={(reward && reward !== null) ? reward : ''}
 					placeholder={string['inputRedeemCode']}
-					onChangeText={(text)=>{}}
+					onChangeText={(text)=>inputRedeemCode(text)}
 				/>
 			</View>
 		)
@@ -50,12 +64,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		reward : state.transaction.reward
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
+		inputRedeemCode
 	}, dispatch)
 }
 
