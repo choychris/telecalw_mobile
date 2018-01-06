@@ -2,12 +2,14 @@ import React, { PropTypes, Component } from 'react';
 import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Telebot from '../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import Referral from './referral';
 import Redeem from './redeem';
 import { confirmRedeem } from '../actions';
+const height = Dimensions.get('window').height;
 
 class Reward extends Component {
 	shouldComponenetUpdate(nextProps){
@@ -32,29 +34,40 @@ class Reward extends Component {
 					coins={true} 
 					navigator={navigator}
 				/>
-				<MessageBox 
-					title={'referral'}
-					type={'right'}
-					content={this._renderContainer()}
-					promptString={'rewardPrompt'}
-					buttons={[
-						{
-							text : 'confirm',
-							textStyle : {
-								color : 'white',
-								fontSize : 25,
-								fontFamily : 'Silom',
-								fontWeight : 'bold'
-							},
-							btnStyle : {
-								backgroundColor : '#4C4C4C',
-								paddingVertical : 15,
-								paddingHorizontal : 20
-							},
-							onPressFunction : ()=>confirmRedeem()
-						}
-					]}
-				/>
+				<KeyboardAvoidingView 
+					behavior="position" 
+					style={styles.keyboardView}
+				>
+					<MessageBox 
+						title={'referral'}
+						type={'right'}
+						content={this._renderContainer()}
+						promptString={'rewardPrompt'}
+						buttons={[
+							{
+								text : 'confirm',
+								textStyle : {
+									color : 'white',
+									fontSize : 25,
+									fontFamily : 'Silom',
+									fontWeight : 'bold'
+								},
+								btnStyle : {
+									backgroundColor : '#4C4C4C',
+									paddingVertical : 15,
+									paddingHorizontal : 20
+								},
+								onPressFunction : ()=>confirmRedeem()
+							}
+						]}
+					/>
+					<Telebot 
+						style={styles.telebot}
+						status={'normal'} 
+						height={height * 0.13} 
+						width={height * 0.13}
+					/>
+				</KeyboardAvoidingView>
 			</View>
 		)
 	}
@@ -67,7 +80,7 @@ const styles = StyleSheet.create({
 		backgroundColor : '#263E50'
 	},
 	innerContainer : {
-		alignSelf : 'stretch'
+		alignSelf : 'stretch',
 	},
 	keyboardView: {
 		alignSelf : 'stretch' , 
@@ -77,9 +90,8 @@ const styles = StyleSheet.create({
 	},
 	telebot : {
 		position : 'absolute',
-		bottom : 0,
-		right : 0,
-		padding : 5
+		bottom : -height*0.02,
+		right : 0
 	}
 });
 

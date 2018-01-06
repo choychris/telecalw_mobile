@@ -98,7 +98,7 @@ export function payment(navigator){
 			loading('show',navigator);
 			getPaymentToken(params,Request)
 				.then((res,err)=>{
-					console.warn(JSON.stringify(res.result));
+					//console.warn(JSON.stringify(res.result));
 					//console.warn(JSON.stringify(err));
 					BTClient.setup(res.result);
 					BTClient.showPaymentViewController({}).then((nonce)=>{
@@ -157,7 +157,16 @@ export function transactions(){
 			token : id,
 			userId : userId
 		};
-		getTransactions(params,Request)
+		//getTransactions(params,Request)
+			//.then((res,err)=>{
+				////console.warn(JSON.stringify(res));
+				////console.warn(JSON.stringify(err));
+				//return dispatch({ type : 'STORE_TRANSACTIONS' , value : res });	
+			//})
+			//.catch(function(err) {
+				//console.warn(JSON.stringify(err));
+			//});
+		userTransactions(params,Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));

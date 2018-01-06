@@ -78,7 +78,8 @@ const en = {
 	noTracking : 'No Tacking Information Avaliable Yet',
 	back : 'Back',
 	confirm : 'Confirm',
-	insufficientFund : 'Insufficient Fund'
+	insufficientFund : 'Insufficient Fund',
+	checkIn : 'Check In Reward'
 }
 
 export default en;

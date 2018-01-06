@@ -18,6 +18,10 @@ class TransactionListContainer extends Component{
 		const { transactions } = this.props;
 		transactions();
 	}
+	shouldComponentUpdate(nextProps){
+		const { transactionsData } = this.props;
+		return (transactionsData.length !== nextProps.transactionsData.length);
+	}
 	_renderLoading(){
 		return (
 			<View style={styles.container}>
@@ -53,10 +57,10 @@ const styles = StyleSheet.create({
 	listWrapper : {
 		alignSelf : 'stretch',
 		height : height * 0.4,
-		marginVertical : 10
+		marginBottom : 50
 	},
 	listContainer : {
-		paddingVertical : 10,
+		padding : 10,
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		justifyContent : 'center'

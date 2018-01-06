@@ -32,8 +32,8 @@ class TopUp extends Component {
 							},
 							btnStyle : {
 								backgroundColor : '#4C4C4C',
-								paddingVertical : 15,
-								paddingHorizontal : 20
+								paddingVertical : 10,
+								paddingHorizontal : 15
 							},
 							onPressFunction : ()=>payment(navigator)
 						}
@@ -66,6 +66,7 @@ class TopUp extends Component {
 				<NavBar 
 					back={true}
 					coins={true} 
+					coinsDisable={true}
 					navigator={navigator}
 				/>
 				<MessageBox 
@@ -73,13 +74,12 @@ class TopUp extends Component {
 					tabs={tabs}
 					promptString={'topUpPrompt'}
 				/>
-				<View style={styles.telebot}>
-					<Telebot 
-						status={'money'} 
-						height={height * 0.13} 
-						width={height * 0.13}
-					/>
-				</View>
+				<Telebot 
+					style={styles.telebot}
+					status={'money'} 
+					height={height * 0.13} 
+					width={height * 0.13}
+				/>
 			</View>
 		)
 	}
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		bottom : 0,
 		right : 0,
-		padding : 5
+		margin : 10
 	}
 });
 

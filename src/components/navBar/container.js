@@ -10,6 +10,9 @@ import Viewers from './viewers';
 import Timer from './timer';
 
 class NavBar extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { 
 			back , 
@@ -18,13 +21,14 @@ class NavBar extends Component {
 			signal , 
 			timer , 
 			viewers ,
-			navigator 
+			navigator ,
+			coinsDisable
 		} = this.props;
 		const spaceStyle = (timer === true) ? { justifyContent : 'space-between' } : null;
 		return(
 			<View style={[styles.container,spaceStyle]}>	
 				{(back === true) ? <Back navigator={navigator}/> : null }
-				{(coins === true) ? <Coins navigator={navigator}/>  : null}
+				{(coins === true) ? <Coins navigator={navigator} disabled={coinsDisable}/>  : null}
 				{(timer === true) ? <Timer/> : null}
 				{(location === true) ? <Location/> : null}
 				{(viewers === true) ? <Viewers/> : null}

@@ -31,7 +31,6 @@ class MessageBox extends Component {
 		const { selectedTab } = this.state;
 		return (
 			<FlatList
-				style={styles.tabs}
 				contentContainerStyle={styles.tabContent}
 				horizontal={true}
 				data={tabs}
@@ -90,13 +89,14 @@ const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
 		width : '100%',
-		height : height * 0.75
+		height : height * 0.75,
+		opacity : 0.95
 	},
 	innerView : { 
 		height : height * 0.70,
 		borderRadius : 30 , 
-		alignItems : 'center',
-		backgroundColor : 'transparent'
+		backgroundColor : 'transparent',
+		paddingVertical : 10
 	},
 	title : {
 		fontFamily : 'Silom',
@@ -107,11 +107,10 @@ const styles = StyleSheet.create({
 	},
 	tabContent : {
 		flex : 1,
-		alignSelf : 'stretch',
 		flexDirection : 'row',
 		alignItems : 'center',
 		justifyContent : 'space-around',
-		paddingVertical : 10
+		paddingVertical : 5
 	}
 });
 

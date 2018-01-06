@@ -3,11 +3,11 @@ import { Easing , Animated , View , Image , StyleSheet , Dimensions } from 'reac
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const startsImages = [
-	require('../../../assets/background/stars1.png') , 
+	require('../../../assets/background/stars2.png') , 
 ];
 const backgroundImg = require('../../../assets/background/background_img.png');
 
-class BackgroundImage extends Component {
+class StarsImage extends Component {
 	constructor(props){
 		super(props);
 		this._animation = new Animated.Value(0);
@@ -17,12 +17,12 @@ class BackgroundImage extends Component {
 			Animated.sequence([
 				Animated.timing(this._animation, {
 					toValue: 1,
-					duration: 2000,
+					duration: 5000,
 					easing : Easing.linear
 				}),
 				Animated.timing(this._animation, {
 					toValue: 0,
-					duration: 2000,
+					duration: 5000,
 					easing : Easing.linear
 				})
 			])
@@ -46,9 +46,9 @@ class BackgroundImage extends Component {
 			//backgroundImages[Math.floor(Math.random() * (2 - 0 + 1)) + 0];
 		return(
 			<View style={styles.container}>
-				<Image
-					source={backgroundImg}
-					style={[styles.image]}
+				<Animated.Image
+					source={startsImages[0]}
+					style={[styles.image,this._opacityAnimation()]}
 					resizeMode={'cover'}
 				/>
 			</View>																				      
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 		left: 0,
 		width: '100%',
 		height: '100%',
-		backgroundColor : '#263E50'
+		backgroundColor : 'transparent'
 	},
 	image : {
 		height : Dimensions.get('window').height,
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null, null)(BackgroundImage);
+export default connect(null, null)(StarsImage);

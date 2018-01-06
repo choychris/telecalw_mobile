@@ -28,11 +28,11 @@ class Tab extends Component {
 
 const styles = StyleSheet.create({
 	tab : {
-		paddingVertical : 5
+		paddingVertical : 2
 	},
 	title : {
 		fontFamily : 'Silom',
-		fontSize : 20,
+		fontSize : 18,
 		textAlign : 'center'
 	}
 });

@@ -24,6 +24,7 @@ class BarContainer extends Component {
 		const { navigator } = this.props;
 		return (
 			<FlatList
+				style={{ paddingHorizontal : 10  }}
 				horizontal={true}
 				data={menu}
 				renderItem={({item})=>
@@ -38,7 +39,7 @@ class BarContainer extends Component {
 	render(){
 		const { navigator } = this.props;
 		const { menu } = this.state;
-		const screenWidth = Dimensions.get('window').width * 0.28;
+		const screenWidth = Dimensions.get('window').width * 0.25;
 		return (
 			<View style={styles.container}>
 				{this._renderTabItems(menu)}
@@ -54,6 +55,7 @@ class BarContainer extends Component {
 				>
 					<Telebot
 						status={'setting'}
+						style={{ margin : 5 }}
 						height={screenWidth}
 						width={screenWidth}
 					/>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { loading } from '../../utilities/actions';
 import { loadGameList , networkChecking , productStatus ,reserveStatus , getCheckinReward } from '../actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
+import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import LocationBar from './location/bar';
 import ListContainer from './gameList/listContainer';
@@ -40,6 +41,7 @@ class GamePlayList extends Component {
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
+				<StarsImage/>
 				<NavBar 
 					coins={true} 
 					location={true} 

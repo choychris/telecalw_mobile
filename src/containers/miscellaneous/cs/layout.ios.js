@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , ScrollView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Telebot from '../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
@@ -39,7 +40,7 @@ class CustomerSupport extends Component {
 				>
 					<MessageBox 
 						title={'issueReport'}
-						type={'none'}
+						type={'right'}
 						content={this._renderContainer()}
 						promptString={'issuePrompt'}
 						buttons={[
@@ -59,6 +60,12 @@ class CustomerSupport extends Component {
 								onPressFunction : ()=>createIssue()
 							}
 						]}
+					/>
+					<Telebot 
+						style={styles.telebot}
+						status={'postal'} 
+						height={height * 0.13} 
+						width={height * 0.13}
 					/>
 				</KeyboardAvoidingView>
 			</View>
@@ -84,9 +91,8 @@ const styles = StyleSheet.create({
 	},
 	telebot : {
 		position : 'absolute',
-		bottom : 0,
-		right : 0,
-		padding : 5
+		bottom : -height*0.02,
+		right : 0
 	}
 });
 

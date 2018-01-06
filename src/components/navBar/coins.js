@@ -14,6 +14,10 @@ class Coins extends Component {
 		const { getUserWallet , navigator } = this.props;
 		getUserWallet(navigator);
 	}
+	shouldComponentUpdate(nextProps){
+		const { wallet } = this.props;
+		return nextProps.wallet !== wallet;
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
@@ -21,9 +25,24 @@ class Coins extends Component {
 		return <Text style={styles.text}>{Math.round(balance)}</Text>
 	}
 	render(){
-		const { wallet } = this.props;
+		const { 
+			wallet , 
+			navigator , 
+			disabled 
+		} = this.props;
 		return (
-			<TouchableOpacity style={styles.container}>
+			<TouchableOpacity 
+				style={styles.container}
+				disabled={(disabled === true) ? true : false}
+				onPress={()=>{
+					navigator.push({
+						screen : 'app.TopUp',
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+				}}
+			>
 				<Image
 					style={styles.image}
 					source={coins.single}

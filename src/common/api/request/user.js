@@ -72,8 +72,14 @@ export function userReservation(params,request){
 // Get User Transactions
 export function userTransactions(params,request){
 	const { token , userId } = params;
+	const filter = {
+		where:{
+			success: true
+		}, 
+		order: "created DESC"
+	};
 	return new Promise((resolve,reject)=>{
-		request(api.users.root+'/'+userId+'/transactions?access_token='+token,'GET')
+		request(api.users.root+'/'+userId+'/transactions?filter='+JSON.stringify(filter)+'&access_token='+token,'GET')
 			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
 			.catch((error)=>reject(error));	  
 	});
