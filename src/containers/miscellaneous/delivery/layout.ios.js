@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StatusBar , StyleSheet , Dimensions , KeyboardAvoidingView } from 'react-native';
+import { Easing , Animated , View , Text , StatusBar , StyleSheet , Dimensions , KeyboardAvoidingView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
+import StarsImage from '../../../components/utilities/starsImage';
 import Telebot from '../../../components/telebuddies/telebot';
 import MessageBox from '../../../components/messageBox/container';
 import NavBar from '../../../components/navBar/container';
@@ -12,7 +13,7 @@ import { getUserInfo } from '../../auth/actions';
 import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect , showTracking } from '../actions';
 import QuoteSelect from './quote/listContainer';
 import Receipt from './receipt/layout';
-const { width } = Dimensions.get('window');
+const { width , height } = Dimensions.get('window');
 
 class Delivery extends Component {
 	constructor(props){
@@ -23,10 +24,18 @@ class Delivery extends Component {
 		// 3. quoteSelect
 		// 4. deliveryReceipt
 		this.state = { display : 'gamePlaySelect' };
+		this._position = new Animated.ValueXY({
+			x : 0, 
+			y : height*0.1
+		});
+		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
 		const { getUserInfo } = this.props;
 		getUserInfo();
+		setTimeout(()=>{
+			this._slideUpAnimation();
+		},100);
 	}
 	shouldComponentUpdate(nextProps,nextState){
 		const { display , data } = this.state;
@@ -36,6 +45,32 @@ class Delivery extends Component {
 		// Clear Selected Play / Reset 
 		const { resetLogistic } = this.props;
 		resetLogistic();
+	}
+	_fadeAnimation(){
+		Animated.timing(this._animation, {
+			toValue: 1,
+			duration: 100,
+			easing : Easing.linear
+		}).start()
+	}
+	_slideUpAnimation(){
+		Animated.sequence([
+			Animated.spring(this._position, {
+				bounciness : 15 ,
+				toValue : { 
+					x : 0, 
+					y : -height*0.1
+				}
+			}),
+		]).start(()=>this._fadeAnimation());
+	}
+	_opacityAnimation(){
+		return {
+			opacity: this._animation.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 1],
+			})
+		}
 	}
 	_renderContent(display){
 		const { navigator } = this.props;
@@ -218,6 +253,7 @@ class Delivery extends Component {
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
+				<StarsImage/>
 				<NavBar 
 					back={true}
 					coins={true} 
@@ -227,25 +263,27 @@ class Delivery extends Component {
 					behavior="position" 
 					style={styles.keyboardView}
 				>
-					<MessageBox 
-						title={'delivery'}
-						type={'left'}
-						promptString={'deliveryPrompt'}
-						content={displayContent}
-						buttons={displayBtn}
-					/>
-					<Telebot 
-						style={styles.telebot}
-						status={'fly'} 
-						height={width*0.3} 
-						width={width*0.3}
-					/>
+					<Animated.View style={[this._opacityAnimation()]}>
+						<MessageBox 
+							title={'delivery'}
+							type={'left'}
+							promptString={'deliveryPrompt'}
+							content={displayContent}
+							buttons={displayBtn}
+						/>
+					</Animated.View>
+					<Animated.View style={[this._position.getLayout()]}>
+						<Telebot 
+							status={'fly'} 
+							height={width*0.3} 
+							width={width*0.3}
+						/>
+					</Animated.View>
 				</KeyboardAvoidingView>
 			</View>
 		)
 	}
 }
-
 
 const styles = StyleSheet.create({
 	container : {

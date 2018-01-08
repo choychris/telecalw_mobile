@@ -10,6 +10,10 @@ const coinsImg = {
 const width = Dimensions.get('window').width;
 
 class RateItem extends Component {
+	shouldComponentUpdate(nextProps){
+		const { rate } = this.props;
+		return JSON.stringify(rate) !== JSON.stringify(nextProps.rate);
+	}
 	render(){
 		const { 
 			coins , 

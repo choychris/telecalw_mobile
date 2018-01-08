@@ -15,8 +15,11 @@ class RateListContainer extends Component{
 	}
 	componentDidMount(){
 		// Fetch Remote Backend API to Get List of Exchage Rate
-		const { exchangeRate } = this.props;
-		exchangeRate();
+		const { exchangeRate , navigator } = this.props;
+		exchangeRate(navigator);
+	}
+	shouldComponentUpdate(nextProps){
+		return nextProps.rates.length > 0;
 	}
 	_renderLoading(){
 		return (

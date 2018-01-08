@@ -1,7 +1,7 @@
 import  { api } from '../url';
 
 // Get Exchange Rate
-export function getExchageRate(params,request){
+export function getExchangeRate(params,request){
 	const { token } = params;
 	return new Promise((resolve,reject)=>{
 		request(api.exchangeRates.root+'?filter[where][status]=true&access_token='+token,'GET')

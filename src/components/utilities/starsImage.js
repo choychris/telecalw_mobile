@@ -2,27 +2,28 @@ import React, { PropTypes, Component } from 'react';
 import { Easing , Animated , View , Image , StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-const startsImages = [
+const starsImages = [
+	require('../../../assets/background/stars1.png') , 
 	require('../../../assets/background/stars2.png') , 
+	require('../../../assets/background/stars3.png')
 ];
-const backgroundImg = require('../../../assets/background/background_img.png');
 
 class StarsImage extends Component {
 	constructor(props){
 		super(props);
-		this._animation = new Animated.Value(0);
+		this._animation = new Animated.Value(0.2);
 	}
 	componentDidMount(){
 		Animated.loop(
 			Animated.sequence([
 				Animated.timing(this._animation, {
 					toValue: 1,
-					duration: 5000,
+					duration: 2000,
 					easing : Easing.linear
 				}),
 				Animated.timing(this._animation, {
-					toValue: 0,
-					duration: 5000,
+					toValue: 0.2,
+					duration: 2000,
 					easing : Easing.linear
 				})
 			])
@@ -41,13 +42,11 @@ class StarsImage extends Component {
 	}
 	render() {
 		const { type } = this.props;
-		//const backgroundSetting = (type === 'auth') ? 
-			//require('../../../assets/background/background_auth.png') : 
-			//backgroundImages[Math.floor(Math.random() * (2 - 0 + 1)) + 0];
+		const starsSetting = starsImages[Math.floor(Math.random() * (2 - 0 + 1)) + 0];
 		return(
 			<View style={styles.container}>
 				<Animated.Image
-					source={startsImages[0]}
+					source={starsSetting}
 					style={[styles.image,this._opacityAnimation()]}
 					resizeMode={'cover'}
 				/>

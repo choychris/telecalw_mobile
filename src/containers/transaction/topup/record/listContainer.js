@@ -15,8 +15,8 @@ class TransactionListContainer extends Component{
 	}
 	componentDidMount(){
 		// Fetch Remote Backend API to Get List of Transactions
-		const { transactions } = this.props;
-		transactions();
+		const { transactions , navigator } = this.props;
+		transactions(navigator);
 	}
 	shouldComponentUpdate(nextProps){
 		const { transactionsData } = this.props;

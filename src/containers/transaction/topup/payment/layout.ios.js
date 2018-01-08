@@ -20,7 +20,7 @@ class TopUp extends Component {
 			tabs : [
 				{ 
 					name : 'topUp' , 
-					content : <RateListContainer/> ,
+					content : <RateListContainer navigator={navigator}/> ,
 					buttons : [
 						{
 							text : 'confirmText',
@@ -41,7 +41,7 @@ class TopUp extends Component {
 				},
 				{ 
 					name : 'transactions',
-					content : <TransactionListContainer/>
+					content : <TransactionListContainer navigator={navigator}/>
 				}
 			]
 		}

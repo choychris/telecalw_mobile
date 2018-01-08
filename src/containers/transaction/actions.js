@@ -1,7 +1,7 @@
 import Request from '../../utils/fetch';
 import { getPaymentToken , createSales, getTransactions } from '../../common/api/request/transaction';
 import { userTransactions } from '../../common/api/request/user';
-import { getExchageRate } from '../../common/api/request/exchangeRate';
+import { getExchangeRate } from '../../common/api/request/exchangeRate';
 import { redeemReward } from '../../common/api/request/reward';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
@@ -134,45 +134,42 @@ export function payment(navigator){
 	}
 }
 
-export function exchangeRate(){
+export function exchangeRate(navigator){
 	return (dispatch,getState)=>{
 		const { userId , id } = getState()['auth']['token']['lbToken'];
 		const params = { token : id };
-		getExchageRate(params,Request)
+		loading('show',navigator);
+		getExchangeRate(params,Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
 				return dispatch({ type : 'STORE_RATES' , value : res });	
 			})
 			.catch(function(err) {
+				loading('hide',navigator);
 				console.warn(err)
 			});
 	}
 }
 
-export function transactions(){
+export function transactions(navigator){
 	return (dispatch,getState)=>{
 		const { userId , id } = getState()['auth']['token']['lbToken'];
 		const params = {
 			token : id,
 			userId : userId
 		};
-		//getTransactions(params,Request)
-			//.then((res,err)=>{
-				////console.warn(JSON.stringify(res));
-				////console.warn(JSON.stringify(err));
-				//return dispatch({ type : 'STORE_TRANSACTIONS' , value : res });	
-			//})
-			//.catch(function(err) {
-				//console.warn(JSON.stringify(err));
-			//});
+		loading('show',navigator);
 		userTransactions(params,Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
 				return dispatch({ type : 'STORE_TRANSACTIONS' , value : res });	
 			})
 			.catch(function(err) {
+				loading('hide',navigator);
 				console.warn(JSON.stringify(err));
 			});
 	}
