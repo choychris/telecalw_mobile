@@ -9,11 +9,60 @@ import MessageBox from '../../../components/messageBox/container';
 import Referral from './referral';
 import Redeem from './redeem';
 import { confirmRedeem } from '../actions';
-const height = Dimensions.get('window').height;
+const { height , width } = Dimensions.get('window');
 
 class Reward extends Component {
+	constructor(props){
+		super(props);
+		this._floating = new Animated.ValueXY({
+			x : width*0.7,
+			y : -60
+		});
+		this._animation = new Animated.Value(0);
+	}
+	componentDidMount(){
+		this._floatingAnimation();
+		setTimeout(()=>this._fadeAnimation(),500);
+	}
 	shouldComponenetUpdate(nextProps){
 		return false;
+	}
+	_fadeAnimation(){
+		Animated.timing(this._animation, {
+			toValue: 1,
+			duration: 100,
+			easing : Easing.linear
+		}).start()
+	}
+	_floatingAnimation(){
+		Animated.loop(
+			Animated.sequence([
+				Animated.timing(this._floating, {
+					duration : 1000,
+					toValue : { 
+						x : width*0.7,
+						y : -65
+					},
+					easing : Easing.linear
+				}),
+				Animated.timing(this._floating, {
+					duration : 1000,
+					toValue : { 
+						x : width*0.7,
+						y : -60
+					},
+					easing : Easing.linear
+				})
+			])
+		).start();
+	}
+	_opacityAnimation(){
+		return {
+			opacity: this._animation.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 1],
+			})
+		}
 	}
 	_renderContainer(){
 		return(
@@ -38,35 +87,42 @@ class Reward extends Component {
 					behavior="position" 
 					style={styles.keyboardView}
 				>
-					<MessageBox 
-						title={'referral'}
-						type={'right'}
-						content={this._renderContainer()}
-						promptString={'rewardPrompt'}
-						buttons={[
-							{
-								text : 'confirm',
-								textStyle : {
-									color : 'white',
-									fontSize : 25,
-									fontFamily : 'Silom',
-									fontWeight : 'bold'
-								},
-								btnStyle : {
-									backgroundColor : '#4C4C4C',
-									paddingVertical : 15,
-									paddingHorizontal : 20
-								},
-								onPressFunction : ()=>confirmRedeem()
-							}
-						]}
-					/>
-					<Telebot 
-						style={styles.telebot}
-						status={'normal'} 
-						height={height * 0.13} 
-						width={height * 0.13}
-					/>
+					<Animated.View 
+						style={[this._opacityAnimation()]}
+					>
+						<MessageBox 
+							title={'referral'}
+							type={'right'}
+							content={this._renderContainer()}
+							promptString={'rewardPrompt'}
+							buttons={[
+								{
+									text : 'confirm',
+									textStyle : {
+										color : 'white',
+										fontSize : 25,
+										fontFamily : 'Silom',
+										fontWeight : 'bold'
+									},
+									btnStyle : {
+										backgroundColor : '#4C4C4C',
+										paddingVertical : 15,
+										paddingHorizontal : 20
+									},
+									onPressFunction : ()=>confirmRedeem()
+								}
+							]}
+						/>
+					</Animated.View>
+					<Animated.View 
+						style={[this._floating.getLayout()]}
+					>
+						<Telebot 
+							status={'normal'} 
+							height={height * 0.13} 
+							width={height * 0.13}
+						/>
+					</Animated.View>
 				</KeyboardAvoidingView>
 			</View>
 		)
@@ -84,14 +140,8 @@ const styles = StyleSheet.create({
 	},
 	keyboardView: {
 		alignSelf : 'stretch' , 
-		justifyContent : 'flex-start' , 
 		alignItems : 'center' , 
 		flex : 1
-	},
-	telebot : {
-		position : 'absolute',
-		bottom : -height*0.02,
-		right : 0
 	}
 });
 

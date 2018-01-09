@@ -35,7 +35,7 @@ class Delivery extends Component {
 		getUserInfo();
 		setTimeout(()=>{
 			this._slideUpAnimation();
-		},100);
+		},1000);
 	}
 	shouldComponentUpdate(nextProps,nextState){
 		const { display , data } = this.state;

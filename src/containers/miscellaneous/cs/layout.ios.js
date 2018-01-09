@@ -4,16 +4,43 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
+import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import IssueType from '../cs/issue/issueType';
 import IssueForm from '../cs/issue/issueForm';
 import { createIssue } from '../actions';
-const height = Dimensions.get('window').height;
+const { height , width } = Dimensions.get('window');
 
 class CustomerSupport extends Component {
+	constructor(props){
+		super(props);
+		this._position = new Animated.ValueXY({
+			x : -width,
+			y : -60
+		});
+		this._animation = new Animated.Value(0);
+	}
+	componentDidMount(){
+		this._slideAnimation()
+	}
 	shouldComponentUpdate(){
 		return false;
+	}
+	_slideAnimation(){
+		Animated.spring(this._position,{
+			toValue : {
+				x : 0,
+				y : -60
+			}
+		}).start(()=>this._fadeAnimation());
+	}
+	_fadeAnimation(){
+		Animated.timing(this._animation, {
+			toValue: 1,
+			duration: 100,
+			easing : Easing.linear
+		}).start();
 	}
 	_renderContainer(){
 		return(
@@ -23,12 +50,21 @@ class CustomerSupport extends Component {
 			</ScrollView>
 		)
 	}
+	_opacityAnimation(){
+		return {
+			opacity: this._animation.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 1],
+			})
+		}
+	}
 	render(){
 		const { navigator , createIssue } = this.props;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
+				<StarsImage/>
 				<NavBar 
 					back={true}
 					coins={true} 
@@ -38,35 +74,40 @@ class CustomerSupport extends Component {
 					behavior="position" 
 					style={styles.keyboardView}
 				>
-					<MessageBox 
-						title={'issueReport'}
-						type={'right'}
-						content={this._renderContainer()}
-						promptString={'issuePrompt'}
-						buttons={[
-							{
-								text : 'confirm',
-								textStyle : {
-									color : 'white',
-									fontSize : 25,
-									fontFamily : 'Silom',
-									fontWeight : 'bold'
-								},
-								btnStyle : {
-									backgroundColor : '#4C4C4C',
-									paddingVertical : 10,
-									paddingHorizontal : 15
-								},
-								onPressFunction : ()=>createIssue()
-							}
-						]}
-					/>
-					<Telebot 
-						style={styles.telebot}
-						status={'postal'} 
-						height={height * 0.13} 
-						width={height * 0.13}
-					/>
+					<Animated.View style={[this._opacityAnimation()]}>
+						<MessageBox 
+							title={'issueReport'}
+							type={'left'}
+							content={this._renderContainer()}
+							promptString={'issuePrompt'}
+							buttons={[
+								{
+									text : 'confirm',
+									textStyle : {
+										color : 'white',
+										fontSize : 25,
+										fontFamily : 'Silom',
+										fontWeight : 'bold'
+									},
+									btnStyle : {
+										backgroundColor : '#4C4C4C',
+										paddingVertical : 10,
+										paddingHorizontal : 15
+									},
+									onPressFunction : ()=>createIssue()
+								}
+							]}
+						/>
+					</Animated.View>
+					<Animated.View
+						style={[this._position.getLayout()]}
+					>
+						<Telebot 
+							status={'postal'} 
+							height={height * 0.13} 
+							width={height * 0.13}
+						/>
+					</Animated.View>
 				</KeyboardAvoidingView>
 			</View>
 		)

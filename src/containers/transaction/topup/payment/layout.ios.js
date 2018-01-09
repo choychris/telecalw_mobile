@@ -6,16 +6,22 @@ import { loading } from '../../../utilities/actions';
 import { payment , selectRate } from '../../actions';
 import Telebot from '../../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../../components/utilities/backgroundImage';
+import StarsImage from '../../../../components/utilities/starsImage';
 import NavBar from '../../../../components/navBar/container';
 import MessageBox from '../../../../components/messageBox/container';
 import RateListContainer from './listContainer';
 import TransactionListContainer from '../record/listContainer';
-const height = Dimensions.get('window').height;
+const { height , width } = Dimensions.get('window');
 
 class TopUp extends Component {
 	constructor(props){
 		super(props);
 		const { payment , navigator } = props;
+		this._position = new Animated.ValueXY({
+			x : -width,
+			y : -60
+		});
+		this._animation = new Animated.Value(0);
 		this.state = {
 			tabs : [
 				{ 
@@ -46,6 +52,9 @@ class TopUp extends Component {
 			]
 		}
 	}
+	componentDidMount(){
+		setTimeout(()=>this._runAnimation(),1000)
+	}
 	shouldComponentUpdate(){
 		return false;
 	}
@@ -53,6 +62,29 @@ class TopUp extends Component {
 		const { selectRate } = this.props;
 		// Reset Rate Selection
 		selectRate(null);
+	}
+	_fadeAnimation(){
+		Animated.timing(this._animation, {
+			toValue: 1,
+			duration: 100,
+			easing : Easing.linear
+		}).start()
+	}
+	_runAnimation(){
+		Animated.spring(this._position,{
+			toValue : {
+				x : -width*0.35,
+				y : -60
+			}
+		}).start(()=>this._fadeAnimation());
+	}
+	_opacityAnimation(){
+		return {
+			opacity: this._animation.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 1],
+			})
+		}
 	}
 	render(){
 		const { 
@@ -63,23 +95,29 @@ class TopUp extends Component {
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
+				<StarsImage/>
 				<NavBar 
 					back={true}
 					coins={true} 
 					coinsDisable={true}
 					navigator={navigator}
 				/>
-				<MessageBox 
-					type={'right'}
-					tabs={tabs}
-					promptString={'topUpPrompt'}
-				/>
-				<Telebot 
-					style={styles.telebot}
-					status={'money'} 
-					height={height * 0.13} 
-					width={height * 0.13}
-				/>
+				<Animated.View style={[this._opacityAnimation()]}>
+					<MessageBox 
+						type={'left'}
+						tabs={tabs}
+						promptString={'topUpPrompt'}
+					/>
+				</Animated.View>
+				<Animated.View
+					style={[this._position.getLayout()]}
+				>
+					<Telebot 
+						status={'money'} 
+						height={height * 0.13} 
+						width={height * 0.13}
+					/>
+				</Animated.View>
 			</View>
 		)
 	}
@@ -90,12 +128,6 @@ const styles = StyleSheet.create({
 		flex : 1,
 		alignItems : 'center',
 		backgroundColor : '#263E50'
-	},
-	telebot : {
-		position : 'absolute',
-		bottom : 0,
-		right : 0,
-		margin : 10
 	}
 });
 

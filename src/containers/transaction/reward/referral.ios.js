@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import Button from '../../../components/utilities/buttons';
 import { shareToFacebook } from '../actions';
 import { getUserInfo } from '../../auth/actions';
+const botShare = {
+	telebot : require('../../../../assets/telebuddies/telebot/telebot_share.png'),
+	teleufo : require('../../../../assets/telebuddies/telebot/ufo.png')
+}
 
 class Referral extends Component {
 	componentDidMount(){
@@ -59,8 +63,21 @@ class Referral extends Component {
 		const { user } = this.props;
 		return (
 			<View style={styles.container}>
-				{(user.referral) ? this._renderReferralCode(user.referral.code) : null}
-				{this._renderShareButton()}
+				<View style={styles.innerContainer}>
+					{(user.referral) ? this._renderReferralCode(user.referral.code) : null}
+					{this._renderShareButton()}
+				</View>
+				<View style={styles.innerContainer}>
+					<Image
+						source={botShare['telebot']}
+						style={styles.telebot}
+					/>
+					<Image
+						source={botShare['teleufo']}
+						style={styles.teleufo}
+						resizeMode="contain"
+					/>
+				</View>
 			</View>
 		)
 	}
@@ -68,14 +85,16 @@ class Referral extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		flexDirection : 'row',
-		alignSelf : 'stretch',
-		alignItems : 'center',
-		justifyContent : 'space-around',
 		paddingVertical : 10,
 		marginVertical : 10,
 		borderColor : '#C9C9C9',
 		borderBottomWidth : 1
+	},
+	innerContainer : {
+		flexDirection : 'row',
+		alignSelf : 'stretch',
+		alignItems : 'center',
+		justifyContent : 'space-around',
 	},
 	text : {
 		marginVertical : 2,
@@ -83,6 +102,14 @@ const styles = StyleSheet.create({
 		fontFamily : 'Silom',
 		color : '#CF333F',
 		fontWeight : 'bold'
+	},
+	telebot : {
+		height : 80,
+		width : 80
+	},
+	teleufo : {
+		height : 50,
+		width : 50
 	}
 });
 

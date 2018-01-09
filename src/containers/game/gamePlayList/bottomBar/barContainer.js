@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { FlatList , View , Text , StatusBar , StyleSheet , Dimensions ,TouchableOpacity } from 'react-native';
+import { Easing , Animated , FlatList , View , Text , StatusBar , StyleSheet , Dimensions ,TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ItemButton from './itemButton';
@@ -16,9 +16,38 @@ class BarContainer extends Component {
 				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
 			]
 		};
+		this._floating = new Animated.ValueXY({
+			x : 0,
+			y : 0
+		});
+	}
+	componentDidMount(){
+		this._floatingAnimation();
 	}
 	shouldComponentUpdate(){
 		return false;
+	}
+	_floatingAnimation(){
+		Animated.loop(
+			Animated.sequence([
+				Animated.timing(this._floating, {
+					duration : 1000,
+					toValue : { 
+						x : 0, 
+						y : -5
+					},
+					easing : Easing.linear
+				}),
+				Animated.timing(this._floating, {
+					duration : 1000,
+					toValue : { 
+						x : 0, 
+						y : 0
+					},
+					easing : Easing.linear
+				})
+			])
+		).start();
 	}
 	_renderTabItems(menu){
 		const { navigator } = this.props;
@@ -43,23 +72,25 @@ class BarContainer extends Component {
 		return (
 			<View style={styles.container}>
 				{this._renderTabItems(menu)}
-				<TouchableOpacity
-					onPress={()=>{
-						navigator.push({
-							screen : 'app.Setting',
-							navigatorStyle : {
-								navBarHidden : true
-							}
-						});
-					}}
-				>
-					<Telebot
-						status={'setting'}
-						style={{ margin : 5 }}
-						height={screenWidth}
-						width={screenWidth}
-					/>
-				</TouchableOpacity>
+				<Animated.View style={this._floating.getLayout()}>
+					<TouchableOpacity
+						onPress={()=>{
+							navigator.push({
+								screen : 'app.Setting',
+								navigatorStyle : {
+									navBarHidden : true
+								}
+							});
+						}}
+					>
+						<Telebot
+							status={'setting'}
+							style={{ margin : 5 }}
+							height={screenWidth}
+							width={screenWidth}
+						/>
+					</TouchableOpacity>
+				</Animated.View>
 			</View>
 		)
 	}
