@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
+import StarImages from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import Referral from './referral';
@@ -78,6 +79,7 @@ class Reward extends Component {
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
+				<StarImages/>
 				<NavBar 
 					back={true}
 					coins={true} 
@@ -106,8 +108,8 @@ class Reward extends Component {
 									},
 									btnStyle : {
 										backgroundColor : '#4C4C4C',
-										paddingVertical : 15,
-										paddingHorizontal : 20
+										paddingVertical : 10,
+										paddingHorizontal : 15
 									},
 									onPressFunction : ()=>confirmRedeem()
 								}

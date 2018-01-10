@@ -10,6 +10,7 @@ class TopUpButton extends Component {
 		return false;
 	}
 	render(){
+		const { navigator } = this.props;
 		return (
 			<Button
 				text={'topUp'}
@@ -27,7 +28,14 @@ class TopUpButton extends Component {
 				}}
 				borderColor={'#726E1D'}
 				icon={{ name : 'money' , size : 18 , color : '#3F3F3F' }}
-				onPressFunction={()=>{}}
+				onPressFunction={()=>{
+					navigator.push({
+						screen : 'app.TopUp',
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+				}}
 			/>
 		)
 	}

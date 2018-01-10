@@ -21,7 +21,7 @@ class RoomPanel extends Component {
 		}
 	}
 	render(){
-		const { machine } = this.props;
+		const { machine , navigator } = this.props;
 		const { status , currentUser } = machine;
 		return (status !== 'close') ? (
 			<View style={styles.container}>
@@ -31,7 +31,7 @@ class RoomPanel extends Component {
 				</View>
 				<View style={styles.column}>
 					<SwitchButton/>
-					<TopUpButton/>
+					<TopUpButton navigator={navigator}/>
 				</View>
 			</View>
 		) : null;

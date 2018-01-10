@@ -8,12 +8,41 @@ import { getUserInfo } from '../../auth/actions';
 const botShare = {
 	telebot : require('../../../../assets/telebuddies/telebot/telebot_share.png'),
 	teleufo : require('../../../../assets/telebuddies/telebot/ufo.png')
-}
+};
+const { height , width } = Dimensions.get('window');
 
 class Referral extends Component {
+	constructor(props){
+		super(props);
+		this._telebotPos = new Animated.ValueXY({
+			x : -width,
+			y : 0
+		});
+		this._telebotUfo = new Animated.ValueXY({
+			x : width,
+			y : 0
+		});
+	}
 	componentDidMount(){
 		const { getUserInfo } = this.props;
 		getUserInfo();
+		setTimeout(()=>this._slideInAnimation(),1500);
+	}
+	_slideInAnimation(){
+		Animated.parallel([
+			Animated.spring(this._telebotPos,{
+				toValue : {
+					x : 0,
+					y : 0
+				}
+			}),
+			Animated.spring(this._telebotUfo,{
+				toValue : {
+					x : 0,
+					y : 0
+				}
+			})
+		]).start();
 	}
 	shouldComponenetUpdate(nextProps){
 		const { user } = this.props;
@@ -23,7 +52,7 @@ class Referral extends Component {
 		const { string } = this.props;
 		return (
 			<View>
-				<Text style={[styles.text,{ fontSize : 22 }]}>
+				<Text style={[styles.text,{ fontSize : 18 }]}>
 					{string['referralCode']}
 				</Text>
 				<Text style={[styles.text,{ fontSize : 20  }]}>
@@ -50,8 +79,8 @@ class Referral extends Component {
 				}}
 				btnStyle={{ 
 					backgroundColor : '#3B5998',
-					paddingVertical : 15,
-					paddingHorizontal : 20
+					paddingVertical : 10,
+					paddingHorizontal : 15
 				}}
 				icon={{ name : 'share' , size : 18 , color : 'white' }}
 				borderColor={'#203559'}
@@ -68,13 +97,14 @@ class Referral extends Component {
 					{this._renderShareButton()}
 				</View>
 				<View style={styles.innerContainer}>
-					<Image
+					<Animated.Image
 						source={botShare['telebot']}
-						style={styles.telebot}
+						style={[styles.telebot,this._telebotPos.getLayout()]}
+						resizeMode="contain"
 					/>
-					<Image
+					<Animated.Image
 						source={botShare['teleufo']}
-						style={styles.teleufo}
+						style={[styles.teleufo,this._telebotUfo.getLayout()]}
 						resizeMode="contain"
 					/>
 				</View>
@@ -85,8 +115,8 @@ class Referral extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		paddingVertical : 10,
-		marginVertical : 10,
+		paddingVertical : 5,
+		marginVertical : 5,
 		borderColor : '#C9C9C9',
 		borderBottomWidth : 1
 	},
@@ -104,12 +134,12 @@ const styles = StyleSheet.create({
 		fontWeight : 'bold'
 	},
 	telebot : {
-		height : 80,
-		width : 80
+		height : 70,
+		width : 70
 	},
 	teleufo : {
-		height : 50,
-		width : 50
+		height : 40,
+		width : 40
 	}
 });
 
