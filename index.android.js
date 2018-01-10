@@ -1,4 +1,3 @@
 import { AppRegistry } from 'react-native';
-import {Platform, StyleSheet} from 'react-native';
-import Root from './src/containers/root/root';
+import Root from './test.js';
 AppRegistry.registerComponent('mobile_app', () => Root);
