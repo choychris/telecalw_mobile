@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , Image } from 'react-native';
+import { View , Text , StyleSheet , Image , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
@@ -108,13 +108,13 @@ const styles = StyleSheet.create({
 		justifyContent : 'center'
 	},
 	title : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 30
 	},
 	slogan : {
 		color : 'white',
 		fontSize : 20,
-		fontFamily : 'Silom'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	},
 	btnContainer : {
 		alignSelf : 'stretch',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 	btnText : {
 		textAlign : 'center',
 		color : '#4A6CFF',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 20
 	},
 	image : { 

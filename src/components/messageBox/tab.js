@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View ,  StyleSheet , Dimensions , Text , TouchableOpacity } from 'react-native';
+import { View ,  StyleSheet , Dimensions , Text , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 		paddingVertical : 2
 	},
 	title : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 18,
 		textAlign : 'center'
 	}

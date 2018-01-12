@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from '../../../components/utilities/buttons';
@@ -74,8 +74,7 @@ class Referral extends Component {
 				textStyle={{ 
 					color : 'white' , 
 					fontSize : 25 , 
-					fontFamily : 'Silom' ,
-					fontWeight : 'bold'
+					fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 				}}
 				btnStyle={{ 
 					backgroundColor : '#3B5998',
@@ -129,9 +128,8 @@ const styles = StyleSheet.create({
 	text : {
 		marginVertical : 2,
 		textAlign : 'center',
-		fontFamily : 'Silom',
 		color : '#CF333F',
-		fontWeight : 'bold'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	},
 	telebot : {
 		height : 70,

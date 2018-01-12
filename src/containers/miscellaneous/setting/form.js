@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform , Picker } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setUserLanguage } from '../actions';
@@ -33,6 +33,18 @@ class SettingForm extends Component {
 			</TouchableOpacity>
 		)
 	}
+	_renderLanguageAndroidPicker(avaLanguage,locale,string){
+		const { setUserLanguage , navigator } = this.props;
+		return(
+			<Picker
+				style={styles.picker}
+				selectedValue={locale}
+				onValueChange={(itemValue, itemIndex)=>setUserLanguage(itemValue,navigator)}
+			>
+				{Object.keys(avaLanguage).map((langCode,index)=><Picker.Item key={index} label={avaLanguage[langCode]} value={langCode}/>)}
+			</Picker>
+		)
+	}
 	render(){
 		const { user , language } = this.props;
 		const { avaLanguage , locale , string } = language;
@@ -43,7 +55,7 @@ class SettingForm extends Component {
 				<Text style={styles.text}>
 					{user.name}
 				</Text>
-				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : null}
+				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : this._renderLanguageAndroidPicker(avaLanguage,locale,string)}
 			</View>
 		)
 	}
@@ -57,7 +69,7 @@ const styles = StyleSheet.create({
 		height : 200
 	},
 	text : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 18
 	},
 	btn : {
@@ -68,9 +80,12 @@ const styles = StyleSheet.create({
 		backgroundColor : 'white'
 	},
 	langText : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 18,
 		color : '#008CFF'
+	},
+	picker : {
+		alignSelf : 'stretch'
 	}
 });
 

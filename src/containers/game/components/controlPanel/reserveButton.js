@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { initGamePlay , cancelReservation } from '../../actions';
@@ -67,8 +67,7 @@ class ReserveButton extends Component {
 				textStyle={{
 					color : 'white',
 					fontSize : 20,
-					fontFamily : 'Silom',
-					fontWeight : 'bold'
+					fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 				}}
 				btnStyle={btnStyle}
 				borderColor={'#BC6B00'}

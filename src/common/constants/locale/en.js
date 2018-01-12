@@ -79,7 +79,8 @@ const en = {
 	back : 'Back',
 	confirm : 'Confirm',
 	insufficientFund : 'Insufficient Fund',
-	checkIn : 'Check In Reward'
+	checkIn : 'Check In Reward',
+	share : 'Share'
 }
 
 export default en;

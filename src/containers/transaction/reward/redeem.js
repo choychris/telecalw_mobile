@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , TextInput , StyleSheet , Dimensions } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , TextInput , StyleSheet , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { inputRedeemCode } from '../actions';
@@ -46,19 +46,22 @@ const styles = StyleSheet.create({
 	title : {
 		marginVertical : 5,
 		textAlign : 'center',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		color : 'black',
-		fontSize : 20,
-		fontWeight : 'bold'
+		fontSize : 20
 	},
 	input : {
 		alignSelf : 'stretch',
-		backgroundColor : 'white',
-		height: 40,
 		marginTop : 5,
 		marginBottom : 5,
 		paddingHorizontal : 10,
-		fontSize : 15
+		fontSize : 15,
+		...Platform.select({
+			ios : {
+				backgroundColor : 'white',
+				height: 40
+			}
+		})
 	}
 });
 

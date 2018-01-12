@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Image } from 'react-native';
+import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Image , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const width = Dimensions.get('window').width;
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 		opacity : 0.6
 	},
 	text : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		color : '#30D64A',
 		fontSize : 16,
 		marginVertical : 2

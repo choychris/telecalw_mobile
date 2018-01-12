@@ -1,10 +1,9 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { initGamePlay } from '../../actions';
 import Button from '../../../../components/utilities/buttons';
-
 
 class PlayButton extends Component {
 	constructor(props){
@@ -26,8 +25,7 @@ class PlayButton extends Component {
 				textStyle={{
 					color : 'white',
 					fontSize : 25,
-					fontFamily : 'Silom',
-					fontWeight : 'bold'
+					fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 				}}
 				btnStyle={{
 					backgroundColor : '#5DD39E',

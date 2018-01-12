@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Image , ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions } from 'react-native';
+import { Image , ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { selectRate } from '../../actions';
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 		margin : 5
 	},
 	text : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		color : '#30D64A',
 		fontSize : 16,
 		marginVertical : 2

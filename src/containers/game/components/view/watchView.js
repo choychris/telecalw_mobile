@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { filterCamera } from '../../actions';
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 		top : Dimensions.get('window').height * 0.01
 	},
 	text : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		backgroundColor : 'transparent',
 		color : '#FCFFB4'
 	}

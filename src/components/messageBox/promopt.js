@@ -1,9 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Image , StyleSheet , Dimensions , Text } from 'react-native';
+import { View , Image , StyleSheet , Dimensions , Text , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class Prompt extends Component {
+	shouldComponentUpdate(){
+		return false;
+	}
 	render(){
 		const { string , promptString } = this.props;
 		return(
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
 	},
 	text : {
 		color : '#30D64A',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 15
 	}
 })

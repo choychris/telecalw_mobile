@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StatusBar , StyleSheet , Dimensions , Image , ActivityIndicator } from 'react-native';
+import { View , Text , StatusBar , StyleSheet , Dimensions , Image , ActivityIndicator , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getDeliveryData } from '../../actions';
@@ -76,16 +76,14 @@ const styles = StyleSheet.create({
 		padding : 10
 	},
 	headerText : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		margin : 5,
 		fontSize : 20,
-		fontWeight : 'bold'
 	},
 	address : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		padding : 8,
 		fontSize : 15,
-		fontWeight : 'bold',
 		backgroundColor : 'white'
 	},
 	rightContainer : {

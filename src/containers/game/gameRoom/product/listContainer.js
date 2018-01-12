@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ScrollView , Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { BackHandler , ScrollView , Animated , View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -15,6 +15,11 @@ class ProductDetailContainer extends Component {
 		Animated.spring(this._itemPosition,{
 			toValue : { x : 0 , y : 0  }
 		}).start();
+	}
+	componentWillUnmount(){
+		const { navigator , slideDownAnimation } = this.props;
+		navigator.dismissModal({ animationType : 'slide-down' });
+		slideDownAnimation();
 	}
 	shouldComponentUpdate(){
 		return false;
@@ -125,22 +130,22 @@ const styles = StyleSheet.create({
 	},
 	btnText : {
 		marginHorizontal : 5,
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 20
 	},
 	title : {
 		marginVertical : 10,
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 30
 	},
 	desc : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 18
 	},
 	info : {
 		marginVertical : 5,
 		marginHorizontal : 8,
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 16,
 		color : 'grey'
 	}

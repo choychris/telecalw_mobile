@@ -79,7 +79,8 @@ const zhHant = {
 	back : 'Back',
 	confirm : 'Confirm',
 	insufficientFund : 'Insufficient Fund',
-	checkIn : 'Check In Reward'
+	checkIn : 'Check In Reward',
+	share : '分享'
 }
 
 export default zhHant;

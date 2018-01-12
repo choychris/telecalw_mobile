@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , ScrollView } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , ScrollView , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
@@ -86,8 +86,7 @@ class CustomerSupport extends Component {
 									textStyle : {
 										color : 'white',
 										fontSize : 25,
-										fontFamily : 'Silom',
-										fontWeight : 'bold'
+										fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 									},
 									btnStyle : {
 										backgroundColor : '#4C4C4C',

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Easing , Animated , View , Text , StatusBar , StyleSheet , Dimensions , KeyboardAvoidingView } from 'react-native';
+import { Easing , Animated , View , Text , StatusBar , StyleSheet , Dimensions , KeyboardAvoidingView, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
@@ -112,8 +112,7 @@ class Delivery extends Component {
 						textStyle : {
 							color : 'white',
 							fontSize : 25,
-							fontFamily : 'Silom',
-							fontWeight : 'bold'
+							fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 						},
 						btnStyle : {
 							backgroundColor : '#4C4C4C',
@@ -131,8 +130,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : '#4C4C4C',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					borderColor : '#AFAFAF',
 					btnStyle : {
@@ -148,8 +146,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : 'white',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
@@ -170,8 +167,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : '#4C4C4C',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					borderColor : '#AFAFAF',
 					btnStyle : {
@@ -187,8 +183,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : 'white',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
@@ -207,8 +202,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : 'white',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					btnStyle : {
 						backgroundColor : '#4C4C4C',
@@ -223,8 +217,7 @@ class Delivery extends Component {
 					textStyle : {
 						color : 'white',
 						fontSize : 25,
-						fontFamily : 'Silom',
-						fontWeight : 'bold'
+						fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 					},
 					btnStyle : {
 						backgroundColor : '#E63946',
