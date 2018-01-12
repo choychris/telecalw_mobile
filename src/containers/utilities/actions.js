@@ -11,7 +11,7 @@ export function errorMessage(action,navigator,data,time){
 				passProps : data,
 				style: {
 					backgroundBlur: "dark",
-					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					backgroundColor : 'rgba(0, 0, 0, 0.6)',
 					tapBackgroundToDismiss: true
 				}
 			});
@@ -36,7 +36,7 @@ export function loading (action,navigator){
 			},
 			style: {
 				backgroundBlur: "dark",
-				backgroundColor : 'rgba(52, 52, 52, 0.2)',
+				backgroundColor : 'rgba(0, 0, 0, 0.6)',
 				tapBackgroundToDismiss: false
 			}
 		});
@@ -61,7 +61,7 @@ export function message(action,navigator,data,time){
 				passProps : data,
 				style: {
 					backgroundBlur: "dark",
-					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					backgroundColor : 'rgba(0, 0, 0, 0.6)',
 					tapBackgroundToDismiss: true
 				}
 			});

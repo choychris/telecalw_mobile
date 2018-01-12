@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { switchTag , getPlanetImageSource } from '../../actions';
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
 		position : 'absolute'
 	},
 	image : {
-		width : 150,
-		height : 150
+		width : Platform.OS === 'ios' ? 150 : 150,
+		height : Platform.OS === 'ios' ? 150 : 150
 	}
 });
 

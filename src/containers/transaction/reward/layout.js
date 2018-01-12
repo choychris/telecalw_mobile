@@ -17,7 +17,7 @@ class Reward extends Component {
 		super(props);
 		this._floating = new Animated.ValueXY({
 			x : width*0.7,
-			y : -60
+			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
 	}
@@ -42,7 +42,7 @@ class Reward extends Component {
 					duration : 1000,
 					toValue : { 
 						x : width*0.7,
-						y : -65
+						y : -height*0.12 + 5
 					},
 					easing : Easing.linear
 				}),
@@ -50,7 +50,7 @@ class Reward extends Component {
 					duration : 1000,
 					toValue : { 
 						x : width*0.7,
-						y : -60
+						y : -height*0.12
 					},
 					easing : Easing.linear
 				})

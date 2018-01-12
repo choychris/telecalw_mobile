@@ -1,4 +1,4 @@
-import { NetInfo , Dimensions } from 'react-native';
+import { NetInfo , Dimensions , Platform } from 'react-native';
 import { errorMessage , loading } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList , getProduct } from '../../common/api/request/product';
@@ -255,15 +255,25 @@ export function getPlanetImageSource(name,picture){
 export function positioningItems(productList){
 	const screenWidth = Dimensions.get('window').width;
 	const screenHeight = Dimensions.get('window').height;
-	const positions = [
+	const positions = (Platform.OS === 'ios') ? [
 		{ x : -screenWidth/3 , y : -screenHeight*0.2 } ,
 		{ x : 0 , y : -screenHeight*0.32 },
 		{ x : screenWidth/3 , y : -screenHeight*0.3 },
 		{ x : -screenWidth/3 , y : 0 },
 		{ x : 0 , y : screenHeight*0.07 },
 		{ x : screenWidth/3 , y : -screenHeight*0.1 }
+	] : 
+	[
+		{x : 0 - 20 , y : screenHeight * 0.1 },
+		{x : screenWidth / 3 - 10 , y : 0 },
+		{x : screenWidth / 3 * 2 - 5 , y : screenHeight * 0.1 },
+		{x : 0 - 20 , y : screenHeight / 3},
+		{x : screenWidth / 3 - 10 , y : screenHeight * 0.45},
+		{x : screenWidth / 3 * 2 - 5 , y : screenHeight / 3},
 	];
-	productList.map((item,index)=>item.position = positions[index]);
+	productList.map((item,index)=>{
+		item.position = positions[index]
+	});
 	//console.warn(JSON.stringify(productList));
 	return productList;
 }

@@ -19,7 +19,7 @@ class TopUp extends Component {
 		const { payment , navigator } = props;
 		this._position = new Animated.ValueXY({
 			x : -width,
-			y : -60
+			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
 		this.state = {
@@ -74,7 +74,7 @@ class TopUp extends Component {
 		Animated.spring(this._position,{
 			toValue : {
 				x : -width*0.35,
-				y : -60
+				y : -height*0.12
 			}
 		}).start(()=>this._fadeAnimation());
 	}

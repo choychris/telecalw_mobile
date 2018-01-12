@@ -78,54 +78,50 @@ public class MainApplication extends NavigationApplication {
 	private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
 	protected static CallbackManager getCallbackManager() {
-		    return mCallbackManager;
-				  
+		return mCallbackManager;		  
 	}
 
-	//@Override
-	//public void onCreate() {
-						//super.onCreate();
-						//setActivityCallbacks(new ActivityCallbacks() {
-													//@Override
-													//public void onActivityResult(int requestCode, int resultCode, Intent data) {
-																						//mCallbackManager.onActivityResult(requestCode, resultCode, data);
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		setActivityCallbacks(new ActivityCallbacks() {
+			@Override
+			public void onActivityResult(int requestCode, int resultCode, Intent data) {
+				mCallbackManager.onActivityResult(requestCode, resultCode, data);
 																												
-													//}
-																	
-						//});
-																
-	//}
+			}
+		});														
+	}
 
-		 @Override
-		 public boolean isDebug() {
-				// Make sure you are using BuildConfig from your own application
-				return BuildConfig.DEBUG;
-		 }
+	@Override
+	public boolean isDebug() {
+		// Make sure you are using BuildConfig from your own application
+		return BuildConfig.DEBUG;
+	}
 
 
-		 protected List<ReactPackage> getPackages() {
-				// Add additional packages you require here
-				// No need to add RnnPackage and MainReactPackage
-				return Arrays.<ReactPackage>asList(
-					new ReactVideoPackage(),
-					new VectorIconsPackage(),
-					new RNDeviceInfo(),
-					new FBSDKPackage(mCallbackManager),
-					new WebRTCModulePackage(),
-					new BraintreePackage()
-				);
-		 }
+	protected List<ReactPackage> getPackages() {
+		// Add additional packages you require here
+		// No need to add RnnPackage and MainReactPackage
+		return Arrays.<ReactPackage>asList(
+			new ReactVideoPackage(),
+			new VectorIconsPackage(),
+			new RNDeviceInfo(),
+			new FBSDKPackage(mCallbackManager),
+			new WebRTCModulePackage(),
+			new BraintreePackage()
+		);
+	}
 
-		 @Override
-		 public List<ReactPackage> createAdditionalReactPackages() {
-			          return getPackages();
-								     
-		 }
+	@Override
+	public List<ReactPackage> createAdditionalReactPackages() {
+			return getPackages();
+	}
 
-		 @Override
-		 public String getJSMainModuleName() {
-					 return "index";
-		 }
+	@Override
+	public String getJSMainModuleName() {
+			 return "index";
+	}
 
 }
 

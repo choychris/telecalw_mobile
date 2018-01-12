@@ -1,11 +1,11 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setUserLanguage } from '../actions';
 
 class SettingForm extends Component {
-	_renderLanguagePicker(avaLanguage,locale,string){
+	_renderLanguageIOSPicker(avaLanguage,locale,string){
 		//console.warn(JSON.stringify(avaLanguage));
 		const { setUserLanguage , navigator } = this.props;
 		const langDis = Object.keys(avaLanguage)
@@ -43,7 +43,7 @@ class SettingForm extends Component {
 				<Text style={styles.text}>
 					{user.name}
 				</Text>
-				{this._renderLanguagePicker(avaLanguage,locale,string)}
+				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : null}
 			</View>
 		)
 	}

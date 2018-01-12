@@ -100,25 +100,28 @@ export function payment(navigator){
 				.then((res,err)=>{
 					//console.warn(JSON.stringify(res.result));
 					//console.warn(JSON.stringify(err));
-					BTClient.setup(res.result);
-					BTClient.showPaymentViewController({}).then((nonce)=>{
-					//payment succeeded, pass nonce to server
-					dispatch(sales(nonce,rate,navigator));	
-				})
-				.catch((err)=>{
-					loading('hide',navigator);
-					//console.warn(err)
-					message(
-						'show',
-						navigator,
-						{ 
-							type : 'sick',
-							title : string['error'],
-							message : string['tryAgain']
-						},
-						500
-					);
-				});
+					BTClient.setup(res.result).then(()=>{
+						setTimeout(()=>{
+							BTClient.showPaymentViewController({}).then((nonce)=>{
+								//payment succeeded, pass nonce to server
+								dispatch(sales(nonce,rate,navigator));	
+							})
+							.catch((err)=>{
+								loading('hide',navigator);
+								//console.warn(err)
+								message(
+									'show',
+									navigator,
+									{ 
+										type : 'sick',
+										title : string['error'],
+										message : string['tryAgain']
+									},
+									500
+								);
+							});
+						},5000)		
+					});
 			})
 		} else {
 			message(

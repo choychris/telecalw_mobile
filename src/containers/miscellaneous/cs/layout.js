@@ -17,7 +17,7 @@ class CustomerSupport extends Component {
 		super(props);
 		this._position = new Animated.ValueXY({
 			x : -width,
-			y : -60
+			y : -height*0.1
 		});
 		this._animation = new Animated.Value(0);
 	}
@@ -31,7 +31,7 @@ class CustomerSupport extends Component {
 		Animated.spring(this._position,{
 			toValue : {
 				x : 0,
-				y : -60
+			y : -height*0.1
 			}
 		}).start(()=>this._fadeAnimation());
 	}

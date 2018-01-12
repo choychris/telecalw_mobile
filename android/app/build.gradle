@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
 
@@ -146,7 +147,7 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':react-native-fbsdk')
     compile project(':react-native-navigation')
-    compile project(':react-native-webrtc')
+		compile project(':react-native-webrtc')
 		compile project(':react-native-braintree-xplat')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
