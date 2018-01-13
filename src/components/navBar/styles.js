@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet , Platform } from "react-native";
 
 export default StyleSheet.create({
 	container : {
@@ -21,7 +21,7 @@ export default StyleSheet.create({
 	text : {
 		fontSize : 18,
 		color : 'white',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		marginHorizontal : 5,
 		opacity : 1
 	},

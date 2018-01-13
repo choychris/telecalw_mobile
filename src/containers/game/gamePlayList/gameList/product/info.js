@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const coinImage = require('../../../../../../assets/utilities/coins/telecoins_single.png');
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 	text : {
 		fontSize : 15,
 		color : 'white',
-		fontFamily : 'Silom'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	},
 	row : {
 		flexDirection : 'row',

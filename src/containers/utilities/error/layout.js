@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , TouchableWithoutFeedback } from 'react-native';
+import { View , Text , StyleSheet , TouchableWithoutFeedback , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { errorMessage } from '../actions';
@@ -53,14 +53,14 @@ const styles = StyleSheet.create({
 	},
 	title : {
 		textAlign : 'center',
-		fontFamily : 'Bauhaus 93',
+		fontFamily : (Platform.OS === 'ios') ? 'Bauhaus 93' : 'Bauhaus-93_6274',
 		color : 'white',
 		fontSize : 25
 	},
 	message : {
 		width : 200,
 		textAlign : 'center',
-		fontFamily : 'Bauhaus 93',
+		fontFamily : (Platform.OS === 'ios') ? 'Bauhaus 93' : 'Bauhaus-93_6274',
 		color : 'white',
 		fontSize : 18
 	},

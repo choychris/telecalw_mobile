@@ -91,7 +91,6 @@ export function loginFacebook(navigator){
 				if (result.isCancelled) {
 					dispatch(authError(navigator,'facebookCancel','tryAgain'));
 				} else {
-					//console.warn(JSON.stringify(result));
 					authenticationFlow(dispatch,getState,navigator);
 				}
 			},
@@ -184,19 +183,22 @@ export function accessTokenChecking(navigator){
 				loading('show',navigator);
 				
 				const localToken = await AsyncStorage.getItem('token');
-				const checkToken = JSON.parse(localToken);
-				const tokenIsNotExpired = checkTokenExpire(checkToken);				
 				//console.warn(localToken);
-				//console.warn(checkToken);
-				//console.warn(tokenIsNotExpired);
+				if(localToken !== null){
+					const checkToken = JSON.parse(localToken);
+					const tokenIsNotExpired = checkTokenExpire(checkToken);				
+					//console.warn(checkToken);
+					//console.warn(tokenIsNotExpired);
 
-				const userStatusRes = await userStatus(checkToken.lbToken,Request);
-				//console.warn(JSON.stringify(userStatusRes));
+					const userStatusRes = await userStatus(checkToken.lbToken,Request);
+					//console.warn(JSON.stringify(userStatusRes));
 
-				(tokenIsNotExpired === true && userStatusRes.status === true) ? 
-					dispatch(dispatchTokenAndNavigate(checkToken,navigator)) : 
-					dispatch(logout(checkToken.lbToken,navigator));
-
+					(tokenIsNotExpired === true && userStatusRes.status === true) ? 
+						dispatch(dispatchTokenAndNavigate(checkToken,navigator)) : 
+						dispatch(logout(checkToken.lbToken,navigator));
+				} else {
+					loading('hide',navigator);
+				}
 			}
 			catch(e){
 				loading('hide',navigator);

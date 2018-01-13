@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , Image } from 'react-native';
+import { View , Text , StyleSheet , Image , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Timer from '../gamePlay/result/timer';
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
 	btnText : {
 		textAlign : 'center',
 		color : '#4A6CFF',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 20
 	},
 	title : {
 		textAlign : 'center',
 		color : 'white',
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 30,
 		paddingHorizontal : 20
 	}

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../../utilities/actions';
@@ -19,7 +19,7 @@ class TopUp extends Component {
 		const { payment , navigator } = props;
 		this._position = new Animated.ValueXY({
 			x : -width,
-			y : -60
+			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
 		this.state = {
@@ -33,8 +33,7 @@ class TopUp extends Component {
 							textStyle : {
 								color : 'white',
 								fontSize : 25,
-								fontFamily : 'Silom',
-								fontWeight : 'bold'
+								fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 							},
 							btnStyle : {
 								backgroundColor : '#4C4C4C',
@@ -74,7 +73,7 @@ class TopUp extends Component {
 		Animated.spring(this._position,{
 			toValue : {
 				x : -width*0.35,
-				y : -60
+				y : -height*0.12
 			}
 		}).start(()=>this._fadeAnimation());
 	}

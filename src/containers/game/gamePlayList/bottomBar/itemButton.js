@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StatusBar , StyleSheet , Dimensions , TouchableOpacity } from 'react-native';
+import { View , Text , StatusBar , StyleSheet , Dimensions , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 	},
 	text : {
 		color : 'white',
-		fontFamily : 'Silom'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	}
 });
 

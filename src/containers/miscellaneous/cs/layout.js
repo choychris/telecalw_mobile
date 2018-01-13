@@ -1,61 +1,54 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , ScrollView , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
-import StarImages from '../../../components/utilities/starsImage';
+import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
-import Referral from './referral';
-import Redeem from './redeem';
-import { confirmRedeem } from '../actions';
+import IssueType from '../cs/issue/issueType';
+import IssueForm from '../cs/issue/issueForm';
+import { createIssue } from '../actions';
 const { height , width } = Dimensions.get('window');
 
-class Reward extends Component {
+class CustomerSupport extends Component {
 	constructor(props){
 		super(props);
-		this._floating = new Animated.ValueXY({
-			x : width*0.7,
-			y : -60
+		this._position = new Animated.ValueXY({
+			x : -width,
+			y : -height*0.1
 		});
 		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
-		this._floatingAnimation();
-		setTimeout(()=>this._fadeAnimation(),500);
+		this._slideAnimation()
 	}
-	shouldComponenetUpdate(nextProps){
+	shouldComponentUpdate(){
 		return false;
+	}
+	_slideAnimation(){
+		Animated.spring(this._position,{
+			toValue : {
+				x : 0,
+			y : -height*0.1
+			}
+		}).start(()=>this._fadeAnimation());
 	}
 	_fadeAnimation(){
 		Animated.timing(this._animation, {
 			toValue: 1,
 			duration: 100,
 			easing : Easing.linear
-		}).start()
+		}).start();
 	}
-	_floatingAnimation(){
-		Animated.loop(
-			Animated.sequence([
-				Animated.timing(this._floating, {
-					duration : 1000,
-					toValue : { 
-						x : width*0.7,
-						y : -65
-					},
-					easing : Easing.linear
-				}),
-				Animated.timing(this._floating, {
-					duration : 1000,
-					toValue : { 
-						x : width*0.7,
-						y : -60
-					},
-					easing : Easing.linear
-				})
-			])
-		).start();
+	_renderContainer(){
+		return(
+			<ScrollView style={styles.innerContainer}>
+				<IssueType/>
+				<IssueForm/>
+			</ScrollView>
+		)
 	}
 	_opacityAnimation(){
 		return {
@@ -65,21 +58,13 @@ class Reward extends Component {
 			})
 		}
 	}
-	_renderContainer(){
-		return(
-			<View style={styles.innerContainer}>
-				<Referral/>
-				<Redeem/>
-			</View>
-		)
-	}
 	render(){
-		const { navigator , confirmRedeem } = this.props;
+		const { navigator , createIssue } = this.props;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
-				<StarImages/>
+				<StarsImage/>
 				<NavBar 
 					back={true}
 					coins={true} 
@@ -89,38 +74,35 @@ class Reward extends Component {
 					behavior="position" 
 					style={styles.keyboardView}
 				>
-					<Animated.View 
-						style={[this._opacityAnimation()]}
-					>
+					<Animated.View style={[this._opacityAnimation()]}>
 						<MessageBox 
-							title={'referral'}
-							type={'right'}
+							title={'issueReport'}
+							type={'left'}
 							content={this._renderContainer()}
-							promptString={'rewardPrompt'}
+							promptString={'issuePrompt'}
 							buttons={[
 								{
 									text : 'confirm',
 									textStyle : {
 										color : 'white',
 										fontSize : 25,
-										fontFamily : 'Silom',
-										fontWeight : 'bold'
+										fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 									},
 									btnStyle : {
 										backgroundColor : '#4C4C4C',
 										paddingVertical : 10,
 										paddingHorizontal : 15
 									},
-									onPressFunction : ()=>confirmRedeem()
+									onPressFunction : ()=>createIssue()
 								}
 							]}
 						/>
 					</Animated.View>
-					<Animated.View 
-						style={[this._floating.getLayout()]}
+					<Animated.View
+						style={[this._position.getLayout()]}
 					>
 						<Telebot 
-							status={'normal'} 
+							status={'postal'} 
 							height={height * 0.13} 
 							width={height * 0.13}
 						/>
@@ -138,19 +120,26 @@ const styles = StyleSheet.create({
 		backgroundColor : '#263E50'
 	},
 	innerContainer : {
-		alignSelf : 'stretch',
+		height : height * 0.4,
+		alignSelf : 'stretch'
 	},
 	keyboardView: {
 		alignSelf : 'stretch' , 
+		justifyContent : 'flex-start' , 
 		alignItems : 'center' , 
 		flex : 1
+	},
+	telebot : {
+		position : 'absolute',
+		bottom : -height*0.02,
+		right : 0
 	}
 });
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		confirmRedeem
+		createIssue
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(Reward);
+export default connect(null,mapDispatchToProps)(CustomerSupport);

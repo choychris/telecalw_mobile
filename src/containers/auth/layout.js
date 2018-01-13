@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , StatusBar , StyleSheet } from 'react-native';
+import { View , StatusBar , StyleSheet , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginFacebook , accessTokenChecking } from './actions';
@@ -27,8 +27,7 @@ class Login extends Component {
 						textStyle={{ 
 							color : 'white' , 
 							fontSize : 25 , 
-							fontFamily : 'Bauhaus 93' ,
-							fontWeight : 'bold'
+							fontFamily : (Platform.OS === 'ios') ? 'Bauhaus 93' : 'Bauhaus-93_6274'
 						}}
 						btnStyle={{ 
 							backgroundColor : '#3B5998',

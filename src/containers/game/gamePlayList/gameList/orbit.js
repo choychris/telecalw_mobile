@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
+import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const orbitImg = require('../../../../../assets/planet/orbit.png');
+const { width , height } = Dimensions.get('window');
 
 class Orbit extends Component {
 	componentWillMount(){
@@ -46,8 +47,8 @@ class Orbit extends Component {
 const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
-		height : Dimensions.get('window').width,
-		width : Dimensions.get('window').width
+		height : Platform.OS === 'ios' ? width : width * 0.9,
+		width : Platform.OS === 'ios' ? width : width * 0.9
 	}
 });
 

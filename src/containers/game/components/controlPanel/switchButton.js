@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,8 +16,7 @@ class SwitchButton extends Component {
 				textStyle={{
 					color : '#3F3F3F',
 					fontSize : 20,
-					fontFamily : 'Silom',
-					fontWeight : 'bold'
+					fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 				}}
 				btnStyle={{
 					backgroundColor : '#FFFF00',

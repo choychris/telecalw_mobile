@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { FlatList , KeyboardAvoidingView , View , Image , StyleSheet , Dimensions , Text } from 'react-native';
+import { FlatList , KeyboardAvoidingView , View , Image , StyleSheet , Dimensions , Text , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const messageBoxImage = {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 		paddingVertical : 10
 	},
 	title : {
-		fontFamily : 'Silom',
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 		fontSize : 20,
 		paddingVertical : 10,
 		textAlign : 'center',

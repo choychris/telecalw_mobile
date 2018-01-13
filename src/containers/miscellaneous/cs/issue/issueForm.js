@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { TextInput , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator , TouchableOpacity } from 'react-native';
+import { TextInput , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { inputIssue } from '../../actions';
@@ -11,7 +11,7 @@ class IssueForm extends Component {
 	render(){
 		const { string , inputIssue } = this.props;
 		return(
-			<View>
+			<View style={styles.container}>
 				<TextInput
 					style={[styles.input,{ height : 35 }]}
 					placeholder={string['inputEmail']}
@@ -22,7 +22,7 @@ class IssueForm extends Component {
 				<TextInput
 					multiline={true}
 					autoCorrect={false}
-					style={[styles.input,{ height : 100 }]}
+					style={[styles.input,{ height : 80 }]}
 					placeholder={string['inputMsg']}
 					onChangeText={(text)=>inputIssue(['message'],text)}
 				/>
@@ -32,6 +32,14 @@ class IssueForm extends Component {
 }
 
 const styles = StyleSheet.create({
+	container : {
+		...Platform.select({
+			android : {
+				borderColor : '#C9C9C9',
+				borderTopWidth : 1
+			}
+		})
+	},
 	header : {
 		flexDirection : 'row',
 		alignItems : 'center',
@@ -43,11 +51,15 @@ const styles = StyleSheet.create({
 		fontWeight : 'bold'
 	},
 	input : {
-		backgroundColor : 'white',
 		marginTop : 5,
 		marginBottom : 10,
 		paddingHorizontal : 10,
-		fontSize : 13
+		fontSize : 13,
+		...Platform.select({
+			ios : {
+				backgroundColor : 'white'
+			}
+		})
 	}
 });
 

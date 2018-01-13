@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { machineStatus } from '../actions';
 const tubeImage = require('../../../../assets/utilities/sific_tube.png');
-import FastImage from 'react-native-fast-image'
 import RoomPanel from './controlPanel/roomPanel';
 import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
 	image : {
 		position : 'absolute',
 		width	: Dimensions.get('window').width + 1,
-		height : Dimensions.get('window').height - 60
+		height : Dimensions.get('window').height*0.85
 	},
 	viewContainer : {
 		flex : 1 , 
