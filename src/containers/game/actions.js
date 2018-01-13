@@ -256,9 +256,9 @@ export function positioningItems(productList){
 	const screenWidth = Dimensions.get('window').width;
 	const screenHeight = Dimensions.get('window').height;
 	const positions = (Platform.OS === 'ios') ? [
-		{ x : -screenWidth/3 , y : -screenHeight*0.2 } ,
-		{ x : 0 , y : -screenHeight*0.32 },
-		{ x : screenWidth/3 , y : -screenHeight*0.3 },
+		{ x : -screenWidth/3 , y : -screenHeight*0.18 } ,
+		{ x : 0 , y : -screenHeight*0.3 },
+		{ x : screenWidth/3 , y : -screenHeight*0.28 },
 		{ x : -screenWidth/3 , y : 0 },
 		{ x : 0 , y : screenHeight*0.07 },
 		{ x : screenWidth/3 , y : -screenHeight*0.1 }
