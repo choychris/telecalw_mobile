@@ -18,6 +18,10 @@ class IssueType extends Component {
 			]
 		};
 	}
+	shouldComponentUpdate(nextProps){
+		const { issue } = this.props;
+		return JSON.stringify(issue) !== JSON.stringify(nextProps.issue);
+	}
 	_renderIssueType(item){
 		const { string , issue ,selectIssueType } = this.props;
 		const { name , icon } = item;

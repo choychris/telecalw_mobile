@@ -10,7 +10,13 @@ class DetailButton extends Component {
 		return false;
 	}
 	render(){
-		const { mode , navigator , slideUpAnimation , slideDownAnimation } = this.props;
+		const { 
+			mode , 
+			navigator , 
+			slideUpAnimation , 
+			slideDownAnimation ,
+			string
+		} = this.props;
 		return(
 			<TouchableOpacity 
 				style={styles.detailBtn}
@@ -31,7 +37,9 @@ class DetailButton extends Component {
 				}
 			>
 				<Icon name="hand-o-down" size={18} />
-				<Text style={styles.detailText}>{'Prize Detail'}</Text>
+				<Text style={styles.detailText}>
+					{string['prizeDetail']}
+				</Text>
 			</TouchableOpacity>
 		)
 	}
@@ -51,4 +59,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(DetailButton)
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
+
+export default connect(mapStateToProps,null)(DetailButton)

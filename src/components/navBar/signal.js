@@ -8,14 +8,15 @@ import { errorMessage } from '../../containers/utilities/actions';
 
 class Signal extends Component {
 	shouldComponentUpdate(nextProps,nextState){
-		const { status } = this.props;
-		return status !== nextProps.status
+		const { status , language } = this.props;
+		return status !== nextProps.status || language.locale !== nextProps.language.locale;
 	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	_renderDisplay(status){
-		const { string } = this.props;
+		const { language } = this.props;
+		const { string } = language;
 		const displayString = (status === true) ? 'online' : 'offline';
 		return (
 			<Text style={styles.text}>
@@ -24,7 +25,8 @@ class Signal extends Component {
 		)
 	}
 	render(){
-		const { string , status } = this.props;
+		const { language , status } = this.props;
+		const { string } = language;
 		const signalIcon = (status === true) ? 
 			{ color : '#2ECC71' , name : 'signal' } :
 		 	{ color : '#E63946' , name : 'times' }
@@ -44,7 +46,7 @@ class Signal extends Component {
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string,
+		language : state.preference.language,
 		status : state.game.network
 	}
 }

@@ -29,7 +29,7 @@ class PlayButton extends Component {
 				}}
 				btnStyle={{
 					backgroundColor : '#5DD39E',
-					paddingVertical : 16,
+					paddingVertical : 12,
 					paddingHorizontal : 35
 				}}
 				borderColor={'#31845C'}

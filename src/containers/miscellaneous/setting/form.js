@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { setUserLanguage } from '../actions';
 
 class SettingForm extends Component {
+	shouldComponentUpdate(nextProps){
+		const { language } = this.props;
+		return nextProps.language.locale !== language.locale
+	}
 	_renderLanguageIOSPicker(avaLanguage,locale,string){
 		//console.warn(JSON.stringify(avaLanguage));
 		const { setUserLanguage , navigator } = this.props;

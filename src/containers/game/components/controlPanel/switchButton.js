@@ -20,7 +20,7 @@ class SwitchButton extends Component {
 				}}
 				btnStyle={{
 					backgroundColor : '#FFFF00',
-					paddingVertical : 8,
+					paddingVertical : 6,
 					paddingHorizontal : 15,
 					marginVertical : 3
 				}}

@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemButton extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { language } = this.props;
+		return language.locale !== nextProps.language.locale;
 	}
 	render(){
 		const { 
@@ -14,8 +15,9 @@ class ItemButton extends Component {
 			icon , 
 			navigate , 
 			navigator ,
-			string
+			language
 		} = this.props;
+		const { string } = language;
 		return (
 			<TouchableOpacity 
 				style={styles.container}
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		language : state.preference.language
 	}
 }
 

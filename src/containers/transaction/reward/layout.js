@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
+import { ScrollView , KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
@@ -67,10 +67,10 @@ class Reward extends Component {
 	}
 	_renderContainer(){
 		return(
-			<View style={styles.innerContainer}>
+			<ScrollView style={styles.innerContainer}>
 				<Referral/>
 				<Redeem/>
-			</View>
+			</ScrollView>
 		)
 	}
 	render(){
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 	},
 	innerContainer : {
 		alignSelf : 'stretch',
+		height : height * 0.4
 	},
 	keyboardView: {
 		alignSelf : 'stretch' , 

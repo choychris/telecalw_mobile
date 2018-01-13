@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class Prompt extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { language } = this.props;
+		return language.locale !== nextProps.language.locale;
 	}
 	render(){
-		const { string , promptString } = this.props;
+		const { language , promptString } = this.props;
+		const { string } = language;
 		return(
 			<View style={styles.container}>
 				<Text style={styles.text}>
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		language : state.preference.language
 	}
 }
 
