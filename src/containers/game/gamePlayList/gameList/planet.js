@@ -3,6 +3,7 @@ import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndica
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { switchTag , getPlanetImageSource } from '../../actions';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Planet extends Component {
 	shouldComponentUpdate(nextProps){
@@ -12,6 +13,7 @@ class Planet extends Component {
 	componentWillMount(){
 		this._position = new Animated.ValueXY();
 		this._spinAnimation = new Animated.Value(0);
+		this._blinkAnimation = new Animated.Value(0.2);
 		this._panResponder = PanResponder.create({
 			onStartShouldSetPanResponder: (evt, gestureState) =>true,
 			onPanResponderMove: (evt, gestureState) => {
@@ -46,9 +48,23 @@ class Planet extends Component {
 				}
 			)
 		).start();
+		Animated.loop(
+			Animated.sequence([
+				Animated.timing(this._blinkAnimation, {
+					toValue: 1,
+					duration: 1000,
+					easing : Easing.linear
+				}),
+				Animated.timing(this._blinkAnimation, {
+					toValue: 0.2,
+					duration: 1000,
+					easing : Easing.linear
+				})
+			])
+		).start();
 	}
 	_forceSwipe(direction){
-		const action = (direction === 'left') ? 'next' : 'back' ;
+		const action = (direction === 'left') ? 'back' : 'next' ;
 		const { switchTag } = this.props;
 		const screenWidth = Dimensions.get('window').width;
 		switchTag(action);
@@ -77,18 +93,46 @@ class Planet extends Component {
 			transform : [{ rotate : rotate },{ rotate : spin }]
 		}
 	}
+	_blinkStyle(){
+		return {
+			opacity: this._blinkAnimation.interpolate({
+				inputRange: [0, 1],
+				outputRange: [0, 1],
+			})
+		}
+	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
+	_renderSwipeIndicator(direction){
+		const { tag , tags } = this.props;
+		const { index } = tag;
+		const next = (direction == 'right') ? 1 : -1;
+		const swipeExist = (tags[index+next] !== undefined);
+		return (swipeExist === true) ? (
+			<Animated.View 
+				style={[styles[direction+'SwipeIndicator'],this._blinkStyle()]}
+			>
+				<Icon 
+					name={'angle-double-'+direction} 
+					size={55} 
+					color='white'
+				/>
+			</Animated.View>
+		) : null;
+	}
 	_renderDisplay(tag){
-		//,{ transform : [{ rotate : spin }]  }
 		return (
-			<Animated.Image
-				{...this._panResponder.panHandlers}
-				source={getPlanetImageSource(tag.name.en.toLowerCase(),tag.picture)}
-				style={[styles.image,this._planetStyle()]}
-				resizeMode={'contain'}
-			/>
+			<View style={styles.innerContainer}>
+				{this._renderSwipeIndicator('left')}
+				<Animated.Image
+					{...this._panResponder.panHandlers}
+					source={getPlanetImageSource(tag.name.en.toLowerCase(),tag.picture)}
+					style={[styles.image,this._planetStyle()]}
+					resizeMode={'contain'}
+				/>
+				{this._renderSwipeIndicator('right')}
+			</View>
 		)
 	}
 	render(){
@@ -103,7 +147,25 @@ class Planet extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		position : 'absolute'
+		position : 'absolute',
+	},
+	innerContainer : {
+		flexDirection : 'row',
+		alignItems : 'center',
+		justifyContent : 'center',
+		...Platform.select({
+			ios : {
+				backgroundColor : 'transparent'
+			}
+		})
+	},	
+	rightSwipeIndicator : {
+		position : 'absolute',
+		left : Dimensions.get('window').width * 0.5,
+	},
+	leftSwipeIndicator : {
+		position : 'absolute',
+		right : Dimensions.get('window').width * 0.5
 	},
 	image : {
 		width : Platform.OS === 'ios' ? 150 : 150,
@@ -113,7 +175,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		tag : state.game.tag
+		tag : state.game.tag,
+		tags : state.game.tags
 	}
 }
 

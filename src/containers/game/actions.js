@@ -264,12 +264,12 @@ export function positioningItems(productList){
 		{ x : screenWidth/3 , y : -screenHeight*0.1 }
 	] : 
 	[
-		{x : 0 - 20 , y : screenHeight * 0.1 },
+		{x : 0 - 20 , y : screenHeight * 0.09 },
 		{x : screenWidth / 3 - 10 , y : screenHeight * 0.01 },
-		{x : screenWidth / 3 * 2 - 5 , y : screenHeight * 0.1 },
-		{x : 0 - 20 , y : screenHeight / 3},
+		{x : screenWidth / 3 * 2 - 5 , y : screenHeight * 0.09 },
+		{x : 0 - 20 , y : screenHeight / 2.7},
 		{x : screenWidth / 3 - 10 , y : screenHeight * 0.46},
-		{x : screenWidth / 3 * 2 - 5 , y : screenHeight / 3},
+		{x : screenWidth / 3 * 2 - 5 , y : screenHeight / 2.7},
 	];
 	productList.map((item,index)=>{
 		item.position = positions[index]
