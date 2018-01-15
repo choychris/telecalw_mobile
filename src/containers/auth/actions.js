@@ -103,6 +103,7 @@ export function loginFacebook(navigator){
 
 function dispatchTokenAndNavigate(token,navigator){
 	return (dispatch,getState)=>{
+		console.log(token);
 		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
 		dispatch(getUserReservation());
 		userLanguage(token['lbToken'],Request)
@@ -111,13 +112,13 @@ function dispatchTokenAndNavigate(token,navigator){
 				//console.warn(JSON.stringify(err));
 				if(!err) dispatch(languageSetting(res.language));
 			});
-		checkinReward(
-			{
-				userId : token['lbToken']['userId'],
-				token : token['lbToken']['id'],
-			},
-			Request
-		)
+			checkinReward(
+				{
+					userId : token['lbToken']['userId'],
+					token : token['lbToken']['id'],
+				},
+				Request
+			)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(err));
 				//console.warn(JSON.stringify(res));
@@ -127,12 +128,27 @@ function dispatchTokenAndNavigate(token,navigator){
 						dispatch({
 							type : 'UPDATE_WALLET_BALANCE',
 							value : result.newWalletBalance
-						});	
+						});
+						setTimeout(()=>
+							navigator.showLightBox({
+								screen : 'app.CheckinReward',
+								animationType : 'slide-up',
+								navigatorStyle: {
+									navBarHidden: true
+								},
+								passProps : result,
+								style: {
+									backgroundBlur: "dark",
+									backgroundColor : 'rgba(0, 0, 0, 0.8)',
+									tapBackgroundToDismiss: true
+								}
+							})
+						,5000);
 					}
 				}
 			})
 			.catch((err)=>{
-				console.warn(JSON.stringify(err));
+				dispatch(authError(navigator,'error','tryAgain'));
 			})
 		updateUser(
 			{
@@ -155,7 +171,7 @@ function dispatchTokenAndNavigate(token,navigator){
 				});
 			})
 			.catch((err)=>{
-				console.warn(JSON.stringify(err));
+				dispatch(authError(navigator,'error','tryAgain'));
 			});
 			
 	}

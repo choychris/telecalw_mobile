@@ -37,7 +37,8 @@ export function loading (action,navigator){
 			style: {
 				backgroundBlur: "dark",
 				backgroundColor : 'rgba(0, 0, 0, 0.8)',
-				tapBackgroundToDismiss: false
+				tapBackgroundToDismiss: false,
+				flex : 1
 			}
 		});
 	}

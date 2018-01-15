@@ -83,7 +83,9 @@ const zhHant = {
 	checkIn : '簽到獎勵',
 	share : '分享',
 	prizeDetail : '奬品詳情',
-	logout : '登出'
+	logout : '登出',
+	checkinReward : '天天簽到 天天玩',
+	rewardAmount : '你已獲得'
 }
 
 export default zhHant;
