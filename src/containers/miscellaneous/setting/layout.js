@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
@@ -7,7 +7,7 @@ import BackgroundImage from '../../../components/utilities/backgroundImage';
 import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
-import { getUserInfo } from '../../auth/actions';
+import { getUserInfo , logout } from '../../auth/actions';
 import SettingForm from './form';
 const { height , width } = Dimensions.get('window');
 
@@ -67,7 +67,7 @@ class Setting extends Component {
 		}
 	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , logout } = this.props;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -84,6 +84,23 @@ class Setting extends Component {
 						type={'right'}
 						content={<SettingForm navigator={navigator}/>}
 						promptString={'settingPrompt'}
+						buttons={[
+							{   
+								text : 'logout',
+								textStyle : {
+									color : 'white',
+									fontSize : 25,
+									fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
+								},
+								btnStyle : {
+									backgroundColor : '#E63946',
+									paddingVertical : 10,
+									paddingHorizontal : 15
+								},
+								borderColor : '#8E2633',
+								onPressFunction : ()=>logout(null,navigator)
+							}
+						]}
 					/>
 				</Animated.View>
 				<Animated.View 
@@ -110,7 +127,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		getUserInfo
+		getUserInfo,
+		logout
 	}, dispatch)
 }
 

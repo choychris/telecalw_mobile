@@ -82,7 +82,8 @@ const zhHant = {
 	insufficientFund : '金幣不足',
 	checkIn : '簽到獎勵',
 	share : '分享',
-	prizeDetail : '奬品詳情'
+	prizeDetail : '奬品詳情',
+	logout : '登出'
 }
 
 export default zhHant;
