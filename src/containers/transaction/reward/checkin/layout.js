@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
 	},
 	text : {
 		color : 'white',
-		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+		textAlign : 'center'
 	},
 	image : {
 		marginTop : 10,

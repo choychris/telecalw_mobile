@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage , Vibration , Platform } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
 import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userLanguage , updateUser } from '../../common/api/request/user';
@@ -129,7 +129,7 @@ function dispatchTokenAndNavigate(token,navigator){
 							type : 'UPDATE_WALLET_BALANCE',
 							value : result.newWalletBalance
 						});
-						setTimeout(()=>
+						setTimeout(()=>{
 							navigator.showLightBox({
 								screen : 'app.CheckinReward',
 								animationType : 'slide-up',
@@ -139,11 +139,13 @@ function dispatchTokenAndNavigate(token,navigator){
 								passProps : result,
 								style: {
 									backgroundBlur: "dark",
-									backgroundColor : 'rgba(0, 0, 0, 0.8)',
-									tapBackgroundToDismiss: true
+									backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+									tapBackgroundToDismiss: true,
+									flex : 1
 								}
-							})
-						,5000);
+							});
+							Vibration.vibrate(500);
+						},3000);
 					}
 				}
 			})

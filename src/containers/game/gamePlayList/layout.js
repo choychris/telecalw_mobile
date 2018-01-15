@@ -32,8 +32,6 @@ class GamePlayList extends Component {
 		productStatus();
 		// Initiate Pusher Reservation Listener 
 		reserveStatus(navigator);
-		// Initiate Checkin Reward
-		//getCheckinReward();
 	}
 	render(){
 		const { navigator } = this.props;
