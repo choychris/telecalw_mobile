@@ -13,6 +13,7 @@ import ProductDetailContainer from '../game/gameRoom/product/listContainer';
 import Delivery from '../miscellaneous/delivery/layout';
 import Tracking from '../miscellaneous/delivery/receipt/tracking';
 import Reward from '../transaction/reward/layout';
+import CheckinReward from '../transaction/reward/checkin/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
 
@@ -30,6 +31,7 @@ import Setting from '../miscellaneous/setting/layout';
 	 Navigation.registerComponent('app.ProductDetail', () => ProductDetailContainer,store,Provider);
 	 Navigation.registerComponent('app.TopUp', () => TopUp,store,Provider);
 	 Navigation.registerComponent('app.Reward', () => Reward,store,Provider);
+	 Navigation.registerComponent('app.CheckinReward', () => CheckinReward,store,Provider);
 	 Navigation.registerComponent('app.Delivery', () => Delivery,store,Provider);
 	 Navigation.registerComponent('app.Tracking', () => Tracking,store,Provider);
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
