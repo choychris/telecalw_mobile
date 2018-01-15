@@ -6,8 +6,8 @@ import styles from '../../../../components/navBar/styles';
 
 class Location extends Component {
 	shouldComponentUpdate(nextProps){
-		const { tag } = this.props;
-		return nextProps.tag !== tag;
+		const { tag , locale } = this.props;
+		return nextProps.tag !== tag || locale !== nextProps.locale;
 	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>

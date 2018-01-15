@@ -1,4 +1,5 @@
 const en = {
+	loading : 'Loading ...',
 	facebookLogin : 'Facebook Login',
 	facebookCancel : 'Facebook Login Cancel',
 	facebookErr : 'Facebook Login Fail',
@@ -80,7 +81,8 @@ const en = {
 	confirm : 'Confirm',
 	insufficientFund : 'Insufficient Fund',
 	checkIn : 'Check In Reward',
-	share : 'Share'
+	share : 'Share',
+	prizeDetail : 'Prize Detail'
 }
 
 export default en;

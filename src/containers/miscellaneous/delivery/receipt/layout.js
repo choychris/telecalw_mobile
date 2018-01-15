@@ -67,7 +67,6 @@ class Receipt extends Component {
 const styles = StyleSheet.create({
 	container : {
 		alignSelf : 'stretch',
-		height : height * 0.4,
 		marginVertical : 5
 	},
 	header : {

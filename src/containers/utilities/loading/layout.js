@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Easing , Animated , View , Text , StyleSheet , Image } from 'react-native';
+import { Easing , Animated , View , Text , StyleSheet , Image, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -36,6 +36,7 @@ class Loading extends Component {
 		}
 	}
 	render(){
+		const { string } = this.props;
 		return(
 			<View style={styles.container}>
 				<Animated.Image
@@ -43,7 +44,7 @@ class Loading extends Component {
 					source={require('../../../../assets/utilities/sand_clock.png')}
 					resizeMode="contain"
 				/>
-				<Text style={styles.text}>Loading ...</Text>
+				<Text style={styles.text}>{string['loading']}</Text>
 			</View>
 		)
 	}
@@ -56,14 +57,20 @@ const styles = StyleSheet.create({
 		margin : 20
 	},
 	container : {
+		backgroundColor : 'transparent',
 		alignItems : 'center',
 		justifyContent : 'center'
 	},
 	text : {
 		color : 'white',
-		fontFamily : 'Silom'
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
 
-export default connect(null,null)(Loading)
+export default connect(mapStateToProps,null)(Loading)

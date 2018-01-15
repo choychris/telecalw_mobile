@@ -7,8 +7,8 @@ import Signal from './signal';
 
 class ProductInfo extends Component {
 	shouldComponentUpdate(nextProps){
-		const { name , status } = this.props;	
-		return name !== nextProps.name || status !== nextProps.status;
+		const { name , status , locale } = this.props;	
+		return name !== nextProps.name || status !== nextProps.status || locale !== nextProps.locale;
 	}
 	_productName(){
 		const { locale , name } = this.props;

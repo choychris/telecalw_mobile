@@ -68,7 +68,7 @@ class ProductDetailContainer extends Component {
 					>
 						<Icon name="hand-o-up" size={18} />
 						<Text style={styles.btnText}>
-							{'Product Detail'}
+							{string['prizeDetail']}
 						</Text>
 					</TouchableOpacity>
 					<View style={styles.detailContainer}>
