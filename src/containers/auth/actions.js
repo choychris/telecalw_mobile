@@ -211,6 +211,7 @@ export function accessTokenChecking(navigator){
 
 export function logout(token,navigator){
 	return (dispatch,getState)=>{
+		if(token === null || token === undefined) token = getState()['auth']['token']['lbToken'] ;
 		async function logoutFlow(){
 			try {
 				// Step 1 : Clear Local Storage
@@ -219,7 +220,7 @@ export function logout(token,navigator){
 				userLogout(token,Request);				
 				// Step 3 : Navigate to Login UI
 				navigator.resetTo({
-					screen : 'app.Login',
+					screen : 'app.Auth',
 					navigatorStyle : {
 						navBarHidden : true
 					}

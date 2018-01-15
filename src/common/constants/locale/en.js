@@ -82,7 +82,8 @@ const en = {
 	insufficientFund : 'Insufficient Fund',
 	checkIn : 'Check In Reward',
 	share : 'Share',
-	prizeDetail : 'Prize Detail'
+	prizeDetail : 'Prize Detail',
+	logout : 'Logout'
 }
 
 export default en;
