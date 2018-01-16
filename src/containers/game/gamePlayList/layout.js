@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../utilities/actions';
 import { loadGameList , networkChecking , productStatus ,reserveStatus , getCheckinReward } from '../actions';
+import { playBackgroundMusic } from '../../../utils/sound';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
@@ -22,7 +23,8 @@ class GamePlayList extends Component {
 			networkChecking ,
 			productStatus,
 			reserveStatus,
-			getCheckinReward
+			getCheckinReward,
+			playBackgroundMusic
 		} = this.props;
 		// Initial Function of Game Play List
 		loadGameList(navigator);
@@ -32,6 +34,11 @@ class GamePlayList extends Component {
 		productStatus();
 		// Initiate Pusher Reservation Listener 
 		reserveStatus(navigator);
+		// Play Background Music
+		this.background = playBackgroundMusic();
+	}
+	componentWillUnmount(){
+		this.background.stop(()=>this.background.release());
 	}
 	render(){
 		const { navigator } = this.props;
@@ -67,7 +74,8 @@ function mapDispatchToProps(dispatch) {
 		networkChecking,
 		productStatus,
 		reserveStatus,
-		getCheckinReward
+		getCheckinReward,
+		playBackgroundMusic
 	}, dispatch)
 }
 

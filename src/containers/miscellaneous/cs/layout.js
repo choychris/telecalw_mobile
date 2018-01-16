@@ -9,6 +9,7 @@ import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import IssueType from '../cs/issue/issueType';
 import IssueForm from '../cs/issue/issueForm';
+import { playUISound } from './../../../utils/sound';
 import { createIssue } from '../actions';
 const { height , width } = Dimensions.get('window');
 
@@ -22,6 +23,8 @@ class CustomerSupport extends Component {
 		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
+		const { playUISound } = this.props;
+		playUISound('talking');
 		this._slideAnimation()
 	}
 	shouldComponentUpdate(){
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
+		playUISound,
 		createIssue
 	}, dispatch)
 }

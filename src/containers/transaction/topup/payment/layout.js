@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../../utilities/actions';
 import { payment , selectRate } from '../../actions';
+import { playUISound } from '../../../../utils/sound';
 import Telebot from '../../../../components/telebuddies/telebot';
 import BackgroundImage from '../../../../components/utilities/backgroundImage';
 import StarsImage from '../../../../components/utilities/starsImage';
@@ -52,7 +53,11 @@ class TopUp extends Component {
 		}
 	}
 	componentDidMount(){
-		setTimeout(()=>this._runAnimation(),1000)
+		const { playUISound } = this.props;
+		setTimeout(()=>{
+			this.sound = playUISound('coins');
+			this._runAnimation();
+		},1000)
 	}
 	shouldComponentUpdate(){
 		return false;
@@ -133,7 +138,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		payment,
-		selectRate
+		selectRate,
+		playUISound
 	}, dispatch)
 }
 

@@ -3,6 +3,7 @@ package com.mobile_app;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -105,6 +106,7 @@ public class MainApplication extends NavigationApplication {
 		// No need to add RnnPackage and MainReactPackage
 		return Arrays.<ReactPackage>asList(
 			new ReactVideoPackage(),
+			new RNSoundPackage(),
 			new VectorIconsPackage(),
 			new RNDeviceInfo(),
 			new FBSDKPackage(mCallbackManager),

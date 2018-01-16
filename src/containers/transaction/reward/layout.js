@@ -9,6 +9,7 @@ import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
 import Referral from './referral';
 import Redeem from './redeem';
+import { playUISound } from '../../../utils/sound';
 import { confirmRedeem } from '../actions';
 const { height , width } = Dimensions.get('window');
 
@@ -22,8 +23,12 @@ class Reward extends Component {
 		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
+		const { playUISound } = this.props;
 		this._floatingAnimation();
-		setTimeout(()=>this._fadeAnimation(),500);
+		setTimeout(()=>{
+			playUISound('talking');
+			this._fadeAnimation();
+		},500);
 	}
 	shouldComponenetUpdate(nextProps){
 		return false;
@@ -149,7 +154,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		confirmRedeem
+		confirmRedeem,
+		playUISound
 	}, dispatch)
 }
 

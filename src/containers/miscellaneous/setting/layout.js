@@ -7,6 +7,7 @@ import BackgroundImage from '../../../components/utilities/backgroundImage';
 import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
 import MessageBox from '../../../components/messageBox/container';
+import { playUISound } from '../../../utils/sound';
 import { getUserInfo , logout } from '../../auth/actions';
 import SettingForm from './form';
 const { height , width } = Dimensions.get('window');
@@ -21,9 +22,10 @@ class Setting extends Component {
 		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
-		const { getUserInfo } = this.props;
+		const { getUserInfo , playUISound } = this.props;
 		getUserInfo();
 		this._floatingAnimation();
+		playUISound('talking');
 		setTimeout(()=>this._fadeAnimation(),500);
 	}
 	shouldComponentUpdate(){
@@ -128,7 +130,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		getUserInfo,
-		logout
+		logout,
+		playUISound
 	}, dispatch)
 }
 

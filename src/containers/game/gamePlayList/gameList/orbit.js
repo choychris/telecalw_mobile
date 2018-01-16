@@ -15,7 +15,7 @@ class Orbit extends Component {
 				this._spinAnimation,
 				{
 					toValue : 1,
-					duration : 80000,
+					duration : 50000,
 					easing : Easing.linear
 				}
 			)

@@ -9,6 +9,7 @@ import MessageBox from '../../../components/messageBox/container';
 import NavBar from '../../../components/navBar/container';
 import GamePlaySelect from './play/listContainer';
 import LogisticForm from './logistic/layout';
+import { playUISound } from '../../../utils/sound';
 import { getUserInfo } from '../../auth/actions';
 import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect , showTracking } from '../actions';
 import QuoteSelect from './quote/listContainer';
@@ -31,9 +32,10 @@ class Delivery extends Component {
 		this._animation = new Animated.Value(0);
 	}
 	componentDidMount(){
-		const { getUserInfo } = this.props;
+		const { getUserInfo , playUISound } = this.props;
 		getUserInfo();
 		setTimeout(()=>{
+			playUISound('spaceship');
 			this._slideUpAnimation();
 		},1000);
 	}
@@ -302,7 +304,8 @@ function mapDispatchToProps(dispatch) {
 		getLogisticQuote,
 		resetLogistic,
 		confirmDelivery,
-		showTracking
+		showTracking,
+		playUISound
 	}, dispatch)
 }
 

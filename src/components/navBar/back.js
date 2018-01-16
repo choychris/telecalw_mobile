@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , StatusBar , StyleSheet , TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { playUISound } from '../../utils/sound';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Back extends Component {
@@ -9,11 +10,14 @@ class Back extends Component {
 		return false;
 	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , playUISound } = this.props;
 		return (
 			<TouchableOpacity 
 				style={styles.button}
-				onPress={()=>navigator.pop()}
+				onPress={()=>{
+					playUISound('cancel');
+					navigator.pop();
+				}}
 			>
 				<Icon 
 					name="angle-left" 
@@ -32,4 +36,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(Back);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		playUISound
+	}, dispatch)
+}
+
+export default connect(null,mapDispatchToProps)(Back);

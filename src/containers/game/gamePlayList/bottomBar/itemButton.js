@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , StatusBar , StyleSheet , Dimensions , TouchableOpacity , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { playUISound } from '../../../../utils/sound';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ItemButton extends Component {
@@ -15,13 +16,15 @@ class ItemButton extends Component {
 			icon , 
 			navigate , 
 			navigator ,
-			language
+			language ,
+			playUISound
 		} = this.props;
 		const { string } = language;
 		return (
 			<TouchableOpacity 
 				style={styles.container}
 				onPress={()=>{
+					playUISound('click1');
 					navigator.push({
 						screen : navigate,
 						navigatorStyle : {
@@ -53,10 +56,16 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		playUISound
+	}, dispatch)
+}
+
 function mapStateToProps(state) {
 	return {
 		language : state.preference.language
 	}
 }
 
-export default connect(mapStateToProps,null)(ItemButton);
+export default connect(mapStateToProps,mapDispatchToProps)(ItemButton);
