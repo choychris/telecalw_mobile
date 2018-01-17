@@ -40,10 +40,10 @@ export function userStatus(params,request){
 }
 
 // Get User Language
-export function userLanguage(params,request){
+export function userPreference(params,request){
 	const { userId , id } = params;
 	return new Promise((resolve,reject)=>{
-		request(api.users.root+'/'+userId+'?filter[fields][language]=true&access_token='+id,'GET')
+		request(api.users.root+'/'+userId+'?filter[fields][language]=true&filter[fields][preference]=true&access_token='+id,'GET')
 			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
 			.catch((error)=>reject(error));	  
 	});

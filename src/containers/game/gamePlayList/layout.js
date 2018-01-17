@@ -13,8 +13,9 @@ import ListContainer from './gameList/listContainer';
 import BarContainer from './bottomBar/barContainer';
 
 class GamePlayList extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { sound } = this.props;
+		return nextProps.sound !== sound;
 	}
 	componentDidMount(){
 		const { 
@@ -23,8 +24,7 @@ class GamePlayList extends Component {
 			networkChecking ,
 			productStatus,
 			reserveStatus,
-			getCheckinReward,
-			playBackgroundMusic
+			getCheckinReward
 		} = this.props;
 		// Initial Function of Game Play List
 		loadGameList(navigator);
@@ -35,10 +35,22 @@ class GamePlayList extends Component {
 		// Initiate Pusher Reservation Listener 
 		reserveStatus(navigator);
 		// Play Background Music
-		this.background = playBackgroundMusic();
+		this._startBackground();
 	}
 	componentWillUnmount(){
-		this.background.stop(()=>this.background.release());
+		this._stopBackground(); 
+	}
+	componentDidUpdate(){
+		const { sound } = this.props;
+		if(sound === false) this._stopBackground();
+		if(sound === true) this._startBackground();
+	}
+	_startBackground(){
+		const { playBackgroundMusic } = this.props;
+		this.background = playBackgroundMusic();
+	}
+	_stopBackground(){
+		if(this.background) this.background.stop(()=>this.background.release());
 	}
 	render(){
 		const { navigator } = this.props;
@@ -68,6 +80,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		sound : state.preference.preference.sound
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		loadGameList,
@@ -79,4 +97,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(GamePlayList);
+export default connect(mapStateToProps,mapDispatchToProps)(GamePlayList);

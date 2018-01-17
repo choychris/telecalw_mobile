@@ -4,7 +4,8 @@ import { getDeliveryQuote , postDelivery , getDelivery } from '../../common/api/
 import { postIssue } from '../../common/api/request/issue';
 import { updateUser } from '../../common/api/request/user';
 import { loading , message } from '../utilities/actions';
-import { languageSetting } from '../../utils/language';
+import { languageSetting , preferenceSetting } from '../../utils/language';
+const Sound = require('react-native-sound');
 
 export function winResult(navigator){
 	return(dispatch,getState)=>{
@@ -271,6 +272,42 @@ export function setUserLanguage(locale,navigator){
 				loading('hide',navigator);
 				if(!err){
 				 	dispatch(languageSetting(res.language));
+					return dispatch({
+						type : 'STORE_USER_INFO',
+						value : res
+					})
+				};
+			})
+			.catch((err)=>{
+				loading('hide',navigator);
+				console.warn(JSON.stringify(err));
+			})
+	}
+}
+
+export function setUserPreference(navigator,key,value){
+	return(dispatch,getState)=>{
+		const { id , userId } = getState()['auth']['token']['lbToken'];
+		let preference = getState()['preference']['preference'];
+		preference[key] = value;
+		const data = { preference : preference };
+		const params = {   
+			data : data,
+			token : id,
+			userId : userId
+		};
+		//console.warn(JSON.stringify(params));
+		loading('show',navigator);
+		updateUser(params,Request)	
+			.then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				loading('hide',navigator);
+				if(!err){
+				 	dispatch(preferenceSetting(res.preference));
+					if(res.preference.sound === false) {
+
+					};
 					return dispatch({
 						type : 'STORE_USER_INFO',
 						value : res

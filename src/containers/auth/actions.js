@@ -1,9 +1,9 @@
-import { AsyncStorage , Vibration , Platform } from 'react-native';
+import { AsyncStorage , Platform } from 'react-native';
 import { LoginManager , AccessToken , GraphRequest , GraphRequestManager } from 'react-native-fbsdk';
 import { errorMessage , loading } from '../utilities/actions';
-import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userLanguage , updateUser } from '../../common/api/request/user';
+import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userPreference , updateUser } from '../../common/api/request/user';
 import { checkinReward } from '../../common/api/request/reward';
-import { languageSetting } from '../../utils/language';
+import { languageSetting , preferenceSetting } from '../../utils/language';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -103,55 +103,57 @@ export function loginFacebook(navigator){
 
 function dispatchTokenAndNavigate(token,navigator){
 	return (dispatch,getState)=>{
-		console.log(token);
+		//console.log(token);
 		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
 		dispatch(getUserReservation());
-		userLanguage(token['lbToken'],Request)
+		userPreference(token['lbToken'],Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
 				//console.warn(JSON.stringify(err));
-				if(!err) dispatch(languageSetting(res.language));
-			});
-			checkinReward(
-				{
-					userId : token['lbToken']['userId'],
-					token : token['lbToken']['id'],
-				},
-				Request
-			)
-			.then((res,err)=>{
-				//console.warn(JSON.stringify(err));
-				//console.warn(JSON.stringify(res));
 				if(!err){
-					const { result } = res;
-					if(result.success === true){
-						dispatch({
-							type : 'UPDATE_WALLET_BALANCE',
-							value : result.newWalletBalance
+					dispatch(preferenceSetting(res.preference));
+					dispatch(languageSetting(res.language));
+				} 
+			});
+		checkinReward(
+			{
+				userId : token['lbToken']['userId'],
+				token : token['lbToken']['id'],
+			},
+			Request
+		)
+		.then((res,err)=>{
+			//console.warn(JSON.stringify(err));
+			//console.warn(JSON.stringify(res));
+			if(!err){
+				const { result } = res;
+				if(result.success === true){
+					dispatch({
+						type : 'UPDATE_WALLET_BALANCE',
+						value : result.newWalletBalance
+					});
+					setTimeout(()=>{
+						navigator.showLightBox({
+							screen : 'app.CheckinReward',
+							animationType : 'slide-up',
+							navigatorStyle: {
+								navBarHidden: true
+							},
+							passProps : result,
+							style: {
+								backgroundBlur: "dark",
+								backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+								tapBackgroundToDismiss: true,
+								flex : 1
+							}
 						});
-						setTimeout(()=>{
-							navigator.showLightBox({
-								screen : 'app.CheckinReward',
-								animationType : 'slide-up',
-								navigatorStyle: {
-									navBarHidden: true
-								},
-								passProps : result,
-								style: {
-									backgroundBlur: "dark",
-									backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
-									tapBackgroundToDismiss: true,
-									flex : 1
-								}
-							});
-							Vibration.vibrate(500);
-						},3000);
-					}
+					},3000);
 				}
-			})
-			.catch((err)=>{
-				dispatch(authError(navigator,'error','tryAgain'));
-			})
+			}
+		})
+		.catch((err)=>{
+			dispatch(authError(navigator,'error','tryAgain'));
+		});
 		updateUser(
 			{
 				userId : token['lbToken']['userId'],
@@ -304,7 +306,6 @@ export function getUserInfo(){
 			userId : userId
 		},Request).then((res,err)=>{
 			if(!err){
-				//console.warn(JSON.stringify(res))
 				dispatch({
 					type : 'STORE_USER_INFO',
 					value : res

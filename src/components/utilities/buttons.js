@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { View , Image , StyleSheet , TouchableHighlight , Text , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { playUISound } from '../../utils/sound';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Button extends Component {
@@ -48,7 +49,8 @@ class Button extends Component {
 			string , 
 			icon ,
 			disable,
-			loading
+			loading,
+			playUISound
 		} = this.props;
 		const { pressIn } = this.state;
 		const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
@@ -65,7 +67,12 @@ class Button extends Component {
 					if(onPressOutFunction) onPressOutFunction();
 					this.setState({ pressIn : false });
 				}}
-				onPress={()=>(onPressFunction) ? onPressFunction() : null}
+				onPress={()=>{
+					if(onPressFunction){
+						playUISound('click2');
+						onPressFunction();
+					}
+				}}
 				style={[styles.container,btnBorder,btnStyle,btnBorderColor]}
 				underlayColor={borderColor}
 			>
@@ -102,4 +109,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps, null)(Button);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		playUISound
+	}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Button);

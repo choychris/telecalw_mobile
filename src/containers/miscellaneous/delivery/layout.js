@@ -35,7 +35,7 @@ class Delivery extends Component {
 		const { getUserInfo , playUISound } = this.props;
 		getUserInfo();
 		setTimeout(()=>{
-			playUISound('spaceship');
+			playUISound('whoosh');
 			this._slideUpAnimation();
 		},1000);
 	}

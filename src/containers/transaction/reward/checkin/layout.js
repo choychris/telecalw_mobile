@@ -4,11 +4,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
 const coinsImg = require('../../../../../assets/utilities/coins/telecoins_single.png');
+import { playUISound } from '../../../../utils/sound';
+import { vibrate } from '../../../../utils/vibrate';
 
 class CheckinReward extends Component {
 	constructor(props){
 		super(props);
 	}
+	componentDidMount(){
+		const { playUISound , vibrate } = this.props;
+		playUISound('happy');
+		vibrate(500);
+	} 
 	shouldComponentUpdate(){
 		return false;
 	}
@@ -80,4 +87,11 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps,null)(CheckinReward)
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		playUISound,
+		vibrate
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CheckinReward)

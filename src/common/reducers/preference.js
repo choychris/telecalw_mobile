@@ -29,6 +29,11 @@ function preferenceReducer(state = initialPrefernece , action){
 					.setIn(['pusher'],action.value)
 					.toJS();
 			break;
+			case 'SET_PREFERENCE':
+				return state
+					.setIn(['preference'],action.value)
+					.toJS();
+			break;
 			default:
 				return state.toJS();
 			break;												  

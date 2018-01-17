@@ -76,6 +76,9 @@
 		D6B836741FCFB977004566FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366C1FCFB977004566FB /* Bolts.framework */; };
 		D6B8367B1FCFBBDC004566FB /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8367A1FCFBB7E004566FB /* libRCTFBSDK.a */; };
 		D6B836851FCFF69C004566FB /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B836821FCFF681004566FB /* libRNDeviceInfo.a */; };
+		D6E4C855200EF23F006977F3 /* whoosh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E4C828200EF23E006977F3 /* whoosh.mp3 */; };
+		D6E4C856200EF23F006977F3 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E4C853200EF23F006977F3 /* fail.mp3 */; };
+		D6E4C857200EF23F006977F3 /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E4C854200EF23F006977F3 /* happy.mp3 */; };
 		D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E8E7E0200DA15F00C41395 /* libRNSound.a */; };
 		D6E8E7E3200DA60A00C41395 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E2200DA60A00C41395 /* background.mp3 */; };
 		D6E8E7E5200DF92F00C41395 /* coins_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */; };
@@ -472,6 +475,9 @@
 		D6B8366C1FCFB977004566FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../../../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		D6B836751FCFBB7E004566FB /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		D6B8367C1FCFF681004566FB /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
+		D6E4C828200EF23E006977F3 /* whoosh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = whoosh.mp3; path = ../assets/sound/whoosh.mp3; sourceTree = "<group>"; };
+		D6E4C853200EF23F006977F3 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = fail.mp3; path = ../assets/sound/fail.mp3; sourceTree = "<group>"; };
+		D6E4C854200EF23F006977F3 /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = happy.mp3; path = ../assets/sound/happy.mp3; sourceTree = "<group>"; };
 		D6E8E7DB200DA15F00C41395 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		D6E8E7E2200DA60A00C41395 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../assets/sound/background.mp3; sourceTree = "<group>"; };
 		D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = coins_sound.mp3; path = ../assets/sound/coins_sound.mp3; sourceTree = "<group>"; };
@@ -734,6 +740,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D6E4C853200EF23F006977F3 /* fail.mp3 */,
+				D6E4C854200EF23F006977F3 /* happy.mp3 */,
+				D6E4C828200EF23E006977F3 /* whoosh.mp3 */,
 				D6E8E7EE200E07B100C41395 /* cancel_error.mp3 */,
 				D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */,
 				D6E8E7E2200DA60A00C41395 /* background.mp3 */,
@@ -1394,6 +1403,8 @@
 			files = (
 				D6B78B861FD131E70045EEEE /* Ionicons.ttf in Resources */,
 				D6B78B871FD131E70045EEEE /* MaterialCommunityIcons.ttf in Resources */,
+				D6E4C856200EF23F006977F3 /* fail.mp3 in Resources */,
+				D6E4C857200EF23F006977F3 /* happy.mp3 in Resources */,
 				D6B78B741FD122290045EEEE /* Silom.ttf in Resources */,
 				D6B78B831FD131E70045EEEE /* Feather.ttf in Resources */,
 				D6B78B821FD131E70045EEEE /* EvilIcons.ttf in Resources */,
@@ -1407,6 +1418,7 @@
 				D6E8E7EB200E012B00C41395 /* click1.mp3 in Resources */,
 				D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */,
 				D6B78B881FD131E70045EEEE /* MaterialIcons.ttf in Resources */,
+				D6E4C855200EF23F006977F3 /* whoosh.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				D6E8E7E3200DA60A00C41395 /* background.mp3 in Resources */,
 				D6E8E7E5200DF92F00C41395 /* coins_sound.mp3 in Resources */,
