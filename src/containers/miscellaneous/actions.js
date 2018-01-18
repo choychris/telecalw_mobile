@@ -6,6 +6,7 @@ import { updateUser } from '../../common/api/request/user';
 import { loading , message } from '../utilities/actions';
 import { languageSetting , preferenceSetting } from '../../utils/language';
 const Sound = require('react-native-sound');
+import { trackEvent } from '../../utils/analytic';
 
 export function winResult(navigator){
 	return(dispatch,getState)=>{
@@ -353,13 +354,13 @@ export function showTracking(navigator){
 	}
 }
 
-export function createIssue(){
+export function createIssue(navigator){
 	return (dispatch,getState)=>{
 		const { id , userId } = getState()['auth']['token']['lbToken'];
 		let { issue } = getState()['mis'];
 		if(issue.message && issue.message !== null){
 			issue.userId = userId;
-			console.warn(JSON.stringify(issue))
+			//console.warn(JSON.stringify(issue))
 			loading('show',navigator);
 			postIssue({
 				token : id,
@@ -369,12 +370,8 @@ export function createIssue(){
 					//console.warn(JSON.stringify(res));
 					//console.warn(JSON.stringify(err));
 					loading('hide',navigator);
-					//dispatch({
-						//type : 'AMEND_ISSUE',
-						//keys : ['message'],
-						//value : ''
-					//})
-					
+					dispatch(trackEvent('createIssue',res));
+					navigator.pop();
 				})
 				.catch((err)=>{
 					//console.warn(JSON.stringify(err));

@@ -13,6 +13,7 @@ import MessageBox from '../../../../components/messageBox/container';
 import RateListContainer from './listContainer';
 import TransactionListContainer from '../record/listContainer';
 const { height , width } = Dimensions.get('window');
+import { trackScreen } from '../../../../utils/analytic';
 
 class TopUp extends Component {
 	constructor(props){
@@ -51,6 +52,10 @@ class TopUp extends Component {
 				}
 			]
 		}
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('TopUp');
 	}
 	componentDidMount(){
 		const { playUISound } = this.props;
@@ -139,7 +144,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		payment,
 		selectRate,
-		playUISound
+		playUISound,
+		trackScreen
 	}, dispatch)
 }
 

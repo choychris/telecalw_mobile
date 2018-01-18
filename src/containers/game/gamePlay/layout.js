@@ -7,8 +7,13 @@ import { loading } from '../../utilities/actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import GameContainer from '../components/gameContainer';
+import { trackScreen } from '../../../utils/analytic';
 
 class GamePlay extends Component {
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('GamePlay');
+	}
 	componentDidMount(){
 		const { loadGamePlay , navigator } = this.props;
 		loadGamePlay(navigator);
@@ -46,7 +51,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		loadGamePlay
+		loadGamePlay,
+		trackScreen
 	}, dispatch)
 }
 
