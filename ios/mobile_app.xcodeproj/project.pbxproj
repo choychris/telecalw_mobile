@@ -54,6 +54,7 @@
 		D64874B61FB83BEA00ABC458 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874AC1FB83BA400ABC458 /* CoreAudio.framework */; };
 		D64874B71FB83BF200ABC458 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874AE1FB83BB800ABC458 /* VideoToolbox.framework */; };
 		D6A3BD141FEB694D00F90C18 /* libRCTBraintree.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A3BCF01FEB692C00F90C18 /* libRCTBraintree.a */; };
+		D6B3987F20105B4D00CCBF88 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6B3987E20105B4D00CCBF88 /* background.mp3 */; };
 		D6B78B741FD122290045EEEE /* Silom.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B4D1FD122280045EEEE /* Silom.ttf */; };
 		D6B78B811FD131E70045EEEE /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B761FD131E70045EEEE /* Entypo.ttf */; };
 		D6B78B821FD131E70045EEEE /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B771FD131E70045EEEE /* EvilIcons.ttf */; };
@@ -80,7 +81,6 @@
 		D6E4C856200EF23F006977F3 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E4C853200EF23F006977F3 /* fail.mp3 */; };
 		D6E4C857200EF23F006977F3 /* happy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E4C854200EF23F006977F3 /* happy.mp3 */; };
 		D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E8E7E0200DA15F00C41395 /* libRNSound.a */; };
-		D6E8E7E3200DA60A00C41395 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E2200DA60A00C41395 /* background.mp3 */; };
 		D6E8E7E5200DF92F00C41395 /* coins_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */; };
 		D6E8E7EA200E012B00C41395 /* click2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E6200E012800C41395 /* click2.mp3 */; };
 		D6E8E7EB200E012B00C41395 /* click1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E7200E012900C41395 /* click1.mp3 */; };
@@ -457,6 +457,7 @@
 		D64874B11FB83BC900ABC458 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D64874B31FB83BD400ABC458 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		D6A3BCE51FEB692900F90C18 /* RCTBraintree.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBraintree.xcodeproj; path = "../node_modules/react-native-braintree-xplat/ios/RCTBraintree.xcodeproj"; sourceTree = "<group>"; };
+		D6B3987E20105B4D00CCBF88 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../assets/sound/background.mp3; sourceTree = "<group>"; };
 		D6B78B4D1FD122280045EEEE /* Silom.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Silom.ttf; path = ../assets/fonts/Silom.ttf; sourceTree = "<group>"; };
 		D6B78B761FD131E70045EEEE /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
 		D6B78B771FD131E70045EEEE /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
@@ -479,7 +480,6 @@
 		D6E4C853200EF23F006977F3 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = fail.mp3; path = ../assets/sound/fail.mp3; sourceTree = "<group>"; };
 		D6E4C854200EF23F006977F3 /* happy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = happy.mp3; path = ../assets/sound/happy.mp3; sourceTree = "<group>"; };
 		D6E8E7DB200DA15F00C41395 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
-		D6E8E7E2200DA60A00C41395 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../assets/sound/background.mp3; sourceTree = "<group>"; };
 		D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = coins_sound.mp3; path = ../assets/sound/coins_sound.mp3; sourceTree = "<group>"; };
 		D6E8E7E6200E012800C41395 /* click2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = click2.mp3; path = ../assets/sound/click2.mp3; sourceTree = "<group>"; };
 		D6E8E7E7200E012900C41395 /* click1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = click1.mp3; path = ../assets/sound/click1.mp3; sourceTree = "<group>"; };
@@ -740,12 +740,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D6B3987E20105B4D00CCBF88 /* background.mp3 */,
 				D6E4C853200EF23F006977F3 /* fail.mp3 */,
 				D6E4C854200EF23F006977F3 /* happy.mp3 */,
 				D6E4C828200EF23E006977F3 /* whoosh.mp3 */,
 				D6E8E7EE200E07B100C41395 /* cancel_error.mp3 */,
 				D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */,
-				D6E8E7E2200DA60A00C41395 /* background.mp3 */,
 				D6E8E7E7200E012900C41395 /* click1.mp3 */,
 				D6E8E7E6200E012800C41395 /* click2.mp3 */,
 				D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */,
@@ -1407,6 +1407,7 @@
 				D6E4C857200EF23F006977F3 /* happy.mp3 in Resources */,
 				D6B78B741FD122290045EEEE /* Silom.ttf in Resources */,
 				D6B78B831FD131E70045EEEE /* Feather.ttf in Resources */,
+				D6B3987F20105B4D00CCBF88 /* background.mp3 in Resources */,
 				D6B78B821FD131E70045EEEE /* EvilIcons.ttf in Resources */,
 				D6B78B8A1FD131E70045EEEE /* SimpleLineIcons.ttf in Resources */,
 				D6B78B851FD131E70045EEEE /* Foundation.ttf in Resources */,
@@ -1420,7 +1421,6 @@
 				D6B78B881FD131E70045EEEE /* MaterialIcons.ttf in Resources */,
 				D6E4C855200EF23F006977F3 /* whoosh.mp3 in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				D6E8E7E3200DA60A00C41395 /* background.mp3 in Resources */,
 				D6E8E7E5200DF92F00C41395 /* coins_sound.mp3 in Resources */,
 				D6B78B891FD131E70045EEEE /* Octicons.ttf in Resources */,
 				D6E8E7EF200E07B200C41395 /* cancel_error.mp3 in Resources */,
