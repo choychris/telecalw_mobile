@@ -11,11 +11,16 @@ import NavBar from '../../../components/navBar/container';
 import LocationBar from './location/bar';
 import ListContainer from './gameList/listContainer';
 import BarContainer from './bottomBar/barContainer';
+import { trackScreen } from '../../../utils/analytic';
 
 class GamePlayList extends Component {
 	shouldComponentUpdate(nextProps){
 		const { sound } = this.props;
 		return nextProps.sound !== sound;
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('GamePlayList');
 	}
 	componentDidMount(){
 		const { 
@@ -93,7 +98,8 @@ function mapDispatchToProps(dispatch) {
 		productStatus,
 		reserveStatus,
 		getCheckinReward,
-		playBackgroundMusic
+		playBackgroundMusic,
+		trackScreen
 	}, dispatch)
 }
 

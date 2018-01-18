@@ -12,6 +12,7 @@ import IssueForm from '../cs/issue/issueForm';
 import { playUISound } from './../../../utils/sound';
 import { createIssue } from '../actions';
 const { height , width } = Dimensions.get('window');
+import { trackScreen } from '../../../utils/analytic';
 
 class CustomerSupport extends Component {
 	constructor(props){
@@ -21,6 +22,10 @@ class CustomerSupport extends Component {
 			y : -height*0.1
 		});
 		this._animation = new Animated.Value(0);
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('CustomerSupport');
 	}
 	componentDidMount(){
 		const { playUISound } = this.props;
@@ -96,7 +101,7 @@ class CustomerSupport extends Component {
 										paddingVertical : 10,
 										paddingHorizontal : 15
 									},
-									onPressFunction : ()=>createIssue()
+									onPressFunction : ()=>createIssue(navigator)
 								}
 							]}
 						/>
@@ -142,7 +147,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		playUISound,
-		createIssue
+		createIssue,
+		trackScreen
 	}, dispatch)
 }
 

@@ -6,8 +6,13 @@ import { loading } from '../../utilities/actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
 import GameContainer from '../components/gameContainer';
+import { trackScreen } from '../../../utils/analytic';
 
 class GameRoom extends Component {
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('GameRoom');
+	}
 	componentDidMount(){
 		const { navigator } = this.props;
 		loading('hide',navigator);
@@ -51,4 +56,10 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps,null)(GameRoom);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		trackScreen
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(GameRoom);

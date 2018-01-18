@@ -4,6 +4,7 @@ import { errorMessage , loading } from '../utilities/actions';
 import { authRequest, userWallet , userStatus , userLogout , userReservation , userInfoRequest , userPreference , updateUser } from '../../common/api/request/user';
 import { checkinReward } from '../../common/api/request/reward';
 import { languageSetting , preferenceSetting } from '../../utils/language';
+import { identitfyUser , trackEvent } from '../../utils/analytic';
 import Request from '../../utils/fetch';
 
 function getFbAccessToken(){
@@ -76,6 +77,9 @@ async function authenticationFlow(dispatch,getState,navigator) {
 		
 		// Step 6 : Dispatch response to local store , Navigate to Gameplay List UI
 		dispatch(dispatchTokenAndNavigate(result,navigator));
+
+		// Step 7 : Track User
+		identitfyUser(result['lbToken']['userId']);
 	}
 	catch(e){
 		//console.warn(JSON.stringify(e));
@@ -106,6 +110,7 @@ function dispatchTokenAndNavigate(token,navigator){
 		//console.log(token);
 		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
 		dispatch(getUserReservation());
+		// Get User Preference
 		userPreference(token['lbToken'],Request)
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(res));
@@ -115,6 +120,7 @@ function dispatchTokenAndNavigate(token,navigator){
 					dispatch(languageSetting(res.language));
 				} 
 			});
+		// Get User Check In Reward
 		checkinReward(
 			{
 				userId : token['lbToken']['userId'],
@@ -132,6 +138,7 @@ function dispatchTokenAndNavigate(token,navigator){
 						type : 'UPDATE_WALLET_BALANCE',
 						value : result.newWalletBalance
 					});
+					dispatch(trackEvent('checkinReward',result));
 					setTimeout(()=>{
 						navigator.showLightBox({
 							screen : 'app.CheckinReward',
@@ -154,6 +161,7 @@ function dispatchTokenAndNavigate(token,navigator){
 		.catch((err)=>{
 			dispatch(authError(navigator,'error','tryAgain'));
 		});
+		// Update User Last Login Time
 		updateUser(
 			{
 				userId : token['lbToken']['userId'],
@@ -167,6 +175,7 @@ function dispatchTokenAndNavigate(token,navigator){
 			.then((res,err)=>{
 				//console.warn(JSON.stringify(err));
 				//console.warn(JSON.stringify(res));
+				dispatch(trackEvent('lastLogin',res));
 				navigator.resetTo({
 					screen : 'app.GamePlayList',
 					navigatorStyle : {

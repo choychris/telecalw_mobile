@@ -13,6 +13,7 @@ import Pusher from 'pusher-js/react-native';
 import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
 import { closeWebrtc } from '../../utils/webrtc';
+import { trackEvent } from '../../utils/analytic';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -341,6 +342,8 @@ export function navigateToGameRoom(productId,status,navigator){
 							navBarHidden : true
 						}
 					});
+					// Step 7 : Tracking
+					dispatch(trackEvent('viewProduct',targetProduct));
 				} else {
 					loading('hide',navigator);
 					errorMessage(
@@ -418,6 +421,8 @@ export function initGamePlay(navigator){
 								type : 'UPDATE_WALLET_BALANCE' , 
 								value : newWalletBalance 
 							});
+							// Tracking
+							dispatch(trackEvent('playGame',productId));
 						} else if(result.reservation){
 							dispatch({
 								type : 'UPDATE_RESERVATION',

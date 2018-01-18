@@ -6,6 +6,7 @@ import { redeemReward } from '../../common/api/request/reward';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
 import { ShareDialog } from 'react-native-fbsdk';
+import { trackEvent } from '../../utils/analytic';
 
 export function selectRate(rate){
 	return (dispatch,getState)=>{
@@ -49,6 +50,7 @@ export function sales(nonce,rate,navigator){
 							},
 							500
 						);
+						dispatch(trackEvent('topUp',{ rateId : rate }));
 						dispatch(selectRate(null));
 						return dispatch({
 							type : 'UPDATE_WALLET_BALANCE',

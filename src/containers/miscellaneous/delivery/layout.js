@@ -15,6 +15,7 @@ import { getLogisticQuote , resetLogistic , confirmDelivery , confirmPlaySelect 
 import QuoteSelect from './quote/listContainer';
 import Receipt from './receipt/layout';
 const { width , height } = Dimensions.get('window');
+import { trackScreen } from '../../../utils/analytic';
 
 class Delivery extends Component {
 	constructor(props){
@@ -30,6 +31,10 @@ class Delivery extends Component {
 			y : height*0.1
 		});
 		this._animation = new Animated.Value(0);
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('Delivery');
 	}
 	componentDidMount(){
 		const { getUserInfo , playUISound } = this.props;
@@ -305,7 +310,8 @@ function mapDispatchToProps(dispatch) {
 		resetLogistic,
 		confirmDelivery,
 		showTracking,
-		playUISound
+		playUISound,
+		trackScreen
 	}, dispatch)
 }
 

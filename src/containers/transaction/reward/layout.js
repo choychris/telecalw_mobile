@@ -12,6 +12,7 @@ import Redeem from './redeem';
 import { playUISound } from '../../../utils/sound';
 import { confirmRedeem } from '../actions';
 const { height , width } = Dimensions.get('window');
+import { trackScreen } from '../../../utils/analytic';
 
 class Reward extends Component {
 	constructor(props){
@@ -21,6 +22,10 @@ class Reward extends Component {
 			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('Reward');
 	}
 	componentDidMount(){
 		const { playUISound } = this.props;
@@ -155,7 +160,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		confirmRedeem,
-		playUISound
+		playUISound,
+		trackScreen
 	}, dispatch)
 }
 

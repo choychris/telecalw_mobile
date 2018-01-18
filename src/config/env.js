@@ -32,3 +32,7 @@ export function webrtcUrl(){
 export function gizwitsUrl(){
 	return 'https://api.gizwits.com/app/';
 }
+
+export function segmentKey(){
+	return (__DEV__) ? '6615xgSmJFb9OrBuywhtCwYgJ47YdYSf' : 'nCcd1t1DAQPkeFwe1IWIRoQzOUY9QNC6';
+}

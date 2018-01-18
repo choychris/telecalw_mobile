@@ -11,6 +11,7 @@ import { playUISound } from '../../../utils/sound';
 import { getUserInfo , logout } from '../../auth/actions';
 import SettingForm from './form';
 const { height , width } = Dimensions.get('window');
+import { trackScreen } from '../../../utils/analytic';
 
 class Setting extends Component {
 	constructor(props){
@@ -20,6 +21,10 @@ class Setting extends Component {
 			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
+	}
+	componentWillMount(){
+		const { trackScreen } = this.props;
+		trackScreen('Setting');
 	}
 	componentDidMount(){
 		const { getUserInfo , playUISound } = this.props;
@@ -131,7 +136,8 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		getUserInfo,
 		logout,
-		playUISound
+		playUISound,
+		trackScreen
 	}, dispatch)
 }
 
