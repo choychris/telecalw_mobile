@@ -13,5 +13,8 @@ Navigation.startSingleScreenApp({
 		navigatorStyle: {
 			navBarHidden: true
 		}
+	},
+	appStyle: {
+		orientation: 'portrait',			    
 	}
 });
