@@ -6,6 +6,7 @@ import { engageGamePlay } from '../../common/api/request/machine';
 import { gameResult } from '../../common/api/request/play';
 import { endGameEngage , cancelReserve } from '../../common/api/request/reservation';
 import { checkinReward } from '../../common/api/request/reward';
+import { playUISound } from '../../utils/sound';
 import Request from '../../utils/fetch';
 import { localPlanetImg } from '../../utils/images';
 import Pusher from 'pusher-js/react-native';
@@ -70,6 +71,8 @@ export function switchTag(action){
 		const { index } = currentTag;
 		const targetIndex = (action === 'next') ? index + 1 : index - 1;
 		if(tags[targetIndex]){
+			// Step 0 : Sound Effect
+			dispatch(playUISound('spaceship'));
 			// Step 1 : Dispatch Selected Tag
 			let targetTag = tags[targetIndex];
 			targetTag.index = targetIndex;
@@ -99,6 +102,8 @@ export function switchTag(action){
 					);
 				}
 			});			
+		} else {
+			dispatch(playUISound('cancel'));
 		}
 	}
 }

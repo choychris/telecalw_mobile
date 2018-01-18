@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 export function errorMessage(action,navigator,data,time){
 	let callback;
 	if(action === 'show'){
@@ -11,7 +12,7 @@ export function errorMessage(action,navigator,data,time){
 				passProps : data,
 				style: {
 					backgroundBlur: "dark",
-					backgroundColor : 'rgba(0, 0, 0, 0.8)',
+					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 					tapBackgroundToDismiss: true
 				}
 			});
@@ -36,7 +37,7 @@ export function loading (action,navigator){
 			},
 			style: {
 				backgroundBlur: "dark",
-				backgroundColor : 'rgba(0, 0, 0, 0.8)',
+				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false,
 				flex : 1
 			}
@@ -62,7 +63,7 @@ export function message(action,navigator,data,time){
 				passProps : data,
 				style: {
 					backgroundBlur: "dark",
-					backgroundColor : 'rgba(0, 0, 0, 0.8)',
+					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 					tapBackgroundToDismiss: true
 				}
 			});

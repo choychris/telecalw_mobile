@@ -11,10 +11,15 @@ export function languageChecking(){
 	}
 }
 
-
 export function languageSetting(locale){
 	return(dispatch,getState)=>{
 		return dispatch({ type : 'SET_LANGUAGE' , value : locale });
 	}
 }
 
+
+export function preferenceSetting(preference){
+	return(dispatch,getState)=>{
+		return dispatch({ type : 'SET_PREFERENCE' , value : preference });
+	}
+}

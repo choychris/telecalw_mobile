@@ -84,8 +84,10 @@ const en = {
 	share : 'Share',
 	prizeDetail : 'Prize Detail',
 	logout : 'Logout',
-	checkinReward : 'A Check In A Day keeps Teleclaw to Play',
-	rewardAmount : 'You are rewarded'
+	checkinReward : 'A Check In A Day keeps\nTeleclaw to Play',
+	rewardAmount : 'You are rewarded',
+	sound : 'Sound Effect',
+	vibration : 'Vibration'
 }
 
 export default en;

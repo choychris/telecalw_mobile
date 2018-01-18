@@ -1,13 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform , Picker } from 'react-native';
+import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform , Picker , Switch } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setUserLanguage } from '../actions';
+import { setUserLanguage , setUserPreference } from '../actions';
 
 class SettingForm extends Component {
 	shouldComponentUpdate(nextProps){
-		const { language } = this.props;
-		return nextProps.language.locale !== language.locale
+		const { language , preference } = this.props;
+		return nextProps.language.locale !== language.locale || nextProps.preference !== preference;
 	}
 	_renderLanguageIOSPicker(avaLanguage,locale,string){
 		//console.warn(JSON.stringify(avaLanguage));
@@ -49,8 +49,36 @@ class SettingForm extends Component {
 			</Picker>
 		)
 	}
+	_renderMusicSetting(string,{ sound }){
+		const { setUserPreference , navigator } = this.props;
+		return(
+			<View style={styles.innerContainer}>
+				<Text style={styles.text}>
+					{string['sound']}
+				</Text>
+				<Switch
+					value={sound}
+					onValueChange={(value)=>setUserPreference(navigator,'sound',value)}
+				/>				
+			</View>
+		)
+	}
+	_renderVibrationSetting(string,{ vibration }){
+		const { setUserPreference , navigator } = this.props;
+		return(
+			<View style={styles.innerContainer}>
+				<Text style={styles.text}>
+					{string['vibration']}
+				</Text>
+				<Switch
+					value={vibration}
+					onValueChange={(value)=>setUserPreference(navigator,'vibration',value)}
+				/>				
+			</View>
+		)
+	}
 	render(){
-		const { user , language } = this.props;
+		const { user , language , preference } = this.props;
 		const { avaLanguage , locale , string } = language;
 		//console.warn(JSON.stringify(user));
 		//console.warn(locale)
@@ -60,6 +88,8 @@ class SettingForm extends Component {
 					{user.name}
 				</Text>
 				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : this._renderLanguageAndroidPicker(avaLanguage,locale,string)}
+				{this._renderMusicSetting(string,preference)}
+				{this._renderVibrationSetting(string,preference)}
 			</View>
 		)
 	}
@@ -70,7 +100,16 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		paddingVertical : 10,
-		height : 200
+		height : 210
+	},
+	innerContainer : {
+		flexDirection : 'row',
+		alignSelf : 'stretch',
+		alignItems : 'center',
+		justifyContent : 'space-between',
+		padding : 10,
+		backgroundColor : 'white',
+		marginVertical : 5
 	},
 	text : {
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
@@ -96,13 +135,15 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
 	return {
 		user : state.auth.user,
-		language : state.preference.language
+		language : state.preference.language,
+		preference : state.preference.preference
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		setUserLanguage
+		setUserLanguage,
+		setUserPreference
 	}, dispatch)
 }
 

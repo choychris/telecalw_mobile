@@ -3,6 +3,7 @@ import { FlatList , View , Text , Image , ActivityIndicator, StyleSheet , Dimens
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { positioningItems , navigateToGameRoom } from '../../actions';
+import { playUISound } from '../../../../utils/sound';
 import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
@@ -16,12 +17,19 @@ class ListContainer extends Component {
 		return <ActivityIndicator size="small" color={'white'}/>
 	}
 	_renderItems(products){
-		const { navigator , navigateToGameRoom } = this.props;
+		const { 
+			navigator , 
+			navigateToGameRoom ,
+			playUISound 
+		} = this.props;
 		return positioningItems(products).map((item,key)=>
 			<ItemContainer 
 				{...item}
 				key={key}
-				onPressFunction={(productId,status)=>navigateToGameRoom(productId,status,navigator)}
+				onPressFunction={(productId,status)=>{
+					playUISound('click2');
+					navigateToGameRoom(productId,status,navigator);
+				}}
 			/>)
 	}
 	render(){
@@ -54,7 +62,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		navigateToGameRoom
+		navigateToGameRoom,
+		playUISound
 	}, dispatch)
 }
 

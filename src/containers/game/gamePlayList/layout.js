@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loading } from '../../utilities/actions';
 import { loadGameList , networkChecking , productStatus ,reserveStatus , getCheckinReward } from '../actions';
+import { playBackgroundMusic } from '../../../utils/sound';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import StarsImage from '../../../components/utilities/starsImage';
 import NavBar from '../../../components/navBar/container';
@@ -12,8 +13,9 @@ import ListContainer from './gameList/listContainer';
 import BarContainer from './bottomBar/barContainer';
 
 class GamePlayList extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { sound } = this.props;
+		return nextProps.sound !== sound;
 	}
 	componentDidMount(){
 		const { 
@@ -32,8 +34,23 @@ class GamePlayList extends Component {
 		productStatus();
 		// Initiate Pusher Reservation Listener 
 		reserveStatus(navigator);
-		// Initiate Checkin Reward
-		//getCheckinReward();
+		// Play Background Music
+		this._startBackground();
+	}
+	componentWillUnmount(){
+		this._stopBackground(); 
+	}
+	componentDidUpdate(){
+		const { sound } = this.props;
+		if(sound === false) this._stopBackground();
+		if(sound === true) this._startBackground();
+	}
+	_startBackground(){
+		const { playBackgroundMusic } = this.props;
+		this.background = playBackgroundMusic();
+	}
+	_stopBackground(){
+		if(this.background) this.background.stop(()=>this.background.release());
 	}
 	render(){
 		const { navigator } = this.props;
@@ -63,14 +80,21 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		sound : state.preference.preference.sound
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		loadGameList,
 		networkChecking,
 		productStatus,
 		reserveStatus,
-		getCheckinReward
+		getCheckinReward,
+		playBackgroundMusic
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(GamePlayList);
+export default connect(mapStateToProps,mapDispatchToProps)(GamePlayList);
