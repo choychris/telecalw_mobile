@@ -34,7 +34,7 @@ class ProductImage extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		top : Dimensions.get('window').height * 0.11,
+		top : Dimensions.get('window').height * 0.1,
 		position : 'absolute'
 	},
 	image : {

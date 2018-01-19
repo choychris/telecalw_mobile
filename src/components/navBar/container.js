@@ -8,6 +8,7 @@ import Location from '../../containers/game/gamePlayList/location/name';
 import Back from './back';
 import Viewers from './viewers';
 import Timer from './timer';
+const DeviceInfo = require('react-native-device-info');
 
 class NavBar extends Component {
 	shouldComponentUpdate(){
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		flexDirection : 'row',
 		paddingHorizontal : 10,
-		paddingTop : 8,
+		paddingTop : (DeviceInfo.getModel() === 'iPhone X') ? 35 : 8,
 		paddingBottom : 5
 	}
 });
