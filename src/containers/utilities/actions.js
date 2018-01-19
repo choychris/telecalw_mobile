@@ -77,3 +77,20 @@ export function message(action,navigator,data,time){
 	}
 	(time) ? setTimeout(()=>callback(),time) : callback();
 }
+
+export function insufficientFundMessage(navigator){
+	navigator.showLightBox({
+		screen : 'app.InsufficientFund',
+		animationType : 'slide-up',
+		navigatorStyle: {
+			navBarHidden: true
+		},
+		passProps : { navigator : navigator },
+		style: {
+			backgroundBlur: "dark",
+			backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+			tapBackgroundToDismiss: true,
+			flex : 1
+		}
+	});
+}

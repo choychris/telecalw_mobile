@@ -3,7 +3,7 @@ import { getWinResult } from '../../common/api/request/play';
 import { getDeliveryQuote , postDelivery , getDelivery } from '../../common/api/request/delivery';
 import { postIssue } from '../../common/api/request/issue';
 import { updateUser } from '../../common/api/request/user';
-import { loading , message } from '../utilities/actions';
+import { loading , message , insufficientFundMessage } from '../utilities/actions';
 import { languageSetting , preferenceSetting } from '../../utils/language';
 const Sound = require('react-native-sound');
 import { trackEvent } from '../../utils/analytic';
@@ -187,14 +187,7 @@ export function confirmDelivery(navigator,nextState){
 					console.warn(JSON.stringify(err));
 				});
 		} else {
-			message(
-				'show',
-				navigator,
-				{
-					title : 'sorry',
-					message : 'insufficientFund'
-				}
-			)
+			insufficientFundMessage(navigator);
 		}
 	}
 }

@@ -14,6 +14,13 @@ class PlayButton extends Component {
 		const { loading , disable } = this.state;
 		return nextState.loading !== loading || nextState.disable !== disable;	
 	}
+	_loading(status){
+		if(status === true){
+			this.setState({ loading : true , disable : true });
+		} else if (status === false){
+			this.setState({ loading : false , disable : false });
+		}
+	}
 	render(){
 		const { loading , disable } = this.state;
 		const { navigator , initGamePlay } = this.props;
@@ -35,8 +42,7 @@ class PlayButton extends Component {
 				borderColor={'#31845C'}
 				icon={{ name : 'play' , size : 18 , color : 'white' }}
 				onPressFunction={()=>{
-					this.setState({ loading : true , disable : true });
-					initGamePlay(navigator);
+					initGamePlay(navigator,(status)=>this._loading(status));
 				}}
 			/>
 		)
