@@ -87,7 +87,8 @@ const en = {
 	checkinReward : 'A Check In A Day keeps\nTeleclaw to Play',
 	rewardAmount : 'You are rewarded',
 	sound : 'Sound Effect',
-	vibration : 'Vibration'
+	vibration : 'Vibration',
+	earnCoins : 'You can earn more coins to play'
 }
 
 export default en;

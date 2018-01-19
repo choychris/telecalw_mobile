@@ -1,5 +1,5 @@
 import { NetInfo , Dimensions , Platform } from 'react-native';
-import { errorMessage , loading } from '../utilities/actions';
+import { errorMessage , loading, insufficientFundMessage } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
@@ -368,8 +368,11 @@ export function filterCamera(cameras,mode){
 	return targetCamera;
 }
 
-export function initGamePlay(navigator){
+export function initGamePlay(navigator,loadState){
 	return (dispatch,getState)=>{
+
+		// Step 0 : Loading State
+		loadState(true);
 
 		// Step 1 : Check Wallet Balance
 		const { balance } = getState()['auth']['wallet'];
@@ -429,7 +432,7 @@ export function initGamePlay(navigator){
 								value : result.reservation
 							});
 						} else if(result === 'insufficient_balance'){
-
+							insufficientFundMessage(navigator);
 						}
 					} else {
 						loading('hide',navigator);
@@ -444,7 +447,10 @@ export function initGamePlay(navigator){
 					}
 				});
 		} else {
-			// Insufficient Fund
+			// Reverse Loading State
+			loadState(false);
+			// Insufficient Fund PopUp
+			insufficientFundMessage(navigator);
 		}
 
 	}

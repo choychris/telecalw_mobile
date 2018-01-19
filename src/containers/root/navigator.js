@@ -16,6 +16,7 @@ import Reward from '../transaction/reward/layout';
 import CheckinReward from '../transaction/reward/checkin/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
+import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 
 // register all screens of the app (including internal ones)
  export function registerScreens(store , Provider) {
@@ -36,4 +37,5 @@ import Setting from '../miscellaneous/setting/layout';
 	 Navigation.registerComponent('app.Tracking', () => Tracking,store,Provider);
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
 	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
+	 Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest,store,Provider);
 }
