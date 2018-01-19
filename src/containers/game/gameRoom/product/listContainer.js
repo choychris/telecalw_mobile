@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const boardImg = require('../../../../../assets/utilities/board.png');
 import ProductImage from './itemContainer';
+const DeviceInfo = require('react-native-device-info');
 
 class ProductDetailContainer extends Component {
 	componentWillMount(){
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		marginVertical : 5,
 		backgroundColor : 'transparent',
-		paddingVertical : 10
+		paddingVertical : (DeviceInfo.getModel() === 'iPhone X') ? 30 : 10
 	},
 	btnText : {
 		marginHorizontal : 5,
