@@ -1,13 +1,22 @@
 import React, { PropTypes, Component } from 'react';
-import { View , StatusBar , StyleSheet , Platform } from 'react-native';
+import { View , StatusBar , StyleSheet , Platform , Image } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginFacebook , accessTokenChecking } from './actions';
 import { languageChecking } from '../../utils/language';
 import BackgroundImage from '../../components/utilities/backgroundImage';
+import StarsImage from '../../components/utilities/starsImage';
 import Button from '../../components/utilities/buttons';
+const logos = {
+	en : require('../../../assets/logo/logo_en.png'),
+	zhHant : require('../../../assets/logo/logo_zhHant.png')
+};
 
 class Login extends Component {
+	shouldComponentUpdate(nextProps){
+		const { language } = this.props;
+		return language.locale !== nextProps.language.locale;
+	}
 	componentWillMount(){
 		const { languageChecking ,accessTokenChecking , navigator } = this.props;
 		// Acess Token Checking
@@ -15,15 +24,27 @@ class Login extends Component {
 		// User Language Checking
 		languageChecking();	
 	}
+	_renderLogo(locale){
+		return (
+			<Image
+				source={logos[locale]}
+				style={styles.logo}
+				resizeMode={'contain'}
+			/>
+		)
+	}
 	render() {
-		const { loginFacebook , navigator } = this.props;
+		const { loginFacebook , navigator , language } = this.props;
+		const { locale , string } = language;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
-				<BackgroundImage type={'auth'}/>
+				<BackgroundImage type={'random'}/>
+				<StarsImage/>
+				{this._renderLogo(locale)}
 				<View style={styles.bottom}>
 					<Button 
-						text={'facebookLogin'}
+						text={string['facebookLogin']}
 						textStyle={{ 
 							color : 'white' , 
 							fontSize : 25 , 
@@ -45,7 +66,8 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		flex : 1
+		flex : 1,
+		alignItems : 'center'
 	},
 	bottom : {
 		position : 'absolute',
@@ -53,9 +75,20 @@ const styles = StyleSheet.create({
 		left : 0,
 		width : '100%',
 		paddingVertical : 50
+	},
+	logo : {
+		position : 'absolute',
+		top : 0,
+		width : '86%',
+		height : '30%'
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		language : state.preference.language
+	}
+}
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
@@ -65,4 +98,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
