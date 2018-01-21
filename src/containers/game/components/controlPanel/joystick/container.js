@@ -9,13 +9,14 @@ class JoyStick extends Component {
 		return false
 	}
 	render(){
-		const { string , ws } = this.props;
+		const { string , ws , did } = this.props;
 		return (
 			<View style={styles.container}>
 				<Direction 
 					action={'MoveUp'} 
 					icon={'caret-up'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -32,6 +33,7 @@ class JoyStick extends Component {
 					action={'MoveDown'} 
 					icon={'caret-down'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -48,6 +50,7 @@ class JoyStick extends Component {
 					action={'MoveLeft'} 
 					icon={'caret-left'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
@@ -64,6 +67,7 @@ class JoyStick extends Component {
 					action={'MoveRight'} 
 					icon={'caret-right'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						position : 'absolute',

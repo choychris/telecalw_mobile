@@ -18,7 +18,8 @@ class Direction extends Component {
 			icon,
 			action,
 			btnStyle,
-			ws
+			ws,
+			did
 		} = this.props;
 		return (
 			<Button
@@ -34,7 +35,7 @@ class Direction extends Component {
 					websocketControl({ 
 						direction : action ,   
 						value : true ,
-						did : "bnyXLPJWNpoumbKUYKA78V"
+						did : did
 					},ws);
 					lastMachineMove(action);
 				}}
@@ -42,7 +43,7 @@ class Direction extends Component {
 					websocketControl({ 
 						direction : action ,   
 						value : false ,
-						did : "bnyXLPJWNpoumbKUYKA78V"
+						did : did
 					},ws);
 					lastMachineMove(null);
 				}}

@@ -57,13 +57,15 @@ class PlayPanel extends Component {
 		this.ws.close();
 	}
 	render(){
+		const { config } = this.props;
+		const { did } = config.gizwits.control;
 		return(
 			<View style={styles.container}>
 				<View style={styles.leftContainer}>
-					<JoyStick ws={this.ws}/>
+					<JoyStick ws={this.ws} did={did}/>
 				</View>
 				<View style={styles.rightContainer}>
-					<CatchButton ws={this.ws}/>
+					<CatchButton ws={this.ws} did={did}/>
 					<SwitchCameraButton/>	
 				</View>
 			</View>
