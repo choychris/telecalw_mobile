@@ -7,10 +7,8 @@ import { languageChecking } from '../../utils/language';
 import BackgroundImage from '../../components/utilities/backgroundImage';
 import StarsImage from '../../components/utilities/starsImage';
 import Button from '../../components/utilities/buttons';
-const logos = {
-	en : require('../../../assets/logo/logo_en.png'),
-	zhHant : require('../../../assets/logo/logo_zhHant.png')
-};
+import Logo from './components/logo';
+import Planet from './components/planet';
 
 class Login extends Component {
 	shouldComponentUpdate(nextProps){
@@ -24,15 +22,6 @@ class Login extends Component {
 		// User Language Checking
 		languageChecking();	
 	}
-	_renderLogo(locale){
-		return (
-			<Image
-				source={logos[locale]}
-				style={styles.logo}
-				resizeMode={'contain'}
-			/>
-		)
-	}
 	render() {
 		const { loginFacebook , navigator , language } = this.props;
 		const { locale , string } = language;
@@ -41,7 +30,8 @@ class Login extends Component {
 				<StatusBar hidden={true}/>
 				<BackgroundImage type={'random'}/>
 				<StarsImage/>
-				{this._renderLogo(locale)}
+				<Logo locale={locale}/>
+				<Planet/>
 				<View style={styles.bottom}>
 					<Button 
 						text={string['facebookLogin']}
@@ -75,12 +65,6 @@ const styles = StyleSheet.create({
 		left : 0,
 		width : '100%',
 		paddingVertical : 50
-	},
-	logo : {
-		position : 'absolute',
-		top : 0,
-		width : '86%',
-		height : '30%'
 	}
 });
 
