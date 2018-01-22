@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SwitchCameraButton from './swicthCameraButton';
@@ -25,7 +25,7 @@ class PlayPanel extends Component {
 			},
 			style: {
 				backgroundBlur: "x-light",
-				backgroundColor : 'rgba(52, 52, 52, 0.2)',
+				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false
 			},
 			passProps : {

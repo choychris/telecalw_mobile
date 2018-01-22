@@ -16,7 +16,7 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
   let header = null ;
   if(data !== null || data !== undefined){
     method = 'POST';
-    header = new Headers("Content-Type", "text/plain");
+    header = { "Content-Type" : "text/plain" };
     data = JSON.stringify(data);
   };
   let init = {

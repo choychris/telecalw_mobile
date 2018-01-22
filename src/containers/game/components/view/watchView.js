@@ -21,8 +21,7 @@ class WatchView extends Component {
 		return (
 			<Video 
 				style={styles.video}
-				source={{uri: 'http://live.teleclaw.win/teleclaw/102.m3u8'}}
-				rate={1.0}                              
+				source={{uri: frontCamera.alibabaSetting.m3u8}}
 				volume={0}                            
 				muted={true}                           
 				paused={false}                          

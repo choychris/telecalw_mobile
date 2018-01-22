@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , Image , Platform } from 'react-native';
+import { View , Text , StyleSheet , Image , Platform , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
 import Button from '../../../../components/utilities/buttons';
 import Timer from './timer';
 import { initGamePlay , resetTimer , loadGamePlay , closeAllWebrtc , endGamePlay } from '../../actions';
+const { height , width } = Dimensions.get('window');
 
 class GameResult extends Component {
 	constructor(props){
@@ -98,8 +99,14 @@ class GameResult extends Component {
 
 const styles = StyleSheet.create({
 	container : {
+		backgroundColor : 'transparent',
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+		...Platform.select({
+			android : {
+				height : height
+			}
+		})
 	},
 	innerContainer : {
 		flexDirection : 'row',

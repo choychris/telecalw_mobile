@@ -486,7 +486,7 @@ export function loadGamePlay(navigator){
 			},
 			style: {
 				backgroundBlur: "dark",
-				backgroundColor : 'rgba(52, 52, 52, 0.1)',
+				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false
 			}
 		});

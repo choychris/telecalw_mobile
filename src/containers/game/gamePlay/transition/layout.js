@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Easing , Animated, View , Text , StyleSheet , Image , ActivityIndicator , Dimensions } from 'react-native';
+import { Easing , Animated, View , Text , StyleSheet , Image , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { resetTimer } from '../../actions';
@@ -52,7 +52,7 @@ class GameCountDown extends Component {
 	_slideUpAnimation(){
 		Animated.spring(this._position,{
 			toValue : { 
-				x : 0  , 
+				x : (Platform.OS === 'ios') ? 0 : width  , 
 				y : -height - 100
 			}
 		}).start();
@@ -60,8 +60,8 @@ class GameCountDown extends Component {
 	_slideDownAnimation(){
 		Animated.spring(this._position,{
 			toValue : { 
-				x : -width/2.2 , 
-				y : -height/1.6
+				x : (Platform.OS === 'ios') ? -width/2.2 : width*0.1 , 
+				y : (Platform.OS === 'ios') ? -height/1.6 : -height*0.1
 			}
 		}).start();
 	}
@@ -121,11 +121,18 @@ class GameCountDown extends Component {
 
 const styles = StyleSheet.create({
 	container : {
+		backgroundColor : 'transparent',
 		alignSelf : 'stretch',
 		alignItems : 'center',
-		justifyContent : 'center'	
+		justifyContent : 'center'	,
+		...Platform.select({
+			android : {
+				height : height
+			}
+		})
 	},
 	trafficLighContainer : {
+		backgroundColor : 'transparent',
 		position : 'absolute' , 
 		alignItems : 'center' , 
 		justifyContent : 'center'
