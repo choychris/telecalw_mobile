@@ -48,7 +48,7 @@ class GameContainer extends Component {
 			<Image 
 				source={tubeImage}
 				style={styles.image}
-				resizeMode={'stretch'}	
+				resizeMode={'contain'}	
 			/>
 		)
 	}
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
 	},
 	image : {
 		position : 'absolute',
-		width	: Dimensions.get('window').width + 1,
-		height : Dimensions.get('window').height*0.85
+		width	: Dimensions.get('window').width *1.2,
+		height : Dimensions.get('window').height*0.89
 	},
 	viewContainer : {
 		flex : 1 , 

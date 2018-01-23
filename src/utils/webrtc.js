@@ -1,4 +1,5 @@
 import WebRTC from 'react-native-webrtc';
+import { Platform } from 'react-native';
 const {
   RTCPeerConnection,
   RTCIceCandidate,
@@ -39,9 +40,9 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
     }
     console.log(scope, res)
 		if(scope === 'onicecandidate'){
-			if(res.status && res.status === 404 && restartCount <= 5){
-				console.warn('Auto Restart Mechinsm')
-				restart();
+			if(res.status && res.status === 404 && restartCount <= 3){
+				//console.warn('Auto Restart Mechinsm')
+				//restart();
 			}
 		}
   })
@@ -82,7 +83,7 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 			// Garunteed it is connected to initiate game play
 			if(pc.iceConnectionState === 'checking'){
 				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected' && times < 3){
+					if(pc.iceConnectionState !== 'connected' && times < 2){
 						console.warn('Trigger Restart Mechanism');
 						closeWebrtc(pc,rtsp);
 						return dispatch(initiatewebRTC(mode,rtsp,times+1));

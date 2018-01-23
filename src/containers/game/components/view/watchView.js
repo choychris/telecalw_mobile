@@ -45,16 +45,17 @@ class WatchView extends Component {
 		const frontCameraExist = (machine.cameras && machine.cameras.length > 0 && frontCamera) ? true : false;
 		return (
 			<View style={styles.container}>
-				{(frontCameraExist === true) ? this._renderDisplay(frontCamera) : null}
-				{(frontCameraExist === true && onBuffer === true) ? this._renderLoading() : null }
 				<View style={styles.infoBoard}>
 					<Text style={styles.text}>{machine.name}</Text>
 				</View>
+				{(frontCameraExist === true) ? this._renderDisplay(frontCamera) : null}
+				{(frontCameraExist === true && onBuffer === true) ? this._renderLoading() : null }
 			</View>
 		);
 	}
 }
 
+		//top : Dimensions.get('window').height * 0.13,
 const styles = StyleSheet.create({
 	container : {
 		flex : 1 , 
@@ -67,10 +68,10 @@ const styles = StyleSheet.create({
 	},
 	video : {
 		backgroundColor : 'transparent',
-		top : Dimensions.get('window').height * 0.09,
 		position : 'absolute',
+		bottom : 10,
 		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.65
+		height : Dimensions.get('window').height * 0.64
 	},
 	infoBoard : {
 		position : 'absolute',
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
 		borderTopWidth : 5,
 		borderRightWidth : 3,
 		borderLeftWidth : 3,
-		top : Dimensions.get('window').height * 0.01
+		top : (Platform.OS === 'ios') ? 0 : -5
 	},
 	text : {
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',

@@ -14,6 +14,7 @@ import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
 import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
+import { checkInRewardChecking } from '../auth/actions';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -46,6 +47,8 @@ async function loadGameListFlow(dispatch,getState,navigator){
 		}
 		// Step 3 : Hide Loading Lightbox
 		loading('hide',navigator);
+		// Step 4 : Initial Check In Reward
+		dispatch(checkInRewardChecking(navigator));
 	}
 	catch(e){
 		loading('hide',navigator);

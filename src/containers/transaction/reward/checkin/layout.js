@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
-import { Easing , Animated , View , Text , StyleSheet , Image, Platform } from 'react-native';
+import { Easing , Animated , View , Text , StyleSheet , Image, Platform , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
 const coinsImg = require('../../../../../assets/utilities/coins/telecoins_single.png');
 import { playUISound } from '../../../../utils/sound';
 import { vibrate } from '../../../../utils/vibrate';
+const { height , width } = Dimensions.get('window');
 
 class CheckinReward extends Component {
 	constructor(props){
@@ -53,7 +54,12 @@ const styles = StyleSheet.create({
 	container : {
 		backgroundColor : 'transparent',
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+		...Platform.select({
+			android : {
+				height : height * 0.6
+			}
+		})
 	},
 	title : {
 		fontSize : 30,

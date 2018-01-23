@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
 		justifyContent : 'center',
 		top : Dimensions.get('window').height * 0.12,
 		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.65
+		height : Dimensions.get('window').height * 0.64
 	},
 	video : {
 		backgroundColor : 'transparent',
-		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.65
+		width	: '100%',
+		height : '100%'
 	}
 });
 

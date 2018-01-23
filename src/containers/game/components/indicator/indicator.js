@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 	container : {
 		alignItems : 'center',
 		justifyContent : 'center',
-		top : -Dimensions.get('window').height * 0.35,
+		top : -Dimensions.get('window').height * 0.34,
 		right : Dimensions.get('window').width * 0.09
 	},
 	image : {
