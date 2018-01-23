@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SwitchCameraButton from './swicthCameraButton';
@@ -25,7 +25,7 @@ class PlayPanel extends Component {
 			},
 			style: {
 				backgroundBlur: "x-light",
-				backgroundColor : 'rgba(52, 52, 52, 0.2)',
+				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false
 			},
 			passProps : {
@@ -57,13 +57,15 @@ class PlayPanel extends Component {
 		this.ws.close();
 	}
 	render(){
+		const { config } = this.props;
+		const { did } = config.gizwits.control;
 		return(
 			<View style={styles.container}>
 				<View style={styles.leftContainer}>
-					<JoyStick ws={this.ws}/>
+					<JoyStick ws={this.ws} did={did}/>
 				</View>
 				<View style={styles.rightContainer}>
-					<CatchButton ws={this.ws}/>
+					<CatchButton ws={this.ws} did={did}/>
 					<SwitchCameraButton/>	
 				</View>
 			</View>

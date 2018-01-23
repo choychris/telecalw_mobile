@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions } from 'react-native';
+import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Direction from './direction';
@@ -9,19 +9,20 @@ class JoyStick extends Component {
 		return false
 	}
 	render(){
-		const { string , ws } = this.props;
+		const { string , ws , did } = this.props;
 		return (
 			<View style={styles.container}>
 				<Direction 
 					action={'MoveUp'} 
 					icon={'caret-up'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
 						paddingHorizontal : 10,
 						position : 'absolute',
-						top : -27,
+						top : (Platform.OS === 'ios') ? -27 : 0,
 						borderTopLeftRadius : 10,
 						borderTopRightRadius : 10,
 						borderBottomLeftRadius : 0,
@@ -32,12 +33,13 @@ class JoyStick extends Component {
 					action={'MoveDown'} 
 					icon={'caret-down'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
 						paddingHorizontal : 10,
 						position : 'absolute',
-						bottom : -30,
+						bottom : (Platform.OS === 'ios') ? -30 : 0,
 						borderBottomRightRadius : 10,
 						borderTopLeftRadius : 0,
 						borderTopRightRadius : 0,
@@ -48,12 +50,13 @@ class JoyStick extends Component {
 					action={'MoveLeft'} 
 					icon={'caret-left'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						paddingVertical : 6,
 						paddingHorizontal : 10,
 						position : 'absolute',
-						left : -28,
+						left : (Platform.OS === 'ios') ? -28 : 5,
 						borderBottomRightRadius : 0,
 						borderTopLeftRadius : 10,
 						borderTopRightRadius : 0,
@@ -64,10 +67,11 @@ class JoyStick extends Component {
 					action={'MoveRight'} 
 					icon={'caret-right'}
 					ws={ws}
+					did={did}
 					btnStyle={{
 						backgroundColor : '#4C4C4C',
 						position : 'absolute',
-						right : -28,
+						right : (Platform.OS === 'ios') ? -28 : 5,
 						paddingVertical : 6,
 						paddingHorizontal : 10,
 						borderBottomRightRadius : 10,
@@ -89,7 +93,13 @@ const styles = StyleSheet.create({
 		flexDirection : 'row',
 		backgroundColor : 'transparent',
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+		...Platform.select({
+			android: {
+				height : 100,
+				width : 100
+			}   
+		})
 	},
 	center : {
 		backgroundColor : '#4C4C4C',

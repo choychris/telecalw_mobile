@@ -1,13 +1,21 @@
 import React, { PropTypes, Component } from 'react';
-import { View , StatusBar , StyleSheet , Platform } from 'react-native';
+import { View , StatusBar , StyleSheet , Platform , Image } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginFacebook , accessTokenChecking } from './actions';
 import { languageChecking } from '../../utils/language';
 import BackgroundImage from '../../components/utilities/backgroundImage';
+import StarsImage from '../../components/utilities/starsImage';
 import Button from '../../components/utilities/buttons';
+import Logo from './components/logo';
+import Planet from './components/planet';
+import Characters from './components/characters';
 
 class Login extends Component {
+	shouldComponentUpdate(nextProps){
+		const { language } = this.props;
+		return language.locale !== nextProps.language.locale;
+	}
 	componentWillMount(){
 		const { languageChecking ,accessTokenChecking , navigator } = this.props;
 		// Acess Token Checking
@@ -16,14 +24,21 @@ class Login extends Component {
 		languageChecking();	
 	}
 	render() {
-		const { loginFacebook , navigator } = this.props;
+		const { loginFacebook , navigator , language } = this.props;
+		const { locale , string } = language;
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
-				<BackgroundImage type={'auth'}/>
+				<BackgroundImage type={'random'}/>
+				<StarsImage/>
+				<Logo locale={locale}/>
+				<View style={styles.innerContainer}>
+					<Characters/>
+					<Planet/>
+				</View>
 				<View style={styles.bottom}>
 					<Button 
-						text={'facebookLogin'}
+						text={string['facebookLogin']}
 						textStyle={{ 
 							color : 'white' , 
 							fontSize : 25 , 
@@ -45,7 +60,13 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
 	container : {
-		flex : 1
+		flex : 1,
+		alignItems : 'center'
+	},
+	innerContainer : {
+		position : 'absolute',
+		alignItems : 'center',
+		justifyContent : 'center',
 	},
 	bottom : {
 		position : 'absolute',
@@ -56,6 +77,11 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		language : state.preference.language
+	}
+}
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
@@ -65,4 +91,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

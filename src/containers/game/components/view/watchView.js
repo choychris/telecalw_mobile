@@ -22,7 +22,6 @@ class WatchView extends Component {
 			<Video 
 				style={styles.video}
 				source={{uri: frontCamera.alibabaSetting.m3u8}}
-				rate={1.0}                              
 				volume={0}                            
 				muted={true}                           
 				paused={false}                          
@@ -32,7 +31,10 @@ class WatchView extends Component {
 				playWhenInactive={false}                
 				progressUpdateInterval={250.0}
 				onLoad={()=>this.setState({ onBuffer : false })}
-				onError={()=>this.setState({ onBuffer : true })}
+				onError={(e)=>{
+					console.warn(JSON.stringify(e))
+					this.setState({ onBuffer : true })
+				}}
 			/>
 		)
 	}

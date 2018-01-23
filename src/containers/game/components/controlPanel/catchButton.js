@@ -25,7 +25,8 @@ class CatchButton extends Component {
 		const { 
 			string , 
 			lastMachineMove,
-			ws
+			ws,
+			did
 		} = this.props;
 		const { disable } = this.state;
 		const backgroundColor = (disable === true) ? '#D8D8D8' : '#D10B9D';
@@ -53,7 +54,7 @@ class CatchButton extends Component {
 					websocketControl({
 						direction : 'CatchGift',
 						value : true,
-						did : "bnyXLPJWNpoumbKUYKA78V"
+						did : did
 					},ws);
 					lastMachineMove('CatchGift');
 				}}
