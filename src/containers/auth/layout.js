@@ -9,6 +9,7 @@ import StarsImage from '../../components/utilities/starsImage';
 import Button from '../../components/utilities/buttons';
 import Logo from './components/logo';
 import Planet from './components/planet';
+import Characters from './components/characters';
 
 class Login extends Component {
 	shouldComponentUpdate(nextProps){
@@ -31,7 +32,10 @@ class Login extends Component {
 				<BackgroundImage type={'random'}/>
 				<StarsImage/>
 				<Logo locale={locale}/>
-				<Planet/>
+				<View style={styles.innerContainer}>
+					<Characters/>
+					<Planet/>
+				</View>
 				<View style={styles.bottom}>
 					<Button 
 						text={string['facebookLogin']}
@@ -58,6 +62,11 @@ const styles = StyleSheet.create({
 	container : {
 		flex : 1,
 		alignItems : 'center'
+	},
+	innerContainer : {
+		position : 'absolute',
+		alignItems : 'center',
+		justifyContent : 'center',
 	},
 	bottom : {
 		position : 'absolute',
