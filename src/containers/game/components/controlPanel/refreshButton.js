@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 import { restartWebrtc } from '../../../../utils/webrtc';
+const { height , width } = Dimensions.get('window');
 
 class RefreshButton extends Component {
 	shouldComponentUpdate(){
@@ -19,8 +20,8 @@ class RefreshButton extends Component {
 					paddingVertical : 5,
 					paddingHorizontal : 5,
 					position : 'absolute',
-					top : Dimensions.get('window').height * 0.14,
-					left : 38
+					bottom : height * 0.57 ,
+					left: width * 0.1
 				}}
 				borderColor={'grey'}
 				icon={{ name : 'refresh' , size : 20 , color : 'black' }}

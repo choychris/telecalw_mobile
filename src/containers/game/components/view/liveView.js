@@ -17,6 +17,7 @@ import { filterCamera } from '../../actions';
 import Request from '../../../../utils/fetch';
 import { errorMessage } from '../../../utilities/actions';
 import { initiatewebRTC , closeWebrtc } from '../../../../utils/webrtc';
+const { height , width } = Dimensions.get('window');
 
 class LiveView extends Component {
   constructor(props){
@@ -27,7 +28,7 @@ class LiveView extends Component {
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
-		return (nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
+		return (nextProps.webrtcUrl[mode] !== undefined && nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
 	}
   componentDidMount(){
 		const { 
@@ -57,7 +58,7 @@ class LiveView extends Component {
 	}
   render() {
 		const { webrtcUrl , mode , cameraMode } = this.props;
-		const opacity = (mode !== cameraMode) ? { opacity : 0 } : {} ;
+		const opacity = (mode !== cameraMode) ? { bottom : height } : { bottom : -2} ;
 		return (
 			<View style={[opacity,styles.container]}>
 				{(webrtcUrl[mode]) ? <RTCView style={styles.video} streamURL={webrtcUrl[mode]['stream']}/>	: this._renderLoading()}
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		alignItems : 'center',
 		justifyContent : 'center',
-		top : Dimensions.get('window').height * 0.12,
 		width	: Dimensions.get('window').width * 0.82,
 		height : Dimensions.get('window').height * 0.64
 	},

@@ -57,9 +57,9 @@ class GameContainer extends Component {
 		return (mode === 'room') ? 
 			<WatchView mode={'front'}/> : 
 			<View style={styles.viewContainer}>
-				{(timer !== null) ? <Indicator/> : null}
 				<LiveView mode={'front'} navigator={navigator}/>
 				<LiveView mode={'top'} navigator={navigator}/>
+				{(timer !== null) ? <Indicator/> : null}
 				<RefreshButton/>
 			</View>;
 	}
@@ -71,7 +71,9 @@ class GameContainer extends Component {
 				slideUpAnimation={()=>this._slideUpAnimation()}
 				slideDownAnimation={()=>this._slideDownAnimation()}
 			/>
-		) : ((timer !== null) ? <PlayPanel navigator={navigator}/> : null)
+		) : ((timer !== null) ? 
+			<PlayPanel navigator={navigator}/> : 
+			<View style={styles.buffer}></View>)
 	}
 	render(){
 		const { navigator , mode } = this.props;
@@ -98,10 +100,14 @@ const styles = StyleSheet.create({
 		height : Dimensions.get('window').height*0.89
 	},
 	viewContainer : {
-		flex : 1 , 
+		flex : 1,
+		flexDirection : 'column',
 		alignSelf : 'stretch' , 
 		alignItems : 'center' , 
-		justifyContent : 'center'
+		justifyContent : 'flex-start'
+	},
+	buffer : {
+		height : Dimensions.get('window').height * 0.18
 	}
 });
 
