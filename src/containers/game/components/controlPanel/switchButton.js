@@ -4,13 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
+import { switchMachine } from '../../actions';
 
 class SwitchButton extends Component {
 	shouldComponentUpdate(){
 		return false;
 	}
 	render(){
-		return (
+		const { switchMachine , navigator , machines } = this.props;
+		return (machines.length > 1) ? (
 			<Button
 				text={'switch'}
 				textStyle={{
@@ -26,10 +28,22 @@ class SwitchButton extends Component {
 				}}
 				borderColor={'#726E1D'}
 				icon={{ name : 'exchange' , size : 18 , color : '#3F3F3F' }}
-				onPressFunction={()=>{}}
+				onPressFunction={()=>switchMachine(navigator,true)}
 			/>
-		)
+		) : null
 	}
 }
 
-export default connect(null,null)(SwitchButton)
+function mapStateToProps(state) {
+	return {
+		machines : state.game.machines,
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ 
+		switchMachine
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(SwitchButton)

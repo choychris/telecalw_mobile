@@ -12,7 +12,8 @@ class WatchView extends Component {
 	}
 	shouldComponentUpdate(nextProps,nextState){
 		const { onBuffer } = this.state;
-		return nextState.onBuffer !== onBuffer;
+		const { machine } = this.props;
+		return nextState.onBuffer !== onBuffer || machine.id !== nextProps.machine.id;
 	}
 	_renderLoading(){
 		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>
