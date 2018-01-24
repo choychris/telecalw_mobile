@@ -1,4 +1,5 @@
 import WebRTC from 'react-native-webrtc';
+import { Platform } from 'react-native';
 const {
   RTCPeerConnection,
   RTCIceCandidate,
@@ -30,20 +31,20 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	//let url = `http://default-environment.25k6y4yfum.us-west-2.elasticbeanstalk.com${serverMethod}`
 	//let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
 	let url = `${webrtcUrl()}${serverMethod}`;
-  console.log(url);
+  //console.log(url);
   fetch(url, init)
   .then(res => {
     if(res.status === 200 && onSuccess){
       console.log(res._bodyText);
       onSuccess(JSON.parse(res._bodyInit), pc);
     }
-    console.log(scope, res)
-		if(scope === 'onicecandidate'){
-			if(res.status && res.status === 404 && restartCount <= 5){
-				console.warn('Auto Restart Mechinsm')
-				restart();
-			}
-		}
+    //console.log(scope, res)
+		//if(scope === 'onicecandidate'){
+			//if(res.status && res.status === 404 && restartCount <= 3){
+				////console.warn('Auto Restart Mechinsm')
+				////restart();
+			//}
+		//}
   })
   .catch(err => {
 		console.log(scope, err)
@@ -54,6 +55,7 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 	return(dispatch,getState)=>{
 		const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
+		let streamObj = {};
 
 		pc.onicecandidate = (evt) => {
 			if(evt.candidate){
@@ -70,24 +72,28 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 			}
 		}
 		
-		pc.onaddstream = (evt)=>dispatch({  
-			type : 'STORE_WEBRTC_URL',
-			keys : [mode],
-			value :	{ stream : evt.stream.toURL() , pc : pc , rtsp : rtsp }
-		});
+		pc.onaddstream = (evt)=>{
+			streamObj = { stream : evt.stream.toURL() , pc : pc , rtsp : rtsp };
+		}
 
 		pc.oniceconnectionstatechange = function(evt) {  
-			//console.warn("oniceconnectionstatechange  state: " + pc.iceConnectionState);
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
 			if(pc.iceConnectionState === 'checking'){
 				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected' && times < 3){
-						console.warn('Trigger Restart Mechanism');
+					if(pc.iceConnectionState !== 'connected' && times < 5){
+						//console.warn('Trigger Restart Mechanism');
 						closeWebrtc(pc,rtsp);
 						return dispatch(initiatewebRTC(mode,rtsp,times+1));
 					}
 				},3000)
+			}
+			if(pc.iceConnectionState === 'connected'){
+				dispatch({  
+					type : 'STORE_WEBRTC_URL',
+					keys : [mode],
+					value :	streamObj
+				});
 			}
 		}
 
@@ -125,14 +131,16 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 
 export const closeWebrtc = (pc,rtsp)=>{
 	fetchRequest(`/hangup?peerid=${rtsp}`)
-	pc.close();
+	if(pc && pc !== undefined) pc.close();
 }
 
 export const restartWebrtc = ()=>{
 	return(dispatch,getState)=>{
 		const mode = getState()['game']['play']['cameraMode'];
-		const { pc ,rtsp }= getState()['game']['play']['webrtcUrl'][mode];
-		closeWebrtc(pc,rtsp);
-		dispatch(initiatewebRTC(mode,rtsp,0));
+		if(getState()['game']['play']['webrtcUrl'][mode]){
+			const { pc ,rtsp } = getState()['game']['play']['webrtcUrl'][mode];
+			closeWebrtc(pc,rtsp);
+			dispatch(initiatewebRTC(mode,rtsp,0));
+		}
 	}
 }

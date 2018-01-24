@@ -105,26 +105,15 @@ export function loginFacebook(navigator){
 	}
 }
 
-function dispatchTokenAndNavigate(token,navigator){
+export function checkInRewardChecking(navigator){
 	return (dispatch,getState)=>{
-		//console.log(token);
-		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
-		dispatch(getUserReservation());
-		// Get User Preference
-		userPreference(token['lbToken'],Request)
-			.then((res,err)=>{
-				//console.warn(JSON.stringify(res));
-				//console.warn(JSON.stringify(err));
-				if(!err){
-					dispatch(preferenceSetting(res.preference));
-					dispatch(languageSetting(res.language));
-				} 
-			});
+
+		const token = getState()['auth']['token']['lbToken'];
 		// Get User Check In Reward
 		checkinReward(
 			{
-				userId : token['lbToken']['userId'],
-				token : token['lbToken']['id'],
+				userId : token['userId'],
+				token : token['id'],
 			},
 			Request
 		)
@@ -154,39 +143,59 @@ function dispatchTokenAndNavigate(token,navigator){
 								flex : 1
 							}
 						});
-					},3000);
+					},1000);
 				}
+
+				// Update User Last Login Time
+				updateUser(
+					{
+						userId : token['userId'],
+						token : token['id'],
+						data : {
+							lastLogIn : new Date().getTime()
+						},
+					},
+					Request
+				)
+					.then((res,err)=>{
+						//console.warn(JSON.stringify(err));
+						//console.warn(JSON.stringify(res));
+						dispatch(trackEvent('lastLogin',res));
+					})
+					.catch((err)=>{
+						dispatch(authError(navigator,'error','tryAgain'));
+					});
+			
+
 			}
 		})
 		.catch((err)=>{
 			dispatch(authError(navigator,'error','tryAgain'));
 		});
-		// Update User Last Login Time
-		updateUser(
-			{
-				userId : token['lbToken']['userId'],
-				token : token['lbToken']['id'],
-				data : {
-					lastLogIn : new Date().getTime()
-				},
-			},
-			Request
-		)
+	}
+}
+
+function dispatchTokenAndNavigate(token,navigator){
+	return (dispatch,getState)=>{
+		//console.log(token);
+		dispatch({ type : 'STORE_AUTH_TOKEN' , value : token });
+		dispatch(getUserReservation());
+		// Get User Preference
+		userPreference(token['lbToken'],Request)
 			.then((res,err)=>{
-				//console.warn(JSON.stringify(err));
 				//console.warn(JSON.stringify(res));
-				dispatch(trackEvent('lastLogin',res));
-				navigator.resetTo({
-					screen : 'app.GamePlayList',
-					navigatorStyle : {
-						navBarHidden : true
-					}
-				});
-			})
-			.catch((err)=>{
-				dispatch(authError(navigator,'error','tryAgain'));
+				//console.warn(JSON.stringify(err));
+				if(!err){
+					dispatch(preferenceSetting(res.preference));
+					dispatch(languageSetting(res.language));
+					navigator.resetTo({
+						screen : 'app.GamePlayList',
+						navigatorStyle : {
+							navBarHidden : true
+						}
+					});
+				} 
 			});
-			
 	}
 }
 

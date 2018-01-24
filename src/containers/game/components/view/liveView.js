@@ -17,17 +17,18 @@ import { filterCamera } from '../../actions';
 import Request from '../../../../utils/fetch';
 import { errorMessage } from '../../../utilities/actions';
 import { initiatewebRTC , closeWebrtc } from '../../../../utils/webrtc';
+const { height , width } = Dimensions.get('window');
 
 class LiveView extends Component {
   constructor(props){
     super(props);
 		const { machine , mode } = this.props;
 		const camera = filterCamera(machine.cameras,mode);
-		this.state = { rtsp : camera.rtspDdnsUrl };
+		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl } : { rtsp : null };
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
-		return (nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
+		return (nextProps.webrtcUrl[mode] !== undefined && nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
 	}
   componentDidMount(){
 		const { 
@@ -36,14 +37,16 @@ class LiveView extends Component {
 			machine
 		} = this.props;
 		const { rtsp } = this.state;
-		if(mode === 'top'){
-			setTimeout(()=>{
-				this.pc = initiatewebRTC(mode,rtsp,0);
-			},2000)
-		} else {
-			setTimeout(()=>{
-				this.pc = initiatewebRTC(mode,rtsp,0);
-			},3000)
+		if(rtsp !== null){
+			if(mode === 'top'){
+				setTimeout(()=>{
+					this.pc = initiatewebRTC(mode,rtsp,0);
+				},2000)
+			} else {
+				setTimeout(()=>{
+					this.pc = initiatewebRTC(mode,rtsp,0);
+				},3000)
+			}
 		}
   }
 	componentWillUnmount(){
@@ -55,7 +58,7 @@ class LiveView extends Component {
 	}
   render() {
 		const { webrtcUrl , mode , cameraMode } = this.props;
-		const opacity = (mode !== cameraMode) ? { opacity : 0 } : {} ;
+		const opacity = (mode !== cameraMode) ? { bottom : height } : { bottom : -2} ;
 		return (
 			<View style={[opacity,styles.container]}>
 				{(webrtcUrl[mode]) ? <RTCView style={styles.video} streamURL={webrtcUrl[mode]['stream']}/>	: this._renderLoading()}
@@ -69,14 +72,13 @@ const styles = StyleSheet.create({
 		position : 'absolute',
 		alignItems : 'center',
 		justifyContent : 'center',
-		top : Dimensions.get('window').height * 0.12,
 		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.65
+		height : Dimensions.get('window').height * 0.64
 	},
 	video : {
 		backgroundColor : 'transparent',
-		width	: Dimensions.get('window').width * 0.82,
-		height : Dimensions.get('window').height * 0.65
+		width	: '100%',
+		height : '100%'
 	}
 });
 

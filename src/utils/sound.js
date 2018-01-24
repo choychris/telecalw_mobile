@@ -49,6 +49,12 @@ export function playUISound(sound){
 			case 'happy':
 				soundTrack = 'happy.mp3';
 			break;
+			case 'fail':
+				soundTrack = 'fail.mp3';
+			break;
+			case 'countDown':
+				soundTrack = 'count_down.mp3';
+			break;
 		};
 		if(soundPre === true){
 			soundObj = new Sound(soundTrack,Sound.MAIN_BUNDLE,(error)=>{
