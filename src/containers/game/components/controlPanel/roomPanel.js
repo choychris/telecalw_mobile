@@ -30,7 +30,7 @@ class RoomPanel extends Component {
 					<DetailButton {...this.props}/>
 				</View>
 				<View style={styles.column}>
-					<SwitchButton/>
+					<SwitchButton navigator={navigator}/>
 					<TopUpButton navigator={navigator}/>
 				</View>
 			</View>

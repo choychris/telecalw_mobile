@@ -111,6 +111,29 @@ export function switchTag(action){
 		}
 	}
 }
+export function switchMachine(navigator,load){
+	return (dispatch,getState)=>{
+		const currentMachine = getState()['game']['machine'];
+		const machines = getState()['game']['machines'];
+		const randomIndex = Math.floor(Math.random() * ((machines.length - 1) - 0 + 1)) + 0;
+		if(load === true) loading('show',navigator);
+		if(currentMachine.index === randomIndex){
+			dispatch(switchMachine(navigator,false));
+		} else {
+			let targetMachine = machines[randomIndex];
+			targetMachine.index = randomIndex;
+			dispatch({
+				type : 'SELECT_MACHINE',
+				value : targetMachine
+			});
+			dispatch(machineStatus('leave'));
+			setTimeout(()=>{
+				dispatch(machineStatus('start'));
+				loading('hide',navigator);
+			},1000);
+		}
+	}
+}
 
 export function initiatePusher(userId,dispatch){
 	Pusher.logToConsole = true;
@@ -331,8 +354,12 @@ export function navigateToGameRoom(productId,status,navigator){
 					// Step 5 : Randomly Select a Target Machine
 					const randomIndex = Math.floor(Math.random() * ((res.length - 1) - 0 + 1)) + 0;
 					let targetMachine = res[randomIndex];
-					res.map((machine)=>{
-						if(machine.status === 'open') targetMachine = machine;
+					targetMachine.index = randomIndex;
+					res.map((machine,index)=>{
+						if(machine.status === 'open') {
+							targetMachine = machine;
+							targetMachine.index = index;
+						}
 					});
 					dispatch({
 						type : 'SELECT_MACHINE',
