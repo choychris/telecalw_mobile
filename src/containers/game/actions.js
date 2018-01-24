@@ -375,7 +375,7 @@ export function initGamePlay(navigator,loadState){
 	return (dispatch,getState)=>{
 
 		// Step 0 : Loading State
-		loadState(true);
+		if(loadState) loadState(true);
 
 		// Step 1 : Check Wallet Balance
 		const { balance } = getState()['auth']['wallet'];
@@ -451,7 +451,7 @@ export function initGamePlay(navigator,loadState){
 				});
 		} else {
 			// Reverse Loading State
-			loadState(false);
+			if(loadState) loadState(false);
 			// Insufficient Fund PopUp
 			insufficientFundMessage(navigator);
 		}
@@ -518,8 +518,8 @@ export function closeAllWebrtc(){
 	return(dispatch,getState)=>{
 		const { webrtcUrl } = getState()['game']['play'];
 		const { front , top } = webrtcUrl;		
-		closeWebrtc(front.pc,front.rtsp);
-		closeWebrtc(top.pc,top.rtsp);
+		if(front && front.pc !== undefined) closeWebrtc(front.pc,front.rtsp);
+		if(top && top.pc !== undefined) closeWebrtc(top.pc,top.rtsp);
 		dispatch({ type : 'CLEAR_WEBRTC_URL' });
 	}
 }

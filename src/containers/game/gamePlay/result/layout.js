@@ -7,6 +7,7 @@ import Button from '../../../../components/utilities/buttons';
 import Timer from './timer';
 import { initGamePlay , resetTimer , loadGamePlay , closeAllWebrtc , endGamePlay } from '../../actions';
 const { height , width } = Dimensions.get('window');
+import { playUISound } from '../../../../utils/sound';
 
 class GameResult extends Component {
 	constructor(props){
@@ -17,8 +18,9 @@ class GameResult extends Component {
 		return nextState.btnDisable !== this.state.btnDisable;
 	}
 	componentDidMount(){
-		const { navigator } = this.props;
+		const { navigator , result , playUISound } = this.props;
 		this.gameResultTimer = setTimeout(()=>this._endGame('exit'),5500);
+		(result === 1) ? playUISound('happy') : playUISound('fail');
 		//this.btnDisableTimer = setTimeout(()=>this.setState({ btnDisable : true }),5000);
 	}
 	componentWillUnmount(){
@@ -151,7 +153,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ 
+	return bindActionCreators({
+		playUISound,
 		endGamePlay
 	}, dispatch)
 }

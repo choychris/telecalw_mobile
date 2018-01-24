@@ -11,8 +11,12 @@ class SwitchCameraButton extends Component {
 		return false;
 	}
 	render(){
-		const { string , switchMode } = this.props;
-		return (
+		const { 
+			string , 
+			switchMode ,
+			cameras
+		} = this.props;
+		return (cameras.length > 1) ?  (
 			<Button
 				btnStyle={{
 					backgroundColor : '#D10B9D',
@@ -25,13 +29,14 @@ class SwitchCameraButton extends Component {
 				icon={{ name : 'eye' , size : 20 , color : 'white' }}
 				onPressFunction={()=>switchMode()}
 			/>
-		)
+		) : null;
 	}
 }
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		cameras : state.game.machine.cameras
 	}
 }
 

@@ -10,7 +10,8 @@ const lightBulbs = [
 	{ backgroundColor : '#CF333F'  , borderColor : '#87212D' , bottom : 9 , lightup : 3 },
 	{ backgroundColor : '#FFFF00'  , borderColor : '#A09C00' , bottom : 15 , lightup : 2},
 	{ backgroundColor : '#2ECC71'  , borderColor : '#208448' , bottom : 23 , lightup : 1}
-]
+];
+import { playUISound } from '../../../../utils/sound';
 
 class GameCountDown extends Component {
 	constructor(props){
@@ -72,12 +73,16 @@ class GameCountDown extends Component {
 		const { 
 			navigator , 
 			resetTimer ,
-			config
+			config,
+			playUISound
 		} = this.props;
 		this.countDownFunction = setInterval(()=>{
 			const { time } = this.state;
 			const nextTime = (time) ? time - 1 : 5 ;
 			this.setState({ time : nextTime });
+			if(nextTime === 4){
+				playUISound('countDown');
+			}
 			if(nextTime === 0) {
 				this._slideUpAnimation();
 				resetTimer(config.gizwits.control.InitCatcher[0]);
@@ -159,7 +164,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		resetTimer
+		resetTimer,
+		playUISound
 	}, dispatch)
 }
 

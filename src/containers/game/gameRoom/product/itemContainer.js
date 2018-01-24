@@ -9,13 +9,13 @@ class ProductImage extends Component {
 	}
 	render(){
 		const { image } = this.props;
-		return (
+		return (image) ? (
 			<Image
 				source={{ uri : image  }}
 				style={{ width : 180 , height : 180 , marginVertical : 10 }}
 				resizeMode={'contain'}
 			/>
-		)
+		) : null
 	}
 }
 

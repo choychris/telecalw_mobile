@@ -74,7 +74,7 @@ class ProductDetailContainer extends Component {
 					</TouchableOpacity>
 					<View style={styles.detailContainer}>
 						<Text style={styles.title}>{(name[locale]) ? name[locale] : name['en']}</Text>
-						<Text style={styles.desc}>{description}</Text>
+						{(description.en) ? <Text style={styles.desc}>{(description[locale]) ? description[locale] : description }</Text>: null}
 						<View style={styles.infoContainer}>
 							<Text style={styles.info}>
 								{`${string['width']}:${size.width}${size.unit}`}
@@ -83,7 +83,7 @@ class ProductDetailContainer extends Component {
 								{`${string['height']}:${size.height}${size.unit}`}
 							</Text>
 							<Text style={styles.info}>
-								{`${string['weight']}:${weight.weight}${weight.unit}`}
+								{`${string['weight']}:${weight.value}${weight.unit}`}
 							</Text>
 						</View>
 						{(images && images.product) ? this._renderProductImage(images.product) : null}

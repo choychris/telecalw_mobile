@@ -23,7 +23,7 @@ class LiveView extends Component {
     super(props);
 		const { machine , mode } = this.props;
 		const camera = filterCamera(machine.cameras,mode);
-		this.state = { rtsp : camera.rtspDdnsUrl };
+		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl } : { rtsp : null };
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
@@ -36,14 +36,16 @@ class LiveView extends Component {
 			machine
 		} = this.props;
 		const { rtsp } = this.state;
-		if(mode === 'top'){
-			setTimeout(()=>{
-				this.pc = initiatewebRTC(mode,rtsp,0);
-			},2000)
-		} else {
-			setTimeout(()=>{
-				this.pc = initiatewebRTC(mode,rtsp,0);
-			},3000)
+		if(rtsp !== null){
+			if(mode === 'top'){
+				setTimeout(()=>{
+					this.pc = initiatewebRTC(mode,rtsp,0);
+				},2000)
+			} else {
+				setTimeout(()=>{
+					this.pc = initiatewebRTC(mode,rtsp,0);
+				},3000)
+			}
 		}
   }
 	componentWillUnmount(){
