@@ -82,6 +82,7 @@ const zhHant = {
 	insufficientFund : '金幣不足',
 	checkIn : '簽到獎勵',
 	share : '分享',
+	shareMsg : '立即下載Teleclaw, 一齊遙距夾娃娃! 輸入優惠碼賺金幣 : ',
 	prizeDetail : '奬品詳情',
 	logout : '登出',
 	checkinReward : '天天簽到 天天玩',

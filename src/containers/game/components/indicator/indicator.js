@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const telebuddies = require('../../../../../assets/telebuddies/telebot/telebot_without_eyes.png');
 import Eyes from './eyes';
+const { height , width } = Dimensions.get('window');
 
 class Indicator extends Component{
 	shouldComponentUpdate(){
@@ -27,8 +28,8 @@ const styles = StyleSheet.create({
 	container : {
 		alignItems : 'center',
 		justifyContent : 'center',
-		top : 5,
-		right : 30
+		position : 'absolute',
+		bottom : height * 0.7
 	},
 	image : {
 		position : 'absolute',
