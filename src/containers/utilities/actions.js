@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform , Dimensions } from 'react-native';
 export function errorMessage(action,navigator,data,time){
 	let callback;
 	if(action === 'show'){
@@ -11,6 +11,8 @@ export function errorMessage(action,navigator,data,time){
 				},
 				passProps : data,
 				style: {
+					flex: 1,
+					height : Dimensions.get('window').height,
 					backgroundBlur: "dark",
 					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 					tapBackgroundToDismiss: true
@@ -36,10 +38,11 @@ export function loading (action,navigator){
 				navBarHidden: true
 			},
 			style: {
+				flex : 1,
+				height : Dimensions.get('window').height,
 				backgroundBlur: "dark",
 				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
-				tapBackgroundToDismiss: false,
-				flex : 1
+				tapBackgroundToDismiss: false
 			}
 		});
 	}
@@ -62,6 +65,8 @@ export function message(action,navigator,data,time){
 				},
 				passProps : data,
 				style: {
+					flex : 1,
+					height : Dimensions.get('window').height,
 					backgroundBlur: "dark",
 					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 					tapBackgroundToDismiss: true
@@ -87,6 +92,8 @@ export function insufficientFundMessage(navigator){
 		},
 		passProps : { navigator : navigator },
 		style: {
+			flex : 1,
+			height : Dimensions.get('window').height,
 			backgroundBlur: "dark",
 			backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 			tapBackgroundToDismiss: true,

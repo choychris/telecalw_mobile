@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , TouchableWithoutFeedback , Platform } from 'react-native';
+import { View , Text , StyleSheet , TouchableWithoutFeedback , Platform , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { errorMessage } from '../actions';
@@ -49,7 +49,12 @@ class Error extends Component {
 const styles = StyleSheet.create({
 	container : {
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+		...Platform.select({
+			android: {
+				height : Dimensions.get('window').height
+			}
+		})
 	},
 	title : {
 		textAlign : 'center',

@@ -48,7 +48,7 @@ class Coins extends Component {
 					source={coins.single}
 					resizeMode={'contain'}
 				/>
-				{(wallet.balance) ? this._renderDisplay(wallet.balance) : this._renderLoading()}
+				{(wallet.balance !== undefined) ? this._renderDisplay(wallet.balance) : this._renderLoading()}
 			</TouchableOpacity>
 		)
 	}
