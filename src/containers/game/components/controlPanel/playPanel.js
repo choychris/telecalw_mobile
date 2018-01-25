@@ -24,6 +24,8 @@ class PlayPanel extends Component {
 				navBarHidden: true
 			},
 			style: {
+				flex : 1,
+				height : Dimensions.get('window').height,
 				backgroundBlur: "x-light",
 				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false

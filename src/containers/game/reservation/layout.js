@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , Image , Platform } from 'react-native';
+import { View , Text , StyleSheet , Image , Platform , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Timer from '../gamePlay/result/timer';
@@ -79,8 +79,14 @@ class Reservation extends Component {
 
 const styles = StyleSheet.create({
 	container : {
+		backgroundColor : 'transparent',
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+		...Platform.select({
+			android: {
+				height : Dimensions.get('window').height
+			}
+		})
 	},
 	btnContainer : {
 		alignSelf : 'stretch',

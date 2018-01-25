@@ -241,8 +241,10 @@ export function reserveStatus(navigator){
 					navBarHidden: true
 				},
 				style: {
-					backgroundBlur: "x-light",
-					backgroundColor : 'rgba(52, 52, 52, 0.2)',
+					flex : 1,
+					height : Dimensions.get('window').height,
+					backgroundBlur: "dark",
+					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 					tapBackgroundToDismiss: false
 				},
 				passProps : {

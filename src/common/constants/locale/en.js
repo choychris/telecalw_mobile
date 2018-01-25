@@ -82,6 +82,7 @@ const en = {
 	insufficientFund : 'Insufficient Fund',
 	checkIn : 'Check In Reward',
 	share : 'Share',
+	shareMsg : 'Donwload Teleclaw and Play Claw Machine Remotely. Enter the promo code to redeem more coins : ',
 	prizeDetail : 'Prize Detail',
 	logout : 'Logout',
 	checkinReward : 'A Check In A Day keeps\nTeleclaw to Play',

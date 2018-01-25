@@ -7,7 +7,7 @@ import { shareToFacebook } from '../actions';
 import { getUserInfo } from '../../auth/actions';
 const botShare = {
 	telebot : require('../../../../assets/telebuddies/telebot/telebot_share.png'),
-	teleufo : require('../../../../assets/telebuddies/telebot/ufo.png')
+	teleufo : require('../../../../assets/telebuddies/teleufo/ufo.png')
 };
 const { height , width } = Dimensions.get('window');
 
@@ -61,12 +61,12 @@ class Referral extends Component {
 			</View>
 		)
 	}
-	_renderShareButton(){
+	_renderShareButton(code){
 		const { string , shareToFacebook } = this.props;
 		const shareLinkContent = {
 			contentType: 'link',
 			contentUrl: "https://facebook.com",
-			contentDescription: 'Wow, check out this great site!'
+			contentDescription: `${string['shareMsg']}${code}`
 		};
 		return (
 			<Button
@@ -93,7 +93,7 @@ class Referral extends Component {
 			<View style={styles.container}>
 				<View style={styles.innerContainer}>
 					{(user.referral) ? this._renderReferralCode(user.referral.code) : null}
-					{this._renderShareButton()}
+					{(user.referral) ? this._renderShareButton(user.referral.code) : null}
 				</View>
 				<View style={styles.innerContainer}>
 					<Animated.Image
