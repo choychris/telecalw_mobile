@@ -1,4 +1,4 @@
-package com.mobile_app;
+package teleclaw.live;
 
 import android.app.Application;
 
