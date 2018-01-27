@@ -89,7 +89,8 @@ const zhHant = {
 	rewardAmount : '你已獲得',
 	sound : '音效',
 	vibration : '震動',
-	earnCoins : '您可以透過不同辦法賺取更多金幣'
+	earnCoins : '您可以透過不同辦法賺取更多金幣',
+	noRecord : '沒有紀錄'
 }
 
 export default zhHant;

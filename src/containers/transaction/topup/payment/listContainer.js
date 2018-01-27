@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions } from 'react-native';
+import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { exchangeRate } from '../../actions';
@@ -16,7 +16,7 @@ class RateListContainer extends Component{
 	componentDidMount(){
 		// Fetch Remote Backend API to Get List of Exchage Rate
 		const { exchangeRate , navigator } = this.props;
-		exchangeRate(navigator);
+		//exchangeRate(navigator);
 	}
 	shouldComponentUpdate(nextProps){
 		return nextProps.rates.length > 0;
@@ -42,7 +42,12 @@ class RateListContainer extends Component{
 	}
 	render(){
 		const { rates } = this.props;
-		return (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading();
+		return (
+			<View style={[styles.container,styles.listWrapper]}>
+				<Text style={styles.text}>{'Coming Soon ...'}</Text>		
+			</View>
+		)
+		//return (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading();
 	}
 }
 
@@ -64,6 +69,9 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		alignItems : 'center',
 		justifyContent : 'center'
+	},
+	text : {
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 	}
 });
 

@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ListView , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator } from 'react-native';
+import { ListView , View , Text , StatusBar , StyleSheet , Dimensions , ActivityIndicator , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { winResult , clearPlays } from '../../actions';
@@ -40,10 +40,20 @@ class GamePlaySelect extends Component {
 			/>
 		)
 	}
+	_renderNoRecord(){
+		const { string } = this.props;
+		return (
+			<View style={[styles.container,styles.listWrapper]}>
+				<Text style={styles.text}>{string['noRecord']}</Text>
+			</View>
+		)
+	}
 	render(){
 		const { plays } = this.props;
 		//console.warn(JSON.stringify(plays));
-		return (plays.length > 0) ? this._renderList(plays) : this._renderLoading();
+		return (plays !== undefined) ? 
+			((plays.length > 0) ? this._renderList(plays) : this._renderNoRecord()) : 
+			this._renderLoading();
 	}
 }
 
@@ -66,11 +76,15 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		alignItems : 'center',
 		justifyContent : 'center'
+	},
+	text : {
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 	}
 });
 
 function mapStateToProps(state) {
 	return {
+		string : state.preference.language.string,
 		plays : state.mis.plays
 	}
 }
