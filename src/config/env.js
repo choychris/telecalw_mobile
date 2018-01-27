@@ -1,13 +1,13 @@
 export function baseApi(){
-	const devMode = 'local';
+	const devMode = 'production';
 	// There are three types of backend environment
 	// 1. Production Server
 	// 2. Local Server
 	// 3. Development Server
 	const backendApi = {
-		production : "https://www.teleclawapi.com/api",
+		production : "https://api.teleclawapi.live/api",
 		local : "http://192.168.1.181:3000/api",
-		development : "https://kiostech-pos-dev.herokuapp.com/api"
+		development : "http://teleclawbackendapi-staging.ap-southeast-1.elasticbeanstalk.com/api"
 	};
 	return (__DEV__) ? backendApi[devMode] : backendApi['local'];
 }
@@ -18,7 +18,7 @@ export function pusherConfig(){
 		cluster : 'ap1',
 		encrypted : true
 	} : { 
-		key : '0094cc321ae56ee8aa56',
+		key : '7fbd034f7c175d877b05',
 		cluster : 'ap1',
 		encrypted : true
 	};

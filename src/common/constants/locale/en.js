@@ -89,7 +89,8 @@ const en = {
 	rewardAmount : 'You are rewarded',
 	sound : 'Sound Effect',
 	vibration : 'Vibration',
-	earnCoins : 'You can earn more coins to play'
+	earnCoins : 'You can earn more coins to play',
+	noRecord : 'No Record'
 }
 
 export default en;

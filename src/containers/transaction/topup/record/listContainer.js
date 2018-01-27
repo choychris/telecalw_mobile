@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions } from 'react-native';
+import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { transactions } from '../../actions';
@@ -41,9 +41,19 @@ class TransactionListContainer extends Component{
 			/>
 		)
 	}
+	_renderNoRecord(){
+		const { string } = this.props;
+		return (
+			<View style={[styles.container,styles.listWrapper]}>
+				<Text style={styles.text}>{string['noRecord']}</Text>
+			</View>
+		)
+	}
 	render(){
 		const { transactionsData } = this.props;
-		return (transactionsData &&  transactionsData.length > 0) ? this._renderList(transactionsData) : this._renderLoading();
+		return (transactionsData !== undefined) ? 
+		 	((transactionsData.length > 0) ? this._renderList(transactionsData) : this._renderNoRecord()) :
+			this._renderLoading();
 	}
 }
 
@@ -64,11 +74,15 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		justifyContent : 'center'
+	},
+	text : {
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
 	}
 });
 
 function mapStateToProps(state) {
 	return {
+		string : state.preference.language.string,
 		transactionsData : state.transaction.transactions
 	}
 }
