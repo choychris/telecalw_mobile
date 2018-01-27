@@ -38,12 +38,13 @@ export function loading (action,navigator){
 				navBarHidden: true
 			},
 			style: {
-				flex : 1,
 				height : Dimensions.get('window').height,
+				width : Dimensions.get('window').width,
 				backgroundBlur: "dark",
 				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
 				tapBackgroundToDismiss: false
-			}
+			},
+			adjustSoftInput: "unspecified"
 		});
 	}
  	else if (action === 'hide'){

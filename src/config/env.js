@@ -1,5 +1,5 @@
 export function baseApi(){
-	const devMode = 'production';
+	const devMode = 'local';
 	// There are three types of backend environment
 	// 1. Production Server
 	// 2. Local Server
@@ -9,7 +9,7 @@ export function baseApi(){
 		local : "http://192.168.1.181:3000/api",
 		development : "http://teleclawbackendapi-staging.ap-southeast-1.elasticbeanstalk.com/api"
 	};
-	return (__DEV__) ? backendApi[devMode] : backendApi['local'];
+	return (__DEV__) ? backendApi[devMode] : backendApi['production'];
 }
 
 export function pusherConfig(){

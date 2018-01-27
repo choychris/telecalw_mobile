@@ -126,6 +126,7 @@ class GameCountDown extends Component {
 
 const styles = StyleSheet.create({
 	container : {
+		flex : 1,
 		backgroundColor : 'transparent',
 		alignSelf : 'stretch',
 		alignItems : 'center',
