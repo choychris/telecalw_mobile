@@ -40,8 +40,9 @@
 		D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */; };
 		D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
 		D6217A251FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
-		D64874641FB8360D00ABC458 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; };
-		D64874651FB8360D00ABC458 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D629EDB220245637002D5CEA /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D629EDB120245636002D5CEA /* WebRTC.framework */; };
+		D629EDB320245642002D5CEA /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D629EDB120245636002D5CEA /* WebRTC.framework */; };
+		D629EDB420245642002D5CEA /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D629EDB120245636002D5CEA /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D64874A81FB83B8E00ABC458 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A41FB83B5E00ABC458 /* AVFoundation.framework */; };
 		D64874A91FB83B9400ABC458 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A51FB83B6700ABC458 /* AudioToolbox.framework */; };
 		D64874AA1FB83B9B00ABC458 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A61FB83B7000ABC458 /* CoreGraphics.framework */; };
@@ -408,7 +409,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D64874651FB8360D00ABC458 /* WebRTC.framework in Embed Frameworks */,
+				D629EDB420245642002D5CEA /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,7 +444,7 @@
 		AE382A15034E4EA2B07D4F2C /* libRCTWebRTC.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWebRTC.a; sourceTree = "<group>"; };
 		D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bauhaus-93_6274.ttf"; path = "../assets/fonts/Bauhaus-93_6274.ttf"; sourceTree = "<group>"; };
-		D64874631FB8351E00ABC458 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
+		D629EDB120245636002D5CEA /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
 		D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
 		D64874A41FB83B5E00ABC458 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D64874A51FB83B6700ABC458 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -509,6 +510,7 @@
 				D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */,
 				D6A3BD141FEB694D00F90C18 /* libRCTBraintree.a in Frameworks */,
 				D6FC59361FDB8149005AE3AF /* libRCTVideo.a in Frameworks */,
+				D629EDB220245637002D5CEA /* WebRTC.framework in Frameworks */,
 				D6B836851FCFF69C004566FB /* libRNDeviceInfo.a in Frameworks */,
 				D6B8367B1FCFBBDC004566FB /* libRCTFBSDK.a in Frameworks */,
 				D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */,
@@ -523,12 +525,12 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				D64874641FB8360D00ABC458 /* WebRTC.framework in Frameworks */,
 				D6B836711FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */,
 				D64874B21FB83BC900ABC458 /* libsqlite3.tbd in Frameworks */,
 				D64874B41FB83BD400ABC458 /* libstdc++.tbd in Frameworks */,
+				D629EDB320245642002D5CEA /* WebRTC.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -809,6 +811,7 @@
 		D64874A31FB83B5E00ABC458 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D629EDB120245636002D5CEA /* WebRTC.framework */,
 				D6B8366C1FCFB977004566FB /* Bolts.framework */,
 				D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */,
 				D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */,
@@ -816,7 +819,6 @@
 				D64874B31FB83BD400ABC458 /* libstdc++.tbd */,
 				D64874B11FB83BC900ABC458 /* libsqlite3.tbd */,
 				D64874AF1FB83BC300ABC458 /* libc.tbd */,
-				D64874631FB8351E00ABC458 /* WebRTC.framework */,
 				D64874AE1FB83BB800ABC458 /* VideoToolbox.framework */,
 				D64874AD1FB83BAF00ABC458 /* CoreVideo.framework */,
 				D64874AC1FB83BA400ABC458 /* CoreAudio.framework */,
@@ -976,6 +978,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = X26F84HJ89;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -1532,6 +1535,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = X26F84HJ89;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1566,6 +1570,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X26F84HJ89;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
