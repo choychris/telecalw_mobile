@@ -34,17 +34,18 @@ class LiveView extends Component {
 		const { 
 			initiatewebRTC , 
 			mode ,
-			machine
+			machine,
+			navigator
 		} = this.props;
 		const { rtsp } = this.state;
 		if(rtsp !== null){
 			if(mode === 'top'){
 				setTimeout(()=>{
-					this.pc = initiatewebRTC(mode,rtsp,0);
+					this.pc = initiatewebRTC(mode,rtsp,0,navigator);
 				},2000)
 			} else {
 				setTimeout(()=>{
-					this.pc = initiatewebRTC(mode,rtsp,0);
+					this.pc = initiatewebRTC(mode,rtsp,0,navigator);
 				},3000)
 			}
 		}

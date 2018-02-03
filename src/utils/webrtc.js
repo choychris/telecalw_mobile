@@ -62,7 +62,7 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 				console.log('onicecandidate', evt.candidate);
 
 				function fetchFunction(){
-					fetchRequest(`/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
+					fetchRequest(`/addIceCandidate1?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
 				}
 				
 				fetchFunction();		
@@ -81,10 +81,11 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 			// Garunteed it is connected to initiate game play
 			if(pc.iceConnectionState === 'checking'){
 				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected' && times < 5){
-						//console.warn('Trigger Restart Mechanism');
-						closeWebrtc(pc,rtsp);
-						return dispatch(initiatewebRTC(mode,rtsp,times+1));
+					if(pc.iceConnectionState !== 'connected'){
+						if(times <= 3){
+							closeWebrtc(pc,rtsp);
+							return dispatch(initiatewebRTC(mode,rtsp,times+1));
+						}
 					}
 				},3000)
 			}

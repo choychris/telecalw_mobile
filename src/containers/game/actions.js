@@ -778,3 +778,44 @@ export function getCheckinReward(){
 			})
 	}
 }
+
+export function refund(navigator){
+	return (dispatch,getState)=>{
+		const { id, userId } = getState()['auth']['token']['lbToken'];
+		const { webrtcUrl } = getState()['game']['play'];
+		setTimeout(()=>{
+			if(webrtcUrl['front'] === undefined){
+					navigator.dismissLightBox();
+					//console.warn('Refund');
+					playRefund({
+						token : id,
+						userId : userId
+					},Request).then((res,err)=>{
+						//console.warn(JSON.stringify(res));
+						//console.warn(JSON.stringify(err));
+						dispatch({
+							type : 'UPDATE_WALLET_BALANCE',
+							value : res.result.newWalletBalance
+						});
+						navigator.dismissLightBox();
+						navigator.resetTo({
+							screen : 'app.GamePlayList',
+							navigatorStyle : {
+								navBarHidden : true
+							}
+						});
+						setTimeout(()=>{
+							errorMessage(
+								'show',
+								navigator,
+								{
+									title : string['error'],
+									message : string['tryAgain']
+								}
+							);
+						},1000);
+					});
+			}
+		},30000)
+	}	
+}
