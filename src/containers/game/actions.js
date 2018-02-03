@@ -262,14 +262,22 @@ export function networkChecking(navigator){
 	return (dispatch,getState)=>{
 		const { string } = getState()['preference']['language'];
 		NetInfo.getConnectionInfo().then((connectionInfo) => {
-			if(connectionInfo.type !== null) 
-				dispatch({ type : 'CHANGE_NETWORK_STATUS' , value : true });
+			if(connectionInfo.type !== null){
+				dispatch({ 
+					type : 'CHANGE_NETWORK_STATUS' , 
+					value : { status : true , type : connectionInfo.type }
+				});
+			}
 		});
-		NetInfo.isConnected.addEventListener(
+		NetInfo.addEventListener(
 			'connectionChange',
-			(isConnected)=>{
-				dispatch({ type : 'CHANGE_NETWORK_STATUS' , value : isConnected });
-				if(isConnected === false) 
+			(connectionInfo)=>{
+				const newStatus = (connectionInfo.type !== 'none') ? true : false;
+				dispatch({ 
+					type : 'CHANGE_NETWORK_STATUS' , 
+					value : { status : newStatus , type : connectionInfo.type } 
+				});
+				if(connectionInfo.type === 'none') 
 					errorMessage('show',navigator,{ title : string['offline'] , message : string['internetProblem'] }) ;
 			}
 		);
@@ -406,12 +414,15 @@ export function initGamePlay(navigator,loadState){
 		// Step 0 : Loading State
 		if(loadState) loadState(true);
 
-		// Step 1 : Check Wallet Balance
+		// Step 1 : Check Wallet Balance || Wifi Connection
 		const { balance } = getState()['auth']['wallet'];
 		const { gamePlayRate } = getState()['game']['product'];
+		const { status , type } = getState()['game']['network'];
+		const sufficientFund = (balance >= gamePlayRate) ? true : false;
+		const networkValid = (status === true && type === 'wifi') ? true : false;
 		//console.warn(balance);
 		//console.warn(gamePlayRate)
-		if(balance >= gamePlayRate){
+		if(sufficientFund === true && networkValid === true){
 	
 			// Step 2 : Get GamePlay Configuration from Backend
 			const { id , userId } = getState()['auth']['token']['lbToken'];
@@ -482,7 +493,9 @@ export function initGamePlay(navigator,loadState){
 			// Reverse Loading State
 			if(loadState) loadState(false);
 			// Insufficient Fund PopUp
-			insufficientFundMessage(navigator);
+			if(sufficientFund === false) insufficientFundMessage(navigator);
+			// Network Problem PopUp
+			if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
 		}
 
 	}

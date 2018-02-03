@@ -7,7 +7,7 @@ const initialState = {
 	products : {},
 	machine : null,
 	machines : [],
-	network : null,
+	network : {},
 	play : { 
 		timer : null,
 		cameraMode : 'front',
