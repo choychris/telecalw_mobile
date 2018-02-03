@@ -40,8 +40,6 @@
 		D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */; };
 		D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
 		D6217A251FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
-		D64874641FB8360D00ABC458 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; };
-		D64874651FB8360D00ABC458 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D64874631FB8351E00ABC458 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D64874A81FB83B8E00ABC458 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A41FB83B5E00ABC458 /* AVFoundation.framework */; };
 		D64874A91FB83B9400ABC458 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A51FB83B6700ABC458 /* AudioToolbox.framework */; };
 		D64874AA1FB83B9B00ABC458 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64874A61FB83B7000ABC458 /* CoreGraphics.framework */; };
@@ -87,6 +85,8 @@
 		D6E8E7EC200E012B00C41395 /* spaceship.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E8200E012A00C41395 /* spaceship.mp3 */; };
 		D6E8E7ED200E012B00C41395 /* robot_talking.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */; };
 		D6E8E7EF200E07B200C41395 /* cancel_error.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7EE200E07B100C41395 /* cancel_error.mp3 */; };
+		D6EB5AB82025790C00E453A9 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB5AB2202578F700E453A9 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D6EB5ABB2025797100E453A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB5ABA2025797100E453A9 /* WebKit.framework */; };
 		D6FC59361FDB8149005AE3AF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FC591F1FDB811D005AE3AF /* libRCTVideo.a */; };
 /* End PBXBuildFile section */
 
@@ -343,13 +343,6 @@
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
-		D64874A11FB8385000ABC458 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 35A2221F1CB493700015FD5C;
-			remoteInfo = RCTWebRTC;
-		};
 		D6A3BCEF1FEB692C00F90C18 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D6A3BCE51FEB692900F90C18 /* RCTBraintree.xcodeproj */;
@@ -385,6 +378,13 @@
 			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
 			remoteInfo = RNSound;
 		};
+		D6EB5AB0202578BE00E453A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D6EB5AAC202578BD00E453A9 /* RCTWebRTC.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 35A2221F1CB493700015FD5C;
+			remoteInfo = RCTWebRTC;
+		};
 		D6FC591E1FDB811D005AE3AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D6FC59071FDB811D005AE3AF /* RCTVideo.xcodeproj */;
@@ -402,13 +402,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D64874661FB8360E00ABC458 /* Embed Frameworks */ = {
+		D6EB5AB92025790C00E453A9 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D64874651FB8360D00ABC458 /* WebRTC.framework in Embed Frameworks */,
+				D6EB5AB82025790C00E453A9 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,8 +443,6 @@
 		AE382A15034E4EA2B07D4F2C /* libRCTWebRTC.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWebRTC.a; sourceTree = "<group>"; };
 		D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bauhaus-93_6274.ttf"; path = "../assets/fonts/Bauhaus-93_6274.ttf"; sourceTree = "<group>"; };
-		D64874631FB8351E00ABC458 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebRTC.framework; sourceTree = "<group>"; };
-		D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
 		D64874A41FB83B5E00ABC458 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D64874A51FB83B6700ABC458 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D64874A61FB83B7000ABC458 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -486,6 +484,9 @@
 		D6E8E7E8200E012A00C41395 /* spaceship.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = spaceship.mp3; path = ../assets/sound/spaceship.mp3; sourceTree = "<group>"; };
 		D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = robot_talking.mp3; path = ../assets/sound/robot_talking.mp3; sourceTree = "<group>"; };
 		D6E8E7EE200E07B100C41395 /* cancel_error.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = cancel_error.mp3; path = ../assets/sound/cancel_error.mp3; sourceTree = "<group>"; };
+		D6EB5AAC202578BD00E453A9 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
+		D6EB5AB2202578F700E453A9 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
+		D6EB5ABA2025797100E453A9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6FC59071FDB811D005AE3AF /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -506,6 +507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6EB5ABB2025797100E453A9 /* WebKit.framework in Frameworks */,
 				D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */,
 				D6A3BD141FEB694D00F90C18 /* libRCTBraintree.a in Frameworks */,
 				D6FC59361FDB8149005AE3AF /* libRCTVideo.a in Frameworks */,
@@ -523,7 +525,6 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				D64874641FB8360D00ABC458 /* WebRTC.framework in Frameworks */,
 				D6B836711FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */,
@@ -704,13 +705,13 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D6EB5AAC202578BD00E453A9 /* RCTWebRTC.xcodeproj */,
 				D6E8E7DB200DA15F00C41395 /* RNSound.xcodeproj */,
 				D6A3BCE51FEB692900F90C18 /* RCTBraintree.xcodeproj */,
 				D6FC59071FDB811D005AE3AF /* RCTVideo.xcodeproj */,
 				D6B8367C1FCFF681004566FB /* RNDeviceInfo.xcodeproj */,
 				D6B836751FCFBB7E004566FB /* RCTFBSDK.xcodeproj */,
 				D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */,
-				D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -748,6 +749,7 @@
 				D6E8E7E4200DF92C00C41395 /* coins_sound.mp3 */,
 				D6E8E7E7200E012900C41395 /* click1.mp3 */,
 				D6E8E7E6200E012800C41395 /* click2.mp3 */,
+				D6EB5AB2202578F700E453A9 /* WebRTC.framework */,
 				D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */,
 				D6E8E7E8200E012A00C41395 /* spaceship.mp3 */,
 				13B07FAE1A68108700A75B9A /* mobile_app */,
@@ -798,17 +800,10 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		D648749E1FB8385000ABC458 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D64874A21FB8385000ABC458 /* libRCTWebRTC.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D64874A31FB83B5E00ABC458 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6EB5ABA2025797100E453A9 /* WebKit.framework */,
 				D6B8366C1FCFB977004566FB /* Bolts.framework */,
 				D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */,
 				D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */,
@@ -816,7 +811,6 @@
 				D64874B31FB83BD400ABC458 /* libstdc++.tbd */,
 				D64874B11FB83BC900ABC458 /* libsqlite3.tbd */,
 				D64874AF1FB83BC300ABC458 /* libc.tbd */,
-				D64874631FB8351E00ABC458 /* WebRTC.framework */,
 				D64874AE1FB83BB800ABC458 /* VideoToolbox.framework */,
 				D64874AD1FB83BAF00ABC458 /* CoreVideo.framework */,
 				D64874AC1FB83BA400ABC458 /* CoreAudio.framework */,
@@ -880,6 +874,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D6EB5AAD202578BD00E453A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D6EB5AB1202578BE00E453A9 /* libRCTWebRTC.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D6FC59081FDB811D005AE3AF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,7 +920,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				D64874661FB8360E00ABC458 /* Embed Frameworks */,
+				D6EB5AB92025790C00E453A9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1057,8 +1059,8 @@
 					ProjectRef = D6FC59071FDB811D005AE3AF /* RCTVideo.xcodeproj */;
 				},
 				{
-					ProductGroup = D648749E1FB8385000ABC458 /* Products */;
-					ProjectRef = D648749D1FB8385000ABC458 /* RCTWebRTC.xcodeproj */;
+					ProductGroup = D6EB5AAD202578BD00E453A9 /* Products */;
+					ProjectRef = D6EB5AAC202578BD00E453A9 /* RCTWebRTC.xcodeproj */;
 				},
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
@@ -1330,13 +1332,6 @@
 			remoteRef = D648749B1FB8383300ABC458 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D64874A21FB8385000ABC458 /* libRCTWebRTC.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTWebRTC.a;
-			remoteRef = D64874A11FB8385000ABC458 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D6A3BCF01FEB692C00F90C18 /* libRCTBraintree.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1370,6 +1365,13 @@
 			fileType = archive.ar;
 			path = libRNSound.a;
 			remoteRef = D6E8E7DF200DA15F00C41395 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D6EB5AB1202578BE00E453A9 /* libRCTWebRTC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWebRTC.a;
+			remoteRef = D6EB5AB0202578BE00E453A9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D6FC591F1FDB811D005AE3AF /* libRCTVideo.a */ = {
