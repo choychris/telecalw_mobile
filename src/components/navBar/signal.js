@@ -47,7 +47,7 @@ class Signal extends Component {
 function mapStateToProps(state) {
 	return {
 		language : state.preference.language,
-		status : state.game.network
+		status : state.game.network.status
 	}
 }
 
