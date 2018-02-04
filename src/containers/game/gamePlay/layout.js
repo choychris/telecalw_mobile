@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { loadGamePlay } from '../actions';
+import { loadGamePlay , refund } from '../actions';
 import { loading } from '../../utilities/actions';
 import BackgroundImage from '../../../components/utilities/backgroundImage';
 import NavBar from '../../../components/navBar/container';
@@ -15,11 +15,15 @@ class GamePlay extends Component {
 		trackScreen('GamePlay');
 	}
 	componentDidMount(){
-		const { loadGamePlay , navigator } = this.props;
-		//loadGamePlay(navigator);
+		const { loadGamePlay , navigator , refund } = this.props;
+		loadGamePlay(navigator);
+		this.refundTimer = setTimeout(()=>refund(navigator),15000);
 	}
 	shouldComponentUpdate(){
 		return false;
+	}
+	componentWillUnmount(){
+		clearTimeout(this.refundTimer);
 	}
 	render(){
 		const { navigator } = this.props;
@@ -52,7 +56,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		loadGamePlay,
-		trackScreen
+		trackScreen,
+		refund
 	}, dispatch)
 }
 

@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Easing , Animated, View , Text , StyleSheet , Image , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { resetTimer , refund } from '../../actions';
+import { resetTimer } from '../../actions';
 import TrafficLight from './trafficLight';
 import LightBulb from './lightbulb';
 const { height , width } = Dimensions.get('window');
@@ -22,10 +22,6 @@ class GameCountDown extends Component {
 			y : -height -100
 		});
 		this._textAnimation = new Animated.Value(0)
-	}
-	componentDidMount(){
-		const { refund ,navigator } = this.props;
-		refund(navigator);
 	}
 	shouldComponentUpdate(nextProps,nextState){
 		const { webrtcUrl } = this.props;
@@ -171,7 +167,6 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		resetTimer,
 		playUISound,
-		refund
 	}, dispatch)
 }
 

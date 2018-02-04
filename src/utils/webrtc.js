@@ -62,7 +62,7 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 				console.log('onicecandidate', evt.candidate);
 
 				function fetchFunction(){
-					fetchRequest(`/addIceCandidate1?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
+					fetchRequest(`/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
 				}
 				
 				fetchFunction();		
