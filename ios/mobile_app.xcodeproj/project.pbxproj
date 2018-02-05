@@ -511,6 +511,7 @@
 				D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */,
 				D6A3BD141FEB694D00F90C18 /* libRCTBraintree.a in Frameworks */,
 				D6FC59361FDB8149005AE3AF /* libRCTVideo.a in Frameworks */,
+				D629EDB220245637002D5CEA /* WebRTC.framework in Frameworks */,
 				D6B836851FCFF69C004566FB /* libRNDeviceInfo.a in Frameworks */,
 				D6B8367B1FCFBBDC004566FB /* libRCTFBSDK.a in Frameworks */,
 				D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */,
@@ -530,6 +531,7 @@
 				D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */,
 				D64874B21FB83BC900ABC458 /* libsqlite3.tbd in Frameworks */,
 				D64874B41FB83BD400ABC458 /* libstdc++.tbd in Frameworks */,
+				D629EDB320245642002D5CEA /* WebRTC.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -978,6 +980,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = X26F84HJ89;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -1534,6 +1537,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = X26F84HJ89;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1568,6 +1572,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X26F84HJ89;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
