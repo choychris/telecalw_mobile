@@ -493,10 +493,13 @@ export function initGamePlay(navigator,loadState){
 		} else {
 			// Reverse Loading State
 			if(loadState) loadState(false);
-			// Insufficient Fund PopUp
-			if(sufficientFund === false) insufficientFundMessage(navigator);
-			// Network Problem PopUp
-			if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+			loading('hide',navigator);
+			setTimeout(()=>{
+				// Insufficient Fund PopUp
+				if(sufficientFund === false) insufficientFundMessage(navigator);
+				// Network Problem PopUp
+				if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+			},1000);
 		}
 
 	}
