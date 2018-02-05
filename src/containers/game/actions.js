@@ -45,9 +45,7 @@ async function loadGameListFlow(dispatch,getState,navigator){
 				value : productList
 			});
 		}
-		// Step 3 : Hide Loading Lightbox
-		loading('hide',navigator);
-		// Step 4 : Initial Check In Reward
+		// Step 3 : Initial Check In Reward
 		dispatch(checkInRewardChecking(navigator));
 	}
 	catch(e){

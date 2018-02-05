@@ -122,6 +122,8 @@ export function checkInRewardChecking(navigator){
 			//console.warn(JSON.stringify(res));
 			if(!err){
 				const { result } = res;
+				// Hide Loading Lightbox
+				loading('hide',navigator);
 				if(result.success === true){
 					dispatch({
 						type : 'UPDATE_WALLET_BALANCE',
@@ -143,7 +145,7 @@ export function checkInRewardChecking(navigator){
 								flex : 1
 							}
 						});
-					},1000);
+					},500);
 				}
 
 				// Update User Last Login Time
@@ -170,6 +172,7 @@ export function checkInRewardChecking(navigator){
 			}
 		})
 		.catch((err)=>{
+			//console.warn(err);
 			dispatch(authError(navigator,'error','tryAgain'));
 		});
 	}
