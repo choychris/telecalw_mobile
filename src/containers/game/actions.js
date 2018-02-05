@@ -3,7 +3,7 @@ import { errorMessage , loading, insufficientFundMessage } from '../utilities/ac
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
-import { gameResult } from '../../common/api/request/play';
+import { gameResult , playRefund } from '../../common/api/request/play';
 import { endGameEngage , cancelReserve } from '../../common/api/request/reservation';
 import { checkinReward } from '../../common/api/request/reward';
 import { playUISound } from '../../utils/sound';
@@ -45,9 +45,7 @@ async function loadGameListFlow(dispatch,getState,navigator){
 				value : productList
 			});
 		}
-		// Step 3 : Hide Loading Lightbox
-		loading('hide',navigator);
-		// Step 4 : Initial Check In Reward
+		// Step 3 : Initial Check In Reward
 		dispatch(checkInRewardChecking(navigator));
 	}
 	catch(e){
@@ -413,6 +411,7 @@ export function initGamePlay(navigator,loadState){
 
 		// Step 0 : Loading State
 		if(loadState) loadState(true);
+		loading('show',navigator);
 
 		// Step 1 : Check Wallet Balance || Wifi Connection
 		const { balance } = getState()['auth']['wallet'];
@@ -492,10 +491,13 @@ export function initGamePlay(navigator,loadState){
 		} else {
 			// Reverse Loading State
 			if(loadState) loadState(false);
-			// Insufficient Fund PopUp
-			if(sufficientFund === false) insufficientFundMessage(navigator);
-			// Network Problem PopUp
-			if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+			loading('hide',navigator);
+			setTimeout(()=>{
+				// Insufficient Fund PopUp
+				if(sufficientFund === false) insufficientFundMessage(navigator);
+				// Network Problem PopUp
+				if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+			},1000);
 		}
 
 	}
@@ -522,20 +524,21 @@ export function resetTimer(playTime){
 
 export function loadGamePlay(navigator){
 	return(dispatch,getState)=>{
-		
-		navigator.showLightBox({
-			screen : 'app.GameCountDown',
-			animationType : 'fade',
-			navigatorStyle: {
-				navBarHidden: true
-			},
-			style: {
-				backgroundBlur: "dark",
-				backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
-				tapBackgroundToDismiss: false
-			}
-		});
-
+		loading('hide',navigator);
+		setTimeout(()=>{
+			navigator.showLightBox({
+				screen : 'app.GameCountDown',
+				animationType : 'fade',
+				navigatorStyle: {
+					navBarHidden: true
+				},
+				style: {
+					backgroundBlur: "dark",
+					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+					tapBackgroundToDismiss: false
+				}
+			});
+		},1000);
 	}
 }
 
@@ -777,4 +780,42 @@ export function getCheckinReward(){
 				console.warn(JSON.stringify(err));
 			})
 	}
+}
+
+export function refund(navigator){
+	return (dispatch,getState)=>{
+		const { id, userId } = getState()['auth']['token']['lbToken'];
+		const { webrtcUrl } = getState()['game']['play'];
+		if(webrtcUrl['front'] === undefined){
+			//console.warn('Refund');
+			navigator.dismissLightBox();
+			playRefund({
+				token : id,
+				userId : userId
+			},Request).then((res,err)=>{
+				//console.warn(JSON.stringify(res));
+				//console.warn(JSON.stringify(err));
+				dispatch({
+					type : 'UPDATE_WALLET_BALANCE',
+					value : res.result.newWalletBalance
+				});
+				navigator.resetTo({
+					screen : 'app.GamePlayList',
+					navigatorStyle : {
+						navBarHidden : true
+					}
+				});
+				setTimeout(()=>{
+					errorMessage(
+						'show',
+						navigator,
+						{
+							title : 'error',
+							message : 'tryAgain'
+						}
+					);
+				},1000);
+			});
+		}
+	}	
 }

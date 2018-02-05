@@ -166,7 +166,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		resetTimer,
-		playUISound
+		playUISound,
 	}, dispatch)
 }
 

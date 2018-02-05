@@ -92,7 +92,8 @@ const en = {
 	sound : 'Sound Effect',
 	vibration : 'Vibration',
 	earnCoins : 'You can earn more coins to play',
-	noRecord : 'No Record'
+	noRecord : 'No Record',
+	refund : 'Refund'
 }
 
 export default en;

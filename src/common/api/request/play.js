@@ -18,5 +18,15 @@ export function getWinResult(params,request){
 			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
 			.catch((error)=>reject(error));	  
 	});
-
 }
+
+// Refund Mechanism
+export function playRefund(params,request){
+	const { token , userId } = params;
+	return new Promise((resolve,reject)=>{
+		request(api.plays.root+'/'+userId+'/refund?access_token='+token,'GET')
+			.then((responseData)=> (responseData.error) ? reject(responseData.error) : resolve(responseData) )
+			.catch((error)=>reject(error));	  
+	});
+}
+
