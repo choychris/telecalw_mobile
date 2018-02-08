@@ -62,7 +62,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Microphone Permission</string>
+	<string>We need your microphone permission in order to perform in-app chatting and webrtc usage</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>
