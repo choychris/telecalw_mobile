@@ -469,11 +469,13 @@ export function initGamePlay(navigator,loadState){
 							// Tracking
 							dispatch(trackEvent('playGame',productId));
 						} else if(result.reservation){
+							loading('hide',navigator);
 							dispatch({
 								type : 'UPDATE_RESERVATION',
 								value : result.reservation
 							});
 						} else if(result === 'insufficient_balance'){
+							loading('hide',navigator);
 							insufficientFundMessage(navigator);
 						}
 					} else {
