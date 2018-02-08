@@ -34,7 +34,7 @@ const zhHant = {
 	congratulations : '恭喜您',
 	fail : 'OPPs … 您失敗了',
 	congratulationsSlogan : '將您的獎品帶回家',
-	failSlogan : "不能夠回空而回",
+	failSlogan : "不能夠空手而回",
 	playAgain : '再試一次',
 	leaving : '離開',
 	yourTurn : '輪到你了',

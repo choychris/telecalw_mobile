@@ -113,6 +113,6 @@ export function websocketControl(params,ws){
 			}
 		}
 	});
-	ws.send(controlData);
+	if(ws.readyState === 1) ws.send(controlData);
 }
 
