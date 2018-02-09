@@ -79,7 +79,7 @@ class Reward extends Component {
 		return(
 			<ScrollView style={styles.innerContainer}>
 				<Referral/>
-				<Redeem/>
+				{(Platform.OS !== 'ios') ? <Redeem/> : null}
 			</ScrollView>
 		)
 	}
