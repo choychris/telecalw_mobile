@@ -50,7 +50,7 @@ class Referral extends Component {
 	}
 	_renderReferralCode(code){
 		const { string } = this.props;
-		return (
+		return (Platform.OS !== 'ios') ? (
 			<View>
 				<Text style={[styles.text,{ fontSize : 18 }]}>
 					{string['referralCode']}
@@ -59,7 +59,7 @@ class Referral extends Component {
 					{code}
 				</Text>
 			</View>
-		)
+		) : null
 	}
 	_renderShareButton(code){
 		const { string , shareToFacebook } = this.props;
