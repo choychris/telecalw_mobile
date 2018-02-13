@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 const tubeImage = require('../../../../../../assets/utilities/tube.png');
 
 class Tube extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { status } = this.props;
+		return status.maintainStatus !== nextProps.maintainStatus;
 	}
 	render(){
 		const { 

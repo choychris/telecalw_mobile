@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Image } from 'react-native';
+import { Image , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -9,10 +9,11 @@ class ProductImage extends Component {
 	}
 	render(){
 		const { image } = this.props;
+		const { height , width } = Dimensions.get('window');
 		return (image) ? (
 			<Image
 				source={{ uri : image  }}
-				style={{ width : 180 , height : 180 , marginVertical : 10 }}
+				style={{ width : width*0.8 , height : 180 , marginVertical : 10 }}
 				resizeMode={'contain'}
 			/>
 		) : null

@@ -71,4 +71,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(null,null)(ProductInfo)
+export default connect(mapStateToProps,null)(ProductInfo)

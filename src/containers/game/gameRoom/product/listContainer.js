@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
 	},
 	desc : {
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-		fontSize : 18
+		fontSize : 18,
+		paddingHorizontal : 20
 	},
 	info : {
 		marginVertical : 5,
