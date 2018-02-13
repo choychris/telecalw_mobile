@@ -107,7 +107,7 @@ class Reward extends Component {
 							type={'right'}
 							content={this._renderContainer()}
 							promptString={'rewardPrompt'}
-							buttons={[
+							buttons={(Platform.OS !== 'ios') ? [
 								{
 									text : 'confirm',
 									textStyle : {
@@ -122,7 +122,7 @@ class Reward extends Component {
 									},
 									onPressFunction : ()=>confirmRedeem()
 								}
-							]}
+							] : []}
 						/>
 					</Animated.View>
 					<Animated.View 
