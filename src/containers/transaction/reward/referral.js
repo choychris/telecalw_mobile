@@ -65,7 +65,7 @@ class Referral extends Component {
 		const { string , shareToFacebook } = this.props;
 		const shareLinkContent = {
 			contentType: 'link',
-			contentUrl: "https://facebook.com",
+			contentUrl: "https://www.teleclaw.live",
 			contentDescription: `${string['shareMsg']}${code}`
 		};
 		return (
