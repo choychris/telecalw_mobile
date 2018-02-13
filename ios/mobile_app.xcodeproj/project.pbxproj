@@ -37,6 +37,9 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		D6009C1F203288FA00FB739F /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6009C1E203288FA00FB739F /* WebRTC.framework */; };
+		D6009C20203288FE00FB739F /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6009C1E203288FA00FB739F /* WebRTC.framework */; };
+		D6009C21203288FE00FB739F /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D6009C1E203288FA00FB739F /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D6217A201FCE73E200556338 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6217A1F1FCE737000556338 /* libReactNativeNavigation.a */; };
 		D6217A241FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
 		D6217A251FCED38300556338 /* Bauhaus-93_6274.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */; };
@@ -87,9 +90,6 @@
 		D6E8E7EF200E07B200C41395 /* cancel_error.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D6E8E7EE200E07B100C41395 /* cancel_error.mp3 */; };
 		D6EB5ABB2025797100E453A9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB5ABA2025797100E453A9 /* WebKit.framework */; };
 		D6FC59361FDB8149005AE3AF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FC591F1FDB811D005AE3AF /* libRCTVideo.a */; };
-		D6FD1E4A202BF74300DEF5D5 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FD1E49202BF74300DEF5D5 /* WebRTC.framework */; };
-		D6FD1E4B202BF74600DEF5D5 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6FD1E49202BF74300DEF5D5 /* WebRTC.framework */; };
-		D6FD1E4C202BF74600DEF5D5 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D6FD1E49202BF74300DEF5D5 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -410,7 +410,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D6FD1E4C202BF74600DEF5D5 /* WebRTC.framework in Embed Frameworks */,
+				D6009C21203288FE00FB739F /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +443,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE382A15034E4EA2B07D4F2C /* libRCTWebRTC.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWebRTC.a; sourceTree = "<group>"; };
+		D6009C1E203288FA00FB739F /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
 		D62179F81FCE736E00556338 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		D6217A231FCED38200556338 /* Bauhaus-93_6274.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bauhaus-93_6274.ttf"; path = "../assets/fonts/Bauhaus-93_6274.ttf"; sourceTree = "<group>"; };
 		D64874A41FB83B5E00ABC458 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -489,7 +490,6 @@
 		D6EB5AAC202578BD00E453A9 /* RCTWebRTC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebRTC.xcodeproj; path = "../node_modules/react-native-webrtc/ios/RCTWebRTC.xcodeproj"; sourceTree = "<group>"; };
 		D6EB5ABA2025797100E453A9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D6FC59071FDB811D005AE3AF /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		D6FD1E49202BF74300DEF5D5 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -532,7 +532,7 @@
 				D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */,
 				D64874B21FB83BC900ABC458 /* libsqlite3.tbd in Frameworks */,
 				D64874B41FB83BD400ABC458 /* libstdc++.tbd in Frameworks */,
-				D6FD1E4A202BF74300DEF5D5 /* WebRTC.framework in Frameworks */,
+				D6009C1F203288FA00FB739F /* WebRTC.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -540,7 +540,7 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				D64874B01FB83BC300ABC458 /* libc.tbd in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
-				D6FD1E4B202BF74600DEF5D5 /* WebRTC.framework in Frameworks */,
+				D6009C20203288FE00FB739F /* WebRTC.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				D6B8366F1FCFB977004566FB /* FBSDKCoreKit.framework in Frameworks */,
@@ -755,7 +755,7 @@
 				D6E8E7E6200E012800C41395 /* click2.mp3 */,
 				D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */,
 				D6E8E7E8200E012A00C41395 /* spaceship.mp3 */,
-				D6FD1E49202BF74300DEF5D5 /* WebRTC.framework */,
+				D6009C1E203288FA00FB739F /* WebRTC.framework */,
 				13B07FAE1A68108700A75B9A /* mobile_app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mobile_appTests */,
