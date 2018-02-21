@@ -1,0 +1,9 @@
+[submodule "common"]
+	path = common
+	url = https://gitlab.com/teleclaw/common.git
+[submodule "src/--force"]
+	path = src/--force
+	url = https://gitlab.com/teleclaw/common.git
+[submodule "src/common"]
+	path = src/common
+	url = https://gitlab.com/teleclaw/common.git
