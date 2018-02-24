@@ -10,16 +10,18 @@ class Redeem extends Component {
 		inputRedeemCode(null);
 	}
 	shouldComponenetUpdate(nextProps){
-		const { reward } = this.props;
-		return reward !== nextProps.reward;
+		const { reward ,version } = this.props;
+		return reward !== nextProps.reward || version !== nextProps.version;
 	}
 	render(){
 		const { 
 			string , 
 			reward ,
-			inputRedeemCode
+			inputRedeemCode,
+			version
 		} = this.props;
-		return(
+		const { release } = version;
+		return (version.release === true) ? (
 			<View style={styles.container}>
 				<Text style={styles.title}>
 					{string['redeem']}
@@ -31,7 +33,7 @@ class Redeem extends Component {
 					onChangeText={(text)=>inputRedeemCode(text)}
 				/>
 			</View>
-		)
+		) : null;
 	}
 }
 
@@ -68,7 +70,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
 	return {
 		string : state.preference.language.string,
-		reward : state.transaction.reward
+		reward : state.transaction.reward,
+		version : state.mis.version
 	}
 }
 

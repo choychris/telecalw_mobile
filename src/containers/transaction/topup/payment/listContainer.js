@@ -16,15 +16,23 @@ class RateListContainer extends Component{
 	componentDidMount(){
 		// Fetch Remote Backend API to Get List of Exchage Rate
 		const { exchangeRate , navigator } = this.props;
-		//exchangeRate(navigator);
+		exchangeRate(navigator);
 	}
 	shouldComponentUpdate(nextProps){
-		return nextProps.rates.length > 0;
+		const { version } = this.props;
+		return nextProps.rates.length > 0 || version !== nextProps.version;
 	}
 	_renderLoading(){
 		return (
 			<View style={styles.container}>
 				<ActivityIndicator size="small" color={'black'}/>
+			</View>
+		)
+	}
+	_renderNoRate(){
+		return (
+			<View style={[styles.container,styles.listWrapper]}>
+				<Text style={styles.text}>{'Coming Soon ...'}</Text>		
 			</View>
 		)
 	}
@@ -41,13 +49,8 @@ class RateListContainer extends Component{
 		)
 	}
 	render(){
-		const { rates } = this.props;
-		return (
-			<View style={[styles.container,styles.listWrapper]}>
-				<Text style={styles.text}>{'Coming Soon ...'}</Text>		
-			</View>
-		)
-		//return (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading();
+		const { rates , version } = this.props;
+		return (version.release === true) ? (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading() : this._renderNoRate();
 	}
 }
 
@@ -77,7 +80,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		rates : state.transaction.rates
+		rates : state.transaction.rates,
+		version : state.mis.version
 	}
 }
 

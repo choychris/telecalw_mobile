@@ -79,7 +79,7 @@ class Reward extends Component {
 		return(
 			<ScrollView style={styles.innerContainer}>
 				<Referral/>
-				{(Platform.OS !== 'ios') ? <Redeem/> : null}
+				<Redeem/>
 			</ScrollView>
 		)
 	}
@@ -107,7 +107,7 @@ class Reward extends Component {
 							type={'right'}
 							content={this._renderContainer()}
 							promptString={'rewardPrompt'}
-							buttons={(Platform.OS !== 'ios') ? [
+							buttons={[
 								{
 									text : 'confirm',
 									textStyle : {
@@ -122,7 +122,7 @@ class Reward extends Component {
 									},
 									onPressFunction : ()=>confirmRedeem()
 								}
-							] : []}
+							]}
 						/>
 					</Animated.View>
 					<Animated.View 

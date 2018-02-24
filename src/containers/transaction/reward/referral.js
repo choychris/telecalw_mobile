@@ -45,12 +45,12 @@ class Referral extends Component {
 		]).start();
 	}
 	shouldComponenetUpdate(nextProps){
-		const { user } = this.props;
-		return JSON.stringify(user) !== JSON.stringify(nextProps.user);
+		const { user ,version } = this.props;
+		return JSON.stringify(user) !== JSON.stringify(nextProps.user) || version !== nextProps.version;
 	}
 	_renderReferralCode(code){
-		const { string } = this.props;
-		return (Platform.OS !== 'ios') ? (
+		const { string , version } = this.props;
+		return (version.release === true) ? (
 			<View>
 				<Text style={[styles.text,{ fontSize : 18 }]}>
 					{string['referralCode']}
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
 	return {
 		string : state.preference.language.string,
-		user : state.auth.user
+		user : state.auth.user,
+		version : state.mis.version
 	}
 }
 

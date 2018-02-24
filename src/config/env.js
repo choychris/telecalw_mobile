@@ -36,3 +36,7 @@ export function gizwitsUrl(){
 export function segmentKey(){
 	return (__DEV__) ? '6615xgSmJFb9OrBuywhtCwYgJ47YdYSf' : 'nCcd1t1DAQPkeFwe1IWIRoQzOUY9QNC6';
 }
+
+export function serverlessUrl(){
+	return 'https://quw8838zec.execute-api.ap-southeast-1.amazonaws.com/prod'
+}
