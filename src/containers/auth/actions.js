@@ -17,10 +17,10 @@ function getFbUserInfo(){
 			'/me',
 			{
 				httpMethod: 'GET',
-				version: 'v2.5',
+				version: 'v2.12',
 				parameters: {
 					'fields': {
-						'string' : 'email,name'						        
+						'string' : 'email,name,picture'						       
 					}	    
 				}
 			},
@@ -39,7 +39,8 @@ function formUserObj(fbAccessTokenObj,fbUserInfo,getState){
 		accessToken : fbAccessTokenObj.accessToken,
 		username : fbUserInfo.name,
 		userId : fbUserInfo.id,
-		language : language
+		profilePic : fbUserInfo.picture,
+		language : language,
 	};
 	// Append user email if exist
 	if(fbUserInfo.email) userObj.email = fbUserInfo.email;

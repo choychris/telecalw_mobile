@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		paddingVertical : 10,
-		height : 210
+		height : 220
 	},
 	innerContainer : {
 		flexDirection : 'row',
