@@ -6,8 +6,8 @@ import { setUserLanguage , setUserPreference } from '../actions';
 
 class SettingForm extends Component {
 	shouldComponentUpdate(nextProps){
-		const { language , preference } = this.props;
-		return nextProps.language.locale !== language.locale || nextProps.preference !== preference;
+		const { language , preference , version } = this.props;
+		return nextProps.language.locale !== language.locale || nextProps.preference !== preference || version !== nextProps.version;
 	}
 	_renderLanguageIOSPicker(avaLanguage,locale,string){
 		//console.warn(JSON.stringify(avaLanguage));
@@ -78,12 +78,16 @@ class SettingForm extends Component {
 		)
 	}
 	render(){
-		const { user , language , preference } = this.props;
+		const { user , language , preference , version } = this.props;
 		const { avaLanguage , locale , string } = language;
 		//console.warn(JSON.stringify(user));
 		//console.warn(locale)
+		//console.warn(JSON.stringify(version))
 		return (
 			<View style={styles.container}>
+				<Text style={styles.text}>
+					{`${string['version']} : ${version.version}`}
+				</Text>
 				<Text style={styles.text}>
 					{user.name}
 				</Text>
@@ -136,7 +140,8 @@ function mapStateToProps(state) {
 	return {
 		user : state.auth.user,
 		language : state.preference.language,
-		preference : state.preference.preference
+		preference : state.preference.preference,
+		version : state.mis.version
 	}
 }
 

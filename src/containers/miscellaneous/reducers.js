@@ -11,7 +11,8 @@ const initialState = {
 	},
 	issue : {
 		type : 'gameAppeal'
-	}
+	},
+	version : {}
 }
 
 function misReducer (state = initialState, action){
@@ -117,6 +118,11 @@ function misReducer (state = initialState, action){
 		case 'STORE_DELIVERY':
 			return state
 				.setIn(['delivery'],action.value)
+				.toJS()
+		break;
+		case 'STORE_VERSION':
+			return state
+				.setIn(['version'],action.value)
 				.toJS()
 		break;
 		default:

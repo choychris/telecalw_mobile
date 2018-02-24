@@ -1,4 +1,8 @@
 import { Platform , Dimensions } from 'react-native';
+const DeviceInfo = require('react-native-device-info');
+import Request from '../../utils/fetch';
+import { releaseChecking } from '../../common/api/request/version';
+
 export function errorMessage(action,navigator,data,time){
 	let callback;
 	if(action === 'show'){
@@ -101,4 +105,44 @@ export function insufficientFundMessage(navigator){
 			flex : 1
 		}
 	});
+}
+
+export function checkVersionRelease(){
+	return (dispatch,getState)=>{
+		const originVersion = DeviceInfo.getReadableVersion();
+		const lastIndex = originVersion.lastIndexOf("."); 
+		let formatVersion = `v${DeviceInfo.getReadableVersion().slice(0,lastIndex)}(${originVersion.charAt(lastIndex+1)})`;
+		//console.warn(Platform.OS);	
+		//console.warn(DeviceInfo.getReadableVersion());
+		//console.warn(formatVersion);
+		//console.warn(lastIndex);
+		if(Platform.OS === 'ios'){
+			// Engage checking procedure
+			releaseChecking({
+				versionName : formatVersion
+			},Request)
+				.then((res,err)=>{
+					//console.warn(err);
+					//console.warn(JSON.stringify(res));
+					if(!err && res.releaseStatus !== undefined){
+						const releaseStatus = (res.releaseStatus === 'release') ? true : false;
+						dispatch({
+							type : 'STORE_VERSION',
+							value : {
+								version : formatVersion,
+								release : releaseStatus
+							}
+						});
+					}
+				})
+		} else if(Platform.OS === 'android'){
+			dispatch({
+				type : 'STORE_VERSION',
+				value : {
+					version : formatVersion,
+					release : true
+				}
+			})
+		}
+	}
 }

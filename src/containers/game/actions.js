@@ -1,5 +1,5 @@
 import { NetInfo , Dimensions , Platform } from 'react-native';
-import { errorMessage , loading, insufficientFundMessage } from '../utilities/actions';
+import { errorMessage , loading, insufficientFundMessage , checkVersionRelease } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
@@ -47,6 +47,9 @@ async function loadGameListFlow(dispatch,getState,navigator){
 		}
 		// Step 3 : Initial Check In Reward
 		dispatch(checkInRewardChecking(navigator));
+		// Step 4 : Check Version Release
+		dispatch(checkVersionRelease());
+		
 	}
 	catch(e){
 		loading('hide',navigator);
