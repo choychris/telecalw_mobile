@@ -39,7 +39,7 @@ function formUserObj(fbAccessTokenObj,fbUserInfo,getState){
 		accessToken : fbAccessTokenObj.accessToken,
 		username : fbUserInfo.name,
 		userId : fbUserInfo.id,
-		profilePic : fbUserInfo.picture,
+		picture : fbUserInfo.picture,
 		language : language,
 	};
 	// Append user email if exist
