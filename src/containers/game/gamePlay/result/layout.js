@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { View , Text , StyleSheet , Image , Platform , Dimensions } from 'react-native';
+import { View , Text , StyleSheet , Image , Platform , Dimensions , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
@@ -12,10 +12,11 @@ import { playUISound } from '../../../../utils/sound';
 class GameResult extends Component {
 	constructor(props){
 		super(props);
-		this.state = { btnDisable : false };
+		this.state = { btnDisable : false , loading : false };
 	}
 	shouldComponentUpdate(nextProps,nextState){
-		return nextState.btnDisable !== this.state.btnDisable;
+		const { loading } = this.state;
+		return nextState.loading !== loading;
 	}
 	componentDidMount(){
 		const { navigator , result , playUISound } = this.props;
@@ -46,7 +47,7 @@ class GameResult extends Component {
 			endGamePlay
 		} = this.props;
 		endGamePlay(action,navigator);
-		this.setState({ btnDisable : true });
+		this.setState({ loading : true });
 		clearInterval(this.gameResultTimer);
 	}
 	_renderActionButton(){
@@ -79,6 +80,7 @@ class GameResult extends Component {
 	}
 	render(){
 		const { result , string } = this.props;
+		const { loading } = this.state;
 		const resultColor = (result === 2) ? { color : '#CF333F' } : { color : '#2ECC71' };
 		const title = (result === 2) ? string['fail'] : string['congratulations'];
 		const desc = (result === 2) ? string['failSlogan'] : string['congratulationsSlogan'];
@@ -92,7 +94,7 @@ class GameResult extends Component {
 				</View>
 				<Text style={styles.slogan}>{desc}</Text>
 				<View style={styles.btnContainer}>
-					{this._renderActionButton()}
+					{(loading !== true) ? this._renderActionButton() : <ActivityIndicator size="small" color={'white'}/> }
 				</View>
 			</View>
 		)
