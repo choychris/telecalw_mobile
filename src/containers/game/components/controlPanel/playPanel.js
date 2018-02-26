@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import SwitchCameraButton from './swicthCameraButton';
 import CatchButton from './catchButton';
 import JoyStick from './joystick/container';
-import { sendGameResult , webSocketUrl } from '../../actions';
+import { sendGameResult , webSocketUrl , refund } from '../../actions';
 import { websockeInitialize } from '../../../../common/api/request/gizwits';
-import { errorMessage } from '../../../utilities/actions';
 
 class PlayPanel extends Component {
 	constructor(props){
@@ -41,12 +40,13 @@ class PlayPanel extends Component {
 		return false;
 	}
 	componentDidMount(){
-		const { config } = this.props;
+		const { config , navigator } = this.props;
 		this.ws.onopen = () => websockeInitialize(
 			config.gizwits,
 			this.ws,
 			(result)=>this._displayGameResult(result),
-			()=>errorMessage('show',navigator,{ title : 'error'})
+			()=>refund(navigator),
+			1
 		);
 	}
 	//appid : '20a365a7564142d3a342916f6d6df937',
