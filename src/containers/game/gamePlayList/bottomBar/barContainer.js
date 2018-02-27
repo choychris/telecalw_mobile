@@ -8,14 +8,6 @@ import Telebot from '../../../../components/telebuddies/telebot';
 class BarContainer extends Component {
 	constructor(props){
 		super(props);
-		this.state = { 
-			menu : [
-				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
-				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' },
-				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
-			]
-		};
 		this._floating = new Animated.ValueXY({
 			x : 0,
 			y : 0
@@ -24,8 +16,9 @@ class BarContainer extends Component {
 	componentDidMount(){
 		this._floatingAnimation();
 	}
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { version } = this.props;
+		return version !== nextProps.version;
 	}
 	_floatingAnimation(){
 		Animated.loop(
@@ -49,13 +42,27 @@ class BarContainer extends Component {
 			])
 		).start();
 	}
-	_renderTabItems(menu){
-		const { navigator } = this.props;
+	_renderTabItems(){
+		const { navigator , version } = this.props;
+		let renderMenu;
+		if(version.release !== true){
+			renderMenu = [
+				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
+			]
+		} else {
+			renderMenu = [
+				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' },
+				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' }
+			]
+		};
 		return (
 			<FlatList
 				style={{ paddingHorizontal : 10  }}
 				horizontal={true}
-				data={menu}
+				data={renderMenu}
 				renderItem={({item})=>
 					<ItemButton 
 						{...item}
@@ -67,11 +74,10 @@ class BarContainer extends Component {
 	}
 	render(){
 		const { navigator } = this.props;
-		const { menu } = this.state;
 		const screenWidth = Dimensions.get('window').width * 0.25;
 		return (
 			<View style={styles.container}>
-				{this._renderTabItems(menu)}
+				{this._renderTabItems()}
 				<Animated.View style={this._floating.getLayout()}>
 					<TouchableOpacity
 						onPress={()=>{
@@ -105,4 +111,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(BarContainer);
+function mapStateToProps(state) {
+	return {
+		version : state.mis.version
+	}
+}
+
+export default connect(mapStateToProps,null)(BarContainer);
