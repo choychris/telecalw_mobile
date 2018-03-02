@@ -15,8 +15,8 @@ class Coins extends Component {
 		getUserWallet(navigator);
 	}
 	shouldComponentUpdate(nextProps){
-		const { wallet } = this.props;
-		return nextProps.wallet !== wallet;
+		const { wallet , version } = this.props;
+		return nextProps.wallet !== wallet || version !== nextProps.version;
 	}
 	_renderLoading(){
 		return <ActivityIndicator size="small" color={'white'}/>
@@ -28,14 +28,15 @@ class Coins extends Component {
 		const { 
 			wallet , 
 			navigator , 
-			disabled 
+			disabled ,
+			version
 		} = this.props;
 		return (
 			<TouchableOpacity 
 				style={styles.container}
 				disabled={(disabled === true) ? true : false}
 				onPress={()=>{
-					navigator.push({
+					if(version.release === true) navigator.push({
 						screen : 'app.TopUp',
 						navigatorStyle : {
 							navBarHidden : true
@@ -56,7 +57,8 @@ class Coins extends Component {
 
 function mapStateToProps(state) {
 	return {
-		wallet : state.auth.wallet
+		wallet : state.auth.wallet,
+		version : state.mis.version
 	}
 }
 
