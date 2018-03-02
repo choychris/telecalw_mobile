@@ -23,11 +23,11 @@ class InsufficientFundSuggest extends Component {
 		},500);
 	}
 	_renderActionButton(){
-		const { string } = this.props;
-		const actionButtons = [
+		const { string , version } = this.props;
+		const actionButtons = (version.release) ? [
 			{ text : 'referral' , function : ()=>this._navigateTo('app.Reward') },
 			{ text : 'topUp' , function : ()=>this._navigateTo('app.TopUp')}
-		]
+		] : [];
 		return  actionButtons.map((btn,key)=>(
 			<View key={key}>
 				<Button
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+		version : state.mis.version
 	}
 }
 

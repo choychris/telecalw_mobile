@@ -6,12 +6,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 
 class TopUpButton extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { version } = this.props;
+		return version !== nextProps.version;
 	}
 	render(){
-		const { navigator } = this.props;
-		return (
+		const { navigator , version } = this.props;
+		return (version.release === true) ? (
 			<Button
 				text={'topUp'}
 				textStyle={{
@@ -36,8 +37,14 @@ class TopUpButton extends Component {
 					});
 				}}
 			/>
-		)
+		) : null
 	}
 }
 
-export default connect(null,null)(TopUpButton)
+function mapStateToProps(state) {
+	return {
+		version : state.mis.version
+	}
+}
+
+export default connect(mapStateToProps,null)(TopUpButton)
