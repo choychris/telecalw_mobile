@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform , Picker , Switch } from 'react-native';
+import { ScrollView , KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , ActionSheetIOS , TouchableOpacity , Platform , Picker , Switch } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setUserLanguage , setUserPreference } from '../actions';
@@ -84,7 +84,7 @@ class SettingForm extends Component {
 		//console.warn(locale)
 		//console.warn(JSON.stringify(version))
 		return (
-			<View style={styles.container}>
+			<ScrollView contentContainerStyle={styles.container}>
 				<Text style={styles.text}>
 					{`${string['version']} : ${version.version}`}
 				</Text>
@@ -94,7 +94,7 @@ class SettingForm extends Component {
 				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : this._renderLanguageAndroidPicker(avaLanguage,locale,string)}
 				{this._renderMusicSetting(string,preference)}
 				{this._renderVibrationSetting(string,preference)}
-			</View>
+			</ScrollView>
 		)
 	}
 }
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		paddingVertical : 10,
-		height : 220
+		height : 250
 	},
 	innerContainer : {
 		flexDirection : 'row',
