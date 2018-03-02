@@ -298,10 +298,11 @@ export function getPlanetImageSource(name,picture){
 export function positioningItems(productList){
 	const screenWidth = Dimensions.get('window').width;
 	const screenHeight = Dimensions.get('window').height;
+	const padding = (productList.length > 3) ? 30 : 0
 	const positions = (Platform.OS === 'ios') ? [
-		{ x : -screenWidth/3 , y : -screenHeight*0.2 } ,
-		{ x : 0 , y : -screenHeight*0.35 },
-		{ x : screenWidth/3 , y : -screenHeight*0.3 },
+		{ x : -screenWidth/3 , y : -screenHeight*0.19+padding } ,
+		{ x : 0 , y : -screenHeight*0.34+padding },
+		{ x : screenWidth/3 , y : -screenHeight*0.29+padding },
 		{ x : -screenWidth/3 , y : 0 },
 		{ x : 0 , y : screenHeight*0.04 },
 		{ x : screenWidth/3 , y : -screenHeight*0.1 }
