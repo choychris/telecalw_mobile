@@ -47,7 +47,10 @@ class RateItem extends Component {
 						{`${bonus} ${string['bonus']}`}
 					</Text>
 					<Text style={styles.text}>
-						{`${currency['usd']} usd (${currency['hkd']} hkd)`}
+						{`${currency['usd']} usd`}
+					</Text>
+					<Text style={styles.text}>
+						{`(${currency['hkd']} hkd)`}
 					</Text>
 				</View>
 			</TouchableOpacity>	
