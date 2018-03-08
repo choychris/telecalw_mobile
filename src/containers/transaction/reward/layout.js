@@ -120,7 +120,7 @@ class Reward extends Component {
 										paddingVertical : 10,
 										paddingHorizontal : 15
 									},
-									onPressFunction : ()=>confirmRedeem()
+									onPressFunction : ()=>confirmRedeem(navigator)
 								}
 							]}
 						/>

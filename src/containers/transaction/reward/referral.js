@@ -55,7 +55,7 @@ class Referral extends Component {
 				<Text style={[styles.text,{ fontSize : 18 }]}>
 					{string['referralCode']}
 				</Text>
-				<Text style={[styles.text,{ fontSize : 20  }]}>
+			<Text style={[styles.referralText,{ fontSize : 20  }]}>
 					{code}
 				</Text>
 			</View>
@@ -130,6 +130,12 @@ const styles = StyleSheet.create({
 		textAlign : 'center',
 		color : '#CF333F',
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
+	},
+	referralText : {
+		marginVertical : 2,
+		textAlign : 'center',
+		color : '#CF333F',
+		fontWeight : 'bold'
 	},
 	telebot : {
 		height : 70,
