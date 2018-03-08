@@ -214,12 +214,13 @@ export function inputRedeemCode(value){
 	}
 }
 
-export function confirmRedeem(){
+export function confirmRedeem(navigator){
 	return(dispatch,getState)=>{
 		const { reward } = getState()['transaction'];
 		const { userId , id } = getState()['auth']['token']['lbToken'];
+		const { string } = getState()['preference']['language'];
 		if(reward && reward !== null){
-			console.warn(reward);
+			//console.warn(reward);
 			const data = {
 				token : id,
 				data : {
@@ -242,14 +243,46 @@ export function confirmRedeem(){
 								type : 'UPDATE_WALLET_BALANCE',
 								value : result.newWalletBalance
 							});
+							message(
+								'show',
+								navigator,
+								{ 
+									type : 'happy',
+									header : 'Ya!',
+									title : string['getCoins'],
+									message : `${string['thankyou']}. ${string['newBalance']} : ${result.newWalletBalance}`
+								},
+								500
+							);
 						} else {
-
+							//console.warn(result);
+							message(
+								'show',
+								navigator,
+								{ 
+									type : 'sick',
+									title : string['error'],
+									message : string[res.result]
+								},
+								500
+							);
 						}
 					}
 				})
 				.catch((err)=>{
 					//console.warn(JSON.stringify(err));
 				});
+		} else {
+			message(
+				'show',
+				navigator,
+				{ 
+					type : 'sick',
+					title : string['error'],
+					message : string['invalidCode']
+				},
+				500
+			);
 		}
 	}
 }
