@@ -7,6 +7,7 @@ import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
 import { ShareDialog } from 'react-native-fbsdk';
 import { trackEvent } from '../../utils/analytic';
+import { Platform } from 'react-native';
 
 export function selectRate(rate){
 	return (dispatch,getState)=>{
@@ -98,32 +99,38 @@ export function payment(navigator){
 				userId : userId
 			};
 			loading('show',navigator);
+			const paymentHandle = ()=>{
+				setTimeout(()=>{
+					BTClient.showPaymentViewController({}).then((nonce)=>{
+						//payment succeeded, pass nonce to server
+						dispatch(sales(nonce,rate,navigator));	
+					})
+					.catch((err)=>{
+						loading('hide',navigator);
+						//console.warn(err)
+						message(
+							'show',
+							navigator,
+							{ 
+								type : 'sick',
+								title : string['error'],
+								message : string['tryAgain']
+							},
+							500
+						);
+					});
+				},5000)		
+			}
 			getPaymentToken(params,Request)
 				.then((res,err)=>{
 					//console.warn(JSON.stringify(res.result));
 					//console.warn(JSON.stringify(err));
-					BTClient.setup(res.result).then(()=>{
-						setTimeout(()=>{
-							BTClient.showPaymentViewController({}).then((nonce)=>{
-								//payment succeeded, pass nonce to server
-								dispatch(sales(nonce,rate,navigator));	
-							})
-							.catch((err)=>{
-								loading('hide',navigator);
-								//console.warn(err)
-								message(
-									'show',
-									navigator,
-									{ 
-										type : 'sick',
-										title : string['error'],
-										message : string['tryAgain']
-									},
-									500
-								);
-							});
-						},5000)		
-					});
+					if (Platform.OS === 'ios') {
+						BTClient.setupWithURLScheme(res.result, 'teleclaw.live.payments')
+							.then(()=>paymentHandle());
+					} else {
+						BTClient.setup(res.result).then(()=>paymentHandle());
+					}  
 			})
 		} else {
 			message(

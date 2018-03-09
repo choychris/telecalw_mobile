@@ -28,6 +28,16 @@
 				<string>fb144167082893443</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>teleclaw.live</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>teleclaw.live.payments</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>7</string>

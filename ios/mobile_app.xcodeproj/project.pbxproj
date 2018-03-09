@@ -1620,6 +1620,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = mobile_app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1656,6 +1657,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../node_modules/react-native-braintree-xplat/ios/RCTBraintree/**",
 				);
 				INFOPLIST_FILE = mobile_app/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
