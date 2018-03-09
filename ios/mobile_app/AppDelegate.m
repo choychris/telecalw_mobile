@@ -13,6 +13,7 @@
 #import "RCCManager.h"
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <RCTBraintree.h>
 
 @implementation AppDelegate
 
@@ -52,8 +53,12 @@
                                                       sourceApplication:sourceApplication
                                                              annotation:annotation
                   ];
+  if ([url.scheme localizedCaseInsensitiveCompare:@"teleclaw.live.payments"] == NSOrderedSame) {
+    return [[RCTBraintree sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  }
   // Add any custom logic here.
   return handled;
 }
+
 
 @end
