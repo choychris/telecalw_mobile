@@ -205,6 +205,7 @@ export function machineStatus(action){
 			});
 
 			channel.bind('pusher:subscription_succeeded',(members)=>{
+				dispatch({ type : 'UPDATE_MEMBERS' , value : members.members });
 				dispatch({ type : 'UPDATE_VIEWS' , value : members.count });
 			});
 

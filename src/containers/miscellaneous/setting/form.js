@@ -77,10 +77,18 @@ class SettingForm extends Component {
 			</View>
 		)
 	}
+	_renderUserAvatar(picture){
+		return(
+			<Image
+				style={styles.avatar}
+				source={{uri: picture}}
+			/>
+		)
+	}
 	render(){
 		const { user , language , preference , version } = this.props;
 		const { avaLanguage , locale , string } = language;
-		//console.warn(JSON.stringify(user));
+		//console.warn(JSON.stringify(user.picture));
 		//console.warn(locale)
 		//console.warn(JSON.stringify(version))
 		return (
@@ -88,8 +96,12 @@ class SettingForm extends Component {
 				<Text style={styles.text}>
 					{`${string['version']} : ${version.version}`}
 				</Text>
+				{(user.picture !== undefined) ? this._renderUserAvatar(user.picture) : null}
 				<Text style={styles.text}>
 					{user.name}
+				</Text>
+				<Text style={styles.text}>
+					{user.email}
 				</Text>
 				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : this._renderLanguageAndroidPicker(avaLanguage,locale,string)}
 				{this._renderMusicSetting(string,preference)}
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
 		alignSelf : 'stretch',
 		alignItems : 'center',
 		paddingVertical : 10,
-		height : 250
+		height : 400
 	},
 	innerContainer : {
 		flexDirection : 'row',
@@ -117,7 +129,8 @@ const styles = StyleSheet.create({
 	},
 	text : {
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-		fontSize : 18
+		fontSize : 18,
+		paddingVertical : 5
 	},
 	btn : {
 		paddingVertical : 10,
@@ -133,6 +146,11 @@ const styles = StyleSheet.create({
 	},
 	picker : {
 		alignSelf : 'stretch'
+	},
+	avatar : {
+		width : 100,
+		height : 100,
+		borderRadius:50
 	}
 });
 

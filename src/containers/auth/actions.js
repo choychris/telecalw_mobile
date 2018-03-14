@@ -20,7 +20,7 @@ function getFbUserInfo(){
 				version: 'v2.12',
 				parameters: {
 					'fields': {
-						'string' : 'email,name,picture'						       
+						'string' : 'email,name,picture.type(large)'						       
 					}	    
 				}
 			},

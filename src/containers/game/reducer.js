@@ -67,6 +67,11 @@ function gameReducer (state = initialState, action){
 				.setIn(['machine','views'],action.value)
 				.toJS();
 		break;
+		case 'UPDATE_MEMBERS':
+			return state
+				.setIn(['machine','members'],action.value)
+				.toJS();
+		break;
 		case 'UPDATE_TIMER':
 			return state
 				.setIn(['play','timer'],action.value)
