@@ -44,21 +44,26 @@ class BarContainer extends Component {
 	}
 	_renderTabItems(){
 		const { navigator , version } = this.props;
-		let renderMenu;
-		if(version.release !== true){
-			renderMenu = [
-				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
-				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' }
-			]
-		} else {
-			renderMenu = [
-				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
-				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
-				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' }
-			]
-		};
+		const renderMenu = [
+			{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+			{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+			{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
+			{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' }
+		];
+		//if(version.release !== true){
+			//renderMenu = [
+				//{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+				//{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+				//{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' }
+			//]
+		//} else {
+			//renderMenu = [
+				//{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+				//{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+				//{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
+				//{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' }
+			//]
+		//};
 		return (
 			<FlatList
 				style={{ paddingHorizontal : 10  }}

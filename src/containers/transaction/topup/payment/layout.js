@@ -27,26 +27,6 @@ class TopUp extends Component {
 		this.state = {
 			tabs : [
 				{ 
-					name : 'topUp' , 
-					content : <RateListContainer navigator={navigator}/> ,
-					buttons : [
-						{
-							text : 'confirmText',
-							textStyle : {
-								color : 'white',
-								fontSize : 25,
-								fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-							},
-							btnStyle : {
-								backgroundColor : '#4C4C4C',
-								paddingVertical : 10,
-								paddingHorizontal : 15
-							},
-							onPressFunction : ()=>payment(navigator)
-						}
-					]
-				},
-				{ 
 					name : 'transactions',
 					content : <TransactionListContainer navigator={navigator}/>
 				}
@@ -97,9 +77,34 @@ class TopUp extends Component {
 	}
 	render(){
 		const { 
-			navigator 
+			navigator ,
+			version
 		} = this.props;
-		const { tabs } = this.state;
+		let { tabs } = this.state;
+		if(version.release === true){
+			tabs.push(
+				{ 
+					name : 'topUp' , 
+					content : <RateListContainer navigator={navigator}/> ,
+					buttons : [
+						{
+							text : 'confirmText',
+							textStyle : {
+								color : 'white',
+								fontSize : 25,
+								fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+							},
+							btnStyle : {
+								backgroundColor : '#4C4C4C',
+								paddingVertical : 10,
+								paddingHorizontal : 15
+							},
+							onPressFunction : ()=>payment(navigator)
+						}
+					]
+				}
+			)
+		}
 		return(
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -115,7 +120,7 @@ class TopUp extends Component {
 					<MessageBox 
 						type={'left'}
 						tabs={tabs}
-						promptString={'topUpPrompt'}
+						promptString={(version.release === true) ? 'topUpPrompt' : 'recordPrompt'}
 					/>
 				</Animated.View>
 				<Animated.View
@@ -140,6 +145,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		version : state.mis.version
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		payment,
@@ -149,4 +160,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(TopUp);
+export default connect(mapStateToProps,mapDispatchToProps)(TopUp);
