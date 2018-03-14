@@ -29,7 +29,6 @@ class GameRoom extends Component {
 				<NavBar 
 					back={true}
 					coins={true} 
-					signal={true}
 					viewers={true}
 					navigator={navigator}
 				/>

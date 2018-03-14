@@ -25,7 +25,7 @@ class Viewers extends Component {
 			<ScrollView 
 				horizontal={true}
 			>
-				{Object.keys(members).map((key,index)=>(index <= 2) ? <Image
+				{Object.keys(members).map((key,index)=>(index <= 2 && members[key]['picture'] !== undefined) ? <Image
 					key={key}
 					style={styles.avatar}
 					source={{ uri : members[key]['picture'] }}			
