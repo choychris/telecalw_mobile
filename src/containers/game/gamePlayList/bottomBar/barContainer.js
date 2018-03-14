@@ -48,14 +48,15 @@ class BarContainer extends Component {
 		if(version.release !== true){
 			renderMenu = [
 				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' }
+				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' }
 			]
 		} else {
 			renderMenu = [
 				{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
 				{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
-				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' },
-				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' }
+				{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
+				{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' }
 			]
 		};
 		return (

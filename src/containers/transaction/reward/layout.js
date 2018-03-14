@@ -84,7 +84,8 @@ class Reward extends Component {
 		)
 	}
 	render(){
-		const { navigator , confirmRedeem } = this.props;
+		const { navigator , confirmRedeem , version } = this.props;
+		const { release } = version;
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -106,8 +107,8 @@ class Reward extends Component {
 							title={'referral'}
 							type={'right'}
 							content={this._renderContainer()}
-							promptString={'rewardPrompt'}
-							buttons={[
+							promptString={(version.release === true) ? 'rewardPrompt' : 'sharePrompt'}
+							buttons={(version.release === true) ? [
 								{
 									text : 'confirm',
 									textStyle : {
@@ -122,7 +123,7 @@ class Reward extends Component {
 									},
 									onPressFunction : ()=>confirmRedeem(navigator)
 								}
-							]}
+							] : null}
 						/>
 					</Animated.View>
 					<Animated.View 
@@ -157,6 +158,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state) {
+	return {
+		version : state.mis.version
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		confirmRedeem,
@@ -165,4 +172,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(Reward);
+export default connect(mapStateToProps,mapDispatchToProps)(Reward);

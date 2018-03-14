@@ -27,6 +27,12 @@ export default StyleSheet.create({
 	},
 	icon : {
 		marginHorizontal : 5
+	},
+	avatar : {
+		width : 30,
+		height : 30,
+		borderRadius:15,
+		marginHorizontal : 2
 	}
 });
 
