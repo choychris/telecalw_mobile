@@ -14,11 +14,11 @@ import { pusherConfig } from '../../config/env';
 import { api } from '../../common/api/url';
 import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
-import { checkInRewardChecking } from '../auth/actions';
+import { checkInRewardChecking , loginFacebook } from '../auth/actions';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
-		const token = getState()['auth']['token']['lbToken'];
+		const token = (getState()['auth']['token']['lbToken'] === undefined) ?  { id : null } : getState()['auth']['token']['lbToken'];
 		const { string } = getState()['preference']['language'];
 		// Step 1 : Get Tag List From backend API
 		const tags = await tagList(token,Request);	
@@ -45,9 +45,9 @@ async function loadGameListFlow(dispatch,getState,navigator){
 				value : productList
 			});
 		}
-		// Step 3 : Initial Check In Reward
-		dispatch(checkInRewardChecking(navigator));
-		// Step 4 : Check Version Release
+		//// Step 3 : Initial Check In Reward
+		if(token.id !== null) dispatch(checkInRewardChecking(navigator));
+		//// Step 4 : Check Version Release
 		dispatch(checkVersionRelease());
 		
 	}
@@ -152,74 +152,78 @@ export function initiatePusher(userId,dispatch){
 
 export function productStatus(){
 	return (dispatch,getState)=>{
+		const lbToken = getState()['auth']['token']['lbToken'];
+		if(lbToken !== undefined){
+			// Step 1 : Initiate and Authenticate Pusher
+			const { userId } = lbToken;
+			const pusher = initiatePusher(userId,dispatch);
+			console.log(userId);
 
-		// Step 1 : Initiate and Authenticate Pusher
-		const userId = getState()['auth']['token']['lbToken']['userId'];
-		const pusher = initiatePusher(userId,dispatch);
-		console.log(userId);
-
-		// Step 2 : Initiate Product Status Channel
-		var channel = pusher.subscribe('products');
-		channel.bind('statusChange', function(data) {
-			//console.warn(JSON.stringify(data));
-			const { productId , status } = data;
-			const currentTag = getState()['game']['tag'];
-			const products = getState()['game']['products'];
-			if(currentTag !== null && products[currentTag.id]){
-				let updateProductIndex = null
-				products[currentTag.id].map((item,index)=>{
-					if(item.id === productId) updateProductIndex = index;
-				});
-				if(updateProductIndex !== null){
-					dispatch({ 
-						type : 'STORE_PRODUCT_LIST',
-						keys : [currentTag.id,updateProductIndex,'status'],
-						value : status 
+			// Step 2 : Initiate Product Status Channel
+			var channel = pusher.subscribe('products');
+			channel.bind('statusChange', function(data) {
+				//console.warn(JSON.stringify(data));
+				const { productId , status } = data;
+				const currentTag = getState()['game']['tag'];
+				const products = getState()['game']['products'];
+				if(currentTag !== null && products[currentTag.id]){
+					let updateProductIndex = null
+					products[currentTag.id].map((item,index)=>{
+						if(item.id === productId) updateProductIndex = index;
 					});
+					if(updateProductIndex !== null){
+						dispatch({ 
+							type : 'STORE_PRODUCT_LIST',
+							keys : [currentTag.id,updateProductIndex,'status'],
+							value : status 
+						});
+					}
 				}
-			}
-		});
-
+			});
+		}
 	}
 }
 
 export function machineStatus(action){
 	return(dispatch,getState)=>{
-
+		
+		const token = getState()['auth']['token'];
 		const machine = getState()['game']['machine'];
 		const pusher = getState()['preference']['pusher'];
 
-		if(action === 'start'){
-			// Initiate Machine Status Channel
-			var channel = pusher.subscribe('presence-machine-'+machine.id);
-			channel.bind('machine_event', (data)=>{
-				//console.warn(JSON.stringify(data));
-				dispatch({ 
-					type : 'UPDATE_MACHINE_STATUS' , 
-					value : { 
-						status : data.status  , 
-						reservation : data.reservation ,
-						currentUser : data.currentUser
-					}  
-				});	
-			});
+		if(token.lbToken !== undefined){
+			if(action === 'start'){
+				// Initiate Machine Status Channel
+				var channel = pusher.subscribe('presence-machine-'+machine.id);
+				channel.bind('machine_event', (data)=>{
+					//console.warn(JSON.stringify(data));
+					dispatch({ 
+						type : 'UPDATE_MACHINE_STATUS' , 
+						value : { 
+							status : data.status  , 
+							reservation : data.reservation ,
+							currentUser : data.currentUser
+						}  
+					});	
+				});
 
-			channel.bind('pusher:subscription_succeeded',(members)=>{
-				dispatch({ type : 'UPDATE_MEMBERS' , value : members.members });
-				dispatch({ type : 'UPDATE_VIEWS' , value : members.count });
-			});
+				channel.bind('pusher:subscription_succeeded',(members)=>{
+					dispatch({ type : 'UPDATE_MEMBERS' , value : members.members });
+					dispatch({ type : 'UPDATE_VIEWS' , value : members.count });
+				});
 
-			channel.bind('pusher:member_added',(members)=>{
-				const count = channel.members.count;
-				dispatch({ type : 'UPDATE_VIEWS' , value : count });
-			});
+				channel.bind('pusher:member_added',(members)=>{
+					const count = channel.members.count;
+					dispatch({ type : 'UPDATE_VIEWS' , value : count });
+				});
 
-			channel.bind('pusher:member_removed', (member)=>{
-				const count = channel.members.count;
-				dispatch({ type : 'UPDATE_VIEWS' , value : count });
-			});
-		} else if (action === 'leave'){
-			pusher.unsubscribe('presence-machine-'+machine.id);
+				channel.bind('pusher:member_removed', (member)=>{
+					const count = channel.members.count;
+					dispatch({ type : 'UPDATE_VIEWS' , value : count });
+				});
+			} else if (action === 'leave'){
+				pusher.unsubscribe('presence-machine-'+machine.id);
+			}
 		}
 		
 	}
@@ -227,36 +231,37 @@ export function machineStatus(action){
 
 export function reserveStatus(navigator){
 	return(dispatch,getState)=>{
-		
-		const { userId } = getState()['auth']['token']['lbToken'];
-		const pusher = getState()['preference']['pusher'];
+		const lbToken = getState()['auth']['token']['lbToken'];	
+		if(lbToken !== undefined){
+			const { userId } = lbToken;
+			const pusher = getState()['preference']['pusher'];
 
-		var channel = pusher.subscribe('reservation-'+userId);
-		channel.bind('your_turn', (data)=>{
-			//console.warn(JSON.stringify(data));
-			dispatch({ type : 'UPDATE_RESERVATION' , value : data  });
+			var channel = pusher.subscribe('reservation-'+userId);
+			channel.bind('your_turn', (data)=>{
+				//console.warn(JSON.stringify(data));
+				dispatch({ type : 'UPDATE_RESERVATION' , value : data  });
 
-			navigator.showLightBox({
-				screen : 'app.Reservation',
-				animationType : 'fade',
-				navigatorStyle: {
-					navBarHidden: true
-				},
-				style: {
-					flex : 1,
-					height : Dimensions.get('window').height,
-					backgroundBlur: "dark",
-					backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
-					tapBackgroundToDismiss: false
-				},
-				passProps : {
-					data : data,
-					navigator : navigator
-				}
+				navigator.showLightBox({
+					screen : 'app.Reservation',
+					animationType : 'fade',
+					navigatorStyle: {
+						navBarHidden: true
+					},
+					style: {
+						flex : 1,
+						height : Dimensions.get('window').height,
+						backgroundBlur: "dark",
+						backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+						tapBackgroundToDismiss: false
+					},
+					passProps : {
+						data : data,
+						navigator : navigator
+					}
+				});
+
 			});
-
-		});
-
+		}
 	}
 }
 
@@ -325,7 +330,8 @@ export function positioningItems(productList){
 
 export function navigateToGameRoom(productId,status,navigator){
 	return (dispatch,getState)=>{
-		const token = getState()['auth']['token']['lbToken']['id'];
+		const lbToken = getState()['auth']['token']['lbToken'];
+		const token = (lbToken !== undefined) ? lbToken['id'] : null;
 		const tag = getState()['game']['tag'];
 		const products = getState()['game']['products'];
 		if(status === true){
@@ -414,102 +420,111 @@ export function filterCamera(cameras,mode){
 export function initGamePlay(navigator,loadState){
 	return (dispatch,getState)=>{
 
-		// Step 0 : Loading State
-		if(loadState) loadState(true);
-		loading('show',navigator);
+		// Step 0 : Check User Token
+		const token = getState()['auth']['token'];
 
-		// Step 1 : Check Wallet Balance || Wifi Connection
-		const { balance } = getState()['auth']['wallet'];
-		const { gamePlayRate } = getState()['game']['product'];
-		const { status , type } = getState()['game']['network'];
-		const sufficientFund = (balance >= gamePlayRate) ? true : false;
-		const networkValid = (status === true && type === 'wifi') ? true : false;
-		//console.warn(balance);
-		//console.warn(gamePlayRate)
-		if(sufficientFund === true && networkValid === true){
-	
-			// Step 2 : Get GamePlay Configuration from Backend
-			const { id , userId } = getState()['auth']['token']['lbToken'];
-			const machineId = getState()['game']['machine']['id'];
-			const productId = getState()['game']['product']['id'];
-			const params = {
-				token : id,
-				machineId : machineId,
-				data : {
-					productId : productId,
-					userId : userId
-				}
-			};
-			//console.warn(JSON.stringify(params));
-			engageGamePlay(params,Request)
-				.then((res,err)=>{
-					//console.warn(JSON.stringify(res));
-					//console.warn(JSON.stringify(err));
-					if(!err){
-						// Step 3 : Success Callback				
-						const { result } = res;
-						if(result.gizwits){
-							const { 
-								newWalletBalance , 
-								gizwits ,
-								playId
-							} = result;
-							// Store Gizwits Configure
-							dispatch({ 
-								type : 'STORE_PLAY_CONFIG' , 
-								value : { gizwits : gizwits , playId : playId }
-							});
-							// Navigate to GamePlay
-							navigator.resetTo({
-								screen : 'app.GamePlay',
-								navigatorStyle : {
-									navBarHidden : true
-								}
-							});
-							// Update Wallet Balance
-							dispatch({ 
-								type : 'UPDATE_WALLET_BALANCE' , 
-								value : newWalletBalance 
-							});
-							// Tracking
-							dispatch(trackEvent('playGame',productId));
-						} else if(result.reservation){
-							if(loadState) loadState(false);
-							loading('hide',navigator);
-							dispatch({
-								type : 'UPDATE_RESERVATION',
-								value : result.reservation
-							});
-						} else if(result === 'insufficient_balance'){
-							if(loadState) loadState(false);
-							loading('hide',navigator);
-							insufficientFundMessage(navigator);
-						}
-					} else {
-						if(loadState) loadState(false);
-						loading('hide',navigator);
-						errorMessage(
-							'show',
-							navigator,
-							{
-								title : string['error'],
-								message : string['tryAgain']
-							}
-						);
+		if(token.lbToken !== undefined){
+
+			// Step 0 : Loading State
+			if(loadState) loadState(true);
+			loading('show',navigator);
+
+			// Step 1 : Check Wallet Balance || Wifi Connection
+			const { balance } = getState()['auth']['wallet'];
+			const { gamePlayRate } = getState()['game']['product'];
+			const { status , type } = getState()['game']['network'];
+			const sufficientFund = (balance >= gamePlayRate) ? true : false;
+			const networkValid = (status === true && type === 'wifi') ? true : false;
+			//console.warn(balance);
+			//console.warn(gamePlayRate)
+			if(sufficientFund === true && networkValid === true){
+		
+				// Step 2 : Get GamePlay Configuration from Backend
+				const { id , userId } = token['lbToken'];
+				const machineId = getState()['game']['machine']['id'];
+				const productId = getState()['game']['product']['id'];
+				const params = {
+					token : id,
+					machineId : machineId,
+					data : {
+						productId : productId,
+						userId : userId
 					}
-				});
-		} else {
-			// Reverse Loading State
-			if(loadState) loadState(false);
-			loading('hide',navigator);
-			setTimeout(()=>{
-				// Insufficient Fund PopUp
-				if(sufficientFund === false) insufficientFundMessage(navigator);
-				// Network Problem PopUp
-				if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
-			},1000);
-		}
+				};
+				//console.warn(JSON.stringify(params));
+				engageGamePlay(params,Request)
+					.then((res,err)=>{
+						//console.warn(JSON.stringify(res));
+						//console.warn(JSON.stringify(err));
+						if(!err){
+							// Step 3 : Success Callback				
+							const { result } = res;
+							if(result.gizwits){
+								const { 
+									newWalletBalance , 
+									gizwits ,
+									playId
+								} = result;
+								// Store Gizwits Configure
+								dispatch({ 
+									type : 'STORE_PLAY_CONFIG' , 
+									value : { gizwits : gizwits , playId : playId }
+								});
+								// Navigate to GamePlay
+								navigator.resetTo({
+									screen : 'app.GamePlay',
+									navigatorStyle : {
+										navBarHidden : true
+									}
+								});
+								// Update Wallet Balance
+								dispatch({ 
+									type : 'UPDATE_WALLET_BALANCE' , 
+									value : newWalletBalance 
+								});
+								// Tracking
+								dispatch(trackEvent('playGame',productId));
+							} else if(result.reservation){
+								if(loadState) loadState(false);
+								loading('hide',navigator);
+								dispatch({
+									type : 'UPDATE_RESERVATION',
+									value : result.reservation
+								});
+							} else if(result === 'insufficient_balance'){
+								if(loadState) loadState(false);
+								loading('hide',navigator);
+								insufficientFundMessage(navigator);
+							}
+						} else {
+							if(loadState) loadState(false);
+							loading('hide',navigator);
+							errorMessage(
+								'show',
+								navigator,
+								{
+									title : string['error'],
+									message : string['tryAgain']
+								}
+							);
+						}
+					});
+			} else {
+				// Reverse Loading State
+				if(loadState) loadState(false);
+				loading('hide',navigator);
+				setTimeout(()=>{
+					// Insufficient Fund PopUp
+					if(sufficientFund === false) insufficientFundMessage(navigator);
+					// Network Problem PopUp
+					if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+				},1000);
+			}
 
+		} else {
+			//console.warn('Facebook Login')
+			dispatch(loginFacebook(navigator));
+		}
 	}
 }
 

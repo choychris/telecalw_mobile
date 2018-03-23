@@ -14,24 +14,30 @@ export function identitfyUser(userId,userObj){
 
 export function trackEvent(event,params){
 	return(dispatch,getState)=>{
-		const { userId } = getState()['auth']['token']['lbToken'];
-		let trackObj = {
-			userId : userId,
-			event : event
-		};
-		if(params) trackObj.properties  = params;
-		analytics.track(trackObj);	
+		const token = getState()['auth']['token'];
+		if(token.lbToken !== undefined){
+			const { userId } = token.lbToken;
+			let trackObj = {
+				userId : userId,
+				event : event
+			};
+			if(params) trackObj.properties  = params;
+			analytics.track(trackObj);	
+		}
 	}
 }
 
 export function trackScreen(screen,params){
 	return(dispatch,getState)=>{
-		const { userId } = getState()['auth']['token']['lbToken'];
-		let screenObj = {
-			userId : userId,
-			name : screen
-		};
-		if(params) screenObj.properties  = params;
-		analytics.screen(screenObj);	
+		const token = getState()['auth']['token'];
+		if(token.lbToken !== undefined){
+			const { userId } = token.lbToken;
+			let screenObj = {
+				userId : userId,
+				name : screen
+			};
+			if(params) screenObj.properties  = params;
+			analytics.screen(screenObj);	
+		}
 	}
 }
