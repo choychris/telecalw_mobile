@@ -48,15 +48,18 @@ class Referral extends Component {
 		const { user , version } = this.props;
 		return JSON.stringify(user) !== JSON.stringify(nextProps.user) || version !== nextProps.version;
 	}
-	_renderReferralCode(code){
+	_renderReferralCode(code,numOfReferral){
 		const { string , version } = this.props;
 		return (version.release === true) ? (
 			<View>
 				<Text style={[styles.text,{ fontSize : 18 }]}>
 					{string['referralCode']}
 				</Text>
-			<Text style={[styles.referralText,{ fontSize : 20  }]}>
+				<Text style={[styles.referralText,{ fontSize : 20  }]}>
 					{code}
+				</Text>
+				<Text style={[styles.text,{ fontSize : 18  }]}>
+					{`${string['numOfReferral']} : ${numOfReferral}`}
 				</Text>
 			</View>
 		) : null
@@ -92,7 +95,7 @@ class Referral extends Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.innerContainer}>
-					{(user.referral) ? this._renderReferralCode(user.referral.code) : null}
+					{(user.referral) ? this._renderReferralCode(user.referral.code,user.referral.numOfReferred) : null}
 					{(user.referral) ? this._renderShareButton(user.referral.code) : null}
 				</View>
 				<View style={styles.innerContainer}>
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
 	text : {
 		marginVertical : 2,
 		textAlign : 'center',
-		color : '#CF333F',
+		color : 'black',
 		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
 	},
 	referralText : {
