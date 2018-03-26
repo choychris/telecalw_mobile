@@ -11,8 +11,9 @@ import Timer from './timer';
 const DeviceInfo = require('react-native-device-info');
 
 class NavBar extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		const { token } = this.props;
+		return nextProps.token !== token;
 	}
 	render(){
 		const { 
@@ -23,16 +24,17 @@ class NavBar extends Component {
 			timer , 
 			viewers ,
 			navigator ,
-			coinsDisable
+			coinsDisable,
+			token
 		} = this.props;
 		const spaceStyle = (timer === true) ? { justifyContent : 'space-between' } : null;
 		return(
 			<View style={[styles.container,spaceStyle]}>	
 				{(back === true) ? <Back navigator={navigator}/> : null }
-				{(coins === true) ? <Coins navigator={navigator} disabled={coinsDisable}/>  : null}
+				{(coins === true && token.lbToken !== undefined) ? <Coins navigator={navigator} disabled={coinsDisable}/>  : null}
 				{(timer === true) ? <Timer/> : null}
 				{(location === true) ? <Location/> : null}
-				{(viewers === true) ? <Viewers/> : null}
+				{(viewers === true && token.lbToken !== undefined) ? <Viewers/> : null}
 				{(signal === true) ? <Signal navigator={navigator}/> : null}
 			</View>
 		)
@@ -49,6 +51,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect(null,null)(NavBar);
+function mapStateToProps(state) {
+	return {
+		token : state.auth.token
+	}
+}
+
+export default connect(mapStateToProps,null)(NavBar);
 
 
