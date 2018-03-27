@@ -50,7 +50,8 @@ class RateListContainer extends Component{
 	}
 	render(){
 		const { rates , version } = this.props;
-		return (version.release === true) ? (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading() : this._renderNoRate();
+		//return (version.release === true) ? (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading() : this._renderNoRate();
+		return (rates && rates.length > 0) ? this._renderList(rates) : this._renderLoading();
 	}
 }
 
