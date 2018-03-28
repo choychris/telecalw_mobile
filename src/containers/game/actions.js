@@ -292,10 +292,10 @@ export function networkChecking(navigator){
 }
 
 export function getPlanetImageSource(name,picture){
-	if(localPlanetImg()[name]){
+	if(localPlanetImg()[name] !== undefined){
 		return localPlanetImg()[name];
 	} else if (picture) {
-		return picture;
+		return { uri : picture };
 	} else {
 		return null
 	}

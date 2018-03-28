@@ -127,7 +127,7 @@ class Planet extends Component {
 				{this._renderSwipeIndicator('left')}
 				<Animated.Image
 					{...this._panResponder.panHandlers}
-					source={getPlanetImageSource(tag.name.en.toLowerCase(),tag.picture)}
+					source={getPlanetImageSource(tag.name.en.toLowerCase(),tag.images)}
 					style={[styles.image,this._planetStyle()]}
 					resizeMode={'contain'}
 				/>
