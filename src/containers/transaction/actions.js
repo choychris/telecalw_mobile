@@ -64,7 +64,7 @@ export function sales(nonce,rate,navigator){
 							{ 
 								type : 'sick',
 								title : string['error'],
-								message : result.message
+								message : string['processDecline']
 							},
 							500
 						);
