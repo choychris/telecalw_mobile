@@ -26,12 +26,12 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
     mode:'cors',
     body: data
   };
-  console.log(scope, data);
+  //console.log(scope, data);
 	//let url = `http://webrtcstreamer-env.ap-southeast-1.elasticbeanstalk.com${serverMethod}`
 	//let url = `http://default-environment.25k6y4yfum.us-west-2.elasticbeanstalk.com${serverMethod}`
 	//let url = `https://webrtc-streamer.herokuapp.com${serverMethod}`
-	let url = `${webrtcUrl()}${serverMethod}`;
-  //console.log(url);
+	let url = serverMethod;
+	//console.warn(url);
   fetch(url, init)
   .then(res => {
     if(res.status === 200 && onSuccess){
@@ -51,18 +51,17 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	})
 }
 
-export const initiatewebRTC = (mode,rtsp,times)=>{
+export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
 	return(dispatch,getState)=>{
 		const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
 		let streamObj = {};
-
 		pc.onicecandidate = (evt) => {
 			if(evt.candidate){
 				console.log('onicecandidate', evt.candidate);
 
 				function fetchFunction(){
-					fetchRequest(`/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
+					fetchRequest(`${webrtcServer}/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
 				}
 				
 				fetchFunction();		
@@ -73,7 +72,12 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 		}
 		
 		pc.onaddstream = (evt)=>{
-			streamObj = { stream : evt.stream.toURL() , pc : pc , rtsp : rtsp };
+			streamObj = { 
+				stream : evt.stream.toURL() , 
+				pc : pc , 
+				rtsp : rtsp ,
+				webrtcServer : webrtcServer 
+			};
 		}
 
 		pc.oniceconnectionstatechange = function(evt) {  
@@ -83,8 +87,8 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 				setTimeout(()=>{
 					if(pc.iceConnectionState !== 'connected'){
 						if(times <= 3){
-							closeWebrtc(pc,rtsp);
-							return dispatch(initiatewebRTC(mode,rtsp,times+1));
+							closeWebrtc(pc,rtsp,webrtcServer);
+							return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServer));
 						}
 					}
 				},3000)
@@ -101,14 +105,14 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 		try {
 			pc.createOffer(sessionDescription => {
 				pc.setLocalDescription(sessionDescription, () => {
-					fetchRequest(`/call?peerid=${peerid}&url=${encodeURIComponent(rtsp)}`, null, sessionDescription, onReceiveCall, null, 'setDesc', pc)
+					fetchRequest(`${webrtcServer}/call?peerid=${peerid}&url=${encodeURIComponent(rtsp)}`, null, sessionDescription, onReceiveCall, null, 'setDesc', pc)
 				} , err => console.log('setDesc', err))
 			}, err => console.log('createOffer', err));
 		
 			const onReceiveCall = (data, pc) => {
 				pc.setRemoteDescription(new RTCSessionDescription(data), () => {
 					console.log("setRemoteDescription ok");
-					fetchRequest(`/getIceCandidate?peerid=${peerid}`, null, null, onReceiveCandidate ,null , 'remoteDesc', pc)
+					fetchRequest(`${webrtcServer}/getIceCandidate?peerid=${peerid}`, null, null, onReceiveCandidate ,null , 'remoteDesc', pc)
 				},(err) => console.log('remote Desc', err))
 			}
 
@@ -130,8 +134,8 @@ export const initiatewebRTC = (mode,rtsp,times)=>{
 	}
 }
 
-export const closeWebrtc = (pc,rtsp)=>{
-	fetchRequest(`/hangup?peerid=${rtsp}`)
+export const closeWebrtc = (pc,rtsp,webrtcServer)=>{
+	fetchRequest(`${webrtcServer}/hangup?peerid=${rtsp}`)
 	if(pc && pc !== undefined) pc.close();
 }
 
@@ -139,9 +143,9 @@ export const restartWebrtc = ()=>{
 	return(dispatch,getState)=>{
 		const mode = getState()['game']['play']['cameraMode'];
 		if(getState()['game']['play']['webrtcUrl'][mode]){
-			const { pc ,rtsp } = getState()['game']['play']['webrtcUrl'][mode];
-			closeWebrtc(pc,rtsp);
-			dispatch(initiatewebRTC(mode,rtsp,0));
+			const { pc ,rtsp , webrtcServer } = getState()['game']['play']['webrtcUrl'][mode];
+			closeWebrtc(pc,rtsp,webrtcServer);
+			dispatch(initiatewebRTC(mode,rtsp,0,webrtcServer));
 		}
 	}
 }
