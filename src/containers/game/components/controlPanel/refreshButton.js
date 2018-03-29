@@ -23,6 +23,7 @@ class RefreshButton extends Component {
 					bottom : height * 0.57 ,
 					left: width * 0.1
 				}}
+				text={string['refresh']}
 				borderColor={'grey'}
 				icon={{ name : 'refresh' , size : 20 , color : 'black' }}
 				onPressFunction={()=>restartWebrtc()}
@@ -31,9 +32,16 @@ class RefreshButton extends Component {
 	}
 }
 
+function mapStateToProps(state) {
+	return {
+		string : state.preference.language.string
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		restartWebrtc
 	}, dispatch)
 }
-export default connect(null,mapDispatchToProps)(RefreshButton)
+
+export default connect(mapStateToProps,mapDispatchToProps)(RefreshButton)
