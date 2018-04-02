@@ -70,7 +70,7 @@ export function loadGameList(navigator){
 
 export function switchTag(action){
 	return (dispatch,getState)=>{
-		const token = getState()['auth']['token']['lbToken'];
+		const token = (getState()['auth']['token']['lbToken'] === undefined) ?  { id : null } : getState()['auth']['token']['lbToken'];
 		const tags = getState()['game']['tags'];
 		const currentTag = getState()['game']['tag'];
 		const { index } = currentTag;
