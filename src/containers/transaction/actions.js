@@ -40,6 +40,8 @@ export function sales(nonce,rate,navigator){
 				if(!err){
 					const { result } = res;
 					if(result.success === true){
+            dispatch(trackEvent('topUp',{ rateId : rate }));
+            dispatch(selectRate(null));
 						message(
 							'show',
 							navigator,
@@ -51,8 +53,6 @@ export function sales(nonce,rate,navigator){
 							},
 							500
 						);
-						dispatch(trackEvent('topUp',{ rateId : rate }));
-						dispatch(selectRate(null));
 						return dispatch({
 							type : 'UPDATE_WALLET_BALANCE',
 							value : res.result.balance

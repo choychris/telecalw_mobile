@@ -40,7 +40,7 @@ class PlayPanel extends Component {
 		return false;
 	}
 	componentDidMount(){
-		const { config , navigator } = this.props;
+		const { config , navigator, refund } = this.props;
 		this.ws.onopen = () => websockeInitialize(
 			config.gizwits,
 			this.ws,
