@@ -798,6 +798,7 @@ export function refund(navigator){
 		const { webrtcUrl } = getState()['game']['play'];
 		if(webrtcUrl['front'] === undefined){
 			//console.warn('Refund');
+      loading('hide',navigator);
 			navigator.dismissLightBox();
 			playRefund({
 				token : id,
@@ -820,7 +821,7 @@ export function refund(navigator){
 						'show',
 						navigator,
 						{
-							title : 'error',
+							title : 'cannotConnect',
 							message : 'tryAgain'
 						}
 					);

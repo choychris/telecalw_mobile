@@ -50,7 +50,7 @@ class CatchButton extends Component {
 				borderColor={borderColor}
 				onPressFunction={()=>{
 					this.setState({ disable : true });
-					clearInterval(this.btnDisableTimer);
+					clearInterval(this.disableTimer);
 					websocketControl({
 						direction : 'CatchGift',
 						value : true,

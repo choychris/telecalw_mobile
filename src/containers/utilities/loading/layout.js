@@ -7,6 +7,9 @@ class Loading extends Component {
 	constructor(props){
 		super(props);
 		this._spinAnimation = new Animated.Value(0);
+    this.state = {
+      count: 20
+    }
 	}
 	componentDidMount(){
 		Animated.loop(
@@ -22,10 +25,24 @@ class Loading extends Component {
 				Animated.delay(500)
 			])
 		).start();
+
+    if(this.props.game){
+      this.countDown = setInterval(()=>{
+        this.setState({count: this.state.count - 1})
+      }, 1000)
+    }
 	}
-	shouldComponentUpdate(){
-		return false;
+
+	shouldComponentUpdate(nextState){
+		return (nextState.count !== this.state.count);
 	}
+
+  componentWillUnmount(){
+    if(this.props.game){
+      clearInterval(this.countDown);
+    }
+  }
+
 	_spin(){
 		const spin = this._spinAnimation.interpolate({
 			inputRange: [0, 1],
@@ -36,7 +53,8 @@ class Loading extends Component {
 		}
 	}
 	render(){
-		const { string } = this.props;
+		const { string, game } = this.props;
+    const { count } = this.state;
 		return(
 			<View style={styles.container}>
 				<Animated.Image
@@ -44,7 +62,8 @@ class Loading extends Component {
 					source={require('../../../../assets/utilities/sand_clock.png')}
 					resizeMode="contain"
 				/>
-				<Text style={styles.text}>{string['loading']}</Text>
+				{ game ? <Text style={styles.text}>{string['connecting']}{' '}{count}</Text>
+          :<Text style={styles.text}>{string['loading']}</Text> }
 			</View>
 		)
 	}

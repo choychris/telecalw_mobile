@@ -40,14 +40,26 @@ class PlayPanel extends Component {
 		return false;
 	}
 	componentDidMount(){
-		const { config , navigator, refund } = this.props;
-		this.ws.onopen = () => websockeInitialize(
-			config.gizwits,
-			this.ws,
-			(result)=>this._displayGameResult(result),
-			()=>refund(navigator),
-			1
-		);
+		const { webSocketUrl, config , navigator, refund } = this.props;
+		this.ws.onopen = () => {
+      websockeInitialize(
+  			config.gizwits,
+  			this.ws,
+  			(result)=>this._displayGameResult(result),
+  			()=>refund(navigator),
+  			1
+  		);
+      this.ping = setInterval(()=>{
+        console.log('ping');
+        console.log("did mount state : ", this.ws.readyState)
+        if(this.ws.readyState !== 1){
+          this.ws.close();
+          this.ws = new WebSocket(webSocketUrl(config));
+        }
+        this.ws.send(JSON.stringify({cmd: "ping"}))
+      }, 5000);
+    }
+    
 	}
 	//appid : '20a365a7564142d3a342916f6d6df937',
 	//token : 'db7e4ed6c30849cabaeb0207ba5a5e5c',
@@ -57,6 +69,8 @@ class PlayPanel extends Component {
 	//InitCatcher : [35,28,2,2,2,4,4,4,12,0,0,1]
 	componentWillUnmount(){
 		this.ws.close();
+
+    clearInterval(this.ping)
 	}
 	render(){
 		const { config } = this.props;
