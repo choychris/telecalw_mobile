@@ -17,8 +17,8 @@ class BarContainer extends Component {
 		this._floatingAnimation();
 	}
 	shouldComponentUpdate(nextProps){
-		const { version } = this.props;
-		return version !== nextProps.version;
+		const { version, token } = this.props;
+		return version !== nextProps.version || token !== nextProps.token;
 	}
 	_floatingAnimation(){
 		Animated.loop(
@@ -79,20 +79,23 @@ class BarContainer extends Component {
 		)
 	}
 	render(){
-		const { navigator } = this.props;
+		const { navigator , token } = this.props;
 		const screenWidth = Dimensions.get('window').width * 0.25;
 		return (
 			<View style={styles.container}>
-				{this._renderTabItems()}
+				{(token.lbToken !== undefined) ? this._renderTabItems() : null}
 				<Animated.View style={this._floating.getLayout()}>
 					<TouchableOpacity
+						disabled={(token.lbToken !== undefined) ? false : true}
 						onPress={()=>{
-							navigator.push({
-								screen : 'app.Setting',
-								navigatorStyle : {
-									navBarHidden : true
-								}
-							});
+							if(token.lbToken !== undefined){
+								navigator.push({
+									screen : 'app.Setting',
+									navigatorStyle : {
+										navBarHidden : true
+									}
+								});
+							}
 						}}
 					>
 						<Telebot
@@ -119,7 +122,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		version : state.mis.version
+		version : state.mis.version,
+		token : state.auth.token
 	}
 }
 

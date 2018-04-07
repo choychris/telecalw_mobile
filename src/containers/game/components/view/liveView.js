@@ -24,7 +24,7 @@ class LiveView extends Component {
     super(props);
 		const { machine , mode } = this.props;
 		const camera = filterCamera(machine.cameras,mode);
-		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl } : { rtsp : null };
+		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl , webrtcServer : camera.webrtcServer } : { rtsp : null };
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
@@ -37,22 +37,22 @@ class LiveView extends Component {
 			machine,
 			navigator
 		} = this.props;
-		const { rtsp } = this.state;
+		const { rtsp , webrtcServer } = this.state;
 		if(rtsp !== null){
 			if(mode === 'top'){
 				setTimeout(()=>{
-					this.pc = initiatewebRTC(mode,rtsp,0,navigator);
+					this.pc = initiatewebRTC(mode,rtsp,0,webrtcServer);
 				},2000)
 			} else {
 				setTimeout(()=>{
-					this.pc = initiatewebRTC(mode,rtsp,0,navigator);
+					this.pc = initiatewebRTC(mode,rtsp,0,webrtcServer);
 				},3000)
 			}
 		}
   }
 	componentWillUnmount(){
-		const { rtsp } = this.state;
-		closeWebrtc(this.pc,rtsp);
+		const { rtsp , webrtcServer } = this.state;
+		closeWebrtc(this.pc,rtsp,webrtcServer);
 	}
 	_renderLoading(){
 		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>

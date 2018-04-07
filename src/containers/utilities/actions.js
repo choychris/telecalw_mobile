@@ -111,7 +111,7 @@ export function checkVersionRelease(){
 	return (dispatch,getState)=>{
 		const originVersion = DeviceInfo.getReadableVersion();
 		const lastIndex = originVersion.lastIndexOf("."); 
-		let formatVersion = `v${DeviceInfo.getReadableVersion().slice(0,lastIndex)}(${originVersion.charAt(lastIndex+1)})`;
+		let formatVersion = `v${DeviceInfo.getReadableVersion().slice(0,lastIndex)}(${DeviceInfo.getBuildNumber()})`;
 		//console.warn(Platform.OS);	
 		//console.warn(DeviceInfo.getReadableVersion());
 		//console.warn(formatVersion);

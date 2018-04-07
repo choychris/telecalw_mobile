@@ -77,9 +77,9 @@ class TopUp extends Component {
 	}
 	render(){
 		const { 
-			navigator,
+			navigator ,
 			version,
-      payment
+			payment
 		} = this.props;
 		let { tabs } = this.state;
 		if(version.release === true){

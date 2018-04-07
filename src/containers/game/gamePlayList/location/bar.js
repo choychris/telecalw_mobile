@@ -17,7 +17,7 @@ class LocationBar extends Component {
 			return (
 				<Image
 					key={index}
-					source={getPlanetImageSource(planet.name.en.toLowerCase(),planet.picture)}
+					source={getPlanetImageSource(planet.name.en.toLowerCase(),planet.images)}
 					style={imageStyle}
 					resizeMode={'contain'}
 				/>

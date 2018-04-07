@@ -47,10 +47,34 @@ class Login extends Component {
 						btnStyle={{ 
 							backgroundColor : '#3B5998',
 							paddingVertical : 10,
-							paddingHorizontal : 20
+							paddingHorizontal : 20,
+							marginVertical : 5
 						}}
 						borderColor={'#203559'}
 						onPressFunction={()=>loginFacebook(navigator)}
+					/>
+					<Button 
+						text={string['takeALook']}
+						textStyle={{ 
+							color : 'white' , 
+							fontSize : 25 , 
+							fontFamily : (Platform.OS === 'ios') ? 'Bauhaus 93' : 'Bauhaus-93_6274'
+						}}
+						btnStyle={{ 
+							backgroundColor : '#34655e',
+							paddingVertical : 10,
+							paddingHorizontal : 20,
+							marginVertical : 5
+						}}
+						borderColor={'#22443e'}
+						onPressFunction={()=>{
+							navigator.resetTo({
+								screen : 'app.GamePlayList',
+								navigatorStyle : {
+									navBarHidden : true
+								}
+							});
+						}}
 					/>
 				</View>
 			</View>
