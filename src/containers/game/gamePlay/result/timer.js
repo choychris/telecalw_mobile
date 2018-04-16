@@ -7,17 +7,18 @@ class Timer extends Component {
 	constructor(props){
 		super(props);
 		this.state = { time : 5 };
+    this.countDownFunction;
 	}
+
 	componentDidMount(){
 		this._countDown();
 	}
+
 	shouldComponentUpdate(nextProps,nextState){
 		const { time } = this.props;
 		return (nextState.time !== time);
 	}
-	componentWillUnmount(){
-		clearInterval(this.countDownFunction);
-	}
+
 	_countDown(){
 		this.countDownFunction = setInterval(()=>{
 			const { time } = this.state;
@@ -28,6 +29,12 @@ class Timer extends Component {
 			};
 		},1000);
 	}
+
+  componentWillUnmount(){
+    //console.log(this.countDownFunction);
+    clearInterval(this.countDownFunction);
+  }
+
 	render(){
 		const { time } = this.state;
 		return(

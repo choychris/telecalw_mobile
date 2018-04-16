@@ -17,6 +17,7 @@ import CheckinReward from '../transaction/reward/checkin/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
+import PlayMobileData from '../utilities/popup/playUnderCellular';
 
 // register all screens of the app (including internal ones)
  export function registerScreens(store , Provider) {
@@ -37,5 +38,6 @@ import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 	 Navigation.registerComponent('app.Tracking', () => Tracking,store,Provider);
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
 	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
-	 Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest,store,Provider);
+   Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest,store,Provider);
+	 Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData,store,Provider);
 }

@@ -48,7 +48,7 @@ class GameResult extends Component {
 		} = this.props;
 		endGamePlay(action,navigator);
 		this.setState({ loading : true });
-		clearInterval(this.gameResultTimer);
+		clearTimeout(this.gameResultTimer);
 	}
 	_renderActionButton(){
 		const { string } = this.props;

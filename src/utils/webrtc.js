@@ -5,17 +5,16 @@ const {
   RTCIceCandidate,
   RTCSessionDescription,
 } = WebRTC;
-const configuration = {
-	"iceServers": [
-    {
-      urls: [
-        "stun:stun.l.google.com:19302", 
-        "stun:stun1.l.google.com:19302",
-        "stun:stun2.l.google.com:19302"
-      ]
-    }
-	]
-};
+const iceServers = [
+  {
+    urls: [
+      "stun:stun.l.google.com:19302", 
+      "stun:stun1.l.google.com:19302",
+      "stun:stun2.l.google.com:19302"
+    ]
+  }
+];
+
 import { webrtcUrl } from '../config/env.js';
 
 const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, restart) => {
@@ -41,7 +40,7 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
   fetch(url, init)
   .then(res => {
     if(res.status === 200 && onSuccess){
-      console.log(res._bodyText);
+      //console.log(res._bodyText);
       onSuccess(JSON.parse(res._bodyInit), pc);
     }
     //console.log(scope, res)
@@ -57,14 +56,19 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	})
 }
 
-export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
+export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
 	return(dispatch,getState)=>{
-		const pc = new RTCPeerConnection(configuration);
+
+    const turnservers = getState()['game']['turnservers'];
+    if(turnservers[0] !== undefined) iceServers = iceServers.concat(turnservers)
+    const configuration = {iceServers: iceServers};
+    let webrtcServer = (webrtcServerArray.length > 1) ? webrtcServerArray[times%webrtcServerArray.length] : webrtcServerArray[0] ;
+    const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
 		let streamObj = {};
 		pc.onicecandidate = (evt) => {
 			if(evt.candidate){
-				console.log('onicecandidate', evt.candidate);
+				//console.log('onicecandidate', evt.candidate);
 
 				function fetchFunction(){
 					fetchRequest(`${webrtcServer}/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
@@ -86,27 +90,33 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
 			};
 		}
 
+    let reTryTimeOut;
 		pc.oniceconnectionstatechange = function(evt) {  
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
-			if(pc.iceConnectionState === 'checking'){
-				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected'){
-						if(times <= 3){
-							closeWebrtc(pc,rtsp,webrtcServer);
-							return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServer));
-						}
-					}
-				},5000)
-			}
+      console.log('iceconnectionstatechange : ', pc.iceConnectionState)
+
 			if(pc.iceConnectionState === 'connected'){
+        clearTimeout(reTryTimeOut);
 				dispatch({  
 					type : 'STORE_WEBRTC_URL',
 					keys : [mode],
 					value :	streamObj
 				});
 			}
-		}
+		};
+
+    // retry mechanism for webRTC
+    if(times < 3){
+      const reTryTimeOut = setTimeout(()=>{
+        if(pc.iceConnectionState !== 'connected'){
+          if(times <= 3){
+            closeWebrtc(pc,rtsp,webrtcServer);
+            return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServerArray));
+          }
+        }
+      },6000);
+    }
 
 		try {
 			pc.createOffer(sessionDescription => {

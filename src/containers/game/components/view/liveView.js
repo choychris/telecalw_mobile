@@ -18,32 +18,18 @@ import Request from '../../../../utils/fetch';
 import { errorMessage } from '../../../utilities/actions';
 import { initiatewebRTC , closeWebrtc } from '../../../../utils/webrtc';
 const { height , width } = Dimensions.get('window');
-import { baseApi } from '../../../../config/env';
 
 class LiveView extends Component {
   constructor(props){
     super(props);
 		const { machine , mode } = this.props;
 		const camera = filterCamera(machine.cameras,mode);
-		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl , webrtcServer : camera.webrtcServer } : { rtsp : null };
+		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl , webrtcServer : [ camera.webrtcServer, camera.webrtcBackUpServer ] } : { rtsp : null };
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
 		return (nextProps.webrtcUrl[mode] !== undefined && nextProps.webrtcUrl[mode] !== webrtcUrl[mode] || cameraMode !== nextProps.cameraMode);
 	}
-
-  componentWillMount(){
-    Request(`${baseApi()}/turnservers?access_token=${this.props.token}`)
-    .then(res=>{
-      if(res[0].urls !== undefined){
-        this.setState({turnserver:{
-          urls:res[0].urls,
-          username: res[0].username,
-          credential: res[0].credential
-        }})
-      }
-    })
-  }
 
   componentDidMount(){
 		const { 
@@ -57,12 +43,10 @@ class LiveView extends Component {
 		if(rtsp !== null){
 			if(mode === 'top'){
 				setTimeout(()=>{
-          console.warn('turnserver :', turnserver);
 					this.pc = initiatewebRTC(mode,rtsp,0,webrtcServer);
 				},2000)
 			} else {
 				setTimeout(()=>{
-          console.warn('turnserver :', turnserver);
 					this.pc = initiatewebRTC(mode,rtsp,0,webrtcServer);
 				},3000)
 			}
@@ -105,8 +89,7 @@ function mapStateToProps(state) {
 	return {
 		webrtcUrl : state.game.play.webrtcUrl,
 		machine : state.game.machine,
-		cameraMode : state.game.play.cameraMode,
-    token : state.auth.token.lbToken.id
+		cameraMode : state.game.play.cameraMode
 	}
 }
 

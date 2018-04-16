@@ -14,7 +14,8 @@ const initialState = {
 		webrtcUrl : {},
 		lastAction : null,
 		config : null
-	}
+	},
+  turnservers: []
 }
 
 function gameReducer (state = initialState, action){
@@ -102,6 +103,10 @@ function gameReducer (state = initialState, action){
 				.setIn(['play','config'],action.value)
 				.toJS();
 		break;
+    case 'STORE_TURNSERVERS':
+      return state
+        .setIn(['turnservers'], action.value)
+        .toJS();
 		default:
 			return state.toJS();
 		break;
