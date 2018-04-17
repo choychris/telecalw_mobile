@@ -53,8 +53,11 @@ class LiveView extends Component {
 		}
   }
 	componentWillUnmount(){
-		const { rtsp , webrtcServer } = this.state;
-		closeWebrtc(this.pc,rtsp,webrtcServer);
+		//const { rtsp , webrtcServer } = this.state;
+    const { webrtcUrl, mode } = this.props;
+    if(webrtcUrl['front'] !== undefined){
+      closeWebrtc(this.pc,webrtcUrl[mode]['rtsp'],webrtcUrl[mode]['webrtcServer']);
+    }
 	}
 	_renderLoading(){
 		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>

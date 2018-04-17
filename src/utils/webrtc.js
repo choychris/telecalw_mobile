@@ -88,13 +88,15 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
 				rtsp : rtsp ,
 				webrtcServer : webrtcServer 
 			};
+
+      console.log('one stream added !')
 		}
 
     let reTryTimeOut;
 		pc.oniceconnectionstatechange = function(evt) {  
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
-      console.log('iceconnectionstatechange : ', pc.iceConnectionState)
+      console.log('evt oniceconnectionstatechange : ', evt.target.iceConnectionState);
 
 			if(pc.iceConnectionState === 'connected'){
         clearTimeout(reTryTimeOut);
@@ -158,10 +160,11 @@ export const closeWebrtc = (pc,rtsp,webrtcServer)=>{
 export const restartWebrtc = ()=>{
 	return(dispatch,getState)=>{
 		const mode = getState()['game']['play']['cameraMode'];
-		if(getState()['game']['play']['webrtcUrl'][mode]){
-			const { pc ,rtsp , webrtcServer } = getState()['game']['play']['webrtcUrl'][mode];
+    const webrtcUrl = getState()['game']['play']['webrtcUrl'][mode];
+		if(webrtcUrl !== undefined){
+			const { pc ,rtsp , webrtcServer } = webrtcUrl;
 			closeWebrtc(pc,rtsp,webrtcServer);
-			dispatch(initiatewebRTC(mode,rtsp,0,webrtcServer));
+			dispatch(initiatewebRTC(mode,rtsp,0,[ webrtcServer ]));
 		}
 	}
 }
