@@ -673,6 +673,23 @@ export function sendGameResult(result){
 	}
 }
 
+// signal backend that user has pressed catch button
+export function sendCatchCommand(){
+  return(dispatch, getState)=>{
+    const { playId } = getState()['game']['play']['config'];
+    const token = getState()['auth']['token']['lbToken']['id'];
+    const params = {
+      token : token,
+      result : {
+        catched : true
+      },
+      playId : playId
+    };
+
+    gameResult(params,Request)    
+  }
+}
+
 export function endGamePlay(action,navigator){
 	return (dispatch,getState)=>{
 		const token = getState()['auth']['token']['lbToken']['id'];
