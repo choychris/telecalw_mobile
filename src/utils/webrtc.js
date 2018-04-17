@@ -121,10 +121,8 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
     if(times < 3){
       const reTryTimeOut = setTimeout(()=>{
         if(pc.iceConnectionState !== 'connected'){
-          if(times < 3){
-            closeWebrtc(pc,rtsp,webrtcServer);
-            return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServerArray));
-          }
+          closeWebrtc(pc,rtsp,webrtcServer);
+          return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServerArray));
         }
       },7000);
     };
