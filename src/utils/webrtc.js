@@ -63,6 +63,7 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
     if(turnservers[0] !== undefined) iceServers = iceServers.concat(turnservers)
     const configuration = {iceServers: iceServers};
     let webrtcServer = (webrtcServerArray.length > 1) ? webrtcServerArray[times%webrtcServerArray.length] : webrtcServerArray[0] ;
+    console.log(webrtcServer);
     const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
 		let streamObj = {};
@@ -80,6 +81,14 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
 				console.log('No / End of candidates')
 			}
 		}
+
+    dispatch({  
+      type : 'CURRENT_WEBRTC_PC',
+      value : {
+        pcTemp: pc,
+        serverTemp: webrtcServer
+      }
+    });
 		
 		pc.onaddstream = (evt)=>{
 			streamObj = { 
@@ -112,13 +121,21 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
     if(times < 3){
       const reTryTimeOut = setTimeout(()=>{
         if(pc.iceConnectionState !== 'connected'){
-          if(times <= 3){
+          if(times < 3){
             closeWebrtc(pc,rtsp,webrtcServer);
             return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServerArray));
           }
         }
-      },6000);
-    }
+      },7000);
+    };
+
+    if(times === 3){
+      const reTryTimeOut = setTimeout(()=>{
+        if(pc.iceConnectionState !== 'connected'){
+          closeWebrtc(pc,rtsp,webrtcServer);
+        }
+      },7000);
+    };
 
 		try {
 			pc.createOffer(sessionDescription => {

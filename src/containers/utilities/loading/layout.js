@@ -8,7 +8,7 @@ class Loading extends Component {
 		super(props);
 		this._spinAnimation = new Animated.Value(0);
     this.state = {
-      count: 25
+      count: 30
     }
 	}
 	componentDidMount(){

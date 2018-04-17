@@ -7,7 +7,8 @@ import {
   WebView,
 	TouchableOpacity,
 	Dimensions,
-	ActivityIndicator
+	ActivityIndicator,
+  AppState
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -24,7 +25,8 @@ class LiveView extends Component {
     super(props);
 		const { machine , mode } = this.props;
 		const camera = filterCamera(machine.cameras,mode);
-		this.state = (camera && camera !== null) ? { rtsp : camera.rtspDdnsUrl , webrtcServer : [ camera.webrtcServer, camera.webrtcBackUpServer ] } : { rtsp : null };
+		this.state = (camera && camera !== null) ? {  appState: AppState.currentState, rtsp : camera.rtspDdnsUrl , webrtcServer : [ camera.webrtcServer, camera.webrtcBackUpServer ] } : { rtsp : null };
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
 	shouldComponentUpdate(nextProps){
 		const { webrtcUrl , mode , cameraMode } = this.props;
@@ -34,7 +36,7 @@ class LiveView extends Component {
   componentDidMount(){
 		const { 
 			initiatewebRTC , 
-			mode ,
+			mode,
 			machine,
 			navigator
 		} = this.props;
@@ -51,14 +53,29 @@ class LiveView extends Component {
 				},3000)
 			}
 		}
+
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
+
 	componentWillUnmount(){
-		//const { rtsp , webrtcServer } = this.state;
+		const { rtsp } = this.state;
     const { webrtcUrl, mode } = this.props;
     if(webrtcUrl['front'] !== undefined){
-      closeWebrtc(this.pc,webrtcUrl[mode]['rtsp'],webrtcUrl[mode]['webrtcServer']);
+      let { pc, rtsp, webrtcServer } = webrtcUrl[mode];
+      closeWebrtc(pc, rtsp, webrtcServer);
     }
+    AppState.removeEventListener('change', this._handleAppStateChange);
 	}
+
+  _handleAppStateChange(nextAppState){
+    const { rtsp } = this.state;
+    let { webrtcTemp, navigator } = this.props;
+    if (this.state.appState === 'active' && nextAppState === 'inactive'){
+      let { pcTemp, serverTemp } = webrtcTemp;
+      if(!!serverTemp) closeWebrtc(pcTemp, rtsp, serverTemp);
+    }
+  };
+
 	_renderLoading(){
 		return <ActivityIndicator style={styles.loader} size="small" color={'white'}/>
 	}
@@ -90,7 +107,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		webrtcUrl : state.game.play.webrtcUrl,
+    webrtcUrl : state.game.play.webrtcUrl,
+		webrtcTemp : state.game.play.webrtcTemp,
 		machine : state.game.machine,
 		cameraMode : state.game.play.cameraMode
 	}

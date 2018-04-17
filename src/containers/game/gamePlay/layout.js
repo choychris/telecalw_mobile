@@ -17,7 +17,7 @@ class GamePlay extends Component {
 	componentDidMount(){
 		const { loadGamePlay , navigator , refund } = this.props;
 		loadGamePlay(navigator);
-		this.refundTimer = setTimeout(()=>refund(navigator),26000);
+		this.refundTimer = setTimeout(()=>refund(navigator),30000);
 	}
 	shouldComponentUpdate(){
 		return false;
