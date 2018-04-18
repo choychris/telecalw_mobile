@@ -21,7 +21,7 @@ class RoomPanel extends Component {
 		}
 	}
 	render(){
-		const { machine , navigator } = this.props;
+		const { machine, navigator, lbToken } = this.props;
 		const { status , currentUser } = machine;
 		return (status !== 'close') ? (
 			<View style={styles.container}>
@@ -31,7 +31,7 @@ class RoomPanel extends Component {
 				</View>
 				<View style={styles.column}>
 					<SwitchButton navigator={navigator}/>
-					<TopUpButton navigator={navigator}/>
+					{ (lbToken === undefined) ? null : <TopUpButton navigator={navigator}/> }
 				</View>
 			</View>
 		) : null;
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	return {
-		machine : state.game.machine
+		machine : state.game.machine,
+    lbToken : state.auth.token.lbToken
 	}
 }
 

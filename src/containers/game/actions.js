@@ -544,10 +544,14 @@ export function initGamePlay(navigator,loadState, mobileData){
 				if(loadState) loadState(false);
 				loading('hide',navigator);
 				setTimeout(()=>{
-					// Insufficient Fund PopUp
-					if(sufficientFund === false) insufficientFundMessage(navigator);
-					// Network Problem PopUp
-					if(networkValid() === false) playMobileDataMessage(navigator) ;
+					  // Insufficient Fund PopUp
+					if(sufficientFund === false){ 
+            insufficientFundMessage(navigator);
+          }else if(networkValid() === false){
+					  // Network Problem PopUp
+					  playMobileDataMessage(navigator);
+          };
+
 				},1000);
 			}
 
@@ -693,6 +697,10 @@ export function sendCatchCommand(){
 export function endGamePlay(action,navigator){
 	return (dispatch,getState)=>{
 		const token = getState()['auth']['token']['lbToken']['id'];
+    // Check Wallet Balance
+    const { balance } = getState()['auth']['wallet'];
+    const { gamePlayRate } = getState()['game']['product'];
+    const sufficientFund = (balance >= gamePlayRate) ? true : false;
 
 		// Step 0 : Close All WebRTC
 		dispatch(closeAllWebrtc());
@@ -704,8 +712,15 @@ export function endGamePlay(action,navigator){
 
 		// Step 2 : Navigate to Related Page
 		if(action === 'replay'){
-
-			navigator.dismissLightBox();
+      navigator.dismissLightBox();
+      if(!sufficientFund){
+        navigator.resetTo({
+          screen : 'app.GamePlayList',
+          navigatorStyle : {
+            navBarHidden : true
+          }
+        });
+      }
 			setTimeout(()=>{
 				dispatch(initGamePlay(navigator));
 				loadGamePlay(navigator);
