@@ -107,6 +107,25 @@ export function insufficientFundMessage(navigator){
 	});
 }
 
+export function playMobileDataMessage(navigator){
+  navigator.showLightBox({
+    screen : 'app.PlayMobileData',
+    animationType : 'slide-up',
+    navigatorStyle: {
+      navBarHidden: true
+    },
+    passProps : { navigator : navigator },
+    style: {
+      flex : 1,
+      height : Dimensions.get('window').height,
+      backgroundBlur: "dark",
+      backgroundColor : (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+      tapBackgroundToDismiss: true,
+      flex : 1
+    }
+  });
+}
+
 export function checkVersionRelease(){
 	return (dispatch,getState)=>{
 		const originVersion = DeviceInfo.getReadableVersion();

@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { View , Text , Image , StyleSheet , TouchableOpacity , ActivityIndicator , Dimensions , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { lastMachineMove } from '../../actions';
+import { lastMachineMove, sendCatchCommand } from '../../actions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from '../../../../components/utilities/buttons';
 import { websocketControl } from '../../../../common/api/request/gizwits';
@@ -21,6 +21,14 @@ class CatchButton extends Component {
 		const { disable } = this.state;
 		return disable !== nextState.disable;
 	}
+
+  _sendCatch(){
+    const { ws, sendCatchCommand } = this.props;
+    if(ws.readyState === 1 ){
+      sendCatchCommand();
+    }
+  }
+
 	render(){
 		const { 
 			string , 
@@ -50,13 +58,14 @@ class CatchButton extends Component {
 				borderColor={borderColor}
 				onPressFunction={()=>{
 					this.setState({ disable : true });
-					clearInterval(this.btnDisableTimer);
+					clearInterval(this.disableTimer);
 					websocketControl({
 						direction : 'CatchGift',
 						value : true,
 						did : did
 					},ws);
 					lastMachineMove('CatchGift');
+          this._sendCatch();
 				}}
 			/>
 		)
@@ -71,7 +80,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
-		lastMachineMove
+		lastMachineMove,
+    sendCatchCommand
 	}, dispatch)
 }
 

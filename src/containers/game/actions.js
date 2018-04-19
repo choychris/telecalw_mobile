@@ -1,5 +1,7 @@
 import { NetInfo , Dimensions , Platform } from 'react-native';
-import { errorMessage , loading, insufficientFundMessage , checkVersionRelease } from '../utilities/actions';
+import { errorMessage , loading, playMobileDataMessage,
+         insufficientFundMessage, 
+         checkVersionRelease } from '../utilities/actions';
 import { tagList , getTagProduct } from '../../common/api/request/tag';
 import { machineList , getProduct } from '../../common/api/request/product';
 import { engageGamePlay } from '../../common/api/request/machine';
@@ -15,6 +17,7 @@ import { api } from '../../common/api/url';
 import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
 import { checkInRewardChecking , loginFacebook } from '../auth/actions';
+import { baseApi } from '../../config/env';
 
 async function loadGameListFlow(dispatch,getState,navigator){
 	try {
@@ -417,7 +420,7 @@ export function filterCamera(cameras,mode){
 	return targetCamera;
 }
 
-export function initGamePlay(navigator,loadState){
+export function initGamePlay(navigator,loadState, mobileData){
 	return (dispatch,getState)=>{
 
 		// Step 0 : Check User Token
@@ -434,10 +437,19 @@ export function initGamePlay(navigator,loadState){
 			const { gamePlayRate } = getState()['game']['product'];
 			const { status , type } = getState()['game']['network'];
 			const sufficientFund = (balance >= gamePlayRate) ? true : false;
-			const networkValid = (status === true && type === 'wifi') ? true : false;
+			//const networkValid = (status === true && type === 'wifi') ? true : false;
+      function networkValid(){
+        if(status === true && type !== 'wifi' && mobileData){
+          return true
+        }else if(status === true && type === 'wifi'){
+          return true
+        }else{
+          return false
+        }
+      }
 			//console.warn(balance);
 			//console.warn(gamePlayRate)
-			if(sufficientFund === true && networkValid === true){
+			if(sufficientFund === true && networkValid() === true){
 		
 				// Step 2 : Get GamePlay Configuration from Backend
 				const { id , userId } = token['lbToken'];
@@ -451,6 +463,24 @@ export function initGamePlay(navigator,loadState){
 						userId : userId
 					}
 				};
+
+        // Step 2a : get current avaiable turnserver
+        let filter = JSON.stringify({fields: {
+          urls : true,
+          username : true,
+          credential : true
+        }})
+
+        Request(`${baseApi()}/turnservers?access_token=${id}&filter=${filter}`)
+        .then(res=>{
+          if(res[0].urls !== undefined){
+            dispatch({ 
+              type : 'STORE_TURNSERVERS' , 
+              value : res
+            });
+          }
+        })
+
 				//console.warn(JSON.stringify(params));
 				engageGamePlay(params,Request)
 					.then((res,err)=>{
@@ -514,10 +544,14 @@ export function initGamePlay(navigator,loadState){
 				if(loadState) loadState(false);
 				loading('hide',navigator);
 				setTimeout(()=>{
-					// Insufficient Fund PopUp
-					if(sufficientFund === false) insufficientFundMessage(navigator);
-					// Network Problem PopUp
-					if(networkValid === false) errorMessage('show',navigator,{ title : 'networkProblem' , message : 'useWifi' }) ;
+					  // Insufficient Fund PopUp
+					if(sufficientFund === false){ 
+            insufficientFundMessage(navigator);
+          }else if(networkValid() === false){
+					  // Network Problem PopUp
+					  playMobileDataMessage(navigator);
+          };
+
 				},1000);
 			}
 
@@ -643,9 +677,30 @@ export function sendGameResult(result){
 	}
 }
 
+// signal backend that user has pressed catch button
+export function sendCatchCommand(){
+  return(dispatch, getState)=>{
+    const { playId } = getState()['game']['play']['config'];
+    const token = getState()['auth']['token']['lbToken']['id'];
+    const params = {
+      token : token,
+      result : {
+        catched : true
+      },
+      playId : playId
+    };
+
+    gameResult(params,Request)    
+  }
+}
+
 export function endGamePlay(action,navigator){
 	return (dispatch,getState)=>{
 		const token = getState()['auth']['token']['lbToken']['id'];
+    // Check Wallet Balance
+    const { balance } = getState()['auth']['wallet'];
+    const { gamePlayRate } = getState()['game']['product'];
+    const sufficientFund = (balance >= gamePlayRate) ? true : false;
 
 		// Step 0 : Close All WebRTC
 		dispatch(closeAllWebrtc());
@@ -657,8 +712,15 @@ export function endGamePlay(action,navigator){
 
 		// Step 2 : Navigate to Related Page
 		if(action === 'replay'){
-
-			navigator.dismissLightBox();
+      navigator.dismissLightBox();
+      if(!sufficientFund){
+        navigator.resetTo({
+          screen : 'app.GamePlayList',
+          navigatorStyle : {
+            navBarHidden : true
+          }
+        });
+      }
 			setTimeout(()=>{
 				dispatch(initGamePlay(navigator));
 				loadGamePlay(navigator);
@@ -813,6 +875,7 @@ export function refund(navigator){
 		const { webrtcUrl } = getState()['game']['play'];
 		if(webrtcUrl['front'] === undefined){
 			//console.warn('Refund');
+      loading('hide',navigator);
 			navigator.dismissLightBox();
 			playRefund({
 				token : id,
@@ -835,7 +898,7 @@ export function refund(navigator){
 						'show',
 						navigator,
 						{
-							title : 'error',
+							title : 'cannotConnect',
 							message : 'tryAgain'
 						}
 					);

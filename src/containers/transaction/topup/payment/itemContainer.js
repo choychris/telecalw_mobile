@@ -43,15 +43,15 @@ class RateItem extends Component {
 					<Text style={styles.text}>
 						{`${coins} ${string['coins']}`}
 					</Text>
-					<Text style={styles.text}>
+					<Text style={[styles.text, {fontSize: 18}]}>
 						{`${bonus} ${string['bonus']}`}
 					</Text>
 					<Text style={styles.text}>
-						{`${currency['usd']} usd`}
+						{`${currency['hkd']} HKD`}
 					</Text>
-					<Text style={styles.text}>
-						{`(${currency['hkd']} hkd)`}
-					</Text>
+          <Text style={styles.text}>
+            {`(~= ${currency['usd']} USD)`}
+          </Text>
 				</View>
 			</TouchableOpacity>	
 		)

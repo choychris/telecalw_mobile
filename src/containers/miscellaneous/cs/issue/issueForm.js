@@ -22,7 +22,7 @@ class IssueForm extends Component {
 				<TextInput
 					multiline={true}
 					autoCorrect={false}
-					style={[styles.input,{ height : 80 }]}
+					style={[styles.input,{ height : 100 }]}
 					placeholder={string['inputMsg']}
 					onChangeText={(text)=>inputIssue(['message'],text)}
 				/>

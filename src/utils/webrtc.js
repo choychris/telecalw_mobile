@@ -5,15 +5,16 @@ const {
   RTCIceCandidate,
   RTCSessionDescription,
 } = WebRTC;
-const configuration = {
-	"iceServers": [
-		{"url": "stun:stun.l.google.com:19302"},
-		{"url": "stun:stun1.l.google.com:19302"},
-		{"url": "stun:stun2.l.google.com:19302"},
-		{"url": "stun:stun3.l.google.com:19302"},
-		{"url": "stun:stun4.l.google.com:19302"}
-	]
-};
+const iceServers = [
+  {
+    urls: [
+      "stun:stun.l.google.com:19302", 
+      "stun:stun1.l.google.com:19302",
+      "stun:stun2.l.google.com:19302"
+    ]
+  }
+];
+
 import { webrtcUrl } from '../config/env.js';
 
 const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, restart) => {
@@ -39,7 +40,7 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
   fetch(url, init)
   .then(res => {
     if(res.status === 200 && onSuccess){
-      console.log(res._bodyText);
+      //console.log(res._bodyText);
       onSuccess(JSON.parse(res._bodyInit), pc);
     }
     //console.log(scope, res)
@@ -55,14 +56,20 @@ const fetchRequest = (serverMethod,headers,data,onSuccess,onFailure,scope, pc, r
 	})
 }
 
-export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
+export const initiatewebRTC = (mode,rtsp,times,webrtcServerArray)=>{
 	return(dispatch,getState)=>{
-		const pc = new RTCPeerConnection(configuration);
+
+    const turnservers = getState()['game']['turnservers'];
+    if(turnservers[0] !== undefined) iceServers = iceServers.concat(turnservers)
+    const configuration = {iceServers: iceServers};
+    let webrtcServer = (webrtcServerArray.length > 1) ? webrtcServerArray[times%webrtcServerArray.length] : webrtcServerArray[0] ;
+    console.log(webrtcServer);
+    const pc = new RTCPeerConnection(configuration);
 		let peerid = rtsp;
 		let streamObj = {};
 		pc.onicecandidate = (evt) => {
 			if(evt.candidate){
-				console.log('onicecandidate', evt.candidate);
+				//console.log('onicecandidate', evt.candidate);
 
 				function fetchFunction(){
 					fetchRequest(`${webrtcServer}/addIceCandidate?peerid=${peerid}`, null, evt.candidate, null, null, 'onicecandidate',null,()=>fetchFunction);
@@ -74,6 +81,14 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
 				console.log('No / End of candidates')
 			}
 		}
+
+    dispatch({  
+      type : 'CURRENT_WEBRTC_PC',
+      value : {
+        pcTemp: pc,
+        serverTemp: webrtcServer
+      }
+    });
 		
 		pc.onaddstream = (evt)=>{
 			streamObj = { 
@@ -82,29 +97,43 @@ export const initiatewebRTC = (mode,rtsp,times,webrtcServer)=>{
 				rtsp : rtsp ,
 				webrtcServer : webrtcServer 
 			};
+
+      console.log('one stream added !')
 		}
 
+    let reTryTimeOut;
 		pc.oniceconnectionstatechange = function(evt) {  
 			// After Checking Status -> Settimeout to ensure it is connected , else restart the whole process
 			// Garunteed it is connected to initiate game play
-			if(pc.iceConnectionState === 'checking'){
-				setTimeout(()=>{
-					if(pc.iceConnectionState !== 'connected'){
-						if(times <= 3){
-							closeWebrtc(pc,rtsp,webrtcServer);
-							return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServer));
-						}
-					}
-				},3000)
-			}
+      console.log('evt oniceconnectionstatechange : ', evt.target.iceConnectionState);
+
 			if(pc.iceConnectionState === 'connected'){
+        clearTimeout(reTryTimeOut);
 				dispatch({  
 					type : 'STORE_WEBRTC_URL',
 					keys : [mode],
 					value :	streamObj
 				});
 			}
-		}
+		};
+
+    // retry mechanism for webRTC
+    if(times < 3){
+      const reTryTimeOut = setTimeout(()=>{
+        if(pc.iceConnectionState !== 'connected'){
+          closeWebrtc(pc,rtsp,webrtcServer);
+          return dispatch(initiatewebRTC(mode,rtsp,times+1,webrtcServerArray));
+        }
+      },7000);
+    };
+
+    if(times === 3){
+      const reTryTimeOut = setTimeout(()=>{
+        if(pc.iceConnectionState !== 'connected'){
+          closeWebrtc(pc,rtsp,webrtcServer);
+        }
+      },7000);
+    };
 
 		try {
 			pc.createOffer(sessionDescription => {
@@ -146,10 +175,11 @@ export const closeWebrtc = (pc,rtsp,webrtcServer)=>{
 export const restartWebrtc = ()=>{
 	return(dispatch,getState)=>{
 		const mode = getState()['game']['play']['cameraMode'];
-		if(getState()['game']['play']['webrtcUrl'][mode]){
-			const { pc ,rtsp , webrtcServer } = getState()['game']['play']['webrtcUrl'][mode];
+    const webrtcUrl = getState()['game']['play']['webrtcUrl'][mode];
+		if(webrtcUrl !== undefined){
+			const { pc ,rtsp , webrtcServer } = webrtcUrl;
 			closeWebrtc(pc,rtsp,webrtcServer);
-			dispatch(initiatewebRTC(mode,rtsp,0,webrtcServer));
+			dispatch(initiatewebRTC(mode,rtsp,0,[ webrtcServer ]));
 		}
 	}
 }

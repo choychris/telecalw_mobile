@@ -3,6 +3,8 @@ import { Easing , Animated, View , Text , StyleSheet , Image , ActivityIndicator
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { resetTimer } from '../../actions';
+import Loading from '../../../utilities/loading/layout';
+import { loading } from '../../../utilities/actions';
 import TrafficLight from './trafficLight';
 import LightBulb from './lightbulb';
 const { height , width } = Dimensions.get('window');
@@ -28,12 +30,13 @@ class GameCountDown extends Component {
 		const { time } = this.state;
 		return webrtcUrl !== nextProps.webrtcUrl || nextState.time !== time;
 	}
-	componentDidUpdate(prevProps){
-		const { navigator , webrtcUrl } = this.props;
+	componentDidUpdate(prevProps, prevState){
+		const { navigator , webrtcUrl, loading } = this.props;
 		if(
 			prevProps.webrtcUrl['front'] === undefined && 
 			webrtcUrl['front']
 		){
+      //loading('hide', navigator);
 			this._textScale();
 			this._countDown();
 			this._slideDownAnimation();
@@ -104,8 +107,10 @@ class GameCountDown extends Component {
 			break;
 		}
 	}
+
 	render(){
 		const { time } = this.state;
+    const { navigator } = this.props;
 		const textSize = this._textAnimation.interpolate({
 			inputRange: [0, 1],
 			outputRange: [18, 120]					  
@@ -118,7 +123,7 @@ class GameCountDown extends Component {
 						{lightBulbs.map((bulb,index)=><LightBulb key={index} {...bulb} time={time}/>)}
 					</View>
 				</Animated.View>
-				{(time && time !== null) ? <Animated.Text style={[styles.text,{ fontSize : textSize }]}>{this._renderText(time)}</Animated.Text> : this._renderLoading()}
+        { (time && time !== null) ? <Animated.Text style={[styles.text,{ fontSize : textSize }]}>{this._renderText(time)}</Animated.Text> : <Loading game={true}/>}
 			</View>
 		)
 	}
@@ -165,6 +170,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
+    loading,
 		resetTimer,
 		playUISound,
 	}, dispatch)

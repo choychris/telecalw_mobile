@@ -13,8 +13,10 @@ const initialState = {
 		cameraMode : 'front',
 		webrtcUrl : {},
 		lastAction : null,
-		config : null
-	}
+		config : null,
+    webrtcTemp : {}
+	},
+  turnservers: []
 }
 
 function gameReducer (state = initialState, action){
@@ -91,6 +93,10 @@ function gameReducer (state = initialState, action){
 			return state
 				.setIn(['play','webrtcUrl'],{})
 				.toJS();
+    case 'CURRENT_WEBRTC_PC':
+      return state
+        .setIn(['play', 'webrtcTemp'], action.value)
+        .toJS();
 		break;
 		case 'LAST_PLAY_ACTION':
 			return state
@@ -102,6 +108,10 @@ function gameReducer (state = initialState, action){
 				.setIn(['play','config'],action.value)
 				.toJS();
 		break;
+    case 'STORE_TURNSERVERS':
+      return state
+        .setIn(['turnservers'], action.value)
+        .toJS();
 		default:
 			return state.toJS();
 		break;
