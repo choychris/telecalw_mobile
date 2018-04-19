@@ -254,10 +254,12 @@ export function accessTokenChecking(navigator){
 export function logout(token,navigator){
 	return (dispatch,getState)=>{
 		if(token === null || token === undefined) token = getState()['auth']['token']['lbToken'] ;
+    const fbtoken = getState()['auth']['token']['fbToken']
 		async function logoutFlow(){
 			try {
 				// Step 1 : Clear Local Storage
 				await AsyncStorage.clear();	
+        LoginManager.logOut(fbtoken);
 				// Step 2 : Deprecate Remote Backend Access Token
 				userLogout(token,Request);				
 				// Step 3 : Navigate to Login UI
@@ -270,6 +272,7 @@ export function logout(token,navigator){
 			}
 			catch(e){
 				dispatch(authError(navigator,'error','tryAgain'));
+        console.log('facebook error',e);
 			}
 		}	
 		logoutFlow();	
