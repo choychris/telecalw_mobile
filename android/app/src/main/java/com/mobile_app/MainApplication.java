@@ -2,6 +2,10 @@ package teleclaw.live;
 
 import android.app.Application;
 
+//import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
+import android.content.Context;
+
 import com.facebook.react.ReactApplication;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -75,6 +79,12 @@ import java.util.List;
 //}
 
 public class MainApplication extends NavigationApplication {
+
+	@Override
+	protected void attachBaseContext(Context base) {
+	    super.attachBaseContext(base);
+	    MultiDex.install(this);
+	}
 
 	private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
