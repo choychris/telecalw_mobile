@@ -14,6 +14,7 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RCTBraintree.h>
+@import GoogleMobileAds ;
 
 @implementation AppDelegate
 
@@ -29,6 +30,8 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor blackColor];
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
+    /*Initialize mobile ads*/
+  [GADMobileAds configureWithApplicationID:@"ca-app-pub-5094396211239311~5296051459"];
 
   /*RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"mobile_app"
@@ -46,7 +49,6 @@
   UIView* launchScreenView = [[[NSBundle mainBundle] loadNibNamed:@"LaunchScreen" owner:self options:nil] objectAtIndex:0];
   launchScreenView.frame = self.window.bounds;
   rootView.loadingView = launchScreenView; */
-  
   return YES;
 }
 

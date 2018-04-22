@@ -1,0 +1,30 @@
+project 'mobile_app.xcodeproj'
+
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'mobile_app' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+  pod 'Google-Mobile-Ads-SDK'
+  # Pods for mobile_app
+
+  target 'mobile_appTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'mobile_app-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for mobile_app-tvOS
+
+  target 'mobile_app-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
