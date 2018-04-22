@@ -13,6 +13,7 @@ import { playUISound } from '../../../utils/sound';
 import { confirmRedeem } from '../actions';
 const { height , width } = Dimensions.get('window');
 import { trackScreen } from '../../../utils/analytic';
+import { AdMobBanner } from 'react-native-admob';
 
 class Reward extends Component {
 	constructor(props){
@@ -136,6 +137,13 @@ class Reward extends Component {
 						/>
 					</Animated.View>
 				</KeyboardAvoidingView>
+        <AdMobBanner
+          adSize="banner"
+          adUnitID="ca-app-pub-5094396211239311/2419865850"
+          ref={el => (this._basicExample = el)}
+          onAdLoaded={()=>{console.log('ad loaded')}}
+          onAdFailedToLoad={(evt)=>{console.log(evt)}}
+        />
 			</View>
 		)
 	}

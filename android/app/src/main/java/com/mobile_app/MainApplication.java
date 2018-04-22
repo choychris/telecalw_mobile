@@ -2,6 +2,10 @@ package teleclaw.live;
 
 import android.app.Application;
 
+//import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
+import android.content.Context;
+
 import com.facebook.react.ReactApplication;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -25,6 +29,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
+
+import com.sbugert.rnadmob.RNAdMobPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +82,12 @@ import java.util.List;
 
 public class MainApplication extends NavigationApplication {
 
+	@Override
+	protected void attachBaseContext(Context base) {
+	    super.attachBaseContext(base);
+	    MultiDex.install(this);
+	}
+
 	private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
 	protected static CallbackManager getCallbackManager() {
@@ -111,7 +123,8 @@ public class MainApplication extends NavigationApplication {
 			new RNDeviceInfo(),
 			new FBSDKPackage(mCallbackManager),
 			new WebRTCModulePackage(),
-			new BraintreePackage()
+			new BraintreePackage(),
+			new RNAdMobPackage()
 		);
 	}
 

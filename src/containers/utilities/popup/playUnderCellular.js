@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Easing , Animated , View , Text , StyleSheet , Image, Platform } from 'react-native';
+import { Easing , Animated , View , Text , StyleSheet , Image, Platform , ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
@@ -9,13 +9,15 @@ import { vibrate } from '../../../utils/vibrate';
 import { initGamePlay } from '../../game/actions';
 
 class PlayMobileData extends Component {
+  constructor(props){
+    super(props);
+    this.state = { loading : false }
+  }
 
   _startGame(){
     const { navigator, initGamePlay } = this.props;
-    navigator.dismissLightBox({
-      animationType : 'slide-down'
-    });
     console.log('game play')
+    this.setState({loading: true})
     initGamePlay(navigator, null, true);
   }
 
@@ -43,6 +45,7 @@ class PlayMobileData extends Component {
   }
   render(){
     const { string } = this.props;
+    const { loading } = this.state;
     return(
       <View style={styles.container}>
         <Text style={[styles.text,styles.title]}>
@@ -63,7 +66,7 @@ class PlayMobileData extends Component {
           {string['sureToPlay']}
         </Text>
         <View style={styles.innerContainer}>
-          {this._renderActionButton()}
+          { loading ? <ActivityIndicator size="small" color={'white'}/> : this._renderActionButton()}
         </View>
       </View>
     )

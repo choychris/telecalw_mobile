@@ -155,6 +155,7 @@ android {
 
 //compile project(':react-native-video')
 dependencies {
+    compile project(':react-native-admob')
     compile project(':react-native-sound')
     compile project(':react-native-vector-icons')
     compile project(':react-native-device-info')
