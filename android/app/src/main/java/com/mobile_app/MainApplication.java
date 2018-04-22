@@ -30,6 +30,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
 
+import com.sbugert.rnadmob.RNAdMobPackage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -121,7 +123,8 @@ public class MainApplication extends NavigationApplication {
 			new RNDeviceInfo(),
 			new FBSDKPackage(mCallbackManager),
 			new WebRTCModulePackage(),
-			new BraintreePackage()
+			new BraintreePackage(),
+			new RNAdMobPackage()
 		);
 	}
 
