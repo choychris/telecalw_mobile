@@ -429,7 +429,8 @@ export function initGamePlay(navigator,loadState, mobileData){
 		if(token.lbToken !== undefined){
 
 			// Step 0 : Loading State
-			if(loadState) loadState(true);
+			if(loadState){ loadState(true) };
+
 			loading('show',navigator);
 
 			// Step 1 : Check Wallet Balance || Wifi Connection
@@ -501,12 +502,20 @@ export function initGamePlay(navigator,loadState, mobileData){
 									value : { gizwits : gizwits , playId : playId }
 								});
 								// Navigate to GamePlay
-								navigator.resetTo({
-									screen : 'app.GamePlay',
-									navigatorStyle : {
-										navBarHidden : true
-									}
-								});
+                if(mobileData){
+                  navigator.dismissLightBox({
+                    animationType : 'slide-down'
+                  });
+                };
+
+                setTimeout(()=>{
+  								navigator.resetTo({
+  									screen : 'app.GamePlay',
+  									navigatorStyle : {
+  										navBarHidden : true
+  									}
+  								});
+                }, 500)
 								// Update Wallet Balance
 								dispatch({ 
 									type : 'UPDATE_WALLET_BALANCE' , 
