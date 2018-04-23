@@ -1,5 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import { ScrollView , KeyboardAvoidingView , Animated , Easing , PanResponder , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions , TouchableOpacity , StatusBar , Platform } from 'react-native';
+import { ScrollView , KeyboardAvoidingView , Animated , 
+         Easing , PanResponder , View , Text , Image , 
+         ActivityIndicator, StyleSheet , Dimensions , 
+         TouchableOpacity , StatusBar , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../components/telebuddies/telebot';
@@ -14,6 +17,7 @@ import { confirmRedeem } from '../actions';
 const { height , width } = Dimensions.get('window');
 import { trackScreen } from '../../../utils/analytic';
 import { AdMobBanner } from 'react-native-admob';
+import RewardedVideoContainer from './missionAds/layout';
 
 class Reward extends Component {
 	constructor(props){
@@ -87,6 +91,33 @@ class Reward extends Component {
 	render(){
 		const { navigator , confirmRedeem , version } = this.props;
 		const { release } = version;
+    let firstViewAdUnitID = (Platform.OS === 'ios') ? "ca-app-pub-5094396211239311/2419865850" : "ca-app-pub-5094396211239311/8392950095";
+    const tabs = [
+      {
+        name: 'referral',
+        content: this._renderContainer(),
+        buttons: (version.release === true) ? [
+                {
+                  text : 'confirm',
+                  textStyle : {
+                    color : 'white',
+                    fontSize : 25,
+                    fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
+                  },
+                  btnStyle : {
+                    backgroundColor : '#4C4C4C',
+                    paddingVertical : 10,
+                    paddingHorizontal : 15
+                  },
+                  onPressFunction : ()=>confirmRedeem(navigator)
+                }
+              ] : null
+      },
+      {
+        name: 'mission',
+        content: <RewardedVideoContainer />
+      }
+    ]
 		return (
 			<View style={styles.container}>
 				<StatusBar hidden={true}/>
@@ -105,26 +136,9 @@ class Reward extends Component {
 						style={[this._opacityAnimation()]}
 					>
 						<MessageBox 
-							title={'referral'}
 							type={'right'}
-							content={this._renderContainer()}
+							tabs={tabs}
 							promptString={(version.release === true) ? 'rewardPrompt' : 'sharePrompt'}
-							buttons={(version.release === true) ? [
-								{
-									text : 'confirm',
-									textStyle : {
-										color : 'white',
-										fontSize : 25,
-										fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
-									},
-									btnStyle : {
-										backgroundColor : '#4C4C4C',
-										paddingVertical : 10,
-										paddingHorizontal : 15
-									},
-									onPressFunction : ()=>confirmRedeem(navigator)
-								}
-							] : null}
 						/>
 					</Animated.View>
 					<Animated.View 
@@ -132,14 +146,14 @@ class Reward extends Component {
 					>
 						<Telebot 
 							status={'normal'} 
-							height={height * 0.13} 
-							width={height * 0.13}
+							height={height * 0.1} 
+							width={height * 0.1}
 						/>
 					</Animated.View>
 				</KeyboardAvoidingView>
         <AdMobBanner
           adSize="banner"
-          adUnitID="ca-app-pub-5094396211239311/2419865850"
+          adUnitID={firstViewAdUnitID}
           ref={el => (this._basicExample = el)}
           onAdLoaded={()=>{console.log('ad loaded')}}
           onAdFailedToLoad={(evt)=>{console.log(evt)}}
