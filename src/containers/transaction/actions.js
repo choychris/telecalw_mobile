@@ -18,6 +18,23 @@ export function selectRate(rate){
 	}
 }
 
+export function videoReward(navigator){
+  return (dispatch, getState)=>{
+    const { string } = getState()['preference']['language'];
+    message(
+      'show',
+      navigator,
+      { 
+        type : 'happy',
+        header : 'Ya!',
+        title : string['successPurchase'],
+        message : `${string['thankyou']}. ${string['newBalance']} : `
+      },
+      500
+    );
+  }
+}
+
 export function sales(nonce,rate,navigator){
 	return (dispatch,getState)=>{
 		//console.warn(JSON.stringify(nonce));	

@@ -115,7 +115,7 @@ class Reward extends Component {
       },
       {
         name: 'mission',
-        content: <RewardedVideoContainer />
+        content: <RewardedVideoContainer navigator={navigator}/>
       }
     ]
 		return (
