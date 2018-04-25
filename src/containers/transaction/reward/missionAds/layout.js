@@ -5,8 +5,11 @@ import { ActivityIndicator , ListView , View , Easing,
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import VideoAdList from './videoList';
+import FlyUfo from './flyUfo';
 import { AdMobRewarded } from 'react-native-admob';
 import { videoReward } from '../../actions';
+import request from '../../../../utils/fetch';
+import { videoAdsReward } from '../../../../common/api/request/reward';
 const height = Dimensions.get('window').height;
 
 class RewardedVideoListContainer extends Component{
@@ -14,33 +17,28 @@ class RewardedVideoListContainer extends Component{
     super(props);
     this.state = {
       ready: false, 
+      amount: null,
       firstFinish: false, 
       secondFinish: false,
       firstTimer: null,
       secondTimer: null
     };
-    this._AdReady = this._AdReady.bind(this);
     this._reset = this._reset.bind(this);
+    this._renderCounter = this._renderCounter.bind(this);
+    this.createTimer = this.createTimer.bind(this);
   }
 
   componentWillMount(){
-    AsyncStorage.getItem('firstAdAvaliable', (err, res)=>{
-      if(res && new Date().getTime() <= parseInt(res, 10)){
-        this.setState({
-          firstTimer: parseInt(res, 10),
-          firstFinish: true
-        })
+    let data = {
+      token : this.props.token,
+      data : {
+        method: 'get'
       }
-    });
-
-    AsyncStorage.getItem('secondAdAvaliable', (err, res)=>{
-      if(res && new Date().getTime() <= parseInt(res, 10)){
-        this.setState({
-          secondTimer: parseInt(res, 10),
-          secondFinish: true
-        })
-      }
-    });
+    }
+    videoAdsReward(data, request)
+    .then(res=>{
+      console.log(res);
+    })
   }
 
   componentDidMount(){
@@ -49,7 +47,10 @@ class RewardedVideoListContainer extends Component{
     AdMobRewarded.setAdUnitID('ca-app-pub-5094396211239311/8858858109');
 
     AdMobRewarded.addEventListener('rewarded',
-      (reward) => console.log('AdMobRewarded => rewarded', reward)
+      (reward) => {
+        console.log('AdMobRewarded => rewarded', reward);
+        this._reset();
+      }
     );
 
     AdMobRewarded.addEventListener('adFailedToLoad',
@@ -73,45 +74,97 @@ class RewardedVideoListContainer extends Component{
     AdMobRewarded.addEventListener('adClosed',
       () => {
         console.log('AdMobRewarded => adClosed')
-        this._reset();
       }
     );
 
     AdMobRewarded.requestAd().catch(error => console.warn('request error:', error));
-    AdMobRewarded.isReady(this._AdReady)
+    
+    this.createTimer();
+    this.timer = setInterval(()=>{
+      if(this.state.firstTimer){
+        this.setState({firstTimer: (this.state.firstTimer - 1000)})
+      }
+      if(this.state.secondTimer){
+        this.setState({secondTimer: (this.state.secondTimer - 1000)})
+      }
+    }, 1000)
+  }
+
+  async createTimer(){
+    const timeNow = new Date().getTime();
+    try {
+      const value1 = await AsyncStorage.getItem('firstAdAvaliable');
+      const value2 = await AsyncStorage.getItem('secondAdAvaliable');
+
+      if (value1 && timeNow <= parseInt(value1, 10)){
+        console.log('value1', value1);
+        const remainTime = parseInt(value1, 10) - timeNow;
+        this.setState({firstTimer: remainTime})
+      }
+
+      if (value2 && timeNow <= parseInt(value2, 10)){
+        console.log('value2', value2);
+        const remainTime = parseInt(value2, 10) - timeNow;
+        this.setState({secondTimer: remainTime})
+      }
+
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
   _reset(){
     const { videoReward, navigator } = this.props;
     const afterTwoHours = new Date().getTime() + 7200000;
     const NSTimeString = afterTwoHours.toString()
-    if(!this.state.firstFinish){
+    if(!this.state.firstTimer){
       AdMobRewarded.requestAd().catch(error => console.warn('request error:', error));
       AsyncStorage.setItem('firstAdAvaliable', NSTimeString);
-      this.setState({firstFinish: true});
+      this.setState({firstTimer: 7200000});
     }else{
       AsyncStorage.setItem('secondAdAvaliable', NSTimeString);
-      this.setState({secondFinish: true});
+      this.setState({secondTimer: 7200000});
     }
-    setTimeout(()=>videoReward(navigator), 1000)
+    setTimeout(()=>rewardPrompt(navigator, this.state.amount), 2000)
   }
 
-  _AdReady(boo){
-    this.setState({adReady: boo})
-    console.log('ready', boo)
+  _renderCounter(timeStamp){
+    function displayTime(time){
+    let h = Math.floor(time / 3600);
+    let m = Math.floor(time % 3600 / 60);
+    let s = Math.floor(time % 3600 % 60);
+    let mdisplay = m >= 10 ? m : '0'+m;
+    let sdisplay = s >= 10 ? s : '0'+s;
+    return h + ':' + mdisplay + ':' + sdisplay; 
+    }
+    return (
+      <View style={styles.adList}>
+        <View style={styles.itemContainer}>
+          <View>
+            <Text style={styles.text}>Next video available in</Text>
+            <Text style={[styles.text, {textAlign:'center'}]}>
+              {displayTime(timeStamp/1000)}
+            </Text>
+          </View>
+          <FlyUfo/>
+        </View>
+      </View>
+    )
   }
 
   componentWillUnmount(){
     AdMobRewarded.removeAllListeners();
+    clearInterval(this.timer);
   }
 
   render(){
-    let { ready, firstFinish } = this.state;
+    let { ready, firstTimer, secondTimer } = this.state;
     return(
       <View style={[styles.container, styles.listWrapper]}>
-        <Text>{firstFinish? 'Yes':'No'}</Text>
-        <VideoAdList ready={ready} />
-        <VideoAdList ready={ready} />
+
+      {firstTimer? this._renderCounter(firstTimer):<VideoAdList ready={ready} />}
+      {secondTimer? this._renderCounter(secondTimer):<VideoAdList ready={ready} />}
+
       </View>
     )
   }
@@ -129,12 +182,36 @@ const styles = StyleSheet.create({
     alignSelf : 'stretch',
     height : height * 0.4,
     marginBottom : height * 0.1
+  },
+  itemContainer: {
+    flex: 1,
+    flexDirection : 'row',
+    alignSelf : 'stretch',
+    alignItems : 'center',
+    borderRadius : 10,
+    backgroundColor : 'black',
+    padding : 10
+  },
+  text : {
+    fontFamily : font,
+    color : '#30D64A',
+    fontSize : 18,
+    marginVertical : 2
+  },
+  adList: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    alignSelf : 'stretch',
+    padding: 10,
+    margin : 5
   }
 })
 
 function mapStateToProps(state) {
   return {
-    string : state.preference.language.string
+    string : state.preference.language.string,
+    token: state.auth.token.lbToken.id
   }
 }
 

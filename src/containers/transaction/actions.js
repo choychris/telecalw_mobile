@@ -2,7 +2,7 @@ import Request from '../../utils/fetch';
 import { getPaymentToken , createSales, getTransactions } from '../../common/api/request/transaction';
 import { userTransactions } from '../../common/api/request/user';
 import { getExchangeRate } from '../../common/api/request/exchangeRate';
-import { redeemReward } from '../../common/api/request/reward';
+import { redeemReward, videoAdsReward } from '../../common/api/request/reward';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
 import { ShareDialog } from 'react-native-fbsdk';

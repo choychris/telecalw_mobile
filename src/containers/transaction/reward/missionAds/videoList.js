@@ -61,7 +61,7 @@ class VideoAdList extends Component{
   render(){
     const size = this.animatedValue.interpolate({
       inputRange: [0, 0.7, 1],
-      outputRange: [0, 1, 0.8]
+      outputRange: [0, 1.1, 1]
     })
 
     const opacity = this.animatedValue.interpolate({
@@ -71,15 +71,14 @@ class VideoAdList extends Component{
 
     return(
         <View style={styles.adList}>
-          <Animated.View 
-            style={{ transform: [{scale: size}] }}>
-            <Telebot 
-              status={'money'} 
-              height={height * 0.08} 
-              width={height * 0.08}
-            />
-          </Animated.View>
-          <Animated.View style={[styles.itemContainer, {opacity}]}>
+          <Animated.View style={[styles.itemContainer, { transform: [{scale: size}] }]}>
+            <View style={{flex: 1, margin: 5}}>
+              <Telebot 
+                status={'money'} 
+                height={height * 0.07} 
+                width={height * 0.07}
+              />
+            </View>
             <View style={{flex: 3}}>
               <Text style={styles.text}>Complete Watching</Text>
               <Text style={styles.text}>an Ads Video</Text>
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     backgroundColor : '#5AA1AD',
-    borderRadius : 150,
+    borderRadius : 10,
     alignItems : 'center',
     paddingVertical: 16
   },
