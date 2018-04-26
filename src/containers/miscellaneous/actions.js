@@ -351,7 +351,21 @@ export function createIssue(navigator){
 	return (dispatch,getState)=>{
 		const { id , userId } = getState()['auth']['token']['lbToken'];
 		let { issue } = getState()['mis'];
-		if(issue.message && issue.message !== null){
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+
+    if(reg.test(issue.email) === false){
+      dispatch({
+        type : 'AMEND_ISSUE',
+        keys : 'warn',
+        value : 'email'
+      })
+    }else if(!issue.message){
+      dispatch({
+        type : 'AMEND_ISSUE',
+        keys : 'warn',
+        value : 'NoMsg'
+      })
+    }else{
 			issue.userId = userId;
 			//console.warn(JSON.stringify(issue))
 			loading('show',navigator);

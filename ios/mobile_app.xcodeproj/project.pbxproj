@@ -36,6 +36,8 @@
 		2DCD954D1E0B4F2C00145EB5 /* mobile_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobile_appTests.m */; };
 		2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */; };
 		2E64BAEB208B438800FF8AB7 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAEA208B432D00FF8AB7 /* libRNAdMobManager.a */; };
+		2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */; };
+		2E8DC89F2091D1EE00D1C10C /* FacebookAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */; };
 		50A8BF15ACE8F712722999F4 /* libPods-mobile_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9507C02487E1CD4D29BE48B3 /* libPods-mobile_app-tvOS.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -455,6 +457,8 @@
 		2D02E4901E0B4A5D006451C7 /* mobile_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobile_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		2E64BAE5208B432D00FF8AB7 /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAdMobManager.xcodeproj; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; };
+		2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = Pods/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookAdapter.framework; path = "Pods/GoogleMobileAdsMediationFacebook/FacebookAdapter-4.28.1.1/FacebookAdapter.framework"; sourceTree = "<group>"; };
 		350029CEF6F5BBE0B679867D /* Pods-mobile_appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile_appTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mobile_appTests/Pods-mobile_appTests.release.xcconfig"; sourceTree = "<group>"; };
 		4729EE8AAB1CF3394C920525 /* Pods-mobile_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile_app.release.xcconfig"; path = "Pods/Target Support Files/Pods-mobile_app/Pods-mobile_app.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -538,7 +542,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6EB5ABB2025797100E453A9 /* WebKit.framework in Frameworks */,
+				2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */,
 				2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */,
+				2E8DC89F2091D1EE00D1C10C /* FacebookAdapter.framework in Frameworks */,
 				2E64BAEB208B438800FF8AB7 /* libRNAdMobManager.a in Frameworks */,
 				D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */,
 				D6A3BD141FEB694D00F90C18 /* libRCTBraintree.a in Frameworks */,
@@ -866,7 +872,9 @@
 			isa = PBXGroup;
 			children = (
 				D6EB5ABA2025797100E453A9 /* WebKit.framework */,
+				2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */,
 				D6B8366C1FCFB977004566FB /* Bolts.framework */,
+				2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */,
 				D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */,
 				D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */,
 				D6B836691FCFB976004566FB /* FBSDKShareKit.framework */,
@@ -1772,6 +1780,8 @@
 					"$(PROJECT_DIR)",
 					"~/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/**",
+					"$(PROJECT_DIR)/Pods/FBAudienceNetwork/**",
+					"$(PROJECT_DIR)/Pods/GoogleMobileAdsMediationFacebook/FacebookAdapter-4.28.1.1/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
@@ -1814,6 +1824,8 @@
 					"$(PROJECT_DIR)",
 					"~/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/**",
+					"$(PROJECT_DIR)/Pods/FBAudienceNetwork/**",
+					"$(PROJECT_DIR)/Pods/GoogleMobileAdsMediationFacebook/FacebookAdapter-4.28.1.1/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",

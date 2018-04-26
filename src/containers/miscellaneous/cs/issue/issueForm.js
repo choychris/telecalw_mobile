@@ -5,24 +5,27 @@ import { connect } from 'react-redux';
 import { inputIssue } from '../../actions';
 
 class IssueForm extends Component {
-	shouldComponentUpdate(){
-		return false;
+	shouldComponentUpdate(nextProps){
+		return (this.props.warn !== nextProps.warn);
 	}
 	render(){
-		const { string , inputIssue } = this.props;
+		const { string , inputIssue, warn } = this.props;
+    let warningStyleMsg = (warn == 'NoMsg') ? styles.warning : {};
+    let warningStyleEmail = (warn == 'email') ? styles.warning : {};
 		return(
 			<View style={styles.container}>
 				<TextInput
-					style={[styles.input,{ height : 35 }]}
+					style={[styles.input,{ height : 35 }, warningStyleEmail]}
 					placeholder={string['inputEmail']}
 					keyboardType={'email-address'}
 					autoCapitalize={'none'}
+          autoCorrect={false}
 					onChangeText={(text)=>inputIssue(['email'],text)}
 				/>
 				<TextInput
 					multiline={true}
 					autoCorrect={false}
-					style={[styles.input,{ height : 100 }]}
+					style={[styles.input,{ height : 100}, warningStyleMsg]}
 					placeholder={string['inputMsg']}
 					onChangeText={(text)=>inputIssue(['message'],text)}
 				/>
@@ -60,12 +63,18 @@ const styles = StyleSheet.create({
 				backgroundColor : 'white'
 			}
 		})
-	}
+	},
+  warning:{
+    borderColor : '#CF333F' , 
+    borderWidth : 2 , 
+    borderRadius : 5 
+  }
 });
 
 function mapStateToProps(state) {
 	return {
-		string : state.preference.language.string
+		string : state.preference.language.string,
+    warn : state.mis.issue.warn
 	}
 }
 

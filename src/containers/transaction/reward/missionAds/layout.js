@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import VideoAdList from './videoList';
 import FlyUfo from './flyUfo';
 import { AdMobRewarded } from 'react-native-admob';
-import { videoReward } from '../../actions';
+import { videoRewardPrompt } from '../../actions';
 import request from '../../../../utils/fetch';
 import { videoAdsReward } from '../../../../common/api/request/reward';
 const height = Dimensions.get('window').height;
-
+const videoAdUnit = (Platform.OS === 'ios') ? 'ca-app-pub-5094396211239311/8858858109' : 'ca-app-pub-5094396211239311/6761585487';
 class RewardedVideoListContainer extends Component{
   constructor(props){
     super(props);
@@ -37,14 +37,14 @@ class RewardedVideoListContainer extends Component{
     }
     videoAdsReward(data, request)
     .then(res=>{
-      console.log(res);
+      this.setState({amount: res.response.amount});
     })
   }
 
   componentDidMount(){
     if(__DEV__)AdMobRewarded.setTestDevices([AdMobRewarded.simulatorId]);
     
-    AdMobRewarded.setAdUnitID('ca-app-pub-5094396211239311/8858858109');
+    AdMobRewarded.setAdUnitID(videoAdUnit);
 
     AdMobRewarded.addEventListener('rewarded',
       (reward) => {
@@ -77,7 +77,10 @@ class RewardedVideoListContainer extends Component{
       }
     );
 
-    AdMobRewarded.requestAd().catch(error => console.warn('request error:', error));
+    AdMobRewarded.requestAd().catch(error => {
+      console.log(error)
+      this.setState({ready: true})
+    });
     
     this.createTimer();
     this.timer = setInterval(()=>{
@@ -114,21 +117,21 @@ class RewardedVideoListContainer extends Component{
   }
 
   _reset(){
-    const { videoReward, navigator } = this.props;
-    const afterTwoHours = new Date().getTime() + 7200000;
+    const { videoRewardPrompt, navigator } = this.props;
+    const afterTwoHours = new Date().getTime() + 3200000;
     const NSTimeString = afterTwoHours.toString()
     if(!this.state.firstTimer){
       AdMobRewarded.requestAd().catch(error => console.warn('request error:', error));
       AsyncStorage.setItem('firstAdAvaliable', NSTimeString);
-      this.setState({firstTimer: 7200000});
+      this.setState({firstTimer: 3200000});
     }else{
       AsyncStorage.setItem('secondAdAvaliable', NSTimeString);
-      this.setState({secondTimer: 7200000});
+      this.setState({secondTimer: 3200000});
     }
-    setTimeout(()=>rewardPrompt(navigator, this.state.amount), 2000)
+    videoRewardPrompt(navigator, this.state.amount)
   }
 
-  _renderCounter(timeStamp){
+  _renderCounter(timeStamp, word){
     function displayTime(time){
     let h = Math.floor(time / 3600);
     let m = Math.floor(time % 3600 / 60);
@@ -141,7 +144,7 @@ class RewardedVideoListContainer extends Component{
       <View style={styles.adList}>
         <View style={styles.itemContainer}>
           <View>
-            <Text style={styles.text}>Next video available in</Text>
+            <Text style={styles.text}>{word}</Text>
             <Text style={[styles.text, {textAlign:'center'}]}>
               {displayTime(timeStamp/1000)}
             </Text>
@@ -158,12 +161,13 @@ class RewardedVideoListContainer extends Component{
   }
 
   render(){
-    let { ready, firstTimer, secondTimer } = this.state;
+    let { ready, amount, firstTimer, secondTimer } = this.state;
+    let { string } = this.props;
     return(
       <View style={[styles.container, styles.listWrapper]}>
 
-      {firstTimer? this._renderCounter(firstTimer):<VideoAdList ready={ready} />}
-      {secondTimer? this._renderCounter(secondTimer):<VideoAdList ready={ready} />}
+      {firstTimer? this._renderCounter(firstTimer, string['nextVideo']):<VideoAdList ready={ready} amount={amount}/>}
+      {secondTimer? this._renderCounter(secondTimer, string['nextVideo']):<VideoAdList ready={ready} amount={amount}/>}
 
       </View>
     )
@@ -217,7 +221,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ 
-  videoReward
+  videoRewardPrompt
   }, dispatch)
 }
 

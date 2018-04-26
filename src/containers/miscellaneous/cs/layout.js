@@ -13,13 +13,14 @@ import { playUISound } from './../../../utils/sound';
 import { createIssue } from '../actions';
 const { height , width } = Dimensions.get('window');
 import { trackScreen } from '../../../utils/analytic';
+import AdsBanner from '../../../components/AdsBanner';
 
 class CustomerSupport extends Component {
 	constructor(props){
 		super(props);
 		this._position = new Animated.ValueXY({
 			x : -width,
-			y : -height*0.1
+			y : -height*0.12
 		});
 		this._animation = new Animated.Value(0);
 	}
@@ -39,7 +40,7 @@ class CustomerSupport extends Component {
 		Animated.spring(this._position,{
 			toValue : {
 				x : 0,
-			y : -height*0.1
+			y : -height*0.12
 			}
 		}).start(()=>this._fadeAnimation());
 	}
@@ -111,11 +112,12 @@ class CustomerSupport extends Component {
 					>
 						<Telebot 
 							status={'postal'} 
-							height={height * 0.13} 
-							width={height * 0.13}
+							height={height * 0.1} 
+							width={height * 0.1}
 						/>
 					</Animated.View>
 				</KeyboardAvoidingView>
+        <AdsBanner />
 			</View>
 		)
 	}

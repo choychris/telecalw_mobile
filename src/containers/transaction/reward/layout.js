@@ -16,7 +16,7 @@ import { playUISound } from '../../../utils/sound';
 import { confirmRedeem } from '../actions';
 const { height , width } = Dimensions.get('window');
 import { trackScreen } from '../../../utils/analytic';
-import { AdMobBanner } from 'react-native-admob';
+import AdsBanner from '../../../components/AdsBanner';
 import RewardedVideoContainer from './missionAds/layout';
 
 class Reward extends Component {
@@ -91,7 +91,6 @@ class Reward extends Component {
 	render(){
 		const { navigator , confirmRedeem , version } = this.props;
 		const { release } = version;
-    let firstViewAdUnitID = (Platform.OS === 'ios') ? "ca-app-pub-5094396211239311/2419865850" : "ca-app-pub-5094396211239311/8392950095";
     const tabs = [
       {
         name: 'referral',
@@ -151,13 +150,7 @@ class Reward extends Component {
 						/>
 					</Animated.View>
 				</KeyboardAvoidingView>
-        <AdMobBanner
-          adSize="banner"
-          adUnitID={firstViewAdUnitID}
-          ref={el => (this._basicExample = el)}
-          onAdLoaded={()=>{console.log('ad loaded')}}
-          onAdFailedToLoad={(evt)=>{console.log(evt)}}
-        />
+        <AdsBanner/>
 			</View>
 		)
 	}

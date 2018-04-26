@@ -18,20 +18,39 @@ export function selectRate(rate){
 	}
 }
 
-export function videoReward(navigator){
+export function videoRewardPrompt(navigator, amount){
   return (dispatch, getState)=>{
     const { string } = getState()['preference']['language'];
-    message(
-      'show',
-      navigator,
-      { 
-        type : 'happy',
-        header : 'Ya!',
-        title : string['successPurchase'],
-        message : `${string['thankyou']}. ${string['newBalance']} : `
-      },
-      500
-    );
+    const { userId , id } = getState()['auth']['token']['lbToken'];
+    const walletBalance = getState()['auth']['wallet']['balance'];
+    const params = {
+      token: id,
+      data: {
+        userId,
+        method: 'claim'
+      }
+    }
+
+    videoAdsReward(params, Request)
+    .then(res=>{
+      return dispatch({
+        type : 'UPDATE_WALLET_BALANCE',
+        value : walletBalance+amount
+      });
+      setTimeout(()=>{
+        message(
+          'show',
+          navigator,
+          { 
+            type : 'happy',
+            header : 'Ya!',
+            title : null,
+            message : `${string['thankyou']}. ${string['newBalance']} : ${walletBalance+amount} `
+          },
+          500
+        );
+      }, 2000)
+    })
   }
 }
 

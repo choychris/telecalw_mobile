@@ -25,13 +25,13 @@ class VideoAdList extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.ready){
-      this.setState({ready: true});
+    if(!!nextProps.ready){
+      this.setState({ready: nextProps.ready});
     }
   }
 
   _showAd(){
-    AdMobRewarded.showAd().catch(error => console.warn(error));
+    AdMobRewarded.showAd().catch(error => console.log(error));
   }
 
   _animate(){
@@ -44,17 +44,17 @@ class VideoAdList extends Component{
 
   _renderButton(){
     const { ready } = this.state;
+    const { string } = this.props;
     if(ready === true){
       return (    
         <TouchableOpacity disabled={!ready} style={styles.button} onPress={this._showAd}>
-          <Text style={styles.buttonText}>Watch</Text>
-          <Text style={styles.buttonText}>Now</Text>
+          <Text style={styles.buttonText}>{string['watchNow']}</Text>
         </TouchableOpacity>
       )
     }else if(ready === false){
-      return <Text style={styles.text}>Searching ..</Text>
+      return <Text style={styles.text}>{string['loading']}</Text>
     }else{
-      return <Text style={styles.text}>No Ads ..</Text>
+      return <Text style={styles.text}>{string['noAds']}</Text>
     }
   }
 
@@ -68,6 +68,7 @@ class VideoAdList extends Component{
       inputRange: [0, 1],
       outputRange: [0, 1]
     })
+    const { string } = this.props;
 
     return(
         <View style={styles.adList}>
@@ -80,11 +81,10 @@ class VideoAdList extends Component{
               />
             </View>
             <View style={{flex: 3}}>
-              <Text style={styles.text}>Complete Watching</Text>
-              <Text style={styles.text}>an Ads Video</Text>
+              <Text style={styles.text}>{string['adInstruction']}</Text>
               <View style={styles.coinsRow}>
                 <Image source={coinsImg} style={styles.image} resizeMode={'contain'}/>
-                <Text style={styles.inlineText}>10</Text>
+                <Text style={styles.inlineText}>{this.props.amount}</Text>
               </View>
             </View>
             { this._renderButton() }
@@ -154,13 +154,7 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ 
-    
-  }, dispatch)
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(VideoAdList);
+export default connect(mapStateToProps,null)(VideoAdList);
 
 
 
