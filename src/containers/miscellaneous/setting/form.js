@@ -88,6 +88,7 @@ class SettingForm extends Component {
 	render(){
 		const { user , language , preference , version } = this.props;
 		const { avaLanguage , locale , string } = language;
+    
 		//console.warn(JSON.stringify(user.picture));
 		//console.warn(locale)
 		//console.warn(JSON.stringify(version))
@@ -101,7 +102,7 @@ class SettingForm extends Component {
 					{user.name}
 				</Text>
 				<Text style={styles.text}>
-					{user.email}
+					{user.contactEmail || user.email}
 				</Text>
 				{(Platform.OS === 'ios') ? this._renderLanguageIOSPicker(avaLanguage,locale,string) : this._renderLanguageAndroidPicker(avaLanguage,locale,string)}
 				{this._renderMusicSetting(string,preference)}
