@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 	},
   warning:{
     borderColor : '#CF333F' , 
-    borderWidth : 2 , 
+    borderWidth : 1.5 , 
     borderRadius : 5 
   }
 });
