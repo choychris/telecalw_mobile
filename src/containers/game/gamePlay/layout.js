@@ -19,12 +19,15 @@ class GamePlay extends Component {
 		loadGamePlay(navigator);
 		this.refundTimer = setTimeout(()=>refund(navigator),30000);
 	}
-	shouldComponentUpdate(){
+	shouldComponentUpdate(nextProps, nextState){
+    if(!this.props.webrtc['front'] && nextProps.webrtc['front']){
+      console.log('clear refun time out', this.refundTimer);
+      clearTimeout(this.refundTimer);
+    }
+
 		return false;
 	}
-	componentWillUnmount(){
-		clearTimeout(this.refundTimer);
-	}
+
 	render(){
 		const { navigator } = this.props;
 		return(
@@ -53,6 +56,12 @@ const styles = StyleSheet.create({
 	}
 });
 
+function mapStateToProps(state){
+  return {
+    webrtc : state.game.play.webrtcUrl
+  }
+}
+
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({ 
 		loadGamePlay,
@@ -61,4 +70,4 @@ function mapDispatchToProps(dispatch) {
 	}, dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(GamePlay);
+export default connect(mapStateToProps,mapDispatchToProps)(GamePlay);

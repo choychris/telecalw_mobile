@@ -37,39 +37,60 @@
 /* Begin PBXFileReference section */
 		08166071FD291F4A7728BE569C9ED729 /* Pods-mobile_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app.release.xcconfig"; sourceTree = "<group>"; };
 		0B96F4FB803BBD9827D57CA05AF7864E /* Pods-mobile_app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app.debug.xcconfig"; sourceTree = "<group>"; };
+		0BFFCACAB5F568443F3B0857B5423C27 /* FBNativeAdTableViewCellProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdTableViewCellProvider.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdTableViewCellProvider.h; sourceTree = "<group>"; };
+		11BBF21872FE5808F1AD813A5EFF8BEB /* FBAdSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAdSize.h; path = FBAudienceNetwork.framework/Headers/FBAdSize.h; sourceTree = "<group>"; };
 		120D956F00545774CCEEC9389725403C /* Pods-mobile_app-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		196C605C2923771CA0A8C460502627E0 /* Pods-mobile_app-tvOSTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-tvOSTests-resources.sh"; sourceTree = "<group>"; };
+		1BF51C7F3C0250B1E570513A61C666DC /* FBInterstitialAd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBInterstitialAd.h; path = FBAudienceNetwork.framework/Headers/FBInterstitialAd.h; sourceTree = "<group>"; };
 		1CD16493E0EDB88B147A8982A4667A76 /* Pods-mobile_app-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-mobile_app-dummy.m"; sourceTree = "<group>"; };
+		256630A82E811C4A22C68748873EBCE2 /* FBAdSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAdSettings.h; path = FBAudienceNetwork.framework/Headers/FBAdSettings.h; sourceTree = "<group>"; };
 		2A0BB8B7390E60E631364C99CB75057C /* libPods-mobile_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-mobile_app-tvOS.a"; path = "libPods-mobile_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D154F4805B9715F0E6D79B0363CE280 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		2F1F07DCCDCA38039287ADF9AA9F57FC /* libPods-mobile_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-mobile_app-tvOSTests.a"; path = "libPods-mobile_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3371A9D3D484B5BE9F3E70AAEDE54AE6 /* Pods-mobile_app-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-frameworks.sh"; sourceTree = "<group>"; };
 		3A52E008B9C113A3289E38E0C712B37A /* Pods-mobile_app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3D423DB48C558F9B7B8D06FCF8046395 /* FBNativeAdScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdScrollView.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdScrollView.h; sourceTree = "<group>"; };
 		4030B143E2055B0996A93D0557D96BD1 /* Pods-mobile_app-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-mobile_app-tvOS-dummy.m"; sourceTree = "<group>"; };
 		46B39C85730E7BF585C8F4DAD9354F63 /* Pods-mobile_appTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_appTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4D4D593274FCD11DD9BAC0CEC924022A /* FacebookAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookAdapter.framework; path = "FacebookAdapter-4.28.1.1/FacebookAdapter.framework"; sourceTree = "<group>"; };
 		572DBE63D5360AB71E5F80F979738FD0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		57C81C9766AA34C868A0ECC8C4F96DD7 /* FBAudienceNetwork.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAudienceNetwork.h; path = FBAudienceNetwork.framework/Headers/FBAudienceNetwork.h; sourceTree = "<group>"; };
 		5B30C7ABDF05C4FCEFF226207DC6FE1E /* Pods-mobile_app-tvOS-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-tvOS-resources.sh"; sourceTree = "<group>"; };
 		63222EE18EC578D8856478DB935E4B87 /* Pods-mobile_appTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_appTests-frameworks.sh"; sourceTree = "<group>"; };
 		6835FC31F25C53B2483464D8A8151B12 /* Pods-mobile_appTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-mobile_appTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6B24165768045D962E3A3C362A42EFE3 /* FBMediaViewVideoRenderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBMediaViewVideoRenderer.h; path = FBAudienceNetwork.framework/Headers/FBMediaViewVideoRenderer.h; sourceTree = "<group>"; };
+		6E119A0AE954999E4AFD755DEC35DB70 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		773E4AC3A25F12FFF429E96A8986A794 /* Pods-mobile_app-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		7E1DD5A3C6663485699A679BD7551AC5 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		829D69A42D93D220DCF8717A0761CE72 /* Pods-mobile_appTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-mobile_appTests-dummy.m"; sourceTree = "<group>"; };
 		8A01FAAA5715473D4BF076BB0BB0A4B7 /* Pods-mobile_app-tvOSTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-tvOSTests-frameworks.sh"; sourceTree = "<group>"; };
+		8F87D9D0E08B866C41CDAB2200EB33D8 /* FBMediaView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBMediaView.h; path = FBAudienceNetwork.framework/Headers/FBMediaView.h; sourceTree = "<group>"; };
+		8FC1D5E49DE61543B408C573EC8C8171 /* FBAdView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAdView.h; path = FBAudienceNetwork.framework/Headers/FBAdView.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9779D8250FC3B42FB5C7C7AC299C4003 /* libPods-mobile_app.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-mobile_app.a"; path = "libPods-mobile_app.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EE93A90B2E3622BF234C72C784241BB /* FBNativeAdCollectionViewCellProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdCollectionViewCellProvider.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdCollectionViewCellProvider.h; sourceTree = "<group>"; };
+		9EF575F52608A105D88B2044B949388B /* FBRewardedVideoAd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBRewardedVideoAd.h; path = FBAudienceNetwork.framework/Headers/FBRewardedVideoAd.h; sourceTree = "<group>"; };
+		B3679740E6213120188D06E1DA2A3737 /* FBNativeAdView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdView.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdView.h; sourceTree = "<group>"; };
 		B58639D51BBB83769C735455C6F9315C /* Pods-mobile_app-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-mobile_app-acknowledgements.plist"; sourceTree = "<group>"; };
+		B7570AB796E04161C301DB808ABD7021 /* FBInstreamAdView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBInstreamAdView.h; path = FBAudienceNetwork.framework/Headers/FBInstreamAdView.h; sourceTree = "<group>"; };
 		B844287B276DE1F0E2EE806446BD9A9F /* Pods-mobile_appTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-mobile_appTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		BC982826672DA5F2CA81BA62900C425D /* Pods-mobile_app-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-mobile_app-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		C2811F682C3C79CE82CCDCE8D5202C62 /* Pods-mobile_appTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_appTests-resources.sh"; sourceTree = "<group>"; };
 		C5099729C5DDCC4410DB366DC0A34504 /* Pods-mobile_app-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_app-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CB2792BDDEF9BBE533C4B5D757AC7B5F /* Pods-mobile_app-tvOS-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-tvOS-frameworks.sh"; sourceTree = "<group>"; };
+		CF8F92DA2F4E2BEA9A1BF0AD884C851C /* FBNativeAdsManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdsManager.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdsManager.h; sourceTree = "<group>"; };
 		D245A5D3206568DB14C96F8EB9132184 /* libPods-mobile_appTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-mobile_appTests.a"; path = "libPods-mobile_appTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36178F044AC5A98C351F924272C2DE5 /* Pods-mobile_app-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-mobile_app-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D746871CE869D3509278584A066059E1 /* Pods-mobile_app-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-mobile_app-resources.sh"; sourceTree = "<group>"; };
 		DC80FF5DC66B1F71AA8D616582DC0D78 /* Pods-mobile_app-tvOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-mobile_app-tvOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		E11FD3F8D56335D084C33458430D9349 /* FBAdChoicesView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAdChoicesView.h; path = FBAudienceNetwork.framework/Headers/FBAdChoicesView.h; sourceTree = "<group>"; };
+		E3C1295FBD2DB136E21D293E79B29224 /* FBNativeAdCollectionViewAdProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdCollectionViewAdProvider.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdCollectionViewAdProvider.h; sourceTree = "<group>"; };
+		E73EDAA6FCF72528337184483C03772E /* FBNativeAdTableViewAdProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAdTableViewAdProvider.h; path = FBAudienceNetwork.framework/Headers/FBNativeAdTableViewAdProvider.h; sourceTree = "<group>"; };
+		EA684025912A3174843B465AD0C7E1AF /* FBNativeAd.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBNativeAd.h; path = FBAudienceNetwork.framework/Headers/FBNativeAd.h; sourceTree = "<group>"; };
+		EAC8661C3C29D1AA757195F361E55E5D /* FBAdDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBAdDefines.h; path = FBAudienceNetwork.framework/Headers/FBAdDefines.h; sourceTree = "<group>"; };
 		EFAFCF0425D30B9137514F3ABC0AF9EF /* Pods-mobile_app-tvOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-mobile_app-tvOS-acknowledgements.plist"; sourceTree = "<group>"; };
 		F21CB76A75DEA87C78D50907C0A9CFAB /* Pods-mobile_app-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-mobile_app-tvOSTests-dummy.m"; sourceTree = "<group>"; };
 		F40CF2BE5BFCEAEA9ABEB8AA689D70BB /* Pods-mobile_appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-mobile_appTests.release.xcconfig"; sourceTree = "<group>"; };
-		F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		FBC20CFF7142853D1CA767EE1AE150B1 /* Pods-mobile_app-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-mobile_app-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +130,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0409E3B3F15B1B0A28B94214B7AC4E74 /* FBAudienceNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				E11FD3F8D56335D084C33458430D9349 /* FBAdChoicesView.h */,
+				EAC8661C3C29D1AA757195F361E55E5D /* FBAdDefines.h */,
+				256630A82E811C4A22C68748873EBCE2 /* FBAdSettings.h */,
+				11BBF21872FE5808F1AD813A5EFF8BEB /* FBAdSize.h */,
+				8FC1D5E49DE61543B408C573EC8C8171 /* FBAdView.h */,
+				57C81C9766AA34C868A0ECC8C4F96DD7 /* FBAudienceNetwork.h */,
+				B7570AB796E04161C301DB808ABD7021 /* FBInstreamAdView.h */,
+				1BF51C7F3C0250B1E570513A61C666DC /* FBInterstitialAd.h */,
+				8F87D9D0E08B866C41CDAB2200EB33D8 /* FBMediaView.h */,
+				6B24165768045D962E3A3C362A42EFE3 /* FBMediaViewVideoRenderer.h */,
+				EA684025912A3174843B465AD0C7E1AF /* FBNativeAd.h */,
+				E3C1295FBD2DB136E21D293E79B29224 /* FBNativeAdCollectionViewAdProvider.h */,
+				9EE93A90B2E3622BF234C72C784241BB /* FBNativeAdCollectionViewCellProvider.h */,
+				3D423DB48C558F9B7B8D06FCF8046395 /* FBNativeAdScrollView.h */,
+				CF8F92DA2F4E2BEA9A1BF0AD884C851C /* FBNativeAdsManager.h */,
+				E73EDAA6FCF72528337184483C03772E /* FBNativeAdTableViewAdProvider.h */,
+				0BFFCACAB5F568443F3B0857B5423C27 /* FBNativeAdTableViewCellProvider.h */,
+				B3679740E6213120188D06E1DA2A3737 /* FBNativeAdView.h */,
+				9EF575F52608A105D88B2044B949388B /* FBRewardedVideoAd.h */,
+				E18E9696BF4E116CC65CACCA2E534169 /* Frameworks */,
+			);
+			name = FBAudienceNetwork;
+			path = FBAudienceNetwork;
+			sourceTree = "<group>";
+		};
 		20F731AE46C73F232AF0C168DC383CF9 /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,12 +196,39 @@
 			path = "Target Support Files/Pods-mobile_appTests";
 			sourceTree = "<group>";
 		};
+		40C101C0976F2F12C5D238A915E56DD1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D4D593274FCD11DD9BAC0CEC924022A /* FacebookAdapter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58996781A54EE964D7111D73083A18A5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				2D154F4805B9715F0E6D79B0363CE280 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		656023AE077AC7193E5A66078C44C96F /* GoogleMobileAdsMediationFacebook */ = {
+			isa = PBXGroup;
+			children = (
+				40C101C0976F2F12C5D238A915E56DD1 /* Frameworks */,
+			);
+			name = GoogleMobileAdsMediationFacebook;
+			path = GoogleMobileAdsMediationFacebook;
+			sourceTree = "<group>";
+		};
+		65DDA58744EF235A969088DAD14C999F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0409E3B3F15B1B0A28B94214B7AC4E74 /* FBAudienceNetwork */,
+				FE4D58F599D458CFE0F8D7BA15B0B927 /* Google-Mobile-Ads-SDK */,
+				656023AE077AC7193E5A66078C44C96F /* GoogleMobileAdsMediationFacebook */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		69835F2C1480FDEE415F247FFC275AE5 /* Targets Support Files */ = {
@@ -171,26 +247,10 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				A42F72DC1D780481325DD00969B19BB6 /* Frameworks */,
-				820FBBDA65C5B1A6A4C379A893C27235 /* Pods */,
+				65DDA58744EF235A969088DAD14C999F /* Pods */,
 				D4B8946614F5B21D9E1794BEB55772DC /* Products */,
 				69835F2C1480FDEE415F247FFC275AE5 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		820FBBDA65C5B1A6A4C379A893C27235 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A42F72DC1D780481325DD00969B19BB6 /* Frameworks */ = {
@@ -228,6 +288,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E18E9696BF4E116CC65CACCA2E534169 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E119A0AE954999E4AFD755DEC35DB70 /* FBAudienceNetwork.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E706B834028EB2123FFD1D58C17F36BC /* Pods-mobile_app-tvOSTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,10 +311,18 @@
 			path = "Target Support Files/Pods-mobile_app-tvOSTests";
 			sourceTree = "<group>";
 		};
-		E91D6015731707498AAA5817D350B87B /* Google-Mobile-Ads-SDK */ = {
+		F53F9DA4745C4F6EDC477C2E25EAB51A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */,
+				7E1DD5A3C6663485699A679BD7551AC5 /* GoogleMobileAds.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE4D58F599D458CFE0F8D7BA15B0B927 /* Google-Mobile-Ads-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				F53F9DA4745C4F6EDC477C2E25EAB51A /* Frameworks */,
 			);
 			name = "Google-Mobile-Ads-SDK";
 			path = "Google-Mobile-Ads-SDK";

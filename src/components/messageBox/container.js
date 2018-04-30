@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { FlatList , KeyboardAvoidingView , View , Image , StyleSheet , Dimensions , Text , Platform } from 'react-native';
+import { FlatList , KeyboardAvoidingView , View , 
+         Image , StyleSheet , Dimensions , 
+         Text , Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 const messageBoxImage = {

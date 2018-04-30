@@ -2,7 +2,7 @@ import Request from '../../utils/fetch';
 import { getPaymentToken , createSales, getTransactions } from '../../common/api/request/transaction';
 import { userTransactions } from '../../common/api/request/user';
 import { getExchangeRate } from '../../common/api/request/exchangeRate';
-import { redeemReward } from '../../common/api/request/reward';
+import { redeemReward, videoAdsReward } from '../../common/api/request/reward';
 import { loading , message } from '../utilities/actions';
 const BTClient = require('react-native-braintree-xplat');
 import { ShareDialog } from 'react-native-fbsdk';
@@ -16,6 +16,42 @@ export function selectRate(rate){
 			value : rate
 		})
 	}
+}
+
+export function videoRewardPrompt(navigator, amount){
+  return (dispatch, getState)=>{
+    const { string } = getState()['preference']['language'];
+    const { userId , id } = getState()['auth']['token']['lbToken'];
+    const walletBalance = getState()['auth']['wallet']['balance'];
+    const params = {
+      token: id,
+      data: {
+        userId,
+        method: 'claim'
+      }
+    }
+
+    videoAdsReward(params, Request)
+    .then(res=>{
+      return dispatch({
+        type : 'UPDATE_WALLET_BALANCE',
+        value : walletBalance+amount
+      });
+      setTimeout(()=>{
+        message(
+          'show',
+          navigator,
+          { 
+            type : 'happy',
+            header : 'Ya!',
+            title : null,
+            message : `${string['thankyou']}. ${string['newBalance']} : ${walletBalance+amount} `
+          },
+          500
+        );
+      }, 2000)
+    })
+  }
 }
 
 export function sales(nonce,rate,navigator){
