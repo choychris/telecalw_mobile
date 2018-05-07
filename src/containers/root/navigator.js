@@ -18,6 +18,7 @@ import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
+import SlideShow from '../game/gamePlayList/miniGamePoster/slides';
 
 // register all screens of the app (including internal ones)
  export function registerScreens(store , Provider) {
@@ -39,5 +40,6 @@ import PlayMobileData from '../utilities/popup/playUnderCellular';
 	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
 	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
    Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest,store,Provider);
-	 Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData,store,Provider);
+   Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData,store,Provider);
+	 Navigation.registerComponent('app.SlideShow', () => SlideShow,store,Provider);
 }

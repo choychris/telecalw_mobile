@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { FlatList , View , Text , Image , ActivityIndicator, StyleSheet , Dimensions } from 'react-native';
+import { FlatList , View , Text , Image , 
+         ActivityIndicator, StyleSheet , 
+         Dimensions, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { positioningItems , navigateToGameRoom } from '../../actions';
@@ -7,6 +9,10 @@ import { playUISound } from '../../../../utils/sound';
 import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
+import Poster from '../miniGamePoster/posterList';
+const { height, width } = Dimensions.get('window');
+//const forthPosition = (Platform.OS === 'ios') ? { x : -width/3 , y : 0 } : {x : 0 - 20 , y : height / 2.7};
+const fifthPosition = (Platform.OS === 'ios') ? { x : 0 , y : height*0.04 } : {x : width / 3 - 10 , y : height * 0.46};
 
 class ListContainer extends Component {
 	shouldComponentUpdate(nextProps){
@@ -33,11 +39,12 @@ class ListContainer extends Component {
 			/>)
 	}
 	render(){
-		const { products , tag } = this.props;
+		const { products , tag, navigator } = this.props;
 		return (
 			<View style={styles.container}>
 				<Orbit/>
 				{(tag !== null && products[tag.id]) ? this._renderItems(products[tag.id]) : null }
+        <Poster position={fifthPosition} navigator={navigator}/>
 				<Planet/>
 			</View>
 		)
