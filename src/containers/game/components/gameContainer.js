@@ -3,7 +3,8 @@ import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , Activi
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { machineStatus } from '../actions';
-const tubeImage = require('../../../../assets/utilities/sific_tube.png');
+//const tubeImage = require('../../../../assets/utilities/sific_tube.png');
+const tubeImage = require('../../../../assets/utilities/rainbow.png');
 import RoomPanel from './controlPanel/roomPanel';
 import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';

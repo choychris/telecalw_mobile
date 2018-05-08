@@ -133,13 +133,13 @@ class RewardedVideoListContainer extends Component{
 
   _renderCounter(timeStamp, word){
     function displayTime(time){
-    let h = Math.floor(time / 3600);
-    let m = Math.floor(time % 3600 / 60);
-    let s = Math.floor(time % 3600 % 60);
-    let mdisplay = m >= 10 ? m : '0'+m;
-    let sdisplay = s >= 10 ? s : '0'+s;
-    return h + ':' + mdisplay + ':' + sdisplay; 
-    }
+      let h = Math.floor(time / 3600);
+      let m = Math.floor(time % 3600 / 60);
+      let s = Math.floor(time % 3600 % 60);
+      let mDisplay = m >= 10 ? m : '0'+m;
+      let sDisplay = s >= 10 ? s : '0'+s;
+      return h + ':' + mDisplay + ':' + sDisplay; 
+    };
     return (
       <View style={styles.adList}>
         <View style={styles.itemContainer}>

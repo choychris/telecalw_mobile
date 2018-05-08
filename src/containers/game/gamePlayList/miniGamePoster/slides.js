@@ -1,13 +1,13 @@
 import React, { PropTypes, Component } from 'react';
-import { Animated , Easing , PanResponder , View , Platform ,
-         Text , Image , ActivityIndicator, StyleSheet , 
-         Dimensions , TouchableOpacity , StatusBar } from 'react-native';
+import { View , Platform , Image, StyleSheet , 
+         StatusBar, AsyncStorage, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from '../../../../components/utilities/buttons';
 import BackgroundImage from '../../../../components/utilities/backgroundImage';
 import NavBar from '../../../../components/navBar/container';
 import { IndicatorViewPager, PagerDotIndicator } from 'rn-viewpager';
+import { vote } from './actions';
 let posters = [
   require('../../../../../assets/miniGame/poster1.png'),
   require('../../../../../assets/miniGame/poster2.png'),
@@ -16,6 +16,30 @@ let posters = [
 ];
 
 class Slides extends Component {
+  constructor(){
+    super();
+    this.state = {voted:null}
+    this._renderDotIndicator = this._renderDotIndicator.bind(this);
+    this._renderSlides = this._renderSlides.bind(this);
+    this.getStorageItem = this.getStorageItem.bind(this);
+    this.votePress = this.votePress.bind(this);
+  }
+
+  componentDidMount(){
+    this.getStorageItem()
+  }
+
+  async getStorageItem(){
+    try {
+      const value = await AsyncStorage.getItem('voted');
+      if (value !== null){
+        this.setState({voted: true})
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
   _renderDotIndicator() {
     return <PagerDotIndicator pageCount={4} />;
   }
@@ -26,6 +50,32 @@ class Slides extends Component {
           <Image style={styles.imageStyle} resizeMode='contain' source={poster}/>
       </View>
     )
+  }
+
+  _renderVoteButton(){
+    return (
+      <View style={styles.buttonGroup}>
+        <Button 
+          textStyle={styles.buttonText}
+          btnStyle={styles.btnStyle}
+          text='Yay'
+          onPressFunction={()=>this.votePress(true)}
+        />
+        <View style={{margin: 20}}></View>
+        <Button 
+          textStyle={styles.buttonText}
+          btnStyle={styles.btnStyle}
+          text='Nay'
+          onPressFunction={()=>this.votePress(false)}
+        />
+      </View>
+    )
+  }
+
+  votePress(res){
+    vote(res);
+    AsyncStorage.setItem('voted', 'True');
+    this.setState({voted: true})
   }
 
   render(){
@@ -45,18 +95,10 @@ class Slides extends Component {
         >
           {posters.map((poster,i)=>this._renderSlides(poster,i))}
         </IndicatorViewPager>
-        <View style={styles.buttonGroup}>
-          <Button 
-            textStyle={styles.buttonText}
-            btnStyle={styles.btnStyle}
-            text='Yay'
-          />
-          <Button 
-            textStyle={styles.buttonText}
-            btnStyle={styles.btnStyle}
-            text='Nay'
-          />
-        </View>
+        {this.state.voted ? 
+          <Text style={styles.textStyle}>
+            Thank you for your vote !
+          </Text> : this._renderVoteButton()}
       </View>
     )
   }
@@ -94,6 +136,12 @@ const styles = StyleSheet.create({
     paddingVertical : 12,
     paddingHorizontal : 30,
     alignSelf : 'center'
+  },
+  textStyle : {
+    backgroundColor : 'transparent',
+    textAlign : 'center',
+    color : 'white',
+    padding: 10
   }
 });
 
