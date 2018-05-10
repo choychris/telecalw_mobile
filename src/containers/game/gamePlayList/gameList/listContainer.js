@@ -10,9 +10,6 @@ import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
 import Poster from '../miniGamePoster/posterList';
-const { height, width } = Dimensions.get('window');
-//const forthPosition = (Platform.OS === 'ios') ? { x : -width/3 , y : 0 } : {x : 0 - 20 , y : height / 2.7};
-const fifthPosition = (Platform.OS === 'ios') ? { x : 0 , y : height*0.04 } : {x : width / 3 - 10 , y : height * 0.46};
 
 class ListContainer extends Component {
 	shouldComponentUpdate(nextProps){
@@ -44,7 +41,7 @@ class ListContainer extends Component {
 			<View style={styles.container}>
 				<Orbit/>
 				{(tag !== null && products[tag.id]) ? this._renderItems(products[tag.id]) : null }
-        <Poster position={fifthPosition} navigator={navigator}/>
+        <Poster navigator={navigator}/>
 				<Planet/>
 			</View>
 		)

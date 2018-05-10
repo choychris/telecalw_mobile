@@ -45,10 +45,12 @@ class BarContainer extends Component {
 	_renderTabItems(){
 		const { navigator , version } = this.props;
 		const renderMenu = [
-			{ icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
-			{ icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
-			{ icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
-			{ icon : 'money' , name : 'wallet' , navigate : 'app.TopUp' }
+	
+      { icon : 'rocket' , name : 'delivery' , navigate : 'app.Delivery' },
+      { icon : 'dollar' , name : 'wallet' , navigate : 'app.TopUp' },
+      { icon : 'gift' , name : 'reward' , navigate : 'app.Reward' },
+      { icon : 'question-circle' , name : 'support' , navigate : 'app.Support' },
+			
 		];
 		//if(version.release !== true){
 			//renderMenu = [

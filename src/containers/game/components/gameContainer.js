@@ -47,8 +47,8 @@ class GameContainer extends Component {
 	_renderUpperTube(){
 		return (
 			<Image 
+        style={styles.image}
 				source={tubeImage}
-				style={styles.image}
 				resizeMode={'contain'}	
 			/>
 		)
@@ -80,7 +80,7 @@ class GameContainer extends Component {
 		const { navigator , mode } = this.props;
 		return (
 			<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
-				{this._renderUpperTube()}	
+        {this._renderUpperTube()}	
 				{this._renderVideoView(mode,navigator)}
 				{this._renderPanel(mode,navigator)}
 			</Animated.View>
@@ -97,8 +97,9 @@ const styles = StyleSheet.create({
 	},
 	image : {
 		position : 'absolute',
-		width	: Dimensions.get('window').width *1.2,
-		height : Dimensions.get('window').height*0.89
+    alignSelf : 'center',
+		width	: Dimensions.get('window').width * 1.2,
+		height : Dimensions.get('window').height*0.9
 	},
 	viewContainer : {
 		flex : 1,

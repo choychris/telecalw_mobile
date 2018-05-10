@@ -101,7 +101,7 @@ class TopUp extends Component {
       outputRange: ['0deg', '15deg', '0deg', '-5deg', '0deg']
     })
 		if(version.release === true){
-			tabs.push(
+			tabs.unshift(
 				{ 
 					name : 'topUp' , 
 					content : <RateListContainer navigator={navigator}/> ,

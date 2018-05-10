@@ -30,8 +30,8 @@ class Poster extends Component {
     this._AnimatedPosition = new Animated.ValueXY();
   }
 
-  componentDidMount(){
-    const { position } = this.props;
+  componentWillMount(){
+    const position = { x : 0 , y : height * 0.04 }
     const { x, y } = position;
     Animated.spring(this._AnimatedPosition,{
       toValue : { x : x , y : y }
@@ -40,8 +40,9 @@ class Poster extends Component {
 
   render(){
     const{ navigator } = this.props;
+    let absoluteStyle = Platform.OS === 'ios' ? {} : { position : 'absolute' };
     return (
-      <Animated.View style={this._AnimatedPosition.getLayout()}>
+      <Animated.View style={[absoluteStyle, this._AnimatedPosition.getLayout()]}>
         <TouchableOpacity
           style={styles.container}
           onPress={()=>toSlides(navigator)}
@@ -66,10 +67,6 @@ class Poster extends Component {
     )
   }
 };
-
-
-
-
 
 const font = (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold';
 const styles = StyleSheet.create({

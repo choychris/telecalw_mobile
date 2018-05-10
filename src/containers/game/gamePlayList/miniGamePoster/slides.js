@@ -12,7 +12,7 @@ let posters = [
   require('../../../../../assets/miniGame/poster1.png'),
   require('../../../../../assets/miniGame/poster2.png'),
   require('../../../../../assets/miniGame/poster3.png'),
-  require('../../../../../assets/miniGame/poster4.png')
+  require('../../../../../assets/miniGame/poster4.png'),
 ];
 
 class Slides extends Component {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   btnStyle : {
     backgroundColor : 'rgba(52, 52, 52, 0.7)',
     opacity : 70,
-    paddingVertical : 12,
+    paddingVertical : 6,
     paddingHorizontal : 30,
     alignSelf : 'center'
   },
