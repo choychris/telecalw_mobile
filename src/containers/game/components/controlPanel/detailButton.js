@@ -36,7 +36,7 @@ class DetailButton extends Component {
 					}
 				}
 			>
-				<Icon name="hand-o-down" size={18} />
+				<Icon color='white' name="hand-o-down" size={18} />
 				<Text style={styles.detailText}>
 					{string['prizeDetail']}
 				</Text>
@@ -47,16 +47,23 @@ class DetailButton extends Component {
 
 const styles = StyleSheet.create({
 	detailBtn : {
-		marginVertical : 5,
+		marginVertical : 10,
 		flexDirection : 'row',
 		alignItems : 'center',
-		justifyContent : 'center'
+		justifyContent : 'center',
+    borderWidth : 1,
+    borderColor : '#3184C2',
+    borderRadius : 20,
+    backgroundColor : '#3184C2',
+    padding : 5,
 	},
 	detailText : {
+    marginTop : 5,
 		marginHorizontal : 5,
-		fontSize : 18,
-		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
-	}
+		fontSize : 20,
+		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+    color : 'white'
+  }
 });
 
 function mapStateToProps(state) {

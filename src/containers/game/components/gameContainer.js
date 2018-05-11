@@ -3,7 +3,8 @@ import { Animated , View , Text , Image , StyleSheet , TouchableOpacity , Activi
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { machineStatus } from '../actions';
-const tubeImage = require('../../../../assets/utilities/sific_tube.png');
+//const tubeImage = require('../../../../assets/utilities/sific_tube.png');
+const tubeImage = require('../../../../assets/utilities/rainbow.png');
 import RoomPanel from './controlPanel/roomPanel';
 import PlayPanel from './controlPanel/playPanel';
 import WatchView from './view/watchView';
@@ -46,8 +47,8 @@ class GameContainer extends Component {
 	_renderUpperTube(){
 		return (
 			<Image 
+        style={styles.image}
 				source={tubeImage}
-				style={styles.image}
 				resizeMode={'contain'}	
 			/>
 		)
@@ -79,7 +80,7 @@ class GameContainer extends Component {
 		const { navigator , mode } = this.props;
 		return (
 			<Animated.View style={[styles.container,this._itemPosition.getLayout()]}>
-				{this._renderUpperTube()}	
+        {this._renderUpperTube()}	
 				{this._renderVideoView(mode,navigator)}
 				{this._renderPanel(mode,navigator)}
 			</Animated.View>
@@ -96,8 +97,9 @@ const styles = StyleSheet.create({
 	},
 	image : {
 		position : 'absolute',
-		width	: Dimensions.get('window').width *1.2,
-		height : Dimensions.get('window').height*0.89
+    alignSelf : 'center',
+		width	: Dimensions.get('window').width * 1.2,
+		height : Dimensions.get('window').height*0.9
 	},
 	viewContainer : {
 		flex : 1,

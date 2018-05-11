@@ -15,19 +15,10 @@ class TopUpButton extends Component {
 		return (version.release === true) ? (
 			<Button
 				text={'topUp'}
-				textStyle={{
-					color : '#3F3F3F',
-					fontSize : 20,
-					fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
-				}}
-				btnStyle={{
-					backgroundColor : '#FFFF00',
-					paddingVertical : 6,
-					paddingHorizontal : 15,
-					marginVertical : 3
-				}}
+				textStyle={styles.textStyle}
+				btnStyle={styles.btnStyle}
 				borderColor={'#726E1D'}
-				icon={{ name : 'money' , size : 18 , color : '#3F3F3F' }}
+				icon={{ name : 'heart' , size : 22 , color : 'red' }}
 				onPressFunction={()=>{
 					navigator.push({
 						screen : 'app.TopUp',
@@ -40,6 +31,20 @@ class TopUpButton extends Component {
 		) : null
 	}
 }
+
+const styles = StyleSheet.create({
+  btnStyle : {
+    backgroundColor : '#F9A115',
+    paddingVertical : 6,
+    paddingHorizontal : 15,
+    marginVertical : 3
+  },
+  textStyle : {
+    color : 'white',
+    fontSize : 22,
+    fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold'
+  }
+})
 
 function mapStateToProps(state) {
 	return {

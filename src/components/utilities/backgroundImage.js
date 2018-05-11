@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Easing , Animated , View , Image , StyleSheet , Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-const backgroundImg = require('../../../assets/background/background_img.png');
+const backgroundImg = require('../../../assets/background/background_bright.png');
 const authBackgroundImg = require('../../../assets/background/background_auth.png');
 
 class BackgroundImage extends Component {
