@@ -1,0 +1,96 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  Image,
+  View,
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
+import AfterGameAction from '../../actions/afterGameActions';
+
+const leaderboard = require('../../images/leaderboard.png');
+
+class SaveScore extends Component {
+  componentDidMount() {
+    this.props.startSave(this.props.score);
+  }
+
+  render() {
+    if (this.props.saved) {
+      return (
+        <View style={styles.warpperStyle}>
+          <Text style={styles.textStyle}>Score Saved!</Text>
+          <TouchableOpacity style={styles.buttonStyle} onPress={this.props.showBoard}>
+            <Image
+              source={leaderboard}
+              style={styles.imageStyle}
+            />
+            <Text style={styles.buttonText}>{'Leader-\nboard'}</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return (
+      <View style={styles.warpperStyle}>
+        <Text style={styles.textStyle}>Saving Score ...</Text>
+        <ActivityIndicator color="#0000ff" />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  warpperStyle: {
+    flex: 1,
+    justifyContent: 'flex-start',
+  },
+  textStyle: {
+    fontSize: 30,
+    alignSelf: 'center',
+    textAlign: 'center',
+    color: 'white',
+  },
+  imageStyle: {
+    flex: 0.8,
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+  },
+  buttonStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#4A66FF',
+    marginVertical: 30,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderRadius: 14,
+    maxWidth: 170,
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+  },
+  buttonText: {
+    flex: 1,
+    color: 'white',
+    textAlign: 'left',
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingLeft: 10,
+  },
+});
+
+const mapStateToProps = state => ({
+  saved: state.afterGame.scoreSaved,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    startSave: AfterGameAction.saveScoreToDb,
+  }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SaveScore);

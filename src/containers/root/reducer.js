@@ -6,11 +6,11 @@ import transactionReducer from '../transaction/reducers';
 import misReducer from '../miscellaneous/reducers';
 
 const rootReducer = combineReducers({
-	auth : authReducer,
-	preference : preferenceReducer,
-	game : gameReducer,
-	transaction : transactionReducer,
-	mis : misReducer
+  auth: authReducer,
+  preference: preferenceReducer,
+  game: gameReducer,
+  transaction: transactionReducer,
+  mis: misReducer,
 });
 
 export default rootReducer;

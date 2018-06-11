@@ -26,7 +26,6 @@
     "analytics-react-native": "^1.2.0",
     "babel-plugin-transform-remove-console": "^6.9.1",
     "country-list": "^1.1.0",
-    "deepstream.io-client-js": "^2.3.0",
     "immutable": "^3.8.2",
     "install": "^0.10.2",
     "pusher-js": "^4.2.1",
@@ -43,9 +42,8 @@
     "react-native-webrtc": "^1.58.3",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
     "redux-logger": "^3.0.6",
-    "rn-viewpager": "^1.2.9",
+    "redux-thunk": "^2.2.0",
     "url": "^0.11.0"
   }
 }
