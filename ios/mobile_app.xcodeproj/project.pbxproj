@@ -35,11 +35,10 @@
 		2DCD954D1E0B4F2C00145EB5 /* mobile_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobile_appTests.m */; };
 		2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */; };
 		2E64BAEB208B438800FF8AB7 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAEA208B432D00FF8AB7 /* libRNAdMobManager.a */; };
-		2E6501E1209C5AF400EDF5D8 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6501DF209C586500EDF5D8 /* WebRTC.framework */; };
-		2E6501E2209C5AF400EDF5D8 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6501DF209C586500EDF5D8 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E6501E3209C5B4300EDF5D8 /* libRCTWebRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB5AB1202578BE00E453A9 /* libRCTWebRTC.a */; };
 		2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */; };
 		2E8DC89F2091D1EE00D1C10C /* FacebookAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */; };
+		2EA9108520ABF09A00B3E9E9 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */; };
 		50A8BF15ACE8F712722999F4 /* libPods-mobile_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9507C02487E1CD4D29BE48B3 /* libPods-mobile_app-tvOS.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -423,7 +422,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2E6501E2209C5AF400EDF5D8 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,9 +453,9 @@
 		2D02E4901E0B4A5D006451C7 /* mobile_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobile_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		2E64BAE5208B432D00FF8AB7 /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAdMobManager.xcodeproj; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; };
-		2E6501DF209C586500EDF5D8 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
 		2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = Pods/FBAudienceNetwork/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookAdapter.framework; path = "Pods/GoogleMobileAdsMediationFacebook/FacebookAdapter-4.28.1.1/FacebookAdapter.framework"; sourceTree = "<group>"; };
+		2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = "../node_modules/react-native-webrtc/ios/WebRTC.framework"; sourceTree = "<group>"; };
 		350029CEF6F5BBE0B679867D /* Pods-mobile_appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile_appTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-mobile_appTests/Pods-mobile_appTests.release.xcconfig"; sourceTree = "<group>"; };
 		4729EE8AAB1CF3394C920525 /* Pods-mobile_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mobile_app.release.xcconfig"; path = "Pods/Target Support Files/Pods-mobile_app/Pods-mobile_app.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -542,6 +540,7 @@
 				2E6501E3209C5B4300EDF5D8 /* libRCTWebRTC.a in Frameworks */,
 				2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */,
 				2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */,
+				2EA9108520ABF09A00B3E9E9 /* WebRTC.framework in Frameworks */,
 				2E8DC89F2091D1EE00D1C10C /* FacebookAdapter.framework in Frameworks */,
 				2E64BAEB208B438800FF8AB7 /* libRNAdMobManager.a in Frameworks */,
 				D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */,
@@ -555,7 +554,6 @@
 				D64874B51FB83BE400ABC458 /* CoreVideo.framework in Frameworks */,
 				D64874AB1FB83BA000ABC458 /* GLKit.framework in Frameworks */,
 				D6B8366D1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */,
-				2E6501E1209C5AF400EDF5D8 /* WebRTC.framework in Frameworks */,
 				D64874AA1FB83B9B00ABC458 /* CoreGraphics.framework in Frameworks */,
 				D64874A91FB83B9400ABC458 /* AudioToolbox.framework in Frameworks */,
 				D64874A81FB83B8E00ABC458 /* AVFoundation.framework in Frameworks */,
@@ -814,7 +812,7 @@
 				D6E8E7E6200E012800C41395 /* click2.mp3 */,
 				D6E8E7E9200E012A00C41395 /* robot_talking.mp3 */,
 				D6E8E7E8200E012A00C41395 /* spaceship.mp3 */,
-				2E6501DF209C586500EDF5D8 /* WebRTC.framework */,
+				2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */,
 				13B07FAE1A68108700A75B9A /* mobile_app */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mobile_appTests */,
