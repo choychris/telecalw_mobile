@@ -165,11 +165,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  positionList: state.game.positionList,
-  numberList: state.game.numberList,
-  level: state.game.level,
-  ascending: state.game.ascending,
-  timeItem: state.startGame.addTime,
+  positionList: state.bananaGame.game.positionList,
+  numberList: state.bananaGame.game.numberList,
+  level: state.bananaGame.game.level,
+  ascending: state.bananaGame.game.ascending,
+  timeItem: state.bananaGame.startGame.addTime,
 });
 
 const mapDispatchToProps = dispatch =>

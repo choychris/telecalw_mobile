@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'center',
     padding: 10,
+    backgroundColor: 'transparent',
   },
 });
 

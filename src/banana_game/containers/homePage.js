@@ -32,7 +32,7 @@ class HomePage extends Component {
     return (
       <View style={styles.container}>
         <StatusBar hidden />
-        <View style={{ flex: 0.3 }}>Back Button</View>
+        <View style={{ flex: 0.3 }} />
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={titleImage} />
         </View>

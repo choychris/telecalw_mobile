@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  saved: state.afterGame.scoreSaved,
+  saved: state.bananaGame.afterGame.scoreSaved,
 });
 
 const mapDispatchToProps = dispatch =>

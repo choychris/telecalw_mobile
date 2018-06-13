@@ -1,8 +1,9 @@
 import { NetInfo, Dimensions, Platform } from 'react-native';
+import Pusher from 'pusher-js/react-native';
 import {
- errorMessage, loading, playMobileDataMessage,
+  errorMessage, loading, playMobileDataMessage,
   insufficientFundMessage,
-  checkVersionRelease 
+  checkVersionRelease,
 } from '../utilities/actions';
 import { tagList, getTagProduct } from '../../common/api/request/tag';
 import { machineList, getProduct } from '../../common/api/request/product';
@@ -12,37 +13,34 @@ import { endGameEngage, cancelReserve } from '../../common/api/request/reservati
 import { checkinReward } from '../../common/api/request/reward';
 import { playUISound } from '../../utils/sound';
 import Request from '../../utils/fetch';
-import { localPlanetImg } from '../../utils/images';
-import Pusher from 'pusher-js/react-native';
-import { pusherConfig } from '../../config/env';
+import { pusherConfig, baseApi } from '../../config/env';
 import { api } from '../../common/api/url';
 import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
 import { checkInRewardChecking, loginFacebook } from '../auth/actions';
-import { baseApi } from '../../config/env';
 
 async function loadGameListFlow(dispatch, getState, navigator) {
   try {
-    const token = (getState().auth.token.lbToken === undefined) ? { id: null } : getState().auth.token.lbToken;
-    const { string } = getState().preference.language;
+    const token = (getState().auth.token.lbToken === undefined) ?
+      { id: null } : getState().auth.token.lbToken;
     // Step 1 : Get Tag List From backend API
     const tags = await tagList(token, Request);
     if (tags.length > 0) {
-      const initiatedTag = tags[0];
-      initiatedTag.index = 0;
+      // const initiatedTag = tags[0];
+      // initiatedTag.index = 0;
       dispatch({
         type: 'STORE_GAME_TAGS',
         value: tags,
       });
-      dispatch({
-        type: 'SELECT_TAG',
-        value: initiatedTag,
-      });
+      // dispatch({
+      //   type: 'SELECT_TAG',
+      //   value: initiatedTag,
+      // });
       // Step 2 : Get the Gamplay List ( Product List ) from the first tag
       const productList = await getTagProduct({
-          token: token.id,
-          tagId: initiatedTag.id,
-        }, Request);
+        token: token.id,
+        tagId: initiatedTag.id,
+      }, Request);
       dispatch({
         type: 'STORE_PRODUCT_LIST',
         keys: [initiatedTag.id],
@@ -54,6 +52,7 @@ async function loadGameListFlow(dispatch, getState, navigator) {
     // // Step 4 : Check Version Release
     dispatch(checkVersionRelease());
   } catch (e) {
+    const { string } = getState().preference.language;
     loading('hide', navigator);
     errorMessage(
       'show',
@@ -72,10 +71,10 @@ export function loadGameList(navigator) {
 
 export function switchTag(action) {
   return (dispatch, getState) => {
-    const token = (getState().auth.token.lbToken === undefined) ? { id: null } : getState().auth.token.lbToken;
-    const tags = getState().game.tags;
-    const currentTag = getState().game.tag;
-    const { index } = currentTag;
+    const token = (getState().auth.token.lbToken === undefined) ?
+      { id: null } : getState().auth.token.lbToken;
+    const { tags, tag } = getState().game;
+    const { index } = tag;
     const targetIndex = (action === 'next') ? index + 1 : index - 1;
     if (tags[targetIndex]) {
       // Step 0 : Sound Effect
@@ -85,30 +84,24 @@ export function switchTag(action) {
       targetTag.index = targetIndex;
       dispatch({
         type: 'SELECT_TAG',
-        value:	targetTag,
+        value: targetTag,
       });
       // Step 2 : Update the Gameplay List
-      getTagProduct({
-        token: token.id,
-        tagId: targetTag.id,
-      }, Request).then((res, err) => {
-        if (!err) {
-          dispatch({
-            type: 'STORE_PRODUCT_LIST',
-            keys: [targetTag.id],
-            value: res,
+      if (targetIndex > 0) {
+        getTagProduct({
+          token: token.id,
+          tagId: targetTag.id,
+        }, Request)
+          .then((res, err) => {
+            if (!err) {
+              dispatch({
+                type: 'STORE_PRODUCT_LIST',
+                keys: [targetTag.id],
+                value: res,
+              });
+            }
           });
-        } else {
-          errorMessage(
-            'show',
-            navigator,
-            {
-              title: string.error,
-              message: string.tryAgain,
-            },
-          );
-        }
-      });
+      }
     } else {
       dispatch(playUISound('cancel'));
     }
@@ -288,43 +281,6 @@ export function networkChecking(navigator) {
       },
     );
   };
-}
-
-export function getPlanetImageSource(name,picture){
-	if(localPlanetImg()[name] !== undefined){
-		return localPlanetImg()[name];
-	} else if (picture) {
-		return { uri : picture };
-	} 
-		return null
-	
-}
-
-export function positioningItems(productList) {
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
-  const padding = (productList.length > 3) ? 30 : 0;
-  const positions = (Platform.OS === 'ios') ? [
-    { x: -screenWidth / 3, y: -screenHeight * 0.19 + padding },
-    { x: 0, y: -screenHeight * 0.34 + padding },
-    { x: screenWidth / 3, y: -screenHeight * 0.29 + padding },
-    { x: -screenWidth / 3, y: 0 },
-    { x: 0, y: screenHeight * 0.04 },
-    { x: screenWidth / 3, y: -screenHeight * 0.1 },
-  ] :
-    [
-      { x: 0 - 20, y: screenHeight * 0.09 },
-      { x: screenWidth / 3 - 10, y: screenHeight * 0.01 },
-      { x: screenWidth / 3 * 2 - 5, y: screenHeight * 0.09 },
-      { x: 0 - 20, y: screenHeight / 2.7 },
-      { x: screenWidth / 3 - 10, y: screenHeight * 0.46 },
-      { x: screenWidth / 3 * 2 - 5, y: screenHeight / 2.7 },
-    ];
-  productList.map((item, index) => {
-    item.position = positions[index];
-  });
-  // console.warn(JSON.stringify(productList));
-  return productList;
 }
 
 export function navigateToGameRoom(productId, status, navigator) {

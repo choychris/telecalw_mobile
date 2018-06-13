@@ -5,7 +5,7 @@ import Config from '../../../utils/config';
 const coins = require('../../../images/telecoins_single.png');
 
 const Item = ({
-  title, details, coin, selected, onPress
+  title, details, coin, selected, onPress,
 }) => {
   const selectedStyle = selected ?
     { backgroundColor: '#465F96' } : { ...Config.shadow };
@@ -21,7 +21,7 @@ const Item = ({
       <Text style={styles.detailsText}>{details}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     padding: 8,
     fontStyle: 'italic',
+    backgroundColor: 'transparent',
   },
 });
 

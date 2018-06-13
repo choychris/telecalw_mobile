@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  numberList: state.game.traceNumberList,
+  numberList: state.bananaGame.game.traceNumberList,
 });
 
 const mapDispatchToProps = dispatch =>

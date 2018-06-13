@@ -79,6 +79,7 @@ class BarContainer extends Component {
                   navigatorStyle: {
                     navBarHidden: true,
                   },
+                  animationType: 'fade',
                 });
               }
             }}

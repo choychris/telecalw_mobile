@@ -19,7 +19,7 @@ const RootContainer = ({ gameStart }) =>
 
 const mapStateToProps = state =>
   ({
-    gameStart: state.startGame.startGame,
+    gameStart: state.bananaGame.startGame.startGame,
   });
 
 export default connect(mapStateToProps, null)(RootContainer);

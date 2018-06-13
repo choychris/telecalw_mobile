@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  sendingScore: state.afterGame.sendingScore,
+  sendingScore: state.bananaGame.afterGame.sendingScore,
 });
 
 const mapDispatchToProps = dispatch =>

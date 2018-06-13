@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state =>
   ({
-    requiredCoin: state.startGame.coins,
+    requiredCoin: state.bananaGame.startGame.coins,
   });
 
 const mapDispatchToProps = dispatch =>

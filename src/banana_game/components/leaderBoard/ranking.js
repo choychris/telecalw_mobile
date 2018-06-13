@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state =>
   ({
-    rankData: state.leaderboard.rankData,
-    timeLeft: state.leaderboard.timeLeft,
-    totalPlayer: state.leaderboard.totalPlayer,
+    rankData: state.bananaGame.leaderboard.rankData,
+    timeLeft: state.bananaGame.leaderboard.timeLeft,
+    totalPlayer: state.bananaGame.leaderboard.totalPlayer,
   });
 
 const mapDispatchToProps = dispatch =>

@@ -68,12 +68,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginLeft: 3,
     maxWidth: 100,
+    backgroundColor: 'transparent',
   },
 });
 
 const mapStateToProps = state =>
   ({
-    startGame: state.startGame,
+    startGame: state.bananaGame.startGame,
   });
 
 const mapDispatchToProps = dispatch =>

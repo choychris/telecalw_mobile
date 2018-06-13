@@ -17,6 +17,7 @@ class Orbit extends Component {
         toValue: 1,
         duration: 50000,
         easing: Easing.linear,
+        useNativeDriver: true,
       },
     )).start();
   }
@@ -47,8 +48,8 @@ const isIOS = Platform.OS === 'ios';
 const styles = StyleSheet.create({
   image: {
     position: 'absolute',
-    height: isIOS ? width : width * 0.9,
-    width: isIOS ? width : width * 0.9,
+    height: isIOS ? width : width * 0.95,
+    width: isIOS ? width : width * 0.95,
   },
 });
 

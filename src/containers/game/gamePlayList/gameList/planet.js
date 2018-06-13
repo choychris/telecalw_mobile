@@ -3,8 +3,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Animated, Easing, PanResponder, View, ActivityIndicator, StyleSheet, Dimensions, Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { switchTag, getPlanetImageSource } from '../../actions';
+import { switchTag } from '../../actions';
 
+const planet = require('../../../../../assets/planet/earth.png');
+
+const { width } = Dimensions.get('window');
 
 class Planet extends Component {
   componentWillMount() {
@@ -18,7 +21,7 @@ class Planet extends Component {
         this.position.setValue({ x: dx, y: dy });
       },
       onPanResponderRelease: (evt, gestureState) => {
-        const swipeThreshold = Dimensions.get('window').width * 0.2;
+        const swipeThreshold = width * 0.2;
         const { dx, dy } = gestureState;
         if (dx > swipeThreshold) {
           this.forceSwipe('right');
@@ -48,11 +51,13 @@ class Planet extends Component {
         toValue: 1,
         duration: 1000,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
       Animated.timing(this.blinkAnimation, {
         toValue: 0.2,
         duration: 1000,
         easing: Easing.linear,
+        useNativeDriver: true,
       }),
     ])).start();
   }
@@ -64,23 +69,17 @@ class Planet extends Component {
 
   forceSwipe(direction) {
     const action = (direction === 'left') ? 'back' : 'next';
-    const { switchTag } = this.props;
-    const screenWidth = Dimensions.get('window').width;
-    switchTag(action);
-    Animated.timing(this.position, {
-      toValue: { x: screenWidth, y: 0 },
-      duration: 200,
-    }).start();
+    this.props.switchTag(action);
   }
+
   resetPosition() {
     Animated.spring(this.position, {
       toValue: { x: 0, y: 0 },
     }).start();
   }
   planetStyle() {
-    const screenWidth = Dimensions.get('window').width;
     const rotate = this.position.x.interpolate({
-      inputRange: [-screenWidth * 1.5, 0, screenWidth * 1.5],
+      inputRange: [-width * 1.5, 0, width * 1.5],
       outputRange: ['-120deg', '0deg', '120deg'],
     });
     const spin = this.spinAnimation.interpolate({
@@ -114,9 +113,10 @@ class Planet extends Component {
           name={`angle-double-${direction}`}
           size={55}
           color="white"
+          onPress={() => this.forceSwipe(direction)}
         />
       </Animated.View>
-    ) : null;
+    ) : <View style={{ flex: 0.3 }} />;
   }
   renderDisplay(tag) {
     return (
@@ -124,7 +124,7 @@ class Planet extends Component {
         {this.renderSwipeIndicator('left')}
         <Animated.Image
           {...this.panResponder.panHandlers}
-          source={getPlanetImageSource(tag.name.en.toLowerCase(), tag.images)}
+          source={tag.images || planet}
           style={[styles.image, this.planetStyle()]}
           resizeMode="contain"
         />
@@ -147,9 +147,11 @@ class Planet extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    flex: 1,
+    alignSelf: 'stretch',
   },
   innerContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -160,14 +162,17 @@ const styles = StyleSheet.create({
     }),
   },
   rightSwipeIndicator: {
-    position: 'absolute',
-    left: Dimensions.get('window').width * 0.5,
+    flex: 0.3,
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   leftSwipeIndicator: {
-    position: 'absolute',
-    right: Dimensions.get('window').width * 0.5,
+    flex: 0.3,
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   image: {
+    flex: 1,
     width: 150,
     height: 150,
   },

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Image, ActivityIndicator, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { getPlanetImageSource } from '../../actions';
+
+const planetImage = require('../../../../../assets/planet/earth.png');
 
 class LocationBar extends Component {
   shouldComponentUpdate(nextProps) {
@@ -10,13 +11,13 @@ class LocationBar extends Component {
   }
   renderPlanets(planets) {
     const { tag } = this.props;
-    return planets.map((planet) => {
+    return planets.map((planet, i) => {
       const imageStyle = [styles.image];
       if (planet.id !== tag.id) imageStyle.push({ opacity: 0.4 });
       return (
         <Image
-          key={planet.name.en}
-          source={getPlanetImageSource(planet.name.en.toLowerCase(), planet.images)}
+          key={i}
+          source={planet.images || planetImage}
           style={imageStyle}
           resizeMode="contain"
         />
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   image: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
     marginHorizontal: 10,
   },
 });

@@ -18,6 +18,7 @@ import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
+import BananaGame from '../../banana_game/root';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -40,6 +41,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('app.Setting', () => Setting, store, Provider);
   Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest, store, Provider);
   Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData, store, Provider);
+  Navigation.registerComponent('app.BananaGame', () => BananaGame, store, Provider);
 }
 
 export default null;

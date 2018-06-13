@@ -17,4 +17,5 @@ Navigation.startSingleScreenApp({
   appStyle: {
     orientation: 'portrait',
   },
+  animationType: 'fade',
 });
