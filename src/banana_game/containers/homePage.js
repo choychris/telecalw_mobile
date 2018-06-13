@@ -50,7 +50,7 @@ class HomePage extends Component {
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
         <DetailsButton onPress={this.onDetailsPress} />
-        <NavButtonGroup />
+        <NavButtonGroup navigator={this.props.navigator} />
         <ItemButtonGroup />
         { this.state.detailOpened ?
           <DetialSwiper onPress={this.onDetailClose} /> : null }

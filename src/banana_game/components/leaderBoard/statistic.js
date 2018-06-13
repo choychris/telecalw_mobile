@@ -8,19 +8,27 @@ class Stats extends Component {
     this.state = { timeLeft: null };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.timeLeft !== state.timeLeft) {
-      return { timeLeft: props.timeLeft };
-    }
-    return null;
-  }
-
   componentDidMount() {
     this.timer = setInterval(() => {
       if (this.state.timeLeft) {
         this.setState({ timeLeft: this.state.timeLeft - 1 });
       }
     }, 1000);
+  }
+
+  // this works in newer version of react:
+  // static getDerivedStateFromProps(props, state) {
+  //   if (props.timeLeft !== state.timeLeft) {
+  //     return { timeLeft: props.timeLeft };
+  //   }
+  //   return null;
+  // }
+
+  // this works in current version of react:
+  componentWillReceiveProps(nextProps) {
+    if (this.props.timeLeft !== nextProps.timeLeft) {
+      this.setState({ timeLeft: nextProps.timeLeft });
+    }
   }
 
   componentWillUnmount() {

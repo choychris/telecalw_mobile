@@ -9,14 +9,24 @@ import { navigateGame } from '../../../actions/startGameAction';
 const coins = require('../../../images/telecoins_multi.png');
 const leaderboard = require('../../../images/leaderboard.png');
 
-const ButtonGroup = ({ requiredCoin, start }) =>
+const navigate = (navigator) => {
+  navigator.push({
+    screen: 'app.TopUp',
+    navigatorStyle: {
+      navBarHidden: true,
+    },
+    animationType: 'fade',
+  });
+};
+
+const ButtonGroup = ({ requiredCoin, start, navigator }) =>
   (
     <View style={styles.container}>
       <View style={{ flex: 0.7, justifyContent: 'center' }}>
         <PlayButton requiredCoin={requiredCoin} text="START" onPress={() => start(true)} />
       </View>
       <View style={{ flex: 1, justifyContent: 'center', padding: 5 }}>
-        <NavigateButton image={coins} text={'Buy\nCoins'} />
+        <NavigateButton image={coins} text={'Buy\nCoins'} onPress={() => navigate(navigator)} />
         <NavigateButton image={leaderboard} text={'Leader-\nboard'} />
       </View>
     </View>
