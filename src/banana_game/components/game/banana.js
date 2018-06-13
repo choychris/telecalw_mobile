@@ -152,9 +152,6 @@ class Banana extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // transform: [{ rotate: '-50deg' }],
-  },
   imageStyle: {
     flex: 1,
     alignSelf: 'center',
@@ -166,6 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: 'bold',
     fontFamily: 'PixelOperatorSC-Bold',
+    backgroundColor: 'transparent',
   },
   explodeImage: {
     position: 'absolute',

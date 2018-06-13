@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PlayButton from './playButton';
 import NavigateButton from './navigateButton';
-import { startGame } from '../../../actions/startGameAction';
+import { navigateGame } from '../../../actions/startGameAction';
 
 const coins = require('../../../images/telecoins_multi.png');
 const leaderboard = require('../../../images/leaderboard.png');
@@ -13,7 +13,7 @@ const ButtonGroup = ({ requiredCoin, start }) =>
   (
     <View style={styles.container}>
       <View style={{ flex: 0.7, justifyContent: 'center' }}>
-        <PlayButton requiredCoin={requiredCoin} text="START" onPress={start} />
+        <PlayButton requiredCoin={requiredCoin} text="START" onPress={() => start(true)} />
       </View>
       <View style={{ flex: 1, justifyContent: 'center', padding: 5 }}>
         <NavigateButton image={coins} text={'Buy\nCoins'} />
@@ -36,7 +36,7 @@ const mapStateToProps = state =>
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    start: startGame,
+    start: navigateGame,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonGroup);

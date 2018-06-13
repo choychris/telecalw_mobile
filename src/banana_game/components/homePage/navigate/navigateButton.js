@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginVertical: 7,
     marginLeft: 10,
     marginRight: 16,
-    maxWidth: 170,
+    maxWidth: 200,
     ...Config.shadow,
   },
   imageStyle: {

@@ -160,16 +160,17 @@ export function checkInRewardChecking(navigator) {
           )
             .then((res, err) => {
               // console.warn(JSON.stringify(err));
-              // console.warn(JSON.stringify(res));
+              if (err) console.warn(JSON.stringify('checkInReward', err));
               dispatch(trackEvent('lastLogin', res));
             })
             .catch((err) => {
+              console.warn(err);
               dispatch(authError(navigator, 'error', 'tryAgain'));
             });
         }
       })
       .catch((err) => {
-        // console.warn(err);
+        console.warn(err);
         dispatch(authError(navigator, 'error', 'tryAgain'));
       });
   };
@@ -240,6 +241,7 @@ export function accessTokenChecking(navigator) {
         }
       } catch (e) {
         loading('hide', navigator);
+        console.warn(e);
         dispatch(authError(navigator, 'error', 'tryAgain'));
       }
     }
@@ -264,6 +266,7 @@ export function logout(token, navigator) {
           navigatorStyle: {
             navBarHidden: true,
           },
+          animationType: 'fade',
         });
       } catch (e) {
         dispatch(authError(navigator, 'error', 'tryAgain'));
@@ -309,8 +312,6 @@ export function getUserReservation() {
             type: 'UPDATE_RESERVATION',
             value: res,
           });
-        } else {
-
         }
       });
   };

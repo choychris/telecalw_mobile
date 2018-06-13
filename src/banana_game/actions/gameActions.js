@@ -14,16 +14,16 @@ const nextLevel = (level, numberItem, sequenceItem) => ({
 
 const getNewBananaSet = () =>
   (dispatch, getState) => {
-    const { level } = getState().game;
-    const { positive, upOnly } = getState().startGame;
+    const { level } = getState().bananaGame.game;
+    const { positive, upOnly } = getState().bananaGame.startGame;
     const lowest = positive ? 1 : null;
     dispatch(banansInfo(level, lowest, upOnly));
   };
 
 const toNextLevel = () =>
   (dispatch, getState) => {
-    const { level } = getState().game;
-    const { positive, upOnly } = getState().startGame;
+    const { level } = getState().bananaGame.game;
+    const { positive, upOnly } = getState().bananaGame.startGame;
     const lowest = positive ? 1 : null;
     dispatch(nextLevel(level + 1, lowest, upOnly));
   };

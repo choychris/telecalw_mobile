@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View, StatusBar } from 'react-native';
+import { Image, StyleSheet, View, StatusBar, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Config from '../utils/config';
@@ -20,12 +20,13 @@ class TubeBoard extends Component {
     super(props);
     this.state = {
       startGame: false,
-      reminingTime: props.timeItem ? 50 : 40,
+      reminingTime: props.timeItem ? 50 : 5,
       gameFinished: false,
       showLeaderBoard: false,
       canRetry: true,
       score: 0,
     };
+    this.animateValue = new Animated.Value(0);
     this.readyOrFinsih = this.readyOrFinsih.bind(this);
     this.getScore = this.getScore.bind(this);
     this.playAgain = this.playAgain.bind(this);
@@ -34,6 +35,7 @@ class TubeBoard extends Component {
 
   componentDidMount() {
     this.trackTime();
+    this.fadeAnimate();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -46,6 +48,17 @@ class TubeBoard extends Component {
     if (this.state.reminingTime < 1) { return; }
     this.setState({ score: this.state.score + 1 });
     this.props.shiftList();
+  }
+
+  fadeAnimate() {
+    Animated.timing(
+      this.animateValue,
+      {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      },
+    ).start();
   }
 
   trackTime() {
@@ -105,7 +118,7 @@ class TubeBoard extends Component {
     } = this.props;
     const { reminingTime, score } = this.state;
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
         <Image
           source={bigTube2}
@@ -129,13 +142,8 @@ class TubeBoard extends Component {
                 getScore={this.getScore}
               />) : this.readyOrFinsih()
           }
-          {/* <Banana
-            imageWidth={120}
-            bottomPosition={440 - 120}
-            leftPosition={370 - 120}
-          /> */}
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }

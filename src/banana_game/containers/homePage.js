@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, StatusBar } from 'react-native';
+import { View, Image, StyleSheet, StatusBar, Animated } from 'react-native';
 import DetailsButton from '../components/homePage/detailsButton';
 import NavButtonGroup from '../components/homePage/navigate/buttonGroup';
 import ItemButtonGroup from '../components/homePage/items/itemButtonGroup';
 import DetialSwiper from '../components/homePage/detailSwiper';
+import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
 
 const titleImage = require('../images/titleImage.png');
@@ -16,8 +17,20 @@ class HomePage extends Component {
     this.state = {
       detailOpened: false,
     };
+    this.animateValue = new Animated.Value(0);
     this.onDetailsPress = this.onDetailsPress.bind(this);
     this.onDetailClose = this.onDetailClose.bind(this);
+  }
+
+  componentDidMount() {
+    Animated.timing(
+      this.animateValue,
+      {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      },
+    ).start();
   }
 
   onDetailsPress() {
@@ -30,9 +43,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
-        <View style={{ flex: 0.3 }} />
+        <BackButton back coins navigator={this.props.navigator} />
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
@@ -41,7 +54,7 @@ class HomePage extends Component {
         <ItemButtonGroup />
         { this.state.detailOpened ?
           <DetialSwiper onPress={this.onDetailClose} /> : null }
-      </View>
+      </Animated.View>
     );
   }
 }

@@ -6,14 +6,14 @@ import HomePage from './containers/homePage';
 
 const skyBackground = require('./images/background.png');
 
-const RootContainer = ({ gameStart }) =>
+const RootContainer = ({ gameStart, navigator }) =>
   (
     <ImageBackground
       resizeMode="stretch"
       style={{ flex: 1 }}
       source={skyBackground}
     >
-      {gameStart ? <TubeBoard /> : <HomePage />}
+      {gameStart ? <TubeBoard navigator={navigator} /> : <HomePage navigator={navigator} />}
     </ImageBackground>
   );
 

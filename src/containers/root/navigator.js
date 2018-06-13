@@ -19,6 +19,9 @@ import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
 import BananaGame from '../../banana_game/root';
+import BananaGameStart from '../../banana_game/containers/tubeBoard';
+import BananaGameLeaderboard from '../../banana_game/containers/leaderboard';
+
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {

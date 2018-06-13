@@ -10,9 +10,9 @@ export const toggleItem = (id, coins) =>
     dispatch(changeItem(id, coins));
   };
 
-export const startGame = () =>
+export const navigateGame = start =>
   (dispatch) => {
-    dispatch({ type: 'START_GAME' });
+    dispatch({ type: 'START_GAME', start });
   };
 
 export default null;

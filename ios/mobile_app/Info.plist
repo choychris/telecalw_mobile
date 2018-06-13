@@ -70,7 +70,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Permission</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need your microphone permission in order to perform in-app chatting and webrtc usage</string>
 	<key>UIAppFonts</key>
@@ -81,6 +81,18 @@
 		<string>FontAwesome.ttf</string>
 		<string>Silom.ttf</string>
 		<string>Bauhaus-93_6274.ttf</string>
+		<string>Pixel Operator 8 Bold.ttf</string>
+		<string>Pixel Operator 8.ttf</string>
+		<string>Pixel Operator Bold.ttf</string>
+		<string>Pixel Operator SC Bold.ttf</string>
+		<string>Pixel Operator SC.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

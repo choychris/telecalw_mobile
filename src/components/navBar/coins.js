@@ -33,6 +33,7 @@ class Coins extends Component {
         navigatorStyle: {
           navBarHidden: true,
         },
+        animationType: 'fade',
       });
     }
   }

@@ -37,15 +37,15 @@ async function loadGameListFlow(dispatch, getState, navigator) {
       //   value: initiatedTag,
       // });
       // Step 2 : Get the Gamplay List ( Product List ) from the first tag
-      const productList = await getTagProduct({
-        token: token.id,
-        tagId: initiatedTag.id,
-      }, Request);
-      dispatch({
-        type: 'STORE_PRODUCT_LIST',
-        keys: [initiatedTag.id],
-        value: productList,
-      });
+      // const productList = await getTagProduct({
+      //   token: token.id,
+      //   tagId: initiatedTag.id,
+      // }, Request);
+      // dispatch({
+      //   type: 'STORE_PRODUCT_LIST',
+      //   keys: [initiatedTag.id],
+      //   value: productList,
+      // });
     }
     // // Step 3 : Initial Check In Reward
     if (token.id !== null) dispatch(checkInRewardChecking(navigator));
@@ -54,6 +54,7 @@ async function loadGameListFlow(dispatch, getState, navigator) {
   } catch (e) {
     const { string } = getState().preference.language;
     loading('hide', navigator);
+    console.warn('InitalGameList', e);
     errorMessage(
       'show',
       navigator,
@@ -155,26 +156,26 @@ export function productStatus() {
       console.log(userId);
 
       // Step 2 : Initiate Product Status Channel
-      let channel = pusher.subscribe('products');
+      const channel = pusher.subscribe('products');
       channel.bind('statusChange', (data) => {
-				//console.warn(JSON.stringify(data));
-				const { productId , status } = data;
-				const currentTag = getState()['game']['tag'];
-				const products = getState()['game']['products'];
-				if(currentTag !== null && products[currentTag.id]){
-					let updateProductIndex = null
-					products[currentTag.id].map((item,index)=>{
-						if(item.id === productId) updateProductIndex = index;
-					});
-					if(updateProductIndex !== null){
-						dispatch({ 
-							type : 'STORE_PRODUCT_LIST',
-							keys : [currentTag.id,updateProductIndex,'status'],
-							value : status 
-						});
-					}
-				}
-			});
+        // console.warn(JSON.stringify(data));
+        const { productId, status } = data;
+        const currentTag = getState().game.tag;
+        const products = getState().game.products;
+        if (currentTag !== null && products[currentTag.id]) {
+          let updateProductIndex = null;
+          products[currentTag.id].map((item, index) => {
+            if (item.id === productId) updateProductIndex = index;
+          });
+          if (updateProductIndex !== null) {
+            dispatch({
+              type: 'STORE_PRODUCT_LIST',
+              keys: [currentTag.id, updateProductIndex, 'status'],
+              value: status,
+            });
+          }
+        }
+      });
     }
   };
 }
@@ -188,7 +189,7 @@ export function machineStatus(action) {
     if (token.lbToken !== undefined) {
       if (action === 'start') {
         // Initiate Machine Status Channel
-        let channel = pusher.subscribe(`presence-machine-${machine.id}`);
+        const channel = pusher.subscribe(`presence-machine-${machine.id}`);
         channel.bind('machine_event', (data) => {
           // console.warn(JSON.stringify(data));
           dispatch({
@@ -229,7 +230,7 @@ export function reserveStatus(navigator) {
       const { userId } = lbToken;
       const pusher = getState().preference.pusher;
 
-      let channel = pusher.subscribe(`reservation-${userId}`);
+      const channel = pusher.subscribe(`reservation-${userId}`);
       channel.bind('your_turn', (data) => {
         // console.warn(JSON.stringify(data));
         dispatch({ type: 'UPDATE_RESERVATION', value: data });
@@ -276,8 +277,7 @@ export function networkChecking(navigator) {
           type: 'CHANGE_NETWORK_STATUS',
           value: { status: newStatus, type: connectionInfo.type },
         });
-        if (connectionInfo.type === 'none')
-          {errorMessage('show',navigator,{ title : string['offline'] , message : string['internetProblem'] }) ;}
+        if (connectionInfo.type === 'none') { errorMessage('show', navigator, { title: string.offline, message: string.internetProblem }); }
       },
     );
   };
@@ -324,7 +324,7 @@ export function navigateToGameRoom(productId, status, navigator) {
             type: 'STORE_MACHINE_LIST',
             keys: [productId],
             value: res,
-				 	});
+          });
           // Step 5 : Randomly Select a Target Machine
           const randomIndex = Math.floor(Math.random() * ((res.length - 1) - 0 + 1)) + 0;
           let targetMachine = res[randomIndex];
@@ -345,6 +345,7 @@ export function navigateToGameRoom(productId, status, navigator) {
             navigatorStyle: {
               navBarHidden: true,
             },
+            animationType: 'fade',
           });
           // Step 7 : Tracking
           dispatch(trackEvent('viewProduct', targetProduct));
@@ -381,7 +382,7 @@ export function initGamePlay(navigator, loadState, mobileData) {
       // Step 0 : Loading State
       if (loadState) { loadState(true); }
 
-			loading('show', navigator);
+      loading('show', navigator);
 
       // Step 1 : Check Wallet Balance || Wifi Connection
       const { balance } = getState().auth.wallet;
@@ -389,14 +390,13 @@ export function initGamePlay(navigator, loadState, mobileData) {
       const { status, type } = getState().game.network;
       const sufficientFund = (balance >= gamePlayRate);
       // const networkValid = (status === true && type === 'wifi') ? true : false;
-      function networkValid(){
-        if(status === true && type !== 'wifi' && mobileData){
-          return true
-        }else if(status === true && type === 'wifi'){
-          return true
+      function networkValid() {
+        if (status === true && type !== 'wifi' && mobileData) {
+          return true;
+        } else if (status === true && type === 'wifi') {
+          return true;
         }
-          return false
-        
+        return false;
       }
       // console.warn(balance);
       // console.warn(gamePlayRate)
@@ -416,12 +416,12 @@ export function initGamePlay(navigator, loadState, mobileData) {
 
         // Step 2a : get current avaiable turnserver
         const filter = JSON.stringify({
- fields: {
-          urls: true,
-          username: true,
-          credential: true,
-        } 
-});
+          fields: {
+            urls: true,
+            username: true,
+            credential: true,
+          },
+        });
 
         Request(`${baseApi()}/turnservers?access_token=${id}&filter=${filter}`)
           .then((res) => {
@@ -460,12 +460,12 @@ export function initGamePlay(navigator, loadState, mobileData) {
                 }
 
                 setTimeout(() => {
-  								navigator.resetTo({
-  									screen: 'app.GamePlay',
-  									navigatorStyle: {
-  										navBarHidden: true,
-  									},
-  								});
+                  navigator.resetTo({
+                    screen: 'app.GamePlay',
+                    navigatorStyle: {
+                      navBarHidden: true,
+                    },
+                  });
                 }, 500);
                 // Update Wallet Balance
                 dispatch({
@@ -511,8 +511,7 @@ export function initGamePlay(navigator, loadState, mobileData) {
 					  // Network Problem PopUp
 					  playMobileDataMessage(navigator);
           }
-
-				}, 1000);
+        }, 1000);
       }
     } else {
       // console.warn('Facebook Login')
@@ -527,6 +526,7 @@ export function navigateToGamePlayList(navigator) {
     navigatorStyle: {
       navBarHidden: true,
     },
+    animationType: 'fade',
   });
 }
 
@@ -535,7 +535,7 @@ export function resetTimer(playTime) {
     const time = (playTime) || null;
     dispatch({
       type: 'UPDATE_TIMER',
-      value:	time,
+      value: time,
     });
   };
 }
@@ -563,7 +563,7 @@ export function loadGamePlay(navigator) {
 export function switchMode(setMode) {
   return (dispatch, getState) => {
     const cameraMode = getState().game.play.cameraMode;
-    const mode = (setMode) || ((cameraMode === 'top' ) ? 'front': 'top');
+    const mode = (setMode) || ((cameraMode === 'top') ? 'front' : 'top');
     dispatch({ type: 'SWITCH_CAMERA_MODE', value: mode });
   };
 }
@@ -588,17 +588,16 @@ export function closeAllWebrtc() {
 }
 
 export function webSocketUrl(config) {
-  return (dispatch,getState)=>{
-		if(config.websocket){
-			const { host , wss_port } = config.websocket;
-			return 'wss://'+host+':'+wss_port+'/ws/app/v1';
-		} 
-			const { iotPlatform } = getState()['game']['machine'];
-			const { gizwits } = iotPlatform;
-			const { host , wss_port } = gizwits;
-			return 'wss://'+host+':'+wss_port+'/ws/app/v1';
-		
-	};
+  return (dispatch, getState) => {
+    if (config.websocket) {
+      const { host, wss_port } = config.websocket;
+      return `wss://${host}:${wss_port}/ws/app/v1`;
+    }
+    const { iotPlatform } = getState().game.machine;
+    const { gizwits } = iotPlatform;
+    const { host, wss_port } = gizwits;
+    return `wss://${host}:${wss_port}/ws/app/v1`;
+  };
 }
 
 export function sendGameResult(result) {
@@ -688,7 +687,7 @@ export function endGamePlay(action, navigator) {
       const userId = getState().auth.token.lbToken.userId;
       // console.warn(machineId);
       endGameEngage({
-        token ,
+        token,
         machineId,
         userId,
       }, Request);
@@ -702,6 +701,7 @@ export function endGamePlay(action, navigator) {
         navigatorStyle: {
           navBarHidden: true,
         },
+        animationType: 'fade',
       });
     }
   };
@@ -726,8 +726,6 @@ export function cancelReservation() {
             type: 'UPDATE_RESERVATION',
             value: res,
           });
-        } else {
-
         }
       });
   };
@@ -738,7 +736,7 @@ export function rejectReserve(machineId, navigator) {
     const token = getState().auth.token.lbToken.id;
     const userId = getState().auth.token.lbToken.userId;
     endGameEngage({
-      token ,
+      token,
       machineId,
       userId,
     }, Request);
@@ -786,9 +784,7 @@ export function acceptReserve(data, navigator) {
         setTimeout(() => {
           dispatch(initGamePlay(navigator));
         }, 1000);
-      } catch (e) {
-
-      }
+      } catch (e) {}
     }
     acceptFlow();
   };

@@ -19,7 +19,7 @@ const startGameReducer = (state = initialState, action) => {
     case 'START_GAME':
       return {
         ...state,
-        startGame: true,
+        startGame: action.start,
       };
     default:
       return state;

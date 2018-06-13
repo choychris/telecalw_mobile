@@ -52,5 +52,9 @@
     "assets": [
       "./assets/fonts/"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://gitlab.com/teleclaw/mobile_app.git",
+  "author": "ChrisChoy <choylapchichris@gmail.com>",
+  "license": "MIT"
 }
