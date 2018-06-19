@@ -10,7 +10,7 @@ class Ranking extends Component {
   constructor(props) {
     super(props);
     const currentPeriod = (props.period === 0);
-    props.getRankData(currentPeriod);
+    props.getRankData(props.gameId, currentPeriod);
     this.renderList = this.renderList.bind(this);
     this.renderLoading = this.renderLoading.bind(this);
   }
@@ -60,7 +60,9 @@ class Ranking extends Component {
   }
 
   render() {
-    const { timeLeft, totalPlayer } = this.props;
+    let { timeLeft } = this.props;
+    const { totalPlayer } = this.props;
+    if (timeLeft < 0) timeLeft = 0;
     return (
       <View style={styles.container}>
         <Stats timeLeft={timeLeft} totalPlayer={totalPlayer} />

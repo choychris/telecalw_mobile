@@ -34,17 +34,27 @@ class EndGamePopUp extends Component {
 
   render() {
     const {
-      playAgain, canRetry, score, sendingScore,
+      playAgain, wallet,
+      canRetry, score,
+      sendingScore, saveError,
     } = this.props;
+    const enoughMoney = wallet >= 8;
     return (
       <BounceView style={styles.container} bounceAnimate={this.bounceAnimate}>
         <EncourageWord />
         <View style={[styles.warpperStyle, { flex: 0.7 }]}>
           <Text style={styles.textStyle}>{'Time\'s up'}</Text>
         </View>
-        {(canRetry && !sendingScore) ?
-          <ContinueSign canRetry={canRetry} playAgain={playAgain} /> :
-          <SaveScore score={score} showBoard={this.goUp} />
+        {(enoughMoney && canRetry && !sendingScore) ?
+          <ContinueSign
+            canRetry={canRetry}
+            playAgain={playAgain}
+          /> :
+          <SaveScore
+            score={score}
+            showBoard={this.goUp}
+            saveError={saveError}
+          />
         }
       </BounceView>
     );
@@ -81,6 +91,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   sendingScore: state.bananaGame.afterGame.sendingScore,
+  saveError: state.bananaGame.afterGame.saveError,
+  wallet: state.auth.wallet.balance,
 });
 
 const mapDispatchToProps = dispatch =>

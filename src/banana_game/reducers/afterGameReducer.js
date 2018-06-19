@@ -1,6 +1,7 @@
 const initialState = {
   sendingScore: false,
   scoreSaved: false,
+  saveError: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +15,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         scoreSaved: true,
+      };
+    case 'SAVE_ERROR':
+      return {
+        ...state,
+        saveError: true,
+      };
+    case 'RESEND':
+      return {
+        ...state,
+        saveError: false,
       };
     case 'RESET':
       return initialState;

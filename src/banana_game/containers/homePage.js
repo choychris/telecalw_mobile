@@ -17,6 +17,7 @@ class HomePage extends Component {
     this.state = {
       detailOpened: false,
     };
+    this.gameId = 'A0001';
     this.animateValue = new Animated.Value(0);
     this.onDetailsPress = this.onDetailsPress.bind(this);
     this.onDetailClose = this.onDetailClose.bind(this);
@@ -50,7 +51,7 @@ class HomePage extends Component {
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
         <DetailsButton onPress={this.onDetailsPress} />
-        <NavButtonGroup navigator={this.props.navigator} />
+        <NavButtonGroup navigator={this.props.navigator} gameId={this.gameId} />
         <ItemButtonGroup />
         { this.state.detailOpened ?
           <DetialSwiper onPress={this.onDetailClose} /> : null }

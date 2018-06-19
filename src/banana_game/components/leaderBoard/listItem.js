@@ -20,6 +20,9 @@ const listItem = ({ item }) => {
       duration: 500,
     },
   ).start();
+  const {
+    rank, username, highestScore, numberOfTrial,
+  } = item;
   return (
     <Animated.View style={[
         styles.container,
@@ -29,10 +32,10 @@ const listItem = ({ item }) => {
     >
       { (item.rank < 4) ?
         <Image source={crowns[item.rank - 1]} style={styles.imageStyle} /> :
-        <Text style={[styles.textStyle, { fontSize: 18 }]}>{item.rank}</Text> }
-      <Text style={styles.textStyle}>{item.name.toUpperCase()}</Text>
-      <Text style={styles.textStyle}>{item.points}PTS</Text>
-      <Text style={styles.textStyle}>{item.plays}PLAYS</Text>
+        <Text style={[styles.textStyle, { fontSize: 18 }]}>{rank}</Text> }
+      <Text style={styles.textStyle}>{username}</Text>
+      <Text style={styles.textStyle}>{highestScore}PTS</Text>
+      <Text style={styles.textStyle}>{numberOfTrial}PLAYS</Text>
     </Animated.View>
   );
 };

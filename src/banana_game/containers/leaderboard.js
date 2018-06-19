@@ -10,11 +10,12 @@ class LeaderboardView extends Component {
   constructor() {
     super();
     this.bounceAnimate = new Animated.Value(0);
+    this.gameId = 'A0001';
   }
   render() {
     return (
       <BounceView style={styles.container} bounceAnimate={this.bounceAnimate}>
-        <Content endGame />
+        <Content endGame gameId={this.gameId} />
       </BounceView>
     );
   }

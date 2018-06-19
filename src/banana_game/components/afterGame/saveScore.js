@@ -14,8 +14,17 @@ import AfterGameAction from '../../actions/afterGameActions';
 const leaderboard = require('../../images/leaderboard.png');
 
 class SaveScore extends Component {
+  constructor() {
+    super();
+    this.saveAgain = this.saveAgain.bind(this);
+  }
+
   componentDidMount() {
     this.props.startSave(this.props.score);
+  }
+
+  saveAgain() {
+    this.props.startSave(this.props.score, true);
   }
 
   render() {
@@ -29,6 +38,25 @@ class SaveScore extends Component {
               style={styles.imageStyle}
             />
             <Text style={styles.buttonText}>{'Leader-\nboard'}</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    if (this.props.saveError) {
+      return (
+        <View style={styles.warpperStyle}>
+          <Text style={styles.textStyle}>Fail to Save ...</Text>
+          <TouchableOpacity
+            style={[
+              styles.buttonStyle,
+              {
+                paddingVertical: 12,
+                backgroundColor: '#F45B69',
+              },
+            ]}
+            onPress={this.saveAgain}
+          >
+            <Text style={[styles.buttonText, { textAlign: 'center' }]}>Try Again</Text>
           </TouchableOpacity>
         </View>
       );

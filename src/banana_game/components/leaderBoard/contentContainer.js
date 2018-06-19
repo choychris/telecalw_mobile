@@ -49,7 +49,7 @@ class LeaderboardContent extends Component {
           onTabPress={(index) => { this.onTabPress(index); }}
           tabs={this.state.tabContent}
         />
-        <Ranking period={this.state.tab} />
+        <Ranking period={this.state.tab} gameId={this.props.gameId} />
         <TouchableOpacity style={styles.buttonStyle} onPress={this.onDonePress}>
           <Text style={styles.tabTextStyle}>DONE</Text>
         </TouchableOpacity>

@@ -2,8 +2,9 @@ const initialState = {
   addTime: false,
   positive: false,
   upOnly: false,
-  coins: 20,
+  coins: 15,
   startGame: false,
+  trialId: null,
 };
 
 const startGameReducer = (state = initialState, action) => {
@@ -20,6 +21,7 @@ const startGameReducer = (state = initialState, action) => {
       return {
         ...state,
         startGame: action.start,
+        trialId: action.trialId,
       };
     default:
       return state;

@@ -10,6 +10,7 @@ import Banana from '../components/game/banana';
 import ReadySign from '../components/game/readySign';
 import EndGamePopUp from './endGame';
 import Leaderboard from './leaderboard';
+import { addTime } from '../actions/afterGameActions';
 
 const { horizontalScale, verticalScale } = Config;
 const { getNewBananaSet, shiftList, clearList } = GameAction;
@@ -102,6 +103,7 @@ class TubeBoard extends Component {
 
   playAgain() {
     if (this.state.canRetry) {
+      this.props.addTime();
       this.setState({
         reminingTime: 10,
         startGame: false,
@@ -185,6 +187,7 @@ const mapDispatchToProps = dispatch =>
     getNewBananaSet,
     shiftList,
     clearList,
+    addTime,
   }, dispatch);
 
 

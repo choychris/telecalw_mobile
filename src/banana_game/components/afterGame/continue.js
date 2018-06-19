@@ -29,7 +29,7 @@ const ContinueSign = ({ startSending, playAgain }) =>
         >
           <Text style={styles.buttonText} >YES +10s at </Text>
           <Image source={coins} style={styles.imageStyle} />
-          <Text style={styles.buttonText} > 6</Text>
+          <Text style={styles.buttonText} > 8</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -19,11 +19,13 @@ const navigate = (navigator) => {
   });
 };
 
-const ButtonGroup = ({ requiredCoin, start, navigator }) =>
+const ButtonGroup = ({
+  requiredCoin, start, gameId, navigator,
+}) =>
   (
     <View style={styles.container}>
       <View style={{ flex: 0.7, justifyContent: 'center' }}>
-        <PlayButton requiredCoin={requiredCoin} text="START" onPress={() => start(true)} />
+        <PlayButton requiredCoin={requiredCoin} text="START" onPress={() => start(true, gameId, navigator)} />
       </View>
       <View style={{ flex: 1, justifyContent: 'center', padding: 5 }}>
         <NavigateButton image={coins} text={'Buy\nCoins'} onPress={() => navigate(navigator)} />
