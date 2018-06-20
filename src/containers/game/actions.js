@@ -19,6 +19,12 @@ import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
 import { checkInRewardChecking, loginFacebook } from '../auth/actions';
 
+// action to store which Mini Game User in :
+export const chooseGame = gameId =>
+  (dispatch) => {
+    dispatch({ type: 'GAME_LOCATION', gameId });
+  };
+
 async function loadGameListFlow(dispatch, getState, navigator) {
   try {
     const token = (getState().auth.token.lbToken === undefined) ?

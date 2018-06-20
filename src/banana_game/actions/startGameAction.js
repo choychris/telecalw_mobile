@@ -17,11 +17,12 @@ export const toggleItem = (id, coins) =>
     dispatch(changeItem(id, coins));
   };
 
-export const navigateGame = (start, gameId, navigator) =>
+export const navigateGame = (start, navigator) =>
   (dispatch, getState) => {
-    const { coins } = getState().bananaGame.startGame;
-    const { userId, id } = getState().auth.token.lbToken;
     if (start) {
+      const { coins } = getState().bananaGame.startGame;
+      const { gameId } = getState().game;
+      const { userId, id } = getState().auth.token.lbToken;
       loading('show', navigator);
       newGame(userId, gameId, coins, id)
         .then((res) => {

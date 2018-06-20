@@ -6,6 +6,10 @@ import SelectType from '../selectTab';
 import Ranking from './ranking';
 import Config from '../../utils/config';
 import { navigateGame } from '../../actions/startGameAction';
+import {
+  viewLeaderBoard, getRankData,
+  clearData, getWeeklyBest,
+} from '../../actions/leaderboardAction';
 
 const { deviceWidth } = Config;
 
@@ -23,21 +27,40 @@ class LeaderboardContent extends Component {
           'Weekly\nBest',
         ],
     };
+    props.getRankData(true);
     this.onTabPress = this.onTabPress.bind(this);
     this.onDonePress = this.onDonePress.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.closeLb(false);
+    this.props.clearData();
+  }
+
   onTabPress(index) {
-    this.setState({ tab: index }, () => {
-      console.log(this.state.tab, 'tapped');
-    });
+    const differentTab = (this.state.tab !== index);
+    if (this.props.rankData && differentTab) {
+      this.setState({ tab: index }, () => {
+        if (index < 2) {
+          const currentPeriod = (index === 0);
+          this.props.getRankData(currentPeriod);
+        } else {
+          this.props.getWeeklyBest();
+        }
+      });
+    }
   }
 
   onDonePress() {
-    this.props.toHome(false);
+    if (this.props.endGame) {
+      this.props.toHome(false);
+    } else {
+      this.props.closeLb(false);
+    }
   }
 
   render() {
+    const { rankData, timeLeft, totalPlayer } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.headerStyle}>Leaderboard</Text>
@@ -49,7 +72,12 @@ class LeaderboardContent extends Component {
           onTabPress={(index) => { this.onTabPress(index); }}
           tabs={this.state.tabContent}
         />
-        <Ranking period={this.state.tab} gameId={this.props.gameId} />
+        <Ranking
+          period={this.state.tab}
+          rankData={rankData}
+          timeLeft={timeLeft}
+          totalPlayer={totalPlayer}
+        />
         <TouchableOpacity style={styles.buttonStyle} onPress={this.onDonePress}>
           <Text style={styles.tabTextStyle}>DONE</Text>
         </TouchableOpacity>
@@ -84,6 +112,11 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 6,
   },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+  },
   buttonStyle: {
     alignSelf: 'center',
     marginBottom: 20,
@@ -97,9 +130,20 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = state =>
+  ({
+    rankData: state.bananaGame.leaderboard.rankData,
+    timeLeft: state.bananaGame.leaderboard.timeLeft,
+    totalPlayer: state.bananaGame.leaderboard.totalPlayer,
+  });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     toHome: navigateGame,
+    closeLb: viewLeaderBoard,
+    getRankData,
+    getWeeklyBest,
+    clearData,
   }, dispatch);
 
-export default connect(null, mapDispatchToProps)(LeaderboardContent);
+export default connect(mapStateToProps, mapDispatchToProps)(LeaderboardContent);

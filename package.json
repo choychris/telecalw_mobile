@@ -29,6 +29,7 @@
     "immutable": "^3.8.2",
     "install": "^0.10.2",
     "lodash": "^4.17.10",
+    "node-emoji": "^1.8.1",
     "pusher-js": "^4.2.1",
     "react": "16.0.0-beta.5",
     "react-native": "^0.49.5",

@@ -89,7 +89,7 @@ class TubeBoard extends Component {
       return <ReadySign />;
     }
     if (this.state.showLeaderBoard) {
-      return <Leaderboard />;
+      return <Leaderboard endGame />;
     }
     return (
       <EndGamePopUp

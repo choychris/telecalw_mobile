@@ -45,6 +45,7 @@ class NavBar extends Component {
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
+    alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 10,
     paddingTop: (DeviceInfo.getModel() === 'iPhone X') ? 35 : 8,

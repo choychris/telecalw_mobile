@@ -1,38 +1,45 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Stats from './statistic';
+import { View, StyleSheet, ActivityIndicator, Text, FlatList } from 'react-native';
+import Stats, { Header } from './statistic';
 import ListItem from './listItem';
-import { getRankData } from '../../actions/leaderboardAction';
 
 class Ranking extends Component {
   constructor(props) {
     super(props);
-    const currentPeriod = (props.period === 0);
-    props.getRankData(props.gameId, currentPeriod);
     this.renderList = this.renderList.bind(this);
     this.renderLoading = this.renderLoading.bind(this);
   }
 
+  keyExtractor = (item) => item.username;
+
   renderList() {
     const { rankData } = this.props;
-    if (rankData.length < 6) {
+    if (this.props.period === 2) {
       return (
         <View style={styles.subContainer}>
-          {rankData.map(each => <ListItem key={each.rank} item={each} />)}
-          <View style={styles.circleView} />
-          <View style={styles.circleView} />
-          <View style={styles.circleView} />
+          {
+            rankData.map((each, i) =>
+              <ListItem index={i} key={each.username} item={each} />)
+          }
+          <Header />
+          <View>
+            <FlatList
+              data={rankData}
+              renderItem={({ item }) =>
+                <ListItem item={item} />
+              }
+              keyExtractor={this.keyExtractor}
+            />
+          </View>
         </View>
       );
     }
     return (
       <View style={styles.subContainer}>
-        {rankData.slice(0, 3).map(each => <ListItem key={each.rank} item={each} />)}
+        {rankData.slice(0, 3).map(each => <ListItem key={each.username} item={each} />)}
         <View style={styles.circleView} />
         <View style={styles.circleView} />
-        {rankData.slice(3, 6).map(each => <ListItem key={each.rank} item={each} />)}
+        {rankData.slice(3, 6).map(each => <ListItem key={each.username} item={each} />)}
         <View style={styles.circleView} />
         <View style={styles.circleView} />
       </View>
@@ -52,7 +59,7 @@ class Ranking extends Component {
     if (rankData.length === 0) {
       return (
         <Text style={styles.textStyle}>
-          There is no plays yet
+          {'Oh ! \n There is no plays yet'}
         </Text>
       );
     }
@@ -61,11 +68,12 @@ class Ranking extends Component {
 
   render() {
     let { timeLeft } = this.props;
-    const { totalPlayer } = this.props;
+    const { totalPlayer, period } = this.props;
+    const weekly = (period === 2);
     if (timeLeft < 0) timeLeft = 0;
     return (
       <View style={styles.container}>
-        <Stats timeLeft={timeLeft} totalPlayer={totalPlayer} />
+        <Stats weekly={weekly} timeLeft={timeLeft} totalPlayer={totalPlayer} />
         { this.renderLoading() }
       </View>
     );
@@ -82,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textStyle: {
+    textAlign: 'center',
     alignSelf: 'center',
     flex: 1,
   },
@@ -100,16 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state =>
-  ({
-    rankData: state.bananaGame.leaderboard.rankData,
-    timeLeft: state.bananaGame.leaderboard.timeLeft,
-    totalPlayer: state.bananaGame.leaderboard.totalPlayer,
-  });
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    getRankData,
-  }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Ranking);
+export default Ranking;

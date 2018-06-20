@@ -1,4 +1,4 @@
-import { fromJS, toJS } from 'immutable';
+import { fromJS } from 'immutable';
 
 const gameTag = {
   index: 0,
@@ -11,6 +11,7 @@ const gameTag = {
 };
 
 const initialState = {
+  gameId: null,
   tag: gameTag,
   tags: [gameTag],
   product: null,
@@ -32,6 +33,10 @@ const initialState = {
 function gameReducer(state = initialState, action) {
   const immuteState = fromJS(state);
   switch (action.type) {
+    case 'GAME_LOCATION':
+      return immuteState
+        .setIn(['gameId'], action.gameId)
+        .toJS();
     case 'CHANGE_NETWORK_STATUS':
       return immuteState
         .setIn(['network'], action.value)

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, Text, StyleSheet, Animated } from 'react-native';
 
+const emoji = require('node-emoji');
+
 const first = require('../../images/1stPlace.png');
 const second = require('../../images/2ndPlace.png');
 const third = require('../../images/3rdPlace.png');
@@ -12,7 +14,7 @@ const opacity = animateValue.interpolate({
   outputRange: [0, 1],
 });
 
-const listItem = ({ item }) => {
+const listItem = ({ item, index }) => {
   Animated.timing(
     animateValue,
     {
@@ -21,8 +23,14 @@ const listItem = ({ item }) => {
     },
   ).start();
   const {
-    rank, username, highestScore, numberOfTrial,
+    username, highestScore, numberOfTrial,
   } = item;
+  let rank = item.rank || index + 1;
+  let fontSize = 18;
+  if (!rank) {
+    rank = emoji.get('medal');
+    fontSize = 30;
+  }
   return (
     <Animated.View style={[
         styles.container,
@@ -30,9 +38,9 @@ const listItem = ({ item }) => {
         item.self ? styles.selfIndictaor : null,
       ]}
     >
-      { (item.rank < 4) ?
-        <Image source={crowns[item.rank - 1]} style={styles.imageStyle} /> :
-        <Text style={[styles.textStyle, { fontSize: 18 }]}>{rank}</Text> }
+      { (rank < 4) ?
+        <Image source={crowns[rank - 1]} style={styles.imageStyle} /> :
+        <Text style={[styles.textStyle, { fontSize }]}>{rank}</Text> }
       <Text style={styles.textStyle}>{username}</Text>
       <Text style={styles.textStyle}>{highestScore}PTS</Text>
       <Text style={styles.textStyle}>{numberOfTrial}PLAYS</Text>

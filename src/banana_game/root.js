@@ -1,25 +1,34 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
+import BackgroundImage from '../components/utilities/backgroundImage';
 import TubeBoard from './containers/tubeBoard';
+import Leaderboard from './containers/leaderboard';
 import HomePage from './containers/homePage';
 
-const skyBackground = require('./images/background.png');
+const RootContainer = ({ gameStart, leaderboard, navigator }) => {
+  const viewLogic = () => {
+    if (gameStart) {
+      return <TubeBoard />;
+    }
+    if (leaderboard) {
+      return <Leaderboard endGame={false} navigator={navigator} />;
+    }
+    return <HomePage navigator={navigator} />;
+  };
 
-const RootContainer = ({ gameStart, navigator }) =>
-  (
-    <ImageBackground
-      resizeMode="stretch"
-      style={{ flex: 1 }}
-      source={skyBackground}
-    >
-      {gameStart ? <TubeBoard navigator={navigator} /> : <HomePage navigator={navigator} />}
-    </ImageBackground>
+  return (
+    <View style={{ flex: 1 }}>
+      <BackgroundImage />
+      { viewLogic() }
+    </View>
   );
+};
 
 const mapStateToProps = state =>
   ({
     gameStart: state.bananaGame.startGame.startGame,
+    leaderboard: state.bananaGame.leaderboard.showBoard,
   });
 
 export default connect(mapStateToProps, null)(RootContainer);

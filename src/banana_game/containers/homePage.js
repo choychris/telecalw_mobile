@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet, StatusBar, Animated } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import DetailsButton from '../components/homePage/detailsButton';
 import NavButtonGroup from '../components/homePage/navigate/buttonGroup';
 import ItemButtonGroup from '../components/homePage/items/itemButtonGroup';
 import DetialSwiper from '../components/homePage/detailSwiper';
 import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
+import { chooseGame } from '../../containers/game/actions';
+import { viewLeaderBoard } from '../actions/leaderboardAction';
 
 const titleImage = require('../images/titleImage.png');
 
 const { deviceWidth } = Config;
 
 class HomePage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       detailOpened: false,
     };
-    this.gameId = 'A0001';
+    props.saveGameId('A0001');
     this.animateValue = new Animated.Value(0);
     this.onDetailsPress = this.onDetailsPress.bind(this);
     this.onDetailClose = this.onDetailClose.bind(this);
@@ -28,7 +32,7 @@ class HomePage extends Component {
       this.animateValue,
       {
         toValue: 1,
-        duration: 500,
+        duration: 1000,
         useNativeDriver: true,
       },
     ).start();
@@ -43,17 +47,22 @@ class HomePage extends Component {
   }
 
   render() {
+    const { detailOpened } = this.state;
+    const { openLb, navigator } = this.props;
     return (
       <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
-        <BackButton back coins navigator={this.props.navigator} />
+        <BackButton back coins navigator={navigator} />
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
         <DetailsButton onPress={this.onDetailsPress} />
-        <NavButtonGroup navigator={this.props.navigator} gameId={this.gameId} />
+        <NavButtonGroup
+          openLb={() => openLb(true)}
+          navigator={navigator}
+        />
         <ItemButtonGroup />
-        { this.state.detailOpened ?
+        { detailOpened ?
           <DetialSwiper onPress={this.onDetailClose} /> : null }
       </Animated.View>
     );
@@ -77,4 +86,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomePage;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    saveGameId: chooseGame,
+    openLb: viewLeaderBoard,
+  }, dispatch);
+
+export default connect(null, mapDispatchToProps)(HomePage);

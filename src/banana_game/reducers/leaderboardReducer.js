@@ -4,6 +4,7 @@ const initialState = {
   totalPlayer: null,
   weekHigh: [],
   weekWinners: [],
+  showBoard: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -14,6 +15,18 @@ const Reducer = (state = initialState, action) => {
         rankData: action.data,
         totalPlayer: action.totalPlayer,
         timeLeft: action.timeLeft,
+      };
+    case 'VIEW_BOARD':
+      return {
+        ...state,
+        showBoard: action.open,
+      };
+    case 'CLEAR_DATA':
+      return {
+        ...state,
+        rankData: null,
+        timeLeft: null,
+        totalPlayer: null,
       };
     default:
       return state;
