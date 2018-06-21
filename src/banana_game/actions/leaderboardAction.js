@@ -32,16 +32,19 @@ export const getWeeklyBest = () =>
     const { gameId } = getState().game;
     getWeeklyRank(gameId, id)
       .then((res) => {
-        console.log(res.response);
+        console.log('res.response', res.response);
+        // const { allWinner, weeklyTopThree } = res.response;
         dispatch({
           type: 'RANK_DATA',
           data: res.response,
+          // weekHigh: weeklyTopThree,
+          // weekWinners: allWinner,
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
 export const clearData = () =>
   (dispatch) => {

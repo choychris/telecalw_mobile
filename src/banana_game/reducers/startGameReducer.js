@@ -2,7 +2,7 @@ const initialState = {
   addTime: false,
   positive: false,
   upOnly: false,
-  coins: 15,
+  coins: 20,
   startGame: false,
   trialId: null,
 };

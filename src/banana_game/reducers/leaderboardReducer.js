@@ -16,6 +16,12 @@ const Reducer = (state = initialState, action) => {
         totalPlayer: action.totalPlayer,
         timeLeft: action.timeLeft,
       };
+    case 'WEEKLY_DATA':
+      return {
+        ...state,
+        weekHigh: action.weekHigh,
+        weekWinners: action.weekWinners,
+      };
     case 'VIEW_BOARD':
       return {
         ...state,

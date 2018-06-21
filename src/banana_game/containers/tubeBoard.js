@@ -21,7 +21,7 @@ class TubeBoard extends Component {
     super(props);
     this.state = {
       startGame: false,
-      reminingTime: props.timeItem ? 50 : 5,
+      reminingTime: props.timeItem ? 50 : 40,
       gameFinished: false,
       showLeaderBoard: false,
       canRetry: true,

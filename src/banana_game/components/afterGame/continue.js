@@ -42,10 +42,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textStyle: {
-    fontSize: 40,
+    fontSize: 32,
     alignSelf: 'center',
     textAlign: 'center',
     color: 'white',
+    marginBottom: 6,
+    fontFamily: 'PixelOperator8-Bold',
   },
   imageStyle: {
     resizeMode: 'contain',

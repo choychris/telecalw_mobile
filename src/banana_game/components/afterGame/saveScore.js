@@ -32,12 +32,15 @@ class SaveScore extends Component {
       return (
         <View style={styles.warpperStyle}>
           <Text style={styles.textStyle}>Score Saved!</Text>
-          <TouchableOpacity style={styles.buttonStyle} onPress={this.props.showBoard}>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={this.props.showBoard}
+          >
             <Image
               source={leaderboard}
               style={styles.imageStyle}
             />
-            <Text style={styles.buttonText}>{'Leader-\nboard'}</Text>
+            <Text style={styles.buttonText}>{'Leader\nboard'}</Text>
           </TouchableOpacity>
         </View>
       );
@@ -76,10 +79,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   textStyle: {
-    fontSize: 30,
+    fontSize: 22,
     alignSelf: 'center',
     textAlign: 'center',
     color: 'white',
+    fontFamily: 'PixelOperator8-Bold',
   },
   imageStyle: {
     flex: 0.8,
@@ -106,9 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     textAlign: 'left',
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: 'bold',
     paddingLeft: 10,
+    fontFamily: 'PixelOperator8-Bold',
   },
 });
 

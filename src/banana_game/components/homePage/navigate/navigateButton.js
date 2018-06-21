@@ -36,9 +36,10 @@ const styles = StyleSheet.create({
     flex: 1,
     color: 'white',
     textAlign: 'left',
-    fontSize: 19,
+    fontSize: 12,
     fontWeight: 'bold',
     paddingLeft: 10,
+    fontFamily: 'PixelOperator8-Bold',
   },
 });
 

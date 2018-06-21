@@ -10,21 +10,26 @@ class Ranking extends Component {
     this.renderLoading = this.renderLoading.bind(this);
   }
 
-  keyExtractor = (item) => item.username;
+  shouldComponentUpdate(nextProps) {
+    return this.props.rankData !== nextProps.rankData;
+  }
+  keyExtractor = item => item.username;
 
   renderList() {
     const { rankData } = this.props;
+    console.log(rankData);
+    console.log(rankData.weeklyTopThree);
     if (this.props.period === 2) {
       return (
         <View style={styles.subContainer}>
           {
-            rankData.map((each, i) =>
+            rankData.weeklyTopThree.map((each, i) =>
               <ListItem index={i} key={each.username} item={each} />)
           }
           <Header />
           <View>
             <FlatList
-              data={rankData}
+              data={rankData.allWinner}
               renderItem={({ item }) =>
                 <ListItem item={item} />
               }

@@ -14,9 +14,19 @@ import BarContainer from './bottomBar/barContainer';
 import { trackScreen } from '../../../utils/analytic';
 
 class GamePlayList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      backgroundSound: null,
+    };
+    props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.stopBackground = this.stopBackground.bind(this);
+  }
+
   componentWillMount() {
     this.props.trackScreen('GamePlayList');
   }
+
   componentDidMount() {
     const {
       navigator,
@@ -37,27 +47,41 @@ class GamePlayList extends Component {
     this.startBackground();
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { sound } = this.props;
-    return nextProps.sound !== sound;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   const { sound } = this.props;
+  //   return (nextProps.sound !== sound);
+  // }
 
-  componentDidUpdate() {
-    const { sound } = this.props;
-    if (sound === false) this.stopBackground();
-    if (sound === true) this.startBackground();
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.sound) this.stopBackground();
+    if (nextProps.sound) this.startBackground();
   }
 
   componentWillUnmount() {
     this.stopBackground();
   }
 
+  onNavigatorEvent(event) {
+    if (event.id === 'didAppear') {
+      if (!this.state.background) {
+        this.startBackground();
+      }
+    }
+  }
+
   startBackground() {
-    this.background = this.props.playBackgroundMusic();
+    const background = this.props.playBackgroundMusic();
+    this.setState({ backgroundSound: background });
   }
+
   stopBackground() {
-    if (this.background) this.background.stop(() => this.background.release());
+    const { backgroundSound } = this.state;
+    if (backgroundSound) {
+      backgroundSound.stop(() => backgroundSound.release());
+      this.setState({ backgroundSound: null });
+    }
   }
+
   render() {
     const { navigator } = this.props;
     return (
@@ -72,7 +96,7 @@ class GamePlayList extends Component {
           navigator={navigator}
         />
         <LocationBar />
-        <ListContainer navigator={navigator} />
+        <ListContainer navigator={navigator} stop={this.stopBackground} />
         <BarContainer navigator={navigator} />
       </View>
     );
@@ -89,6 +113,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     sound: state.preference.preference.sound,
+    game: state.game.gameId,
   };
 }
 

@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
+    fontSize: 11,
     alignSelf: 'center',
+    fontFamily: 'PixelOperator8-Bold',
   },
   detailsText: {
     color: 'white',

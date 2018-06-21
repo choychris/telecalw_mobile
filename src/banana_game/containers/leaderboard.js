@@ -47,7 +47,7 @@ class LeaderboardView extends Component {
     }
     return (
       <Animated.View style={[styles.fadeContent, { opacity: this.animateValue }]}>
-        <BackButton back coins navigator={this.props.navigator} />
+        <View style={{ height: 20 }} />
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={titleImage} />
         </View>

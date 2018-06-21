@@ -42,8 +42,8 @@ const listItem = ({ item, index }) => {
         <Image source={crowns[rank - 1]} style={styles.imageStyle} /> :
         <Text style={[styles.textStyle, { fontSize }]}>{rank}</Text> }
       <Text style={styles.textStyle}>{username}</Text>
-      <Text style={styles.textStyle}>{highestScore}PTS</Text>
-      <Text style={styles.textStyle}>{numberOfTrial}PLAYS</Text>
+      <Text style={styles.textStyle}>{highestScore} PTS</Text>
+      <Text style={styles.textStyle}>{numberOfTrial} PLAYS</Text>
     </Animated.View>
   );
 };
@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     flex: 1,
-    fontWeight: 'bold',
+    fontFamily: 'PixelOperatorSC-Bold',
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 15,
     flexWrap: 'wrap',
   },
   selfIndictaor: {

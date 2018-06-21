@@ -21,7 +21,9 @@ class ListContainer extends Component {
   }
 
   toGame() {
-    const { navigator } = this.props;
+    const { navigator, playUISound, stop } = this.props;
+    playUISound('start');
+    stop();
     navigator.push({
       screen: 'app.BananaGame',
       navigatorStyle: {

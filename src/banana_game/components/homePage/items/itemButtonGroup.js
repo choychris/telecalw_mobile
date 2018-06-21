@@ -17,13 +17,13 @@ const ItemButtonGroup = ({ startGame, selectItem }) => {
       {
         id: 'positive',
         title: '+ve only',
-        details: "there're only\npositive number",
+        details: "there're only\npositive numbers",
         coin: 15,
       },
       {
         id: 'upOnly',
         title: '^^^ only',
-        details: 'tap only in\nasceding order',
+        details: 'tap only in\nascending order',
         coin: 20,
       },
     ];
@@ -64,11 +64,12 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     marginLeft: 3,
     maxWidth: 100,
     backgroundColor: 'transparent',
+    fontFamily: 'PixelOperator8-Bold',
   },
 });
 

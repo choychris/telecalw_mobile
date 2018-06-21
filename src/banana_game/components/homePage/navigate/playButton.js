@@ -42,14 +42,15 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: 'white',
-    fontSize: 19,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'PixelOperator8-Bold',
     // borderWidth: 1,
   },
   startText: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginTop: 5,
+    fontSize: 16,
+    fontFamily: 'PixelOperator8-Bold',
   },
 });
 

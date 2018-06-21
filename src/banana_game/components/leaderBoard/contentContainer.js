@@ -93,10 +93,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   headerStyle: {
-    fontSize: 30,
+    fontSize: 20,
     alignSelf: 'center',
     textAlign: 'center',
     margin: 8,
+    fontFamily: 'PixelOperator8-Bold',
   },
   tabTextStyle: {
     color: 'white',

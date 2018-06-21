@@ -82,10 +82,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textStyle: {
-    fontSize: 40,
+    fontSize: 32,
     alignSelf: 'center',
     textAlign: 'center',
     color: 'white',
+    fontFamily: 'PixelOperator8-Bold',
   },
 });
 
