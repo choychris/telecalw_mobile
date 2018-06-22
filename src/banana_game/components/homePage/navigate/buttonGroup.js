@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import PlayButton from './playButton';
 import NavigateButton from './navigateButton';
 import { navigateGame } from '../../../actions/startGameAction';
+import { playUISound } from '../../../../utils/sound';
 
 const coins = require('../../../images/telecoins_multi.png');
 const leaderboard = require('../../../images/leaderboard.png');
@@ -20,12 +21,19 @@ const toTopUp = (navigator) => {
 };
 
 const ButtonGroup = ({
-  requiredCoin, start, navigator, openLb,
+  requiredCoin, start, navigator, openLb, sound,
 }) =>
   (
     <View style={styles.container}>
       <View style={{ flex: 0.7, justifyContent: 'center' }}>
-        <PlayButton requiredCoin={requiredCoin} text="START" onPress={() => start(true, navigator)} />
+        <PlayButton
+          requiredCoin={requiredCoin}
+          text="START"
+          onPress={() => {
+            start(true, navigator);
+            sound('start');
+          }}
+        />
       </View>
       <View style={{ flex: 1, justifyContent: 'center', padding: 5 }}>
         <NavigateButton image={coins} text={'Buy\nCoins'} onPress={() => toTopUp(navigator)} />
@@ -49,6 +57,7 @@ const mapStateToProps = state =>
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     start: navigateGame,
+    sound: playUISound,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonGroup);

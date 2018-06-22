@@ -3,9 +3,10 @@ import { Text, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleItem } from '../../../actions/startGameAction';
+import { playUISound } from '../../../../utils/sound';
 import Item from './item';
 
-const ItemButtonGroup = ({ startGame, selectItem }) => {
+const ItemButtonGroup = ({ startGame, selectItem, sound }) => {
   const renderButtons = () => {
     const itemsList = [
       {
@@ -38,7 +39,10 @@ const ItemButtonGroup = ({ startGame, selectItem }) => {
           title={title}
           details={details}
           coin={coin}
-          onPress={() => { selectItem(id, coin); }}
+          onPress={() => {
+            selectItem(id, coin);
+            sound('start');
+          }}
           selected={startGame[id]}
         />
       );
@@ -81,6 +85,7 @@ const mapStateToProps = state =>
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     selectItem: toggleItem,
+    sound: playUISound,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemButtonGroup);

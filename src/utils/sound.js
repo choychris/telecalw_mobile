@@ -1,15 +1,24 @@
 const Sound = require('react-native-sound');
 
-export function playBackgroundMusic() {
+export function playBackgroundMusic(gameId) {
   return (dispatch, getState) => {
     Sound.setCategory('Ambient');
     const soundPre = getState().preference.preference.sound;
     let background;
+    let soundTrack;
+    switch (gameId) {
+      case 'A0001':
+        soundTrack = 'HappyLoop.wav';
+        break;
+      default:
+        soundTrack = 'background.mp3';
+        break;
+    }
     if (soundPre) {
-      background = new Sound('background.mp3', Sound.MAIN_BUNDLE, (error) => {
+      background = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
         if (!error) {
           background.setVolume(0.05);
-          background.setNumberOfLoops(3);
+          background.setNumberOfLoops(-1);
           background.play();
         }
       });
@@ -18,9 +27,42 @@ export function playBackgroundMusic() {
   };
 }
 
+export function bananaGameSound(sound) {
+  return (dispatch, getState) => {
+    const soundPre = getState().preference.preference.sound;
+    if (soundPre) {
+      let soundTrack;
+      switch (sound) {
+        case 'count':
+          soundTrack = 'count.m4a';
+          break;
+        case 'correct':
+          soundTrack = 'correct.wav';
+          break;
+        case 'incorrect':
+          soundTrack = 'incorrect.wav';
+          break;
+        case 'end':
+          soundTrack = 'end.wav';
+          break;
+        default:
+          break;
+      }
+      Sound.setCategory('Ambient');
+      const soundObj = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
+        if (!error) {
+          soundObj.setVolume(0.5);
+          soundObj.play(() => {
+            soundObj.release();
+          });
+        }
+      });
+    }
+  };
+}
+
 export function playUISound(sound) {
   return (dispatch, getState) => {
-    Sound.setCategory('Ambient');
     let soundPre = getState().preference.preference.sound;
     let soundObj;
     let soundTrack;
@@ -62,9 +104,10 @@ export function playUISound(sound) {
         soundPre = false;
     }
     if (soundPre) {
+      Sound.setCategory('Ambient');
       soundObj = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
         if (!error) {
-          soundObj.setVolume(0.8);
+          soundObj.setVolume(0.6);
           soundObj.play(() => {
             soundObj.release();
           });

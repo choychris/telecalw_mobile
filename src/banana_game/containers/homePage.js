@@ -10,6 +10,7 @@ import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
 import { chooseGame } from '../../containers/game/actions';
 import { viewLeaderBoard } from '../actions/leaderboardAction';
+import { playUISound } from '../../utils/sound';
 
 const titleImage = require('../images/titleImage.png');
 
@@ -25,6 +26,7 @@ class HomePage extends Component {
     this.animateValue = new Animated.Value(0);
     this.onDetailsPress = this.onDetailsPress.bind(this);
     this.onDetailClose = this.onDetailClose.bind(this);
+    this.openLeaderboard = this.openLeaderboard.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,7 @@ class HomePage extends Component {
   }
 
   onDetailsPress() {
+    this.props.playUISound('whoosh');
     this.setState({ detailOpened: true });
   }
 
@@ -46,9 +49,14 @@ class HomePage extends Component {
     this.setState({ detailOpened: false });
   }
 
+  openLeaderboard() {
+    this.props.openLb(true);
+    this.props.playUISound('whoosh');
+  }
+
   render() {
     const { detailOpened } = this.state;
-    const { openLb, navigator } = this.props;
+    const { navigator } = this.props;
     return (
       <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
@@ -58,7 +66,7 @@ class HomePage extends Component {
         </View>
         <DetailsButton onPress={this.onDetailsPress} />
         <NavButtonGroup
-          openLb={() => openLb(true)}
+          openLb={this.openLeaderboard}
           navigator={navigator}
         />
         <ItemButtonGroup />
@@ -90,6 +98,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     saveGameId: chooseGame,
     openLb: viewLeaderBoard,
+    playUISound,
   }, dispatch);
 
 export default connect(null, mapDispatchToProps)(HomePage);

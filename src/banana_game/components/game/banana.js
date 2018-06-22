@@ -10,6 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import GameAction from '../../actions/gameActions';
+import { bananaGameSound } from '../../../utils/sound';
 import Config from '../../utils/config';
 
 const { toNextLevel } = GameAction;
@@ -58,6 +59,7 @@ class Banana extends Component {
     this.fadeOut();
     this.props.getScore();
     this.setState({ pressed: true });
+    this.props.sound('correct');
   }
 
   shake() {
@@ -69,7 +71,7 @@ class Banana extends Component {
         duration: 400,
       },
     ).start();
-    console.log('wrong');
+    this.props.sound('incorrect');
   }
 
   fadeIn() {
@@ -179,6 +181,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     toNextLevel,
+    sound: bananaGameSound,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Banana);

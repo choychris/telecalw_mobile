@@ -11,6 +11,7 @@ import ReadySign from '../components/game/readySign';
 import EndGamePopUp from './endGame';
 import Leaderboard from './leaderboard';
 import { addTime } from '../actions/afterGameActions';
+import { bananaGameSound } from '../../utils/sound';
 
 const { horizontalScale, verticalScale } = Config;
 const { getNewBananaSet, shiftList, clearList } = GameAction;
@@ -91,6 +92,7 @@ class TubeBoard extends Component {
     if (this.state.showLeaderBoard) {
       return <Leaderboard endGame />;
     }
+    this.props.sound('end');
     return (
       <EndGamePopUp
         canRetry={this.state.canRetry}
@@ -188,6 +190,7 @@ const mapDispatchToProps = dispatch =>
     shiftList,
     clearList,
     addTime,
+    sound: bananaGameSound,
   }, dispatch);
 
 
