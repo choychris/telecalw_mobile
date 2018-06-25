@@ -7,7 +7,9 @@ import NavigateButton from './navigateButton';
 import { navigateGame } from '../../../actions/startGameAction';
 import { playUISound } from '../../../../utils/sound';
 
-const coins = require('../../../images/telecoins_multi.png');
+// const coins = require('../../../images/telecoins_multi.png');
+const coins = require('../../../../../assets/utilities/coins/telecoins_single.png');
+
 const leaderboard = require('../../../images/leaderboard.png');
 
 const toTopUp = (navigator) => {

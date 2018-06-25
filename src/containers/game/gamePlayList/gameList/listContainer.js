@@ -7,6 +7,7 @@ import { playUISound } from '../../../../utils/sound';
 import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
+import BananaThumbnail from './bananaThumbnail';
 
 const buttonImage = require('../../../../../assets/miniGame/questionMark.png');
 
@@ -62,15 +63,13 @@ class ListContainer extends Component {
             this.renderItems(products[tag.id].slice(0, 2), true) : null }
           {tag.game ?
             <View style={styles.imageContainer}>
-              <TouchableWithoutFeedback onPress={this.toGame}>
-                <Image source={buttonImage} style={styles.imageStyle} />
-              </TouchableWithoutFeedback>
+              <BananaThumbnail toGame={this.toGame} />
             </View> : null }
         </View>
         <Planet />
-        <View style={[styles.subContainer]}>
+        <View style={styles.subContainer}>
           { (tag !== null && products[tag.id]) ?
-            this.renderItems(products[tag.id].slice(3, 5)) : null }
+            this.renderItems(products[tag.id].slice(2, 4)) : null }
         </View>
       </View>
     );

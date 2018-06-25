@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AfterGameAction from '../../actions/afterGameActions';
 
-const coins = require('../../images/telecoins_single.png');
+// const coins = require('../../images/telecoins_single.png');
+const coins = require('../../../../assets/utilities/coins/telecoins_single.png');
 
 const ContinueSign = ({ startSending, playAgain }) =>
   (

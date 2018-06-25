@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Animated, Easing, PanResponder, View, ActivityIndicator, StyleSheet, Dimensions, Platform } from 'react-native';
+import {
+  Animated, Easing, PanResponder,
+  View, ActivityIndicator, StyleSheet,
+  Dimensions, Platform, Text,
+} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { switchTag } from '../../actions';
@@ -115,6 +119,7 @@ class Planet extends Component {
           color="white"
           onPress={() => this.forceSwipe(direction)}
         />
+        { (next === 1) ? <Text style={{ color: 'white' }}>More</Text> : null}
       </Animated.View>
     ) : <View style={{ flex: 0.3 }} />;
   }

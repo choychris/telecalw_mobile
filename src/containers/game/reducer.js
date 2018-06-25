@@ -1,5 +1,7 @@
 import { fromJS } from 'immutable';
 
+const arcadePlanet = require('../../../assets/planet/arcadePlanet.png');
+
 const gameTag = {
   index: 0,
   game: true,
@@ -7,7 +9,7 @@ const gameTag = {
     en: 'Planet of Game',
     zhHant: '游戲星球',
   },
-  images: null,
+  images: arcadePlanet,
 };
 
 const initialState = {

@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Image, Text, StyleSheet, View } from 'react-native';
 import Config from '../../../utils/config';
 
-const coins = require('../../../images/telecoins_single.png');
+const coins = require('../../../../../assets/utilities/coins/telecoins_single.png');
 
 const Item = ({
   title, details, coin, selected, onPress,
