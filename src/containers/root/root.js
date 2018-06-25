@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import configureStore from '../../config/configureStore';
 import { registerScreens } from './navigator';
 
-
 const store = configureStore();
 registerScreens(store, Provider);
 

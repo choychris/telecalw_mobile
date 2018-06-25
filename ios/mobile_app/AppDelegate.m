@@ -14,6 +14,7 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <RCTBraintree.h>
+#import <CodePush/CodePush.h>
 @import GoogleMobileAds ;
 
 @implementation AppDelegate
@@ -25,8 +26,12 @@
   
   NSURL *jsCodeLocation;
 
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  
+  #ifdef DEBUG
+    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  #else
+    jsCodeLocation = [CodePush bundleURL];
+  #endif
+
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor blackColor];
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];

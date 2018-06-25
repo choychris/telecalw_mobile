@@ -12,14 +12,19 @@ class ItemContainer extends Component {
   }
 
   componentDidMount() {
-    this.animate();
+    const { maintainStatus } = this.props.status;
+    if (maintainStatus) {
+      this.animate(0.3);
+    } else {
+      this.animate(1);
+    }
   }
 
-  animate() {
+  animate(value) {
     Animated.timing(
       this.animateValue,
       {
-        toValue: 1,
+        toValue: value,
         duration: 500,
         useNativeDriver: true,
       },
@@ -30,12 +35,10 @@ class ItemContainer extends Component {
     const {
       onPressFunction, name, status, gamePlayRate, id, images, top,
     } = this.props;
-    const disableStyle = (status.maintainStatus === true) ? { opacity: 0.3 } : null;
     const alignSelf = top ? 'flex-end' : 'flex-start';
     return (status.visible === true) ? (
       <Animated.View style={[
         styles.container,
-        disableStyle,
         { alignSelf, opacity: this.animateValue }]}
       >
         <ProductInfo

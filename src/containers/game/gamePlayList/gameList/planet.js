@@ -123,13 +123,15 @@ class Planet extends Component {
       </Animated.View>
     ) : <View style={{ flex: 0.3 }} />;
   }
+
   renderDisplay(tag) {
+    const source = (typeof tag.images === 'string') ? { uri: tag.images } : tag.images;
     return (
       <View style={styles.innerContainer}>
         {this.renderSwipeIndicator('left')}
         <Animated.Image
           {...this.panResponder.panHandlers}
-          source={tag.images || planet}
+          source={source || planet}
           style={[styles.image, this.planetStyle()]}
           resizeMode="contain"
         />
