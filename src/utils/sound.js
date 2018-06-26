@@ -51,7 +51,7 @@ export function bananaGameSound(sound) {
       Sound.setCategory('Ambient');
       const soundObj = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
         if (!error) {
-          soundObj.setVolume(0.5);
+          soundObj.setVolume(0.3);
           soundObj.play(() => {
             soundObj.release();
           });
@@ -107,7 +107,7 @@ export function playUISound(sound) {
       Sound.setCategory('Ambient');
       soundObj = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
         if (!error) {
-          soundObj.setVolume(0.6);
+          soundObj.setVolume(0.4);
           soundObj.play(() => {
             soundObj.release();
           });
