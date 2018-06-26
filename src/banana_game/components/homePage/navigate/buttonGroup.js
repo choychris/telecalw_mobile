@@ -23,7 +23,7 @@ const toTopUp = (navigator) => {
 };
 
 const ButtonGroup = ({
-  requiredCoin, start, navigator, openLb, sound,
+  requiredCoin, start, navigator, openLb, sound, release,
 }) =>
   (
     <View style={styles.container}>
@@ -38,7 +38,12 @@ const ButtonGroup = ({
         />
       </View>
       <View style={{ flex: 1, justifyContent: 'center', padding: 5 }}>
-        <NavigateButton image={coins} text={'Buy\nCoins'} onPress={() => toTopUp(navigator)} />
+        { release ?
+          <NavigateButton
+            image={coins}
+            text={'Buy\nCoins'}
+            onPress={() => toTopUp(navigator)}
+          /> : null }
         <NavigateButton image={leaderboard} text={'Leader\nboard'} onPress={openLb} />
       </View>
     </View>
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state =>
   ({
     requiredCoin: state.bananaGame.startGame.coins,
+    release: state.mis.version.release,
   });
 
 const mapDispatchToProps = dispatch =>

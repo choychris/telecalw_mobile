@@ -1,8 +1,8 @@
-import codePush from 'react-native-code-push';
+// import codePush from 'react-native-code-push';
 import { AppRegistry } from 'react-native';
 import Root from './src/containers/root/root';
 
-const CodePushRoot = codePush(Root);
+// const CodePushRoot = codePush(Root);
 
 if (!__DEV__) {
   console = {};
@@ -11,4 +11,4 @@ if (!__DEV__) {
   console.error = () => {};
 }
 
-AppRegistry.registerComponent('mobile_app', () => CodePushRoot);
+AppRegistry.registerComponent('mobile_app', () => Root);

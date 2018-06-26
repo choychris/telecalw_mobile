@@ -23,14 +23,16 @@ class RootContainer extends Component {
   }
 
   viewLogic() {
-    const { gameStart, leaderboard, navigator } = this.props;
+    const {
+      gameStart, leaderboard, navigator, token,
+    } = this.props;
     if (gameStart) {
       return <TubeBoard />;
     }
     if (leaderboard) {
       return <Leaderboard endGame={false} navigator={navigator} />;
     }
-    return <HomePage navigator={navigator} />;
+    return <HomePage navigator={navigator} token={token} />;
   }
 
   render() {
@@ -47,6 +49,7 @@ const mapStateToProps = state =>
   ({
     gameStart: state.bananaGame.startGame.startGame,
     leaderboard: state.bananaGame.leaderboard.showBoard,
+    token: state.auth.token.lbToken,
   });
 
 const mapDispatchToProps = dispatch =>

@@ -125,7 +125,14 @@ class Planet extends Component {
   }
 
   renderDisplay(tag) {
-    const source = (typeof tag.images === 'string') ? { uri: tag.images } : tag.images;
+    let source;
+    if (!tag.images) {
+      source = planet;
+    } else if (typeof tag.images === 'string') {
+      source = { uri: tag.images };
+    } else {
+      source = tag.images;
+    }
     return (
       <View style={styles.innerContainer}>
         {this.renderSwipeIndicator('left')}

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import DetailsButton from '../components/homePage/detailsButton';
 import NavButtonGroup from '../components/homePage/navigate/buttonGroup';
 import ItemButtonGroup from '../components/homePage/items/itemButtonGroup';
-import DetialSwiper from '../components/homePage/detailSwiper';
+import DetailSwiper from '../components/homePage/detailSwiper';
+import LoginButton from '../components/homePage/loginButton';
 import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
 import { chooseGame } from '../../containers/game/actions';
@@ -56,7 +57,8 @@ class HomePage extends Component {
 
   render() {
     const { detailOpened } = this.state;
-    const { navigator } = this.props;
+    const { navigator, token } = this.props;
+    const loggedIn = !!token;
     return (
       <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
@@ -65,13 +67,14 @@ class HomePage extends Component {
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
         <DetailsButton onPress={this.onDetailsPress} />
-        <NavButtonGroup
-          openLb={this.openLeaderboard}
-          navigator={navigator}
-        />
-        <ItemButtonGroup />
+        { loggedIn ?
+          <NavButtonGroup
+            openLb={this.openLeaderboard}
+            navigator={navigator}
+          /> : null }
+        { loggedIn ? <ItemButtonGroup /> : <LoginButton navigator={navigator} /> }
         { detailOpened ?
-          <DetialSwiper onPress={this.onDetailClose} /> : null }
+          <DetailSwiper onPress={this.onDetailClose} /> : null }
       </Animated.View>
     );
   }

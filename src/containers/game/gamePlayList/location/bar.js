@@ -11,15 +11,21 @@ class LocationBar extends Component {
   }
   renderPlanets(planets) {
     const { tag } = this.props;
-    
     return planets.map((planet, i) => {
       const imageStyle = [styles.image];
-      const source = (typeof planet.images === 'string') ? { uri: planet.images } : planet.images;
+      let source;
+      if (!planet.images) {
+        source = planetImage;
+      } else if (typeof planet.images === 'string') {
+        source = { uri: planet.images };
+      } else {
+        source = planet.images;
+      }
       if (planet.id !== tag.id) imageStyle.push({ opacity: 0.4 });
       return (
         <Image
           key={i}
-          source={source || planetImage}
+          source={source}
           style={imageStyle}
           resizeMode="contain"
         />
