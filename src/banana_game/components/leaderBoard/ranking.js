@@ -17,8 +17,8 @@ class Ranking extends Component {
 
   renderList() {
     const { rankData } = this.props;
-    console.log(rankData);
-    console.log(rankData.weeklyTopThree);
+    // console.log(rankData);
+    // console.log(rankData.weeklyTopThree);
     if (this.props.period === 2) {
       return (
         <View style={styles.subContainer}>

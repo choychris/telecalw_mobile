@@ -31,14 +31,12 @@ export const navigateGame = (start, navigator) =>
             loading('hide', navigator);
             insufficientFundMessage(navigator);
           } else {
+            dispatch({
+              type: 'START_GAME',
+              start,
+              trialId: res.response.trialId,
+            });
             loading('hide', navigator);
-            setTimeout(() => {
-              dispatch({
-                type: 'START_GAME',
-                start,
-                trialId: res.response.trialId,
-              });
-            }, 600);
           }
         })
         .catch((err) => {

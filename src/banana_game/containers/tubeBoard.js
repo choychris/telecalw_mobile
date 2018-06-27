@@ -3,7 +3,7 @@ import { Image, StyleSheet, View, StatusBar, Animated } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Config from '../utils/config';
-import GameAction from '../actions/gameActions';
+import { getNewBananaSet, shiftList, clearList } from '../actions/gameActions';
 import FlyDisplay from '../components/game/timeDisplay';
 import Score from '../components/game/score';
 import Banana from '../components/game/banana';
@@ -14,7 +14,6 @@ import { addTime } from '../actions/afterGameActions';
 import { bananaGameSound } from '../../utils/sound';
 
 const { horizontalScale, verticalScale } = Config;
-const { getNewBananaSet, shiftList, clearList } = GameAction;
 const bigTube2 = require('../images/playTube2.png');
 
 class TubeBoard extends Component {
@@ -27,12 +26,14 @@ class TubeBoard extends Component {
       showLeaderBoard: false,
       canRetry: true,
       score: 0,
+      incorrect: false,
     };
     this.animateValue = new Animated.Value(0);
     this.readyOrFinsih = this.readyOrFinsih.bind(this);
     this.getScore = this.getScore.bind(this);
     this.playAgain = this.playAgain.bind(this);
     this.showBoard = this.showBoard.bind(this);
+    this.handleIncorrect = this.handleIncorrect.bind(this);
   }
 
   componentDidMount() {
@@ -85,6 +86,10 @@ class TubeBoard extends Component {
     this.setState({ showLeaderBoard: true });
   }
 
+  handleIncorrect() {
+    this.setState({ incorrect: !this.state.incorrect });
+  }
+
   readyOrFinsih() {
     if (!this.state.gameFinished) {
       return <ReadySign />;
@@ -120,7 +125,7 @@ class TubeBoard extends Component {
     const {
       positionList, numberList, level, ascending,
     } = this.props;
-    const { reminingTime, score } = this.state;
+    const { reminingTime, score, incorrect } = this.state;
     return (
       <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
         <StatusBar hidden />
@@ -144,6 +149,8 @@ class TubeBoard extends Component {
                 leftPosition={obj.x}
                 number={numberList[i]}
                 getScore={this.getScore}
+                incorrect={incorrect}
+                incorrectPress={this.handleIncorrect}
               />) : this.readyOrFinsih()
           }
         </View>

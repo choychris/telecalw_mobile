@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     backgroundColor: 'transparent',
+    fontFamily: 'PixelOperatorSC-Bold',
   },
 });
 const mapDispatchToProps = dispatch =>

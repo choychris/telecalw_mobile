@@ -16,6 +16,7 @@ const gameReducer = (state = initialState, action) => {
         positionList: action.positionList,
         numberList: action.numberList.list,
         traceNumberList: action.numberList.list,
+        ascending: action.numberList.ascend,
       };
     case 'NEXT_LEVEL':
       return {
@@ -31,13 +32,18 @@ const gameReducer = (state = initialState, action) => {
         ...state,
         traceNumberList: state.traceNumberList.slice(1),
       };
-    case 'CLEAR_LIST':
+    case 'CLEAR_BANANA_LIST':
       return {
         ...state,
         positionList: [],
         numberList: [],
         traceNumberList: [],
         ascending: true,
+      };
+    case 'RESET_LEVEL':
+      return {
+        ...state,
+        level: 1,
       };
     default:
       return state;

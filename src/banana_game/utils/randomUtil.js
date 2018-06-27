@@ -92,15 +92,15 @@ const getRandomNumberList = (level, numberItem, sequenceItem) => {
 };
 
 const randomNumberRange = (level, item) => {
-  if (level < 3) {
+  if (level < 5) {
     return [0, 9];
-  } else if (level < 5) {
-    return [0, 29];
   } else if (level < 8) {
+    return [0, 29];
+  } else if (level < 10) {
     return [item || -10, 29];
-  } else if (level < 13) {
+  } else if (level < 14) {
     return [item || -19, 39];
-  } else if (level < 21) {
+  } else if (level < 24) {
     return [item || -19, 49];
   }
 

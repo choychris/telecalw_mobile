@@ -9,11 +9,9 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import GameAction from '../../actions/gameActions';
+import { toNextLevel } from '../../actions/gameActions';
 import { bananaGameSound } from '../../../utils/sound';
 import Config from '../../utils/config';
-
-const { toNextLevel } = GameAction;
 
 const bananaLeft = require('../../images/bananaLeft.png');
 const bananaRight = require('../../images/bananaRight.png');
@@ -43,7 +41,7 @@ class Banana extends Component {
   }
 
   onPressOut() {
-    if (this.state.pressed) { return; }
+    if (this.state.pressed || this.props.incorrect) { return; }
     const checkPressCorrect = () => this.props.numberList[0] === this.props.number;
     if (this.props.numberList.length === 1) {
       this.getScore();
@@ -51,6 +49,7 @@ class Banana extends Component {
     } else if (checkPressCorrect()) {
       this.getScore();
     } else {
+      this.props.incorrectPress();
       this.shake();
     }
   }
@@ -70,7 +69,7 @@ class Banana extends Component {
         toValue: 1,
         duration: 400,
       },
-    ).start();
+    ).start(this.props.incorrectPress);
     this.props.sound('incorrect');
   }
 
