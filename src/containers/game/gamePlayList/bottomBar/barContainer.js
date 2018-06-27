@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Easing, Animated, FlatList, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  Easing, Animated, FlatList, Text,
+  View, StyleSheet, Dimensions, TouchableOpacity,
+} from 'react-native';
 import { connect } from 'react-redux';
 import ItemButton from './itemButton';
 import Telebot from '../../../../components/telebuddies/telebot';
@@ -90,6 +93,7 @@ class BarContainer extends Component {
               height={screenWidth}
               width={screenWidth}
             />
+            {token.lbToken ? <Text>Setting</Text> : null}
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -103,6 +107,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textStyle: {
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
