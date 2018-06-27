@@ -42,6 +42,8 @@
 		2E6501E3209C5B4300EDF5D8 /* libRCTWebRTC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EB5AB1202578BE00E453A9 /* libRCTWebRTC.a */; };
 		2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */; };
 		2E8DC89F2091D1EE00D1C10C /* FacebookAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */; };
+		2EB2DD9720E3B1CF00DF54D3 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */; };
+		2EB2DD9820E3B1CF00DF54D3 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2ED67BA120DBC4DD002FE606 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67B9020DBC4DA002FE606 /* fail.mp3 */; };
 		2ED67BA220DBC4DD002FE606 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67B9120DBC4DA002FE606 /* correct.wav */; };
 		2ED67BA320DBC4DD002FE606 /* click2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67B9220DBC4DB002FE606 /* click2.mp3 */; };
@@ -58,8 +60,6 @@
 		2ED67BAE20DBC4DD002FE606 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67B9D20DBC4DC002FE606 /* incorrect.wav */; };
 		2ED67BAF20DBC4DD002FE606 /* coins_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67B9E20DBC4DC002FE606 /* coins_sound.mp3 */; };
 		2ED67BB120DBC4DD002FE606 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2ED67BA020DBC4DD002FE606 /* background.mp3 */; };
-		2EDAF93E20E10D2400C2CD04 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */; };
-		2EDAF93F20E10D2400C2CD04 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA9108420ABF09A00B3E9E9 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		332EB008DBF34E99AAED769F /* Pixel Operator 8 Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2D7263BC24A4F31A76A1B4E /* Pixel Operator 8 Bold.ttf */; };
 		3B9D08096F70493A84E9AE27 /* Pixel Operator Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C830B349CBB423D99685051 /* Pixel Operator Bold.ttf */; };
 		4137CA7A787B4D68A166E464 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C95E964EFBD245EAAEF69FC9 /* Ionicons.ttf */; };
@@ -463,13 +463,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2EDAF94020E10D2400C2CD04 /* Embed Frameworks */ = {
+		2EB2DD9920E3B1D000DF54D3 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2EDAF93F20E10D2400C2CD04 /* WebRTC.framework in Embed Frameworks */,
+				2EB2DD9820E3B1CF00DF54D3 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -627,6 +627,7 @@
 				D64874B61FB83BEA00ABC458 /* CoreAudio.framework in Frameworks */,
 				D64874B51FB83BE400ABC458 /* CoreVideo.framework in Frameworks */,
 				D64874AB1FB83BA000ABC458 /* GLKit.framework in Frameworks */,
+				2EB2DD9720E3B1CF00DF54D3 /* WebRTC.framework in Frameworks */,
 				D6B8366D1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */,
 				D64874AA1FB83B9B00ABC458 /* CoreGraphics.framework in Frameworks */,
 				D64874A91FB83B9400ABC458 /* AudioToolbox.framework in Frameworks */,
@@ -642,7 +643,6 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				2EDAF93E20E10D2400C2CD04 /* WebRTC.framework in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				D64874B01FB83BC300ABC458 /* libc.tbd in Frameworks */,
@@ -1121,7 +1121,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				2EDAF94020E10D2400C2CD04 /* Embed Frameworks */,
+				2EB2DD9920E3B1D000DF54D3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
