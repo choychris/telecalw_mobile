@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.14</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -40,7 +40,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>16</string>
+	<key>CodePushDeploymentKey</key>
+	<string>dmeLkmPKFDDPeYMEhdP_YytqLsja81b6a9fd-77a2-469f-9167-88c2209de41d</string>
 	<key>FacebookAppID</key>
 	<string>144167082893443</string>
 	<key>FacebookDisplayName</key>
@@ -70,7 +72,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Permission</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need your microphone permission in order to perform in-app chatting and webrtc usage</string>
 	<key>UIAppFonts</key>
@@ -106,7 +108,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CodePushDeploymentKey</key>
-	<string>dmeLkmPKFDDPeYMEhdP_YytqLsja81b6a9fd-77a2-469f-9167-88c2209de41d</string>
 </dict>
 </plist>
