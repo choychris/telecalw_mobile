@@ -93,7 +93,8 @@ class BarContainer extends Component {
               height={screenWidth}
               width={screenWidth}
             />
-            {token.lbToken ? <Text>Setting</Text> : null}
+            { token.lbToken ?
+              <Text style={styles.textStyle}>Setting</Text> : null}
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     textAlign: 'center',
+    backgroundColor: 'transparent',
   },
 });
 
