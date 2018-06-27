@@ -8,7 +8,7 @@ export const getRankData = currentPeriod =>
     const period = currentPeriod ? 'current' : 'last';
     getSelfRank(gameId, userId, period, id)
       .then((res) => {
-        console.log(res.response);
+        // console.log(res.response);
         const { result, endTime, totalPlayer } = res.response;
         const currentTime = new Date().getTime();
         const timeLeft = Math.floor((endTime - currentTime) / 1000);
@@ -32,7 +32,7 @@ export const getWeeklyBest = () =>
     const { gameId } = getState().game;
     getWeeklyRank(gameId, id)
       .then((res) => {
-        console.log('res.response', res.response);
+        // console.log('res.response', res.response);
         // const { allWinner, weeklyTopThree } = res.response;
         dispatch({
           type: 'RANK_DATA',
@@ -48,7 +48,7 @@ export const getWeeklyBest = () =>
 
 export const clearData = () =>
   (dispatch) => {
-    dispatch({ type: 'CLEAR_DATA' });
+    dispatch({ type: 'CLEAR_RANK_DATA' });
   };
 
 export const viewLeaderBoard = open =>

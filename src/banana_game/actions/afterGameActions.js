@@ -29,7 +29,7 @@ export const addTime = () =>
 const reset = () =>
   (dispatch) => {
     // console.warn('reset');
-    dispatch({ type: 'RESET' });
+    dispatch({ type: 'RESET_AFTERGAME' });
   };
 
 export default {

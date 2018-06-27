@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         saveError: false,
       };
-    case 'RESET':
+    case 'RESET_AFTERGAME':
       return initialState;
     default:
       return state;

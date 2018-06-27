@@ -11,6 +11,7 @@ import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
 import { chooseGame } from '../../containers/game/actions';
 import { viewLeaderBoard } from '../actions/leaderboardAction';
+import { resetLevel } from '../actions/gameActions';
 import { playUISound } from '../../utils/sound';
 
 const titleImage = require('../images/titleImage.png');
@@ -31,6 +32,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    this.props.resetLevel();
     Animated.timing(
       this.animateValue,
       {
@@ -102,6 +104,7 @@ const mapDispatchToProps = dispatch =>
     saveGameId: chooseGame,
     openLb: viewLeaderBoard,
     playUISound,
+    resetLevel,
   }, dispatch);
 
 export default connect(null, mapDispatchToProps)(HomePage);

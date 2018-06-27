@@ -27,7 +27,7 @@ const Reducer = (state = initialState, action) => {
         ...state,
         showBoard: action.open,
       };
-    case 'CLEAR_DATA':
+    case 'CLEAR_RANK_DATA':
       return {
         ...state,
         rankData: null,

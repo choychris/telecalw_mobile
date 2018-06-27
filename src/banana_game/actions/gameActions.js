@@ -12,7 +12,7 @@ const nextLevel = (level, numberItem, sequenceItem) => ({
   numberList: RandomUtils.getRandomNumberList(level, numberItem, sequenceItem),
 });
 
-const getNewBananaSet = () =>
+export const getNewBananaSet = () =>
   (dispatch, getState) => {
     const { level } = getState().bananaGame.game;
     const { positive, upOnly } = getState().bananaGame.startGame;
@@ -20,7 +20,7 @@ const getNewBananaSet = () =>
     dispatch(banansInfo(level, lowest, upOnly));
   };
 
-const toNextLevel = () =>
+export const toNextLevel = () =>
   (dispatch, getState) => {
     const { level } = getState().bananaGame.game;
     const { positive, upOnly } = getState().bananaGame.startGame;
@@ -28,19 +28,19 @@ const toNextLevel = () =>
     dispatch(nextLevel(level + 1, lowest, upOnly));
   };
 
-const shiftList = () =>
+export const shiftList = () =>
   (dispatch) => {
     dispatch({ type: 'SHIFT_LIST' });
   };
 
-const clearList = () =>
+export const clearList = () =>
   (dispatch) => {
-    dispatch({ type: 'CLEAR_LIST' });
+    dispatch({ type: 'CLEAR_BANANA_LIST' });
   };
 
-export default {
-  getNewBananaSet,
-  shiftList,
-  toNextLevel,
-  clearList,
-};
+export const resetLevel = () =>
+  (dispatch) => {
+    dispatch({ type: 'RESET_LEVEL' });
+  };
+
+export default null;
