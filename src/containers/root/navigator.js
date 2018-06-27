@@ -18,28 +18,33 @@ import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
-import SlideShow from '../game/gamePlayList/miniGamePoster/slides';
+import BananaGame from '../../banana_game/root';
+import BananaGameStart from '../../banana_game/containers/tubeBoard';
+import BananaGameLeaderboard from '../../banana_game/containers/leaderboard';
+
 
 // register all screens of the app (including internal ones)
- export function registerScreens(store , Provider) {
-	 Navigation.registerComponent('app.Error', () => Error,store,Provider);
-	 Navigation.registerComponent('app.Loading', () => Loading,store,Provider);
-	 Navigation.registerComponent('app.Auth', () => Auth,store,Provider);
-	 Navigation.registerComponent('app.GamePlayList', () => GamePlayList,store,Provider);
-	 Navigation.registerComponent('app.GameRoom', () => GameRoom,store,Provider);
-	 Navigation.registerComponent('app.GamePlay', () => GamePlay,store,Provider);
-	 Navigation.registerComponent('app.GameResult', () => GameResult,store,Provider);
-	 Navigation.registerComponent('app.Reservation', () => Reservation,store,Provider);
-	 Navigation.registerComponent('app.GameCountDown', () => GameCountDown,store,Provider);
-	 Navigation.registerComponent('app.ProductDetail', () => ProductDetailContainer,store,Provider);
-	 Navigation.registerComponent('app.TopUp', () => TopUp,store,Provider);
-	 Navigation.registerComponent('app.Reward', () => Reward,store,Provider);
-	 Navigation.registerComponent('app.CheckinReward', () => CheckinReward,store,Provider);
-	 Navigation.registerComponent('app.Delivery', () => Delivery,store,Provider);
-	 Navigation.registerComponent('app.Tracking', () => Tracking,store,Provider);
-	 Navigation.registerComponent('app.Support', () => CustomerSupport,store,Provider);
-	 Navigation.registerComponent('app.Setting', () => Setting,store,Provider);
-   Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest,store,Provider);
-   Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData,store,Provider);
-	 Navigation.registerComponent('app.SlideShow', () => SlideShow,store,Provider);
+export function registerScreens(store, Provider) {
+  Navigation.registerComponent('app.Error', () => Error, store, Provider);
+  Navigation.registerComponent('app.Loading', () => Loading, store, Provider);
+  Navigation.registerComponent('app.Auth', () => Auth, store, Provider);
+  Navigation.registerComponent('app.GamePlayList', () => GamePlayList, store, Provider);
+  Navigation.registerComponent('app.GameRoom', () => GameRoom, store, Provider);
+  Navigation.registerComponent('app.GamePlay', () => GamePlay, store, Provider);
+  Navigation.registerComponent('app.GameResult', () => GameResult, store, Provider);
+  Navigation.registerComponent('app.Reservation', () => Reservation, store, Provider);
+  Navigation.registerComponent('app.GameCountDown', () => GameCountDown, store, Provider);
+  Navigation.registerComponent('app.ProductDetail', () => ProductDetailContainer, store, Provider);
+  Navigation.registerComponent('app.TopUp', () => TopUp, store, Provider);
+  Navigation.registerComponent('app.Reward', () => Reward, store, Provider);
+  Navigation.registerComponent('app.CheckinReward', () => CheckinReward, store, Provider);
+  Navigation.registerComponent('app.Delivery', () => Delivery, store, Provider);
+  Navigation.registerComponent('app.Tracking', () => Tracking, store, Provider);
+  Navigation.registerComponent('app.Support', () => CustomerSupport, store, Provider);
+  Navigation.registerComponent('app.Setting', () => Setting, store, Provider);
+  Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest, store, Provider);
+  Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData, store, Provider);
+  Navigation.registerComponent('app.BananaGame', () => BananaGame, store, Provider);
 }
+
+export default null;

@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.14</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -40,7 +40,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>16</string>
+	<key>CodePushDeploymentKey</key>
+	<string>N0QbZd3oiXyKtbSoq13zTSpJtJm081b6a9fd-77a2-469f-9167-88c2209de41d</string>
 	<key>FacebookAppID</key>
 	<string>144167082893443</string>
 	<key>FacebookDisplayName</key>
@@ -81,6 +83,18 @@
 		<string>FontAwesome.ttf</string>
 		<string>Silom.ttf</string>
 		<string>Bauhaus-93_6274.ttf</string>
+		<string>Pixel Operator 8 Bold.ttf</string>
+		<string>Pixel Operator 8.ttf</string>
+		<string>Pixel Operator Bold.ttf</string>
+		<string>Pixel Operator SC Bold.ttf</string>
+		<string>Pixel Operator SC.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

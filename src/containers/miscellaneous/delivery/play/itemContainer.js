@@ -35,7 +35,7 @@ class PlayItem extends Component {
 			nextState
 		} = this.props;
 		const { name , images } = product;
-		const send = (deliveryId !== undefined) ? true : false;
+		const send = !!deliveryId;
 		const selected = this._checkSelected(play,id);
 		const selectedBorder = (send === false && selected === true) ? styles.selectedBorder : null;
 		const btnStyle = (send === true) ? styles.sendContainer : null;

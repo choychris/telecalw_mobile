@@ -171,16 +171,15 @@ export function confirmDelivery(navigator,nextState){
 				},
 				Request
 			)
-				.then((res,err)=>{
-					//console.warn(JSON.stringify(res));
-					//console.warn(JSON.stringify(err));
-					loading('hide',navigator);
-					if(!err) {
-						dispatch({
-							type : 'CLEAR_PLAY'
-						});
-						nextState();
-					};
+				.then((res)=>{
+					loading('hide', navigator);
+					console.log('response', res);
+					// console.log('error', JSON.stringify(err));
+
+					dispatch({
+						type : 'CLEAR_PLAY'
+					});
+					nextState();
 				})
 				.catch((err)=>{
 					loading('hide',navigator);
