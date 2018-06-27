@@ -22,15 +22,15 @@ const listItem = ({ item, index }) => {
       duration: 500,
     },
   ).start();
-  const {
-    username, highestScore, numberOfTrial,
-  } = item;
+  const { username, highestScore } = item;
+  let { numberOfTrial } = item;
   let rank = item.rank || index + 1;
   let fontSize = 18;
   if (!rank) {
     rank = emoji.get('medal');
     fontSize = 30;
   }
+  if (numberOfTrial === 0) numberOfTrial = 1;
   return (
     <Animated.View style={[
         styles.container,
