@@ -16,6 +16,7 @@ const gameReducer = (state = initialState, action) => {
         positionList: action.positionList,
         numberList: action.numberList.list,
         traceNumberList: action.numberList.list,
+        ascending: action.numberList.ascend,
       };
     case 'NEXT_LEVEL':
       return {
