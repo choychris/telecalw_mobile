@@ -35,9 +35,13 @@ function authReducer(state = initialState, action){
 				.setIn(['reservation'],action.value)
 				.toJS();
 		break;
-		case 'USER_ADDRESS':
+		case 'USER_ADDRESS_1':
 			return state
 				.setIn(['user','address','line1'],action.value)
+				.toJS()
+		case 'USER_ADDRESS_2':
+			return state
+				.setIn(['user','address','line2'],action.value)
 				.toJS()
 		break;
 		case 'USER_STATE':
