@@ -105,7 +105,7 @@ class Banana extends Component {
     const fontSize = verticalScale(imageWidth / 2.5);
     const scale = this.fadeInValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [1.7, 1],
+      outputRange: [2, 1],
     });
     const origin = this.rotate;
     const shakeLeft = this.rotate - 15;
@@ -162,9 +162,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     alignSelf: 'center',
-    fontWeight: 'bold',
     fontFamily: 'PixelOperatorSC-Bold',
     backgroundColor: 'transparent',
+    color: 'black',
   },
   explodeImage: {
     position: 'absolute',

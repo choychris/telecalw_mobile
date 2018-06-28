@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StatusBar, StyleSheet, Platform } from 'react-native';
-import codePush from 'react-native-code-push';
+// import codePush from 'react-native-code-push';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { loginFacebook, accessTokenChecking } from './actions';
@@ -20,7 +20,7 @@ class Login extends Component {
     // User Language Checking
     languageChecking();
     // check for code push update and download
-    if (!__DEV__) codePush.sync();
+    // if (!__DEV__) codePush.sync();
   }
   shouldComponentUpdate(nextProps) {
     const { language } = this.props;

@@ -2,7 +2,7 @@ import { getSelfRank, getWeeklyRank } from '../../common/api/request/miniGame/le
 
 export const getRankData = currentPeriod =>
   (dispatch, getState) => {
-    dispatch({ type: 'CLEAR_DATA' });
+    dispatch({ type: 'CLEAR_RANK_DATA' });
     const { userId, id } = getState().auth.token.lbToken;
     const { gameId } = getState().game;
     const period = currentPeriod ? 'current' : 'last';
@@ -27,7 +27,7 @@ export const getRankData = currentPeriod =>
 
 export const getWeeklyBest = () =>
   (dispatch, getState) => {
-    dispatch({ type: 'CLEAR_DATA' });
+    dispatch({ type: 'CLEAR_RANK_DATA' });
     const { id } = getState().auth.token.lbToken;
     const { gameId } = getState().game;
     getWeeklyRank(gameId, id)

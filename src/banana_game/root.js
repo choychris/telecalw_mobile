@@ -19,7 +19,9 @@ class RootContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.music.stop(() => this.music.release);
+    if (this.music) {
+      this.music.stop(() => this.music.release);
+    }
   }
 
   viewLogic() {

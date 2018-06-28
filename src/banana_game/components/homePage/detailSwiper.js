@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Image, StyleSheet, Animated } from 'react-native';
+import { Image, StyleSheet, Animated, Platform } from 'react-native';
 import Config from '../../utils/config';
 
 const details1 = require('../../images/details1.png');
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#81C3D7',
     borderRadius: 10,
     padding: 10,
+    elevation: (Platform.OS === 'ios') ? null : 3,
   },
   wrapper: {
     paddingBottom: 10,

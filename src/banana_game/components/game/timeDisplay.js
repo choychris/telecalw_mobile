@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     paddingVertical: 10,
     width: horizontalScale(120),
-    fontWeight: 'bold',
     fontFamily: 'PixelOperatorSC-Bold',
   },
 });

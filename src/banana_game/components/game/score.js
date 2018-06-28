@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     fontSize: horizontalScale(40),
     width: horizontalScale(120),
     overflow: 'hidden',
-    fontWeight: 'bold',
     fontFamily: 'PixelOperatorSC-Bold',
   },
   imageStyle: {

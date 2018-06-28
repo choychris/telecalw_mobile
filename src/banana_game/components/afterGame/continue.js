@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AfterGameAction from '../../actions/afterGameActions';
@@ -36,6 +36,13 @@ const ContinueSign = ({ startSending, playAgain }) =>
     </View>
   );
 
+const shadow = (Platform.OS === 'ios') ?
+  {
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+  } : { elevation: 2 };
+
 const styles = StyleSheet.create({
   warpperStyle: {
     flex: 1,
@@ -62,9 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#59C197',
     marginHorizontal: 10,
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
+    ...shadow,
   },
   buttonText: {
     fontSize: 20,

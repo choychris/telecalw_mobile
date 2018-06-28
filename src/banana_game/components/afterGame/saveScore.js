@@ -8,6 +8,7 @@ import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import AfterGameAction from '../../actions/afterGameActions';
 
@@ -72,6 +73,12 @@ class SaveScore extends Component {
     );
   }
 }
+const shadow = (Platform.OS === 'ios') ?
+  {
+    shadowOffset: { width: 2, height: 2 },
+    shadowColor: 'black',
+    shadowOpacity: 0.8,
+  } : { elevation: 2 };
 
 const styles = StyleSheet.create({
   warpperStyle: {
@@ -102,16 +109,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 14,
     maxWidth: 170,
-    shadowOffset: { width: 2, height: 2 },
-    shadowColor: 'black',
-    shadowOpacity: 0.8,
+    ...shadow,
   },
   buttonText: {
     flex: 1,
     color: 'white',
     textAlign: 'left',
     fontSize: 12,
-    fontWeight: 'bold',
     paddingLeft: 10,
     fontFamily: 'PixelOperator8-Bold',
   },

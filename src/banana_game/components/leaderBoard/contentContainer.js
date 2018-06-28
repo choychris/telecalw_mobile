@@ -11,7 +11,7 @@ import {
   clearData, getWeeklyBest,
 } from '../../actions/leaderboardAction';
 
-const { deviceWidth } = Config;
+const { deviceWidth, shadow } = Config;
 
 const offSet = ((deviceWidth * (7 / 8)) - 40) / 3;
 
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 8,
     fontFamily: 'PixelOperator8-Bold',
+    color: 'black',
   },
   tabTextStyle: {
     color: 'white',
@@ -125,9 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 25,
     backgroundColor: '#4A66FF',
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: 'black',
-    shadowOpacity: 0.6,
+    ...shadow,
   },
 });
 

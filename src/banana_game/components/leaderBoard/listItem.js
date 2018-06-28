@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 15,
     flexWrap: 'wrap',
+    color: 'black',
   },
   selfIndictaor: {
     backgroundColor: 'rgba(74,144,226,0.6)',

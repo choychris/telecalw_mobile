@@ -8,7 +8,7 @@ export function playBackgroundMusic(gameId) {
     let soundTrack;
     switch (gameId) {
       case 'A0001':
-        soundTrack = 'HappyLoop.wav';
+        soundTrack = 'happyloop.wav';
         break;
       default:
         soundTrack = 'background.mp3';

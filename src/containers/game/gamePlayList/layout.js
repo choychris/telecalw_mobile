@@ -43,8 +43,8 @@ class GamePlayList extends Component {
     productStatus();
     // Initiate Pusher Reservation Listener
     reserveStatus(navigator);
-    // Play Background Music
-    this.startBackground();
+    // // Play Background Music
+    // this.startBackground();
   }
 
   // shouldComponentUpdate(nextProps) {
@@ -63,20 +63,24 @@ class GamePlayList extends Component {
 
   onNavigatorEvent(event) {
     if (event.id === 'didAppear') {
-      if (!this.state.background) {
+      if (!this.state.backgroundSound) {
+        console.log('navigator start');
         this.startBackground();
       }
     }
   }
 
   startBackground() {
-    const background = this.props.playBackgroundMusic();
-    this.setState({ backgroundSound: background });
+    if (!this.state.backgroundSound) {
+      const background = this.props.playBackgroundMusic();
+      this.setState({ backgroundSound: background });
+    }
   }
 
   stopBackground() {
     const { backgroundSound } = this.state;
     if (backgroundSound) {
+      console.log('stop');
       backgroundSound.stop(() => backgroundSound.release());
       this.setState({ backgroundSound: null });
     }

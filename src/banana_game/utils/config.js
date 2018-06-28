@@ -16,6 +16,7 @@ const shadow = {
   shadowOffset: { width: 2, height: 2 },
   shadowColor: 'black',
   shadowOpacity: 0.5,
+  elevation: isIOS ? null : 2,
 };
 
 export default {

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { View, TouchableWithoutFeedback, Text, Image, StyleSheet, Animated } from 'react-native';
+import {
+  View, TouchableWithoutFeedback, Platform,
+  Text, Image, StyleSheet, Animated,
+} from 'react-native';
 import Config from '../../utils/config';
 
 const banana = require('../../images/thumbnail.png');
@@ -55,6 +58,7 @@ class DetailsButton extends Component {
   }
 }
 
+const isIOS = (Platform.OS === 'ios');
 const styles = StyleSheet.create({
   container: {
     flex: 0.5,
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     position: 'absolute',
-    resizeMode: 'cover',
+    resizeMode: isIOS ? 'cover' : 'contain',
     overflow: 'visible',
     width: horizontalScale(230),
     height: horizontalScale(100),
@@ -79,7 +83,9 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'center',
     padding: 10,
+    paddingHorizontal: isIOS ? null : 25,
     backgroundColor: 'transparent',
+    color: 'black',
   },
 });
 

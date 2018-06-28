@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
     fontSize: 12,
-    fontWeight: 'bold',
     paddingLeft: 10,
     fontFamily: 'PixelOperator8-Bold',
   },
