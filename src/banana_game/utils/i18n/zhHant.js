@@ -13,7 +13,7 @@ const zhHant = {
   congrats: '恭喜本周所有第一名玩家 ! ',
   timeLeft: '距離獎品派送時間: ',
   totalPlayer: '總玩家人數: ',
-  saved: '分數上傳!',
+  saved: '分數己上傳',
   failSave: '未能儲存 ...',
   saving: '正在上傳分數 ...',
   continue: '繼續?',

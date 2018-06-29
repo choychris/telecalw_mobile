@@ -128,7 +128,7 @@ public class MainApplication extends NavigationApplication implements ReactInsta
 			new WebRTCModulePackage(),
 			new BraintreePackage(),
 			new RNAdMobPackage(),
-			new CodePush("4LUaC31Z3YIS4hSayxBQxFNMBhqO81b6a9fd-77a2-469f-9167-88c2209de41d", getApplicationContext(), BuildConfig.DEBUG)
+			new CodePush("QmkocT2ky3GpZXfWTLNrcgLZVNmP81b6a9fd-77a2-469f-9167-88c2209de41d", getApplicationContext(), BuildConfig.DEBUG)
 		);
 	}
 
