@@ -6,7 +6,7 @@ const translate = {
   zhHant,
 };
 
-const changeLocale = {
+export const changeLocale = {
   en: 'en',
   zhHant: 'zhHant',
   'en-zh': 'en',

@@ -80,7 +80,7 @@ class HomePage extends Component {
           /> : null }
         { loggedIn ? <ItemButtonGroup /> : <LoginButton navigator={navigator} /> }
         { detailOpened ?
-          <DetailSwiper onPress={this.onDetailClose} /> : null }
+          <DetailSwiper onPress={this.onDetailClose} lang={lang} /> : null }
       </Animated.View>
     );
   }

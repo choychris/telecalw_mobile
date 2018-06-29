@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, StyleSheet, Animated, Platform } from 'react-native';
+import { changeLocale } from '../../utils/i18n/language';
 import Config from '../../utils/config';
 
-const details1 = require('../../images/details1.png');
-const details2 = require('../../images/details2.png');
-const details3 = require('../../images/details3.png');
-const details4 = require('../../images/details4.png');
+const en1 = require('../../images/en_details1.png');
+const en2 = require('../../images/en_details2.png');
+const en3 = require('../../images/en_details3.png');
+const en4 = require('../../images/en_details4.png');
+const zh1 = require('../../images/zh_details1.png');
+const zh2 = require('../../images/zh_details2.png');
+const zh3 = require('../../images/zh_details3.png');
+const zh4 = require('../../images/zh_details4.png');
 
 const { deviceWidth, deviceHeight } = Config;
-
-const detailSlide = [
-  details1,
-  details2,
-  details3,
-  details4,
-];
+const posters = {
+  en: [en1, en2, en3, en4],
+  zhHant: [zh1, zh2, zh3, zh4],
+};
 
 class DetailSwiper extends Component {
   constructor() {
@@ -40,10 +42,12 @@ class DetailSwiper extends Component {
   }
 
   render() {
+    const { lang } = this.props;
     const translateX = this.animateValue.interpolate({
       inputRange: [0, 0.2, 0.4, 0.43, 0.53, 0.7, 0.8, 0.9, 1],
       outputRange: [400, 0, -30, -30, 0, -15, 0, -4, 0],
     });
+    const detailSlide = changeLocale[lang] ? posters[changeLocale[lang]] : posters.en;
     return (
       <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
         <Icon
