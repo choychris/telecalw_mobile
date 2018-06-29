@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Easing, Animated, FlatList, Text,
+  Easing, Animated, FlatList,
   View, StyleSheet, Dimensions, TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -93,8 +93,6 @@ class BarContainer extends Component {
               height={screenWidth}
               width={screenWidth}
             />
-            { token.lbToken ?
-              <Text style={styles.textStyle}>Setting</Text> : null}
           </TouchableOpacity>
         </Animated.View>
       </View>
