@@ -102,9 +102,9 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "teleclaw.live"
-        minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 11
+        minSdkVersion 22
+        targetSdkVersion 26
+        versionCode 12
         versionName "1.1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
