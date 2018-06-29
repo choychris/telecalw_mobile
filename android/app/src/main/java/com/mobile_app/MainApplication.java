@@ -29,8 +29,11 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.react.ReactInstanceManager;
 
 import com.sbugert.rnadmob.RNAdMobPackage;
+import com.microsoft.codepush.react.ReactInstanceHolder;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +83,7 @@ import java.util.List;
   //}
 //}
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication implements ReactInstanceHolder {
 
 	@Override
 	protected void attachBaseContext(Context base) {
@@ -124,7 +127,8 @@ public class MainApplication extends NavigationApplication {
 			new FBSDKPackage(mCallbackManager),
 			new WebRTCModulePackage(),
 			new BraintreePackage(),
-			new RNAdMobPackage()
+			new RNAdMobPackage(),
+			new CodePush("4LUaC31Z3YIS4hSayxBQxFNMBhqO81b6a9fd-77a2-469f-9167-88c2209de41d", getApplicationContext(), BuildConfig.DEBUG)
 		);
 	}
 
@@ -134,8 +138,20 @@ public class MainApplication extends NavigationApplication {
 	}
 
 	@Override
+	public String getJSBundleFile() {
+        // Override default getJSBundleFile method with the one CodePush is providing
+		return CodePush.getJSBundleFile();
+	}
+
+	@Override
 	public String getJSMainModuleName() {
 			 return "index";
+	}
+
+	@Override
+	public ReactInstanceManager getReactInstanceManager() {
+			// CodePush must be told how to find React Native instance
+			return getReactNativeHost().getReactInstanceManager();
 	}
 
 }

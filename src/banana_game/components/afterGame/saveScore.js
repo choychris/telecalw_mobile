@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import AfterGameAction from '../../actions/afterGameActions';
+import locale from '../../utils/i18n/language';
 
 const leaderboard = require('../../images/leaderboard.png');
 
@@ -29,10 +30,11 @@ class SaveScore extends Component {
   }
 
   render() {
+    const { lang } = this.props;
     if (this.props.saved) {
       return (
         <View style={styles.warpperStyle}>
-          <Text style={styles.textStyle}>Score Saved!</Text>
+          <Text style={styles.textStyle}>{locale(lang, 'saved')}</Text>
           <TouchableOpacity
             style={styles.buttonStyle}
             onPress={this.props.showBoard}
@@ -49,7 +51,7 @@ class SaveScore extends Component {
     if (this.props.saveError) {
       return (
         <View style={styles.warpperStyle}>
-          <Text style={styles.textStyle}>Fail to Save ...</Text>
+          <Text style={styles.textStyle}>{locale(lang, 'failSave')}</Text>
           <TouchableOpacity
             style={[
               styles.buttonStyle,
@@ -67,7 +69,7 @@ class SaveScore extends Component {
     }
     return (
       <View style={styles.warpperStyle}>
-        <Text style={styles.textStyle}>Saving Score ...</Text>
+        <Text style={styles.textStyle}>{locale(lang, 'saving')}</Text>
         <ActivityIndicator color="#0000ff" />
       </View>
     );

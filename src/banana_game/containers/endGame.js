@@ -36,7 +36,7 @@ class EndGamePopUp extends Component {
     const {
       playAgain, wallet,
       canRetry, score,
-      sendingScore, saveError,
+      sendingScore, saveError, lang,
     } = this.props;
     const enoughMoney = wallet >= 8;
     return (
@@ -49,11 +49,13 @@ class EndGamePopUp extends Component {
           <ContinueSign
             canRetry={canRetry}
             playAgain={playAgain}
+            lang={lang}
           /> :
           <SaveScore
             score={score}
             showBoard={this.goUp}
             saveError={saveError}
+            lang={lang}
           />
         }
       </BounceView>
@@ -94,6 +96,7 @@ const mapStateToProps = state => ({
   sendingScore: state.bananaGame.afterGame.sendingScore,
   saveError: state.bananaGame.afterGame.saveError,
   wallet: state.auth.wallet.balance,
+  lang: state.preference.language.locale,
 });
 
 const mapDispatchToProps = dispatch =>

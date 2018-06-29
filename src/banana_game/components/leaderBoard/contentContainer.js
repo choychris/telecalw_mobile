@@ -10,6 +10,7 @@ import {
   viewLeaderBoard, getRankData,
   clearData, getWeeklyBest,
 } from '../../actions/leaderboardAction';
+import locale from '../../utils/i18n/language';
 
 const { deviceWidth, shadow } = Config;
 
@@ -20,11 +21,11 @@ class LeaderboardContent extends Component {
     super(props);
     this.state = {
       tab: 0,
-      tabContent: props.endGame ? ['Current\nPeriod'] :
+      tabContent: props.endGame ? [locale(props.lang, 'current')] :
         [
-          'Current\nPeriod',
-          'Last\nPeriod',
-          'Weekly\nBest',
+          locale(props.lang, 'current'),
+          locale(props.lang, 'last'),
+          locale(props.lang, 'weekly'),
         ],
     };
     props.getRankData(true);
@@ -60,7 +61,9 @@ class LeaderboardContent extends Component {
   }
 
   render() {
-    const { rankData, timeLeft, totalPlayer } = this.props;
+    const {
+      rankData, timeLeft, totalPlayer, lang,
+    } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.headerStyle}>Leaderboard</Text>
@@ -77,6 +80,7 @@ class LeaderboardContent extends Component {
           rankData={rankData}
           timeLeft={timeLeft}
           totalPlayer={totalPlayer}
+          lang={lang}
         />
         <TouchableOpacity style={styles.buttonStyle} onPress={this.onDonePress}>
           <Text style={styles.tabTextStyle}>DONE</Text>
@@ -135,6 +139,7 @@ const mapStateToProps = state =>
     rankData: state.bananaGame.leaderboard.rankData,
     timeLeft: state.bananaGame.leaderboard.timeLeft,
     totalPlayer: state.bananaGame.leaderboard.totalPlayer,
+    lang: state.preference.language.locale,
   });
 
 const mapDispatchToProps = dispatch =>

@@ -6,6 +6,7 @@ import PlayButton from './playButton';
 import NavigateButton from './navigateButton';
 import { navigateGame } from '../../../actions/startGameAction';
 import { playUISound } from '../../../../utils/sound';
+import locale from '../../../utils/i18n/language';
 
 // const coins = require('../../../images/telecoins_multi.png');
 const coins = require('../../../../../assets/utilities/coins/telecoins_single.png');
@@ -23,7 +24,8 @@ const toTopUp = (navigator) => {
 };
 
 const ButtonGroup = ({
-  requiredCoin, start, navigator, openLb, sound, release,
+  requiredCoin, start, navigator,
+  openLb, sound, release, lang,
 }) =>
   (
     <View style={styles.container}>
@@ -41,10 +43,14 @@ const ButtonGroup = ({
         { release ?
           <NavigateButton
             image={coins}
-            text={'Buy\nCoins'}
+            text={locale(lang, 'buyCoins')}
             onPress={() => toTopUp(navigator)}
           /> : null }
-        <NavigateButton image={leaderboard} text={'Leader\nboard'} onPress={openLb} />
+        <NavigateButton
+          image={leaderboard}
+          text={locale(lang, 'lb')}
+          onPress={openLb}
+        />
       </View>
     </View>
   );
@@ -60,6 +66,7 @@ const mapStateToProps = state =>
   ({
     requiredCoin: state.bananaGame.startGame.coins,
     release: state.mis.version.release,
+    lang: state.preference.language.locale,
   });
 
 const mapDispatchToProps = dispatch =>

@@ -10,7 +10,6 @@ const dialog = require('../../images/bubble.png');
 
 const { horizontalScale } = Config;
 
-const speak = 'Welcome to MY Game :D \n \nBefore you start, click here to learn the details.';
 class DetailsButton extends Component {
   constructor() {
     super();
@@ -50,7 +49,7 @@ class DetailsButton extends Component {
           </View>
           <View style={{ flex: 0.7 }}>
             <Image source={dialog} style={styles.imageStyle} />
-            <Text style={styles.textStyle}>{speak}</Text>
+            <Text style={styles.textStyle}>{this.props.speak}</Text>
           </View>
         </Animated.View>
       </TouchableWithoutFeedback>

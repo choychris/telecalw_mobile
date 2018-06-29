@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Animated, View, Image } from 'react-native';
 import BounceView from '../components/bounceView';
-import BackButton from '../../components/navBar/container';
 import Content from '../components/leaderBoard/contentContainer';
 import Config from '../utils/config';
 

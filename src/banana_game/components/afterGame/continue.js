@@ -3,14 +3,14 @@ import { Image, View, Text, StyleSheet, TouchableOpacity, Platform } from 'react
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AfterGameAction from '../../actions/afterGameActions';
-
+import locale from '../../utils/i18n/language';
 // const coins = require('../../images/telecoins_single.png');
 const coins = require('../../../../assets/utilities/coins/telecoins_single.png');
 
-const ContinueSign = ({ startSending, playAgain }) =>
+const ContinueSign = ({ startSending, playAgain, lang }) =>
   (
     <View style={styles.warpperStyle}>
-      <Text style={styles.textStyle}>Continue?</Text>
+      <Text style={styles.textStyle}>{locale(lang, 'continue')}</Text>
       <View style={[styles.warpperStyle, { flexDirection: 'row' }]}>
         <TouchableOpacity
           style={[

@@ -13,10 +13,10 @@ class Ranking extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.rankData !== nextProps.rankData;
   }
-  keyExtractor = item => item.username;
+  keyExtractor = () => Math.random();
 
   renderList() {
-    const { rankData } = this.props;
+    const { rankData, lang } = this.props;
     // console.log(rankData);
     // console.log(rankData.weeklyTopThree);
     if (this.props.period === 2) {
@@ -24,9 +24,9 @@ class Ranking extends Component {
         <View style={styles.subContainer}>
           {
             rankData.weeklyTopThree.map((each, i) =>
-              <ListItem index={i} key={each.username} item={each} />)
+              <ListItem index={i} key={Math.random()} item={each} />)
           }
-          <Header />
+          <Header lang={lang} />
           <View>
             <FlatList
               data={rankData.allWinner}
@@ -73,12 +73,17 @@ class Ranking extends Component {
 
   render() {
     let { timeLeft } = this.props;
-    const { totalPlayer, period } = this.props;
+    const { totalPlayer, period, lang } = this.props;
     const weekly = (period === 2);
     if (timeLeft < 0) timeLeft = 0;
     return (
       <View style={styles.container}>
-        <Stats weekly={weekly} timeLeft={timeLeft} totalPlayer={totalPlayer} />
+        <Stats
+          weekly={weekly}
+          timeLeft={timeLeft}
+          totalPlayer={totalPlayer}
+          lang={lang}
+        />
         { this.renderLoading() }
       </View>
     );

@@ -13,6 +13,7 @@ import { chooseGame } from '../../containers/game/actions';
 import { viewLeaderBoard } from '../actions/leaderboardAction';
 import { resetLevel } from '../actions/gameActions';
 import { playUISound } from '../../utils/sound';
+import locale from '../utils/i18n/language';
 
 const titleImage = require('../images/titleImage.png');
 
@@ -59,7 +60,7 @@ class HomePage extends Component {
 
   render() {
     const { detailOpened } = this.state;
-    const { navigator, token } = this.props;
+    const { navigator, token, lang } = this.props;
     const loggedIn = !!token;
     return (
       <Animated.View style={[styles.container, { opacity: this.animateValue }]}>
@@ -68,7 +69,10 @@ class HomePage extends Component {
         <View style={styles.imageContainer}>
           <Image style={styles.imageStyle} source={titleImage} />
         </View>
-        <DetailsButton onPress={this.onDetailsPress} />
+        <DetailsButton
+          onPress={this.onDetailsPress}
+          speak={locale(lang, 'speak')}
+        />
         { loggedIn ?
           <NavButtonGroup
             openLb={this.openLeaderboard}
@@ -99,6 +103,11 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = state =>
+  ({
+    lang: state.preference.language.locale,
+  });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     saveGameId: chooseGame,
@@ -107,4 +116,4 @@ const mapDispatchToProps = dispatch =>
     resetLevel,
   }, dispatch);
 
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

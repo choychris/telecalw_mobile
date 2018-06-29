@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { displayTime } from '../../utils/displayTime';
+import locale from '../../utils/i18n/language';
 
 const emoji = require('node-emoji');
 
@@ -38,25 +39,13 @@ class Stats extends Component {
   }
 
   render() {
-    const { totalPlayer, weekly } = this.props;
+    const { totalPlayer, weekly, lang } = this.props;
     const { timeLeft } = this.state;
     if (weekly) {
       return (
         <View style={styles.container}>
           <Text style={[styles.textStyle, { textAlign: 'center' }]}>
-            {`Highest Score ! ${emoji.get('star2')}`}
-          </Text>
-        </View>
-      );
-    }
-    if (weekly === 2) {
-      return (
-        <View style={styles.container}>
-          <Text style={[styles.textStyle, { textAlign: 'center' }]}>
-            Congrats to All the 1st Place Winners !
-          </Text>
-          <Text style={[styles.textStyle, { textAlign: 'center' }]}>
-            {`${emoji.get('tada')} ${emoji.get('tada')} ${emoji.get('tada')}`}
+            {locale(lang, 'highScore') + emoji.get('star2')}
           </Text>
         </View>
       );
@@ -64,21 +53,21 @@ class Stats extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.textStyle}>
-          Time until prize distribute: {displayTime(timeLeft)}
+          { locale(lang, 'timeLeft') + displayTime(timeLeft) }
         </Text>
         <Text style={styles.textStyle}>
-          Total No. of Player: {totalPlayer}
+          { locale(lang, 'totalPlayer') + totalPlayer }
         </Text>
       </View>
     );
   }
 }
 
-export const Header = () =>
+export const Header = ({ lang }) =>
   (
     <View style={styles.container}>
       <Text style={[styles.textStyle, { textAlign: 'center' }]}>
-        Congrats to All the 1st Place Winners !
+        {locale(lang, 'congrats')}
       </Text>
       <Text style={[styles.textStyle, { textAlign: 'center' }]}>
         {`${emoji.get('tada')} ${emoji.get('tada')} ${emoji.get('tada')}`}
