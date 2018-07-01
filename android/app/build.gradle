@@ -104,8 +104,8 @@ android {
         applicationId "teleclaw.live"
         minSdkVersion 22
         targetSdkVersion 26
-        versionCode 12
-        versionName "1.1.0"
+        versionCode 13
+        versionName "1.1.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
