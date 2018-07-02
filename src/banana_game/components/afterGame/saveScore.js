@@ -10,7 +10,12 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import AfterGameAction from '../../actions/afterGameActions';
+import BonusButtons from './bonusButtons';
+import {
+  saveScoreToDb,
+  scoreBonus,
+  addTime,
+} from '../../actions/afterGameActions';
 import locale from '../../utils/i18n/language';
 
 const leaderboard = require('../../images/leaderboard.png');
@@ -18,19 +23,37 @@ const leaderboard = require('../../images/leaderboard.png');
 class SaveScore extends Component {
   constructor() {
     super();
+    this.state = {
+      bonusIsShown: false,
+      increaseScore: false,
+    };
     this.saveAgain = this.saveAgain.bind(this);
+    this.getBonus = this.getBonus.bind(this);
   }
 
   componentDidMount() {
-    this.props.startSave(this.props.score);
+    this.props.getBonus(this.props.score);
+  }
+
+  getBonus(yes) {
+    this.setState({
+      increaseScore: yes,
+      bonusIsShown: true,
+    }, this.saveAgain);
+    if (yes) {
+      this.props.addTime(20);
+    }
   }
 
   saveAgain() {
-    this.props.startSave(this.props.score, true);
+    const score = this.state.increaseScore ?
+      Math.floor(this.props.score * 1.5) : this.props.score;
+    this.props.startSave(score, true);
   }
 
   render() {
-    const { lang } = this.props;
+    const { lang, bonus, enoughForBonus } = this.props;
+    const { bonusIsShown } = this.state;
     if (this.props.saved) {
       return (
         <View style={styles.warpperStyle}>
@@ -66,6 +89,13 @@ class SaveScore extends Component {
           </TouchableOpacity>
         </View>
       );
+    }
+    if (bonus && !bonusIsShown) {
+      return <BonusButtons
+        disable={!enoughForBonus}
+        lang={lang}
+        onPress={yes => this.getBonus(yes)}
+      />;
     }
     return (
       <View style={styles.warpperStyle}>
@@ -125,11 +155,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   saved: state.bananaGame.afterGame.scoreSaved,
+  bonus: state.bananaGame.afterGame.bonus,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    startSave: AfterGameAction.saveScoreToDb,
+    startSave: saveScoreToDb,
+    getBonus: scoreBonus,
+    addTime,
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveScore);

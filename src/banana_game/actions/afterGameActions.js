@@ -1,11 +1,11 @@
-import { reportScore, retry } from '../../common/api/request/miniGame/playGame';
+import { reportScore, retry, bonus } from '../../common/api/request/miniGame/playGame';
 
 const startSending = () =>
   (dispatch) => {
     dispatch({ type: 'SENDING_SCORE' });
   };
 
-const saveScoreToDb = (score, resend) =>
+export const saveScoreToDb = (score, resend) =>
   (dispatch, getState) => {
     if (resend) dispatch({ type: 'RESEND' });
     const { trialId } = getState().bananaGame.startGame;
@@ -20,10 +20,29 @@ const saveScoreToDb = (score, resend) =>
       });
   };
 
-export const addTime = () =>
+export const addTime = coins =>
   (dispatch, getState) => {
     const { userId, id } = getState().auth.token.lbToken;
-    retry(userId, 8, id);
+    retry(userId, coins, id);
+  };
+
+export const scoreBonus = score =>
+  (dispatch, getState) => {
+    const { userId, id } = getState().auth.token.lbToken;
+    const { gameId } = getState().game;
+    bonus(userId, gameId, id)
+      .then((res) => {
+        console.log('res.response', res.response);
+        if (res.response) {
+          dispatch({ type: 'BOUNS_SCORE' });
+        } else {
+          dispatch(saveScoreToDb(score));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(saveScoreToDb(score));
+      });
   };
 
 const reset = () =>

@@ -17,6 +17,9 @@ const zhHant = {
   failSave: '未能儲存 ...',
   saving: '正在上傳分數 ...',
   continue: '繼續?',
+  bonusOffer: '加油!\n前兩天沒有獎品的玩家\n可以使用特別道具 :',
+  noThx: '不用了',
+  moreScore: '分數 X 1.5 !',
 };
 
 export default zhHant;

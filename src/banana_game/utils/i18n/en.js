@@ -5,7 +5,7 @@ const en = {
   items: 'Items:',
   buyCoins: 'Buy\nCoins',
   lb: 'Leader\nboard',
-  speak: 'Welcome to MY Game :D \n \nBefore you start, click here to learn the details.',
+  speak: 'Welcome to MY Game >w< \n \nBefore you start, click here to learn the details.',
   current: 'Current\nPeriod',
   last: 'Last\nPeriod',
   weekly: 'Weekly\nBest',
@@ -17,6 +17,9 @@ const en = {
   failSave: 'Fail to Save ...',
   saving: 'Saving Score ...',
   continue: 'Continue?',
+  bonusOffer: "You did great!\nFor users didn't win last two days\nYou can use a special item :",
+  noThx: 'No Thanks',
+  moreScore: 'Score X 1.5 !',
 };
 
 export default en;

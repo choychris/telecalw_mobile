@@ -39,6 +39,7 @@ class EndGamePopUp extends Component {
       sendingScore, saveError, lang,
     } = this.props;
     const enoughMoney = wallet >= 8;
+    const enoughForBonus = wallet >= 20;
     return (
       <BounceView style={styles.container} bounceAnimate={this.bounceAnimate}>
         <EncourageWord />
@@ -56,6 +57,7 @@ class EndGamePopUp extends Component {
             showBoard={this.goUp}
             saveError={saveError}
             lang={lang}
+            enoughForBonus={enoughForBonus}
           />
         }
       </BounceView>

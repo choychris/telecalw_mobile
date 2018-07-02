@@ -72,10 +72,11 @@ const styles = StyleSheet.create({
     ...shadow,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 24,
     color: 'white',
     alignSelf: 'center',
     textAlign: 'center',
+    fontFamily: 'PixelOperatorSC-Bold',
   },
 });
 

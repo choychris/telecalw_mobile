@@ -5,7 +5,7 @@ import Config from '../../utils/config';
 const banana = require('../../images/bananaStand.png');
 
 const { horizontalScale, verticalScale } = Config;
-
+const says = "You're Awesome !";
 const EncourageWord = () =>
   (
     <View style={styles.container}>
@@ -15,7 +15,7 @@ const EncourageWord = () =>
       />
       <View style={styles.textWrapper}>
         <View style={styles.borderView}>
-          <Text style={styles.textStyle}>Youre Awesome !</Text>
+          <Text style={styles.textStyle}>{says}</Text>
         </View>
       </View>
     </View>

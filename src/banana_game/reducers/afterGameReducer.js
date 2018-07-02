@@ -2,6 +2,7 @@ const initialState = {
   sendingScore: false,
   scoreSaved: false,
   saveError: false,
+  bonus: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         sendingScore: true,
+      };
+    case 'BOUNS_SCORE':
+      return {
+        ...state,
+        bonus: true,
       };
     case 'SCORE_SAVED':
       return {
