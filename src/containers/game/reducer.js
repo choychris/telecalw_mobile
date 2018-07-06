@@ -44,9 +44,12 @@ function gameReducer(state = initialState, action) {
         .setIn(['network'], action.value)
         .toJS();
     case 'STORE_GAME_TAGS':
-      return immuteState
-        .updateIn(['tags'], tags => tags.concat(action.value))
-        .toJS();
+      if (immuteState.toJS().tags.length === 1) {
+        return immuteState
+          .updateIn(['tags'], tags => tags.concat(action.value))
+          .toJS();
+      }
+      return immuteState.toJS();
     case 'SELECT_TAG':
       return immuteState
         .setIn(['tag'], action.value)

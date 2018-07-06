@@ -310,7 +310,7 @@ export function navigateToGameRoom(productId, status, navigator) {
       // Step 2 : Dispatch Selected Product to Store
       let targetProduct = null;
       products[tag.id].map((product) => {
-        if (product.id == productId)	targetProduct = product;
+        if (product.id === productId)	targetProduct = product;
       });
       dispatch({
         type: 'SELECT_PRODUCT',
@@ -351,10 +351,10 @@ export function navigateToGameRoom(productId, status, navigator) {
             navigatorStyle: {
               navBarHidden: true,
             },
-            animationType: 'fade',
+            // animationType: 'fade',
           });
           // Step 7 : Tracking
-          dispatch(trackEvent('viewProduct', targetProduct));
+          // dispatch(trackEvent('viewProduct', targetProduct));
         } else {
           loading('hide', navigator);
           errorMessage(
@@ -707,7 +707,7 @@ export function endGamePlay(action, navigator) {
         navigatorStyle: {
           navBarHidden: true,
         },
-        animationType: 'fade',
+        // animationType: 'fade',
       });
     }
   };
