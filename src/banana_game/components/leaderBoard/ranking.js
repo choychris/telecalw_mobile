@@ -27,7 +27,7 @@ class Ranking extends Component {
               <ListItem index={i} key={Math.random()} item={each} />)
           }
           <Header lang={lang} />
-          <View>
+          <View style={{ flex: 1 }}>
             <FlatList
               data={rankData.allWinner}
               renderItem={({ item }) =>
