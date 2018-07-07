@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const countries = require('country-list')();
-const DeviceInfo = require('react-native-device-info');
 
 class AddressForm extends Component {
-  componentDidMount() {
-    const { value, dispatchFunction } = this.props;
-    if (!value.countryCode) dispatchFunction('COUNTRY_CODE', DeviceInfo.getDeviceCountry().toLowerCase());
-  }
   shouldComponentUpdate(nextProps) {
     const { value } = this.props;
     return JSON.stringify(value) !== JSON.stringify(nextProps.value);

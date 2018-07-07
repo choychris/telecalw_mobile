@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import DeviceInfo from 'react-native-device-info';
 
 const initialState = {
   plays: [],
@@ -8,6 +9,9 @@ const initialState = {
     target: 'user',
     quotes: [],
     quote: null,
+    address: {
+      countryCode: DeviceInfo.getDeviceCountry().toLowerCase() || 'us',
+    },
   },
   issue: {
     type: 'gameAppeal',
