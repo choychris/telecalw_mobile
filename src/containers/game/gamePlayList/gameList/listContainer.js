@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { navigateToGameRoom } from '../../actions';
@@ -8,8 +8,7 @@ import Planet from './planet';
 import Orbit from './orbit';
 import ItemContainer from './itemContainer';
 import BananaThumbnail from './bananaThumbnail';
-
-const buttonImage = require('../../../../../assets/miniGame/questionMark.png');
+import StackerThumbnail from './stackerThumbnail';
 
 class ListContainer extends Component {
   constructor() {
@@ -21,12 +20,14 @@ class ListContainer extends Component {
     return tag !== nextProps.tag || products !== nextProps.products;
   }
 
-  toGame() {
+  toGame(screen) {
     const { navigator, playUISound, stop } = this.props;
-    playUISound('start');
-    stop();
+    if (screen === 'app.BananaGame') {
+      playUISound('start');
+      stop();
+    }
     navigator.push({
-      screen: 'app.BananaGame',
+      screen,
       navigatorStyle: {
         navBarHidden: true,
       },
@@ -62,8 +63,9 @@ class ListContainer extends Component {
           { (tag !== null && products[tag.id]) ?
             this.renderItems(products[tag.id].slice(0, 2), true) : null }
           {tag.game ?
-            <View style={styles.imageContainer}>
-              <BananaThumbnail toGame={this.toGame} />
+            <View style={[styles.subContainer, { alignItems: 'center' }]}>
+              <BananaThumbnail toGame={() => this.toGame('app.BananaGame')} />
+              <StackerThumbnail toGame={() => this.toGame('app.StackerGame')} />
             </View> : null }
         </View>
         <Planet />
