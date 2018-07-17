@@ -35,10 +35,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: (playWidth / 4) - 15,
-    height: (playWidth / 4) - 15,
+    width: (playWidth / 5),
+    height: (playWidth / 5),
     justifyContent: 'center',
     borderRadius: 8,
+    ...Config.shadow,
   },
   textStyle: {
     textAlign: 'center',

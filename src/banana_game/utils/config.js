@@ -12,7 +12,7 @@ const scale = size => Math.floor((width / guidelineBaseWidth) * size);
 const verticalScale = size => Math.floor((height / guidelineBaseHeight) * size);
 const moderateScale = (size, factor = 0.5) => size + ((scale(size) - size) * factor);
 
-const shadow = {
+export const shadow = {
   shadowOffset: { width: 2, height: 2 },
   shadowColor: 'black',
   shadowOpacity: 0.5,

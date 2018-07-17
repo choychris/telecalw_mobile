@@ -31,7 +31,7 @@ function randomSpeak(end, lastRow, winning) {
     'Nicely Done!',
     'Excellent!',
   ];
-  if (lastRow === 1 && winning >= 0) return 'Congration!\nYou get the biggest Prize!';
+  if (lastRow === 1 && winning >= 1000) return 'Congration!\nYou get the biggest Prize!';
   if (end) return 'So close!\nOne more game?';
   if (lastRow === 12) return "Let's get started.";
   if (lastRow === 3) return 'You just win\nthe first prize !';

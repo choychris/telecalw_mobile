@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Animated } from 'react-native';
+import { View, Animated, StatusBar } from 'react-native';
 import BackgroundImage from '../components/utilities/backgroundImage';
+import BackButton from '../components/navBar/container';
 import Playground from './components/playGround/playLayout';
 import Buttons from './components/home/buttons';
 import Dialog from './components/home/dialog/layout';
 import StackerLogo from './components/home/logo';
 import Config from './config/constants';
 import { switchGameState, restartGame } from './actions/homeAction';
+import WinHistory from './components/winHistory';
 
 const { height } = Config;
 
@@ -17,11 +19,14 @@ class Home extends Component {
     super();
     this.state = {
       buttonShow: false,
+      winnerShow: false,
     };
     this.buttonDrop = new Animated.Value(300);
     this.playgroundDrop = new Animated.Value(600);
+    this.detailsAnimate = new Animated.Value(600);
     this.restart = this.restart.bind(this);
     this.switchingState = this.switchingState.bind(this);
+    this.showDetails = this.showDetails.bind(this);
     this.endPlay = this.endPlay.bind(this);
   }
 
@@ -75,6 +80,19 @@ class Home extends Component {
     });
   }
 
+  showDetails(show) {
+    this.setState({ winnerShow: !this.state.winnerShow });
+    const positionX = show ? 0 : 600;
+    Animated.timing(
+      this.detailsAnimate,
+      {
+        toValue: positionX,
+        duration: 700,
+        useNativeDriver: true,
+      },
+    ).start();
+  }
+
   endPlay() {
     this.switchingState();
     this.setState({ buttonShow: false });
@@ -115,17 +133,36 @@ class Home extends Component {
   }
 
   render() {
-    const { gameStarted, gameEnded } = this.props;
+    const { gameStarted, gameEnded, navigator } = this.props;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
       outputRange: [height / 3, -800],
     });
+    const logoPositionX = this.detailsAnimate.interpolate({
+      inputRange: [0, 600],
+      outputRange: [-600, 0],
+    });
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, overflow: 'hidden' }}>
         <BackgroundImage />
+        <StatusBar hidden />
+        { gameStarted ?
+          <View style={{ height: 45 }} /> :
+          <BackButton back coins navigator={navigator} /> }
         <Animated.View
           style={{
-            transform: [{ translateY: logoDrop }],
+            transform: [{ translateX: this.detailsAnimate }],
+            zIndex: 3,
+          }}
+        >
+          <WinHistory />
+        </Animated.View>
+        <Animated.View
+          style={{
+            transform: [
+              { translateY: logoDrop },
+              { translateX: logoPositionX },
+            ],
             zIndex: 3,
           }}
         >
@@ -133,7 +170,10 @@ class Home extends Component {
         </Animated.View>
         <Animated.View
           style={{
-            transform: [{ translateY: this.playgroundDrop }],
+            transform: [
+              { translateY: this.playgroundDrop },
+              { translateX: logoPositionX },
+            ],
           }}
         >
           <Playground gameStarted={gameStarted} />
@@ -142,6 +182,7 @@ class Home extends Component {
           style={{
             transform: [
               { translateY: this.buttonDrop },
+              { translateX: logoPositionX },
               { scale: gameEnded ? 1.3 : 1 },
             ],
           }}
@@ -149,6 +190,7 @@ class Home extends Component {
           { !gameStarted ?
             <Buttons
               start={this.switchingState}
+              winner={() => { this.showDetails(true); }}
             /> :
             <Dialog
               ended={this.state.buttonShow}

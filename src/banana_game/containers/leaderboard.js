@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Animated, View, Image } from 'react-native';
 import BounceView from '../components/bounceView';
 import Content from '../components/leaderBoard/contentContainer';
-import Config from '../utils/config';
+import Config, { shadow } from '../utils/config';
 
 const titleImage = require('../images/titleImage.png');
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.6)',
     borderRadius: 15,
     justifyContent: 'flex-start',
-    ...Config.shadow,
+    ...shadow,
   },
   fadeContent: {
     flex: 1,

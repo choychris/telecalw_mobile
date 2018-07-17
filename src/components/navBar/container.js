@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 10,
-    paddingTop: (DeviceInfo.getModel() === 'iPhone X') ? 35 : 8,
+    paddingTop: (DeviceInfo.getModel() === 'iPhone X') ? 35 : 5,
     paddingBottom: 5,
   },
 });

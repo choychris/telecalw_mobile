@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.8)',
     padding: 10,
     borderRadius: 10,
+    ...Config.shadow,
   },
   imageStyle: {
     resizeMode: 'contain',

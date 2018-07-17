@@ -67,10 +67,11 @@ class Row extends Component {
         const { move } = this.state;
         this.setState({ index: index + move });
       }
-    }, (max([1.8, this.props.rowIndex - 1.5]) - 0.8) * rand(38, 42));
+    }, (max([1.8, this.props.rowIndex - 1.5]) - 0.8) * rand(36, 40));
   }
 
   animation() {
+    this.drop.setValue(0);
     Animated.timing(
       this.drop,
       {
@@ -82,28 +83,29 @@ class Row extends Component {
   }
 
   stopMove() {
-    clearInterval(this.timer);
     const {
       game, rowIndex, saveIndex, end,
     } = this.props;
     // console.log(rowIndex);
-    const { index, move } = this.state;
+    const { index } = this.state;
     const result = index - game.lastIndex;
-    if (rowIndex === rowNum) {
-      saveIndex(index, rowIndex);
-    } else if (rowIndex === 1) {
-      const win = (rand(1, 4) === 2);
+    const win = (rand(1, 4) === 2);
+    if (rowIndex === 1 && !win && result === 0) {
+      setTimeout(() => {
+        clearInterval(this.timer);
+        end(this.state.index, rowIndex);
+      }, 36);
+      return;
+    }
+    clearInterval(this.timer);
+    if (rowIndex === 1) {
       if (win && result === 0) {
         end(index, rowIndex, true);
-        console.warn('win!');
-      } else if (result === 0) {
-        console.warn('cheat');
-        this.setState({ index: index + move }, () => {
-          end(index, rowIndex);
-        });
       } else {
         end(index, rowIndex);
       }
+    } else if (rowIndex === rowNum) {
+      saveIndex(index, rowIndex);
     } else {
       const currentSize = game.rows[rowIndex - 1].size;
       const lastSize = game.rows[rowIndex].size;
