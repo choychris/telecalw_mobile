@@ -10,6 +10,15 @@ import NavBtn from './navButton';
 const coin = require('../../../../assets/utilities/coins/telecoins_single.png');
 const coins = require('../../../../assets/utilities/coins/telecoins_multi.png');
 
+const toTopUp = (navigator) => {
+  navigator.push({
+    screen: 'app.TopUp',
+    navigatorStyle: {
+      navBarHidden: true,
+    },
+    animationType: 'fade',
+  });
+};
 
 class HomeButtons extends Component {
   constructor() {
@@ -18,13 +27,24 @@ class HomeButtons extends Component {
   }
 
   render() {
-    const { start, winner } = this.props;
+    const {
+      start, navigator, winner, how,
+    } = this.props;
     return (
       <View style={styles.constainer}>
         <NavBtn color="#E0CF18" text={'15\nPlay'} pic={coin} onPress={start} />
-        <NavBtn color="#50E3C2" text={'Buy\nCoins'} pic={coins} />
-        <NavBtn color="orange" text={`${emoji.get('moneybag')}\nToday's\nWinners`} onPress={winner} />
-        <NavBtn color="orange" text={'How\nto\nPlay'} />
+        <NavBtn
+          color="#50E3C2"
+          text={'Buy\nCoins'}
+          pic={coins}
+          onPress={() => { toTopUp(navigator); }}
+        />
+        <NavBtn
+          color="orange"
+          text={`${emoji.get('moneybag')}\nToday's\nWinners`}
+          onPress={winner}
+        />
+        <NavBtn color="orange" text={'How\nto\nPlay'} onPress={how} />
       </View>
     );
   }

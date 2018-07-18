@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    width: playWidth / 4 * 2,
+    width: (playWidth / 4) * 2,
   },
   button: {
     width: 50,

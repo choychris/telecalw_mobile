@@ -9,8 +9,13 @@ import Buttons from './components/home/buttons';
 import Dialog from './components/home/dialog/layout';
 import StackerLogo from './components/home/logo';
 import Config from './config/constants';
-import { switchGameState, restartGame } from './actions/homeAction';
-import WinHistory from './components/winHistory';
+import {
+  switchGameState,
+  restartGame,
+  getWinHistory,
+} from './actions/homeAction';
+import WinHistory from './components/home/winners/winHistory';
+import Instruction from './components/instruction';
 
 const { height } = Config;
 
@@ -19,11 +24,13 @@ class Home extends Component {
     super();
     this.state = {
       buttonShow: false,
-      winnerShow: false,
+      winner: false,
+      how: false,
     };
     this.buttonDrop = new Animated.Value(300);
     this.playgroundDrop = new Animated.Value(600);
     this.detailsAnimate = new Animated.Value(600);
+    this.getDetailInformation = this.getDetailInformation.bind(this);
     this.restart = this.restart.bind(this);
     this.switchingState = this.switchingState.bind(this);
     this.showDetails = this.showDetails.bind(this);
@@ -38,6 +45,20 @@ class Home extends Component {
     if (nextProps.gameEnded) {
       this.endingBounceUp();
     }
+  }
+
+  getDetailInformation() {
+    const { winner, how } = this.state;
+    if (winner) {
+      return <WinHistory
+        onClose={() => this.showDetails(false)}
+        getWinners={this.props.getWinHistory}
+        winners={this.props.winners}
+      />;
+    } else if (how) {
+      return <Instruction onClose={() => this.showDetails(false)} />;
+    }
+    return null;
   }
 
   endingBounceUp() {
@@ -80,8 +101,10 @@ class Home extends Component {
     });
   }
 
-  showDetails(show) {
-    this.setState({ winnerShow: !this.state.winnerShow });
+  showDetails(show, type) {
+    if (show) {
+      this.setState({ [type]: true });
+    }
     const positionX = show ? 0 : 600;
     Animated.timing(
       this.detailsAnimate,
@@ -90,7 +113,11 @@ class Home extends Component {
         duration: 700,
         useNativeDriver: true,
       },
-    ).start();
+    ).start(() => {
+      if (!show) {
+        this.setState({ how: false, winner: false });
+      }
+    });
   }
 
   endPlay() {
@@ -117,7 +144,7 @@ class Home extends Component {
       this.buttonDrop,
       {
         toValue: 0,
-        duration: 300,
+        duration: 400,
         useNativeDriver: true,
       },
     );
@@ -125,7 +152,8 @@ class Home extends Component {
       this.playgroundDrop,
       {
         toValue: 0,
-        duration: 300,
+        delay: 100,
+        duration: 400,
         useNativeDriver: true,
       },
     );
@@ -136,7 +164,7 @@ class Home extends Component {
     const { gameStarted, gameEnded, navigator } = this.props;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
-      outputRange: [height / 3, -800],
+      outputRange: [height / 3, -600],
     });
     const logoPositionX = this.detailsAnimate.interpolate({
       inputRange: [0, 600],
@@ -146,16 +174,29 @@ class Home extends Component {
       <View style={{ flex: 1, overflow: 'hidden' }}>
         <BackgroundImage />
         <StatusBar hidden />
-        { gameStarted ?
-          <View style={{ height: 45 }} /> :
-          <BackButton back coins navigator={navigator} /> }
+        <Animated.View
+          style={{
+            transform: [
+              { translateX: logoPositionX },
+            ],
+          }}
+        >
+          { gameStarted ?
+            <View style={{ height: 45 }} /> :
+            <BackButton
+              back
+              coins
+              navigator={navigator}
+            />
+          }
+        </Animated.View>
         <Animated.View
           style={{
             transform: [{ translateX: this.detailsAnimate }],
             zIndex: 3,
           }}
         >
-          <WinHistory />
+          { this.getDetailInformation() }
         </Animated.View>
         <Animated.View
           style={{
@@ -190,7 +231,9 @@ class Home extends Component {
           { !gameStarted ?
             <Buttons
               start={this.switchingState}
-              winner={() => { this.showDetails(true); }}
+              navigator={navigator}
+              winner={() => { this.showDetails(true, 'winner'); }}
+              how={() => { this.showDetails(true, 'how'); }}
             /> :
             <Dialog
               ended={this.state.buttonShow}
@@ -205,12 +248,14 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   gameStarted: state.stackerGame.home.start,
+  winners: state.stackerGame.home.winners,
   gameEnded: state.stackerGame.game.end,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   switchGameState,
   restartGame,
+  getWinHistory,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

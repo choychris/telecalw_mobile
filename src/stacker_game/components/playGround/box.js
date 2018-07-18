@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import emoji from 'node-emoji';
 
 const emojis = [
-  emoji.get('scream_cat'),
-  emoji.get('heart_eyes_cat'),
-  emoji.get('smiley_cat'),
-  emoji.get('smile_cat'),
+  emoji.get('star2'),
+  emoji.get('full_moon'),
+  emoji.get('earth_africa'),
+  emoji.get('earth_americas'),
 ];
 
 const Box = ({

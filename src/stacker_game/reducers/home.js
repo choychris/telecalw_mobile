@@ -1,7 +1,6 @@
 const initialState = {
   start: false,
-  history: false,
-  how: false,
+  winners: null,
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -10,6 +9,11 @@ const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         start: !state.start,
+      };
+    case 'STACKER_WINNERS':
+      return {
+        ...state,
+        winners: action.winners,
       };
     default:
       return state;

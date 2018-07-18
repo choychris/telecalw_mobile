@@ -21,7 +21,7 @@ class Row extends Component {
     this.startMove = this.startMove.bind(this);
     this.stopMove = this.stopMove.bind(this);
     if (!props.game.end && props.rowIndex === rowNum) {
-      this.animation();
+      this.startMove();
     }
   }
 

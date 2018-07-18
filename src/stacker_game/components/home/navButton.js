@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontWeight: 'bold',
+    backgroundColor: 'transparent',
   },
   image: {
     resizeMode: 'contain',
