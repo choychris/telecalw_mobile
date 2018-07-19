@@ -1,13 +1,15 @@
 import React from 'react';
 import {
   View,
-  Text,
+  // Text,
   StyleSheet,
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles as style } from './home/winners/winHistory';
 import Config from '../config/constants';
+
+const insturc = require('../images/instruction.png');
 
 const Instruction = ({ onClose }) => (
   <View
@@ -23,16 +25,28 @@ const Instruction = ({ onClose }) => (
       style={style.iconStyle}
       onPress={onClose}
     />
-    <Text style={style.headerStyle}>How to win?</Text>
-    <Image />
+    {/* <Text style={style.headerStyle}>How to Play?</Text> */}
+    <Image
+      source={insturc}
+      style={styles.imageStyle}
+    />
   </View>
 );
 
-const { height } = Config;
+const { width, height } = Config;
 const styles = StyleSheet.create({
   container: {
     height: height / 1.2,
-    top: height / 20,
+    top: height / 40,
+  },
+  imageStyle: {
+    width: width * 0.85,
+    height: height / 1.35,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderRadius: 50,
   },
 });
 

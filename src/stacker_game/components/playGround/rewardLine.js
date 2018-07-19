@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Animated, Text, StyleSheet } from 'react-native';
+import { Animated, Text, Image, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import BigWin from './bigWin';
 import Config from '../../config/constants';
+
+const ticket = require('../../../../assets/utilities/ticket.png');
 
 const { width, boxSize, margin } = Config;
 class RewardLine extends Component {
@@ -34,6 +37,7 @@ class RewardLine extends Component {
     const { win, index } = this.props;
     let opacity = 0.5;
     const minor = (index === 4);
+    const images = minor ? new Array(1) : new Array(3);
     if (minor) {
       if (win > 0) opacity = 0.8;
     } else if (win >= 1000) {
@@ -46,9 +50,17 @@ class RewardLine extends Component {
           { opacity, transform: [{ translateX: this.animate }] },
         ]}
       >
+        <BigWin />
         <Text style={styles.textStyle}>
-          { minor ? 'Ticket x100 !' : 'Big Prize! Ticket x1000!'}
+          { minor ? '100 Tickets!' : 'Big Prize! 1000 Tickets!'}
         </Text>
+        {
+          images.fill().map(() => <Image
+            source={ticket}
+            style={styles.imageStyle}
+            key={Math.random()}
+          />)
+        }
       </Animated.View>
     );
   }
@@ -56,6 +68,7 @@ class RewardLine extends Component {
 
 const styles = StyleSheet.create({
   border: {
+    flexDirection: 'row',
     position: 'absolute',
     left: -7,
     bottom: -1,
@@ -65,12 +78,19 @@ const styles = StyleSheet.create({
     borderWidth: 6,
     borderColor: '#FF7B0F',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   textStyle: {
     textAlign: 'center',
     color: '#FF7B0F',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
+  },
+  imageStyle: {
+    height: boxSize,
+    width: boxSize,
+    resizeMode: 'contain',
+    marginHorizontal: 2,
   },
 });
 

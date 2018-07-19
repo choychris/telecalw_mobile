@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import emoji from 'node-emoji';
 
-const ticket = require('../../../../../assets/utilities/coins/telecoins_multi.png');
+const ticket = require('../../../../../assets/utilities/ticket.png');
 
 const ListItem = ({ index, name, wins }) => (
   <View style={styles.container}>
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 5,
+    paddingBottom: 10,
   },
   textStyle: {
     backgroundColor: 'transparent',
