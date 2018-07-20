@@ -42,6 +42,7 @@ class StackerThumbnail extends Component {
     });
     return (
       <TouchableOpacity
+        disabled
         style={styles.container}
         onPress={this.props.toGame}
       >
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     width: 120,
     height: 120,
+    opacity: 0.5,
   },
   textStyle: {
     backgroundColor: 'transparent',
