@@ -11,6 +11,9 @@ class RewardLine extends Component {
   constructor() {
     super();
     this.animate = new Animated.Value(-margin / 2);
+    this.blink = new Animated.Value(0.5);
+    this.makeItRain = this.makeItRain.bind(this);
+    this.count = 20;
   }
 
   componentDidMount() {
@@ -19,6 +22,17 @@ class RewardLine extends Component {
     } else {
       this.reposition(-margin / 2);
     }
+  }
+
+  startBlink() {
+    Animated.loop(Animated.timing(
+      this.blink,
+      {
+        duration: 200,
+        toValue: 1,
+        useNativeDriver: true,
+      },
+    )).start();
   }
 
   reposition(x) {
@@ -33,14 +47,24 @@ class RewardLine extends Component {
     ).start();
   }
 
+  makeItRain(second) {
+    if (second) this.startBlink();
+    const tickets = new Array(this.count);
+    return tickets.fill().map((emt, i) =>
+      <BigWin
+        i={i}
+        key={i}
+        count={this.count}
+        second={second}
+      />);
+  }
+
   render() {
     const { win, index } = this.props;
-    let opacity = 0.5;
+    let opacity = this.blink;
     const minor = (index === 4);
     const images = minor ? new Array(1) : new Array(3);
-    if (minor) {
-      if (win > 0) opacity = 0.8;
-    } else if (win >= 1000) {
+    if (minor && win > 0) {
       opacity = 0.8;
     }
     return (
@@ -50,7 +74,8 @@ class RewardLine extends Component {
           { opacity, transform: [{ translateX: this.animate }] },
         ]}
       >
-        <BigWin />
+        { (win >= 1000 && !minor) ? this.makeItRain(false) : null }
+        { (win >= 1000 && !minor) ? this.makeItRain(true) : null }
         <Text style={styles.textStyle}>
           { minor ? '100 Tickets!' : 'Big Prize! 1000 Tickets!'}
         </Text>
