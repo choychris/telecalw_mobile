@@ -76,9 +76,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
+    // add a little bit more logic
+    // due to react-native-navigagtion in android
     ...Platform.select({
       android: {
-        height: height * 0.6,
+        height,
       },
     }),
   },
