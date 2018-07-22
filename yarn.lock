@@ -4739,9 +4739,9 @@ react-native-admob@^2.0.0-beta.4:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-braintree-xplat@^4.0.0:
+"react-native-braintree-xplat@https://github.com/choychris/react-native-braintree-xplat.git":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-braintree-xplat/-/react-native-braintree-xplat-4.0.0.tgz#4222b4892138628dd39033902f0741b404d51f48"
+  resolved "https://github.com/choychris/react-native-braintree-xplat.git#a465362d604659a0cc40a7480a510213fdea90c9"
 
 react-native-code-push@^5.3.4:
   version "5.3.4"
@@ -4770,9 +4770,9 @@ react-native-fbsdk@^0.6.3:
     pump "^1.0.2"
     xcode "^0.9.3"
 
-react-native-navigation@^1.1.349:
-  version "1.1.471"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.471.tgz#8ab400f3047d4a3bccd3af232e44a7a1cd5d3f37"
+react-native-navigation@^1.1.476:
+  version "1.1.476"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.476.tgz#0cbd66bc1a1d5e95d202cf2a2c753ed407037a08"
   dependencies:
     lodash "4.x.x"
 

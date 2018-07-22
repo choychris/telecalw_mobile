@@ -19,9 +19,7 @@ import Setting from '../miscellaneous/setting/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
 import BananaGame from '../../banana_game/root';
-import BananaGameStart from '../../banana_game/containers/tubeBoard';
-import BananaGameLeaderboard from '../../banana_game/containers/leaderboard';
-
+import StackerGame from '../../stacker_game/Home';
 
 // register all screens of the app (including internal ones)
 export function registerScreens(store, Provider) {
@@ -45,6 +43,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('app.InsufficientFund', () => InsufficientFundSuggest, store, Provider);
   Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData, store, Provider);
   Navigation.registerComponent('app.BananaGame', () => BananaGame, store, Provider);
+  Navigation.registerComponent('app.StackerGame', () => StackerGame, store, Provider);
 }
 
 export default null;

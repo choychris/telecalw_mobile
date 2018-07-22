@@ -51,11 +51,11 @@ class BananaThumbnail extends Component {
     });
     return (
       <TouchableOpacity
-        style={styles.constainer}
+        style={styles.container}
         onPress={this.props.toGame}
       >
         <Text style={styles.textStyle}>
-          Tap the {emoji.get('banana')} !
+          { `Tap the ${emoji.get('banana')} !`}
         </Text>
         <View>
           <Animated.Image
@@ -73,18 +73,21 @@ class BananaThumbnail extends Component {
 }
 
 const styles = StyleSheet.create({
-  constainer: {
+  container: {
     borderWidth: 2,
-    borderRadius: 80,
+    borderRadius: 100,
     justifyContent: 'flex-end',
     borderStyle: 'dashed',
     borderColor: 'grey',
+    width: 120,
+    height: 120,
   },
   textStyle: {
     backgroundColor: 'transparent',
-    fontSize: 24,
+    fontSize: 22,
     fontFamily: 'PixelOperatorSC-Bold',
     color: 'white',
+    textAlign: 'center',
   },
   handImage: {
     position: 'absolute',

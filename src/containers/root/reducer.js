@@ -5,6 +5,7 @@ import gameReducer from '../game/reducer';
 import transactionReducer from '../transaction/reducers';
 import misReducer from '../miscellaneous/reducers';
 import BananaGameReducer from '../../banana_game/store/rootReducer';
+import StackerGameReducer from '../../stacker_game/store/rootReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   transaction: transactionReducer,
   mis: misReducer,
   bananaGame: BananaGameReducer,
+  stackerGame: StackerGameReducer,
 });
 
 export default rootReducer;

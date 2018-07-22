@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: isIOS ? width : width * 0.95,
     width: isIOS ? width : width * 0.95,
+    alignSelf: 'center',
   },
 });
 

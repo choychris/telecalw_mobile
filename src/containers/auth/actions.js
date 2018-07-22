@@ -123,12 +123,14 @@ export function checkInRewardChecking(navigator) {
           const { result } = res;
           // Hide Loading Lightbox
           loading('hide', navigator);
+          // result = {};
+          // result.rewardAmount = 10;
           if (result.success === true) {
             dispatch({
               type: 'UPDATE_WALLET_BALANCE',
               value: result.newWalletBalance,
             });
-            dispatch(trackEvent('checkinReward', result));
+            // dispatch(trackEvent('checkinReward', result));
             setTimeout(() => {
               navigator.showLightBox({
                 screen: 'app.CheckinReward',
