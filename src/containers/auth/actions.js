@@ -120,34 +120,34 @@ export function checkInRewardChecking(navigator) {
         // console.warn(JSON.stringify(err));
         // console.warn(JSON.stringify(res));
         if (!err) {
-          let { result } = res;
+          const { result } = res;
           // Hide Loading Lightbox
           loading('hide', navigator);
-          result = {};
-          result.rewardAmount = 10;
-          // if (result.success === true) {
-          dispatch({
-            type: 'UPDATE_WALLET_BALANCE',
-            value: result.newWalletBalance,
-          });
-          // dispatch(trackEvent('checkinReward', result));
-          setTimeout(() => {
-            navigator.showLightBox({
-              screen: 'app.CheckinReward',
-              animationType: 'slide-up',
-              navigatorStyle: {
-                navBarHidden: true,
-              },
-              passProps: result,
-              style: {
-                backgroundBlur: 'dark',
-                backgroundColor: (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
-                tapBackgroundToDismiss: true,
-                flex: 1,
-              },
+          // result = {};
+          // result.rewardAmount = 10;
+          if (result.success === true) {
+            dispatch({
+              type: 'UPDATE_WALLET_BALANCE',
+              value: result.newWalletBalance,
             });
-          }, 500);
-          // }
+            // dispatch(trackEvent('checkinReward', result));
+            setTimeout(() => {
+              navigator.showLightBox({
+                screen: 'app.CheckinReward',
+                animationType: 'slide-up',
+                navigatorStyle: {
+                  navBarHidden: true,
+                },
+                passProps: result,
+                style: {
+                  backgroundBlur: 'dark',
+                  backgroundColor: (Platform.OS === 'ios') ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.8)',
+                  tapBackgroundToDismiss: true,
+                  flex: 1,
+                },
+              });
+            }, 500);
+          }
 
           // Update User Last Login Time
           updateUser(

@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Platform, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Platform,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
@@ -12,6 +20,11 @@ const { height } = Dimensions.get('window');
 const coinsImg = require('../../../../../assets/utilities/coins/telecoins_single.png');
 
 class CheckinReward extends Component {
+  constructor() {
+    super();
+    this.dismiss = this.dismiss.bind(this);
+  }
+
   componentDidMount() {
     const { playUISound, vibrate } = this.props;
     playUISound('happy');
@@ -20,33 +33,40 @@ class CheckinReward extends Component {
   shouldComponentUpdate() {
     return false;
   }
+
+  dismiss() {
+    this.props.navigator.dismissLightBox();
+  }
+
   render() {
     const { string, rewardAmount } = this.props;
     return (
-      <View style={styles.container}>
-        <Text style={[styles.text, styles.title]}>
-          {string.checkIn}
-        </Text>
-        <Telebot
-          status="happy"
-          width={180}
-          height={180}
-        />
-        <Text style={[styles.text, styles.desc]}>
-          {string.checkinReward}
-        </Text>
-        <View style={styles.innerContainer}>
-          <Text style={[styles.text, styles.desc]}>
-            {`${string.rewardAmount} : ${rewardAmount}`}
+      <TouchableWithoutFeedback onPress={this.dismiss}>
+        <View style={styles.container}>
+          <Text style={[styles.text, styles.title]}>
+            {string.checkIn}
           </Text>
-          <Image
-            source={coinsImg}
-            style={styles.image}
-            resizeMode="contain"
+          <Telebot
+            status="happy"
+            width={180}
+            height={180}
           />
+          <Text style={[styles.text, styles.desc]}>
+            {string.checkinReward}
+          </Text>
+          <View style={styles.innerContainer}>
+            <Text style={[styles.text, styles.desc]}>
+              {`${string.rewardAmount} : ${rewardAmount}`}
+            </Text>
+            <Image
+              source={coinsImg}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+          <UpdatePrompt string={string.checkIn} />
         </View>
-        <UpdatePrompt string={string.checkIn} />
-      </View>
+      </TouchableWithoutFeedback >
     );
   }
 }
