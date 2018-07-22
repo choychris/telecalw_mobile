@@ -4739,9 +4739,9 @@ react-native-admob@^2.0.0-beta.4:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-braintree-xplat@^4.0.0:
+"react-native-braintree-xplat@https://github.com/choychris/react-native-braintree-xplat.git":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-braintree-xplat/-/react-native-braintree-xplat-4.0.0.tgz#4222b4892138628dd39033902f0741b404d51f48"
+  resolved "https://github.com/choychris/react-native-braintree-xplat.git#a465362d604659a0cc40a7480a510213fdea90c9"
 
 react-native-code-push@^5.3.4:
   version "5.3.4"
