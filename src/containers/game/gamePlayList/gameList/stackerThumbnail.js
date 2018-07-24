@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
     width: 120,
     height: 120,
-    opacity: 0.5,
+    opacity: 0.3,
   },
   textStyle: {
     backgroundColor: 'transparent',

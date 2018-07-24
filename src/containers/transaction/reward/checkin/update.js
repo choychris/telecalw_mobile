@@ -13,7 +13,7 @@ const telebot = require('../../../../../assets/telebuddies/telebot/telebot.png')
 const features = {
   eng: [
     `${emoji.get('rocket')} New mini game - STACKER`,
-    `${emoji.get('admission_tickets')} Tickets - pirzes can be exchanged for tickets.`,
+    `${emoji.get('admission_tickets')} Tickets - prizes can be exchanged for tickets.`,
     `${emoji.get('house')} Prize Center - use tickets to get your fav. prizes!`,
   ],
   zhHant: [
