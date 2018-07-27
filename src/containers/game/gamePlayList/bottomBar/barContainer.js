@@ -88,7 +88,7 @@ class BarContainer extends Component {
             }}
           >
             <Telebot
-              status="setting"
+              status="settingMain"
               style={{ margin: 5 }}
               height={screenWidth}
               width={screenWidth}
