@@ -13,20 +13,23 @@ import {
   switchGameState,
   restartGame,
   getWinHistory,
+  saveGameSore,
 } from './actions/homeAction';
 import WinHistory from './components/home/winners/winHistory';
 import Instruction from './components/instruction';
+import { chooseGame } from '../containers/game/actions';
 
 const { height } = Config;
 
 class Home extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       buttonShow: false,
       winner: false,
       how: false,
     };
+    props.chooseGame('B0001');
     this.buttonDrop = new Animated.Value(300);
     this.playgroundDrop = new Animated.Value(600);
     this.detailsAnimate = new Animated.Value(600);
@@ -43,6 +46,7 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.gameEnded) {
+      this.props.saveGameSore();
       this.endingBounceUp();
     }
   }
@@ -80,7 +84,7 @@ class Home extends Component {
     });
   }
 
-  switchingState() {
+  switchingState(start, navigator) {
     Animated.timing(
       this.buttonDrop,
       {
@@ -89,15 +93,15 @@ class Home extends Component {
         useNativeDriver: true,
       },
     ).start(() => {
-      this.props.switchGameState();
-      Animated.timing(
+      const animate = Animated.timing(
         this.buttonDrop,
         {
           toValue: 0,
           duration: 800,
           useNativeDriver: true,
         },
-      ).start();
+      );
+      this.props.switchGameState(start, navigator, animate);
     });
   }
 
@@ -121,22 +125,23 @@ class Home extends Component {
   }
 
   endPlay() {
-    this.switchingState();
+    this.switchingState(false);
     this.setState({ buttonShow: false });
     this.props.restartGame();
   }
 
   restart() {
-    this.setState({ buttonShow: false });
-    this.props.restartGame();
-    Animated.timing(
+    const { navigator } = this.props;
+    const animate = Animated.timing(
       this.buttonDrop,
       {
         toValue: 0,
+        delay: 200,
         duration: 300,
         useNativeDriver: true,
       },
-    ).start();
+    );
+    this.props.restartGame(navigator, animate, () => this.setState({ buttonShow: false }));
   }
 
   startAnimation() {
@@ -230,7 +235,7 @@ class Home extends Component {
         >
           { !gameStarted ?
             <Buttons
-              start={this.switchingState}
+              start={() => this.switchingState(true, navigator)}
               navigator={navigator}
               winner={() => { this.showDetails(true, 'winner'); }}
               how={() => { this.showDetails(true, 'how'); }}
@@ -256,6 +261,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   switchGameState,
   restartGame,
   getWinHistory,
+  chooseGame,
+  saveGameSore,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

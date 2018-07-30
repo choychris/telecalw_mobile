@@ -18,22 +18,31 @@ class WinHistory extends Component {
     this.props.getWinners();
   }
 
+  keyExtractor = item => item.id;
+
   winnerList() {
     const { winners } = this.props;
     if (!winners) {
       return <ActivityIndicator />;
     }
     if (winners.length === 0) {
-      return <Text>No player history yet.</Text>;
+      return (
+        <Text
+          style={styles.headerStyle}
+        >
+          No player history yet.
+        </Text>
+      );
     }
     return <FlatList
       data={winners}
+      keyExtractor={this.keyExtractor}
       renderItem={({ item, index }) => (
         <ListItem
-          id={item.key}
+          id={item.id}
           index={index}
-          name={item.name}
-          wins={item.wins}
+          name={item.username || 'Unknown'}
+          wins={item.score}
         />
       )}
     />;
@@ -50,7 +59,7 @@ class WinHistory extends Component {
           style={styles.iconStyle}
           onPress={onClose}
         />
-        <Text style={styles.headerStyle}>Winners of Today</Text>
+        <Text style={styles.headerStyle}>Winners of this Week</Text>
         <View style={styles.section}>
           <Text
             style={styles.sectionText}
@@ -104,6 +113,7 @@ export const styles = StyleSheet.create({
     color: 'yellow',
     textAlign: 'center',
   },
+
 });
 
 export default WinHistory;
