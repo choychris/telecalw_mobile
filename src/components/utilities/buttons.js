@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { playUISound } from '../../utils/sound';
 
-
 class Button extends Component {
   constructor(props) {
     super(props);
@@ -14,27 +13,24 @@ class Button extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { disable, btnStyle, loading } = this.props;
     const { pressIn } = this.state;
-    return (disable !== nextProps.disable || pressIn !== nextState.pressIn || btnStyle !== nextProps.btnStyle || loading !== nextProps.loading);
-  }
-  renderLoading() {
-    return <ActivityIndicator size="small" color="white" />;
+    const disabled = disable !== nextProps.disable;
+    const pressed = pressIn !== nextState.pressIn;
+    const load = loading !== nextProps.loading;
+    const style = btnStyle !== nextProps.btnStyle;
+    return (disabled || pressed || load || style);
   }
   renderIcon() {
     const { icon } = this.props;
     return <Icon {...icon} />;
   }
-  renderText(displayText, textStyle) {
-    return (
-      <Text style={[styles.text, textStyle]}>
-        {displayText}
-      </Text>
-    );
-  }
-  _renderInnerContainer(icon, text, displayText, textStyle) {
+  renderInnerContainer(icon, text, displayText, textStyle) {
     return (
       <View style={styles.innerContainer}>
         {(icon) ? this.renderIcon() : null}
-        {(text) ? this.renderText(displayText, textStyle) : null}
+        {(text) ?
+          <Text style={[styles.text, textStyle]}>
+            {displayText}
+          </Text> : null}
       </View>
     );
   }
@@ -51,7 +47,7 @@ class Button extends Component {
       icon,
       disable,
       loading,
-      playUISound,
+      // playUISound,
     } = this.props;
     const { pressIn } = this.state;
     const btnBorder = (pressIn === false) ? styles.nonPressBorder : {};
@@ -70,16 +66,16 @@ class Button extends Component {
         }}
         onPress={() => {
           if (onPressFunction) {
-            playUISound('click2');
+            this.props.playUISound('click2');
             onPressFunction();
           }
         }}
         style={[styles.container, btnBorder, btnStyle, btnBorderColor]}
         underlayColor={borderColor}
       >
-        {(loading === true) ?
-          this.renderLoading() :
-          this._renderInnerContainer(icon, text, displayText, textStyle)}
+        { loading ?
+          <ActivityIndicator size="small" color="white" /> :
+          this.renderInnerContainer(icon, text, displayText, textStyle)}
       </TouchableHighlight>
     );
   }

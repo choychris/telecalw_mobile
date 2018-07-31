@@ -1,96 +1,95 @@
-import React, { PropTypes, Component } from 'react';
-import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Platform } from 'react-native';
+import React, { Component } from 'react';
+import {
+  ActivityIndicator,
+  ListView,
+  View,
+  StyleSheet,
+  Text,
+  Dimensions,
+  Platform,
+} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { transactions } from '../../actions';
 import TransactionItem from './itemContainer';
-const height = Dimensions.get('window').height;
 
-class TransactionListContainer extends Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			ds :  new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-		};
-	}
-	componentDidMount(){
-		// Fetch Remote Backend API to Get List of Transactions
-		const { transactions , navigator } = this.props;
-		transactions(navigator);
-	}
-	shouldComponentUpdate(nextProps){
-		const { transactionsData } = this.props;
-		return (transactionsData.length !== nextProps.transactionsData.length);
-	}
-	_renderLoading(){
-		return (
-			<View style={styles.container}>
-				<ActivityIndicator size="small" color={'black'}/>
-			</View>
-		)
-	}
-	_renderList(transactions){
-		const { ds } = this.state;
-		const dataSource =  ds.cloneWithRows(transactions);
-		return (
-			<ListView
-				style={styles.listWrapper}
-				contentContainerStyle={styles.listContainer}
-				dataSource={dataSource}
-				renderRow={(rowData)=><TransactionItem {...rowData}/>}
-			/>
-		)
-	}
-	_renderNoRecord(){
-		const { string } = this.props;
-		return (
-			<View style={[styles.container,styles.listWrapper]}>
-				<Text style={styles.text}>{string['noRecord']}</Text>
-			</View>
-		)
-	}
-	render(){
-		const { transactionsData } = this.props;
-		return (transactionsData !== undefined) ? 
-		 	((transactionsData.length > 0) ? this._renderList(transactionsData) : this._renderNoRecord()) :
-			this._renderLoading();
-	}
+const { height } = Dimensions.get('window');
+
+class TransactionListContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+    };
+  }
+  componentDidMount() {
+    // Fetch Remote Backend API to Get List of Transactions
+    const { transactions, navigator } = this.props;
+    transactions(navigator);
+  }
+  shouldComponentUpdate(nextProps) {
+    const { transactionsData } = this.props;
+    return (transactionsData !== nextProps.transactionsData);
+  }
+  render() {
+    const { transactionsData, string } = this.props;
+    if (!transactionsData) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size="small" color="green" />
+        </View>
+      );
+    }
+    if (transactionsData.length > 0) {
+      const { ds } = this.state;
+      const dataSource = ds.cloneWithRows(transactionsData);
+      return (
+        <View style={styles.container}>
+          <ListView
+            contentContainerStyle={styles.listContainer}
+            dataSource={dataSource}
+            renderRow={rowData => <TransactionItem {...rowData} />}
+          />
+        </View>
+      );
+    }
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>{string.noRecord}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-	container : {
-		alignSelf : 'stretch',
-		alignItems : 'center',
-		justifyContent : 'center',
-		paddingVertical : 50
-	},
-	listWrapper : {
-		alignSelf : 'stretch',
-		height : height * 0.4,
-		marginBottom : 50
-	},
-	listContainer : {
-		padding : 10,
-		alignSelf : 'stretch',
-		alignItems : 'center',
-		justifyContent : 'center'
-	},
-	text : {
-		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-	}
+  container: {
+    alignSelf: 'stretch',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    marginVertical: 10,
+    height: height * 0.4,
+  },
+  listContainer: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+  },
 });
 
 function mapStateToProps(state) {
-	return {
-		string : state.preference.language.string,
-		transactionsData : state.transaction.transactions
-	}
+  return {
+    string: state.preference.language.string,
+    transactionsData: state.transaction.transactions,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ 
-		transactions
-	}, dispatch)
+  return bindActionCreators({
+    transactions,
+  }, dispatch);
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(TransactionListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionListContainer);
