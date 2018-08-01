@@ -25,11 +25,11 @@ class Prompt extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
-    padding: 10,
+    padding: 8,
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 60,
+    flex: 1,
   },
   text: {
     color: '#30D64A',

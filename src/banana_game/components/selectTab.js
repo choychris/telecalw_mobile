@@ -38,6 +38,7 @@ class SelectTab extends Component {
     const {
       textStyle,
       underLineStyle,
+      underLineContent,
       inputRange,
       outputRange,
       tabs,
@@ -72,7 +73,9 @@ class SelectTab extends Component {
             underLineStyle,
             { transform: [{ translateX }] },
           ]}
-        />
+        >
+          { underLineContent }
+        </Animated.View>
       </View>
     );
   }

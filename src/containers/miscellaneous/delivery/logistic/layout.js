@@ -44,7 +44,8 @@ class LogisticForm extends Component {
 
 const styles = StyleSheet.create({
   form: {
-    height: height * 0.4,
+    // height: height * 0.4,
+    flex: 5,
     backgroundColor: 'transparent',
     marginVertical: 5,
     alignSelf: 'stretch',

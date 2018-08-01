@@ -4,15 +4,12 @@ import {
   ListView,
   View,
   StyleSheet,
-  Dimensions,
   Platform,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { exchangeRate } from '../../actions';
 import RateItem from './itemContainer';
-
-const { height } = Dimensions.get('window');
 
 class RateListContainer extends Component {
   constructor(props) {
@@ -59,7 +56,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 10,
-    height: height * 0.4,
+    // height: height * 0.4,
+    flex: 5,
   },
   listContainer: {
     alignSelf: 'stretch',

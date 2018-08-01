@@ -5,15 +5,12 @@ import {
   View,
   StyleSheet,
   Text,
-  Dimensions,
   Platform,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { transactions } from '../../actions';
 import TransactionItem from './itemContainer';
-
-const { height } = Dimensions.get('window');
 
 class TransactionListContainer extends Component {
   constructor(props) {
@@ -67,7 +64,8 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
     marginVertical: 10,
-    height: height * 0.4,
+    // height: height * 0.4,
+    flex: 5,
   },
   listContainer: {
     alignSelf: 'stretch',

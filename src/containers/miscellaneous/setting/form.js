@@ -9,11 +9,14 @@ import {
   Platform,
   Picker,
   Switch,
+  Dimensions,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { setUserLanguage, setUserPreference } from '../actions';
+
+const { height } = Dimensions.get('window');
 
 class SettingForm extends Component {
   constructor() {
@@ -128,47 +131,51 @@ class SettingForm extends Component {
     // console.warn(locale)
     // console.warn(JSON.stringify(version))
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-
-        <Text style={styles.text}>
-          {user.name}
-        </Text>
-        <Text style={styles.text}>
-          {user.contactEmail || user.email}
-        </Text>
-        {
-          (Platform.OS === 'ios') ?
-          this.renderLanguageIOSPicker(avaLanguage, locale, string) :
-          this.renderLanguageAndroidPicker(avaLanguage, locale, string)
-        }
-        {this.renderMusicSetting(string, preference)}
-        {this.renderVibrationSetting(string, preference)}
-        <TouchableOpacity
-          style={[
-            styles.innerContainer,
-            { backgroundColor: 'rgba(39, 93, 173, 0.8)' },
-          ]}
-          onPress={this.navigate}
+      <View style={{ height: height * 0.45 }}>
+        <ScrollView
+          contentContainerStyle={styles.container}
         >
-          <Text style={[styles.text, { color: 'white' }]}>
-            Contact Support
+          <Text style={styles.text}>
+            {user.name}
           </Text>
-          <Icon name="question-circle" size={25} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.text}>
-          {`${string.version} : ${version.version}`}
-        </Text>
-      </ScrollView>
+          <Text style={styles.text}>
+            {user.contactEmail || user.email}
+          </Text>
+          {
+            (Platform.OS === 'ios') ?
+            this.renderLanguageIOSPicker(avaLanguage, locale, string) :
+            this.renderLanguageAndroidPicker(avaLanguage, locale, string)
+          }
+          {this.renderMusicSetting(string, preference)}
+          {this.renderVibrationSetting(string, preference)}
+          <TouchableOpacity
+            style={[
+              styles.innerContainer,
+              { backgroundColor: 'rgba(39, 93, 173, 0.8)' },
+            ]}
+            onPress={this.navigate}
+          >
+            <Text style={[styles.text, { color: 'white' }]}>
+              Contact Support
+            </Text>
+            <Icon name="question-circle" size={25} color="white" />
+          </TouchableOpacity>
+          <Text style={styles.text}>
+            {`${string.version} : ${version.version}`}
+          </Text>
+        </ScrollView>
+      </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
     alignSelf: 'stretch',
     alignItems: 'center',
     paddingVertical: 10,
-    height: 400,
+    height: height * 0.6,
   },
   innerContainer: {
     flexDirection: 'row',
@@ -199,11 +206,11 @@ const styles = StyleSheet.create({
   picker: {
     alignSelf: 'stretch',
   },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
+  // avatar: {
+  //   width: 100,
+  //   height: 100,
+  //   borderRadius: 50,
+  // },
 });
 
 function mapStateToProps(state) {

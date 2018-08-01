@@ -40,22 +40,24 @@ class MessageBox extends Component {
     const { string } = this.props;
     const { selectedTab } = this.state;
     return (
-      <FlatList
-        contentContainerStyle={styles.tabContent}
-        horizontal
-        data={tabs}
-        renderItem={({ item, index }) =>
-          <Tab
-            string={string}
-            index={index}
-            {...item}
-            selected={index === selectedTab}
-            onPress={() => this.setState({ selectedTab: index })}
-          />
-        }
-        extraData={selectedTab}
-        keyExtractor={(item, index) => index}
-      />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          contentContainerStyle={styles.tabContent}
+          horizontal
+          data={tabs}
+          renderItem={({ item, index }) =>
+            <Tab
+              string={string}
+              index={index}
+              {...item}
+              selected={index === selectedTab}
+              onPress={() => this.setState({ selectedTab: index })}
+            />
+          }
+          extraData={selectedTab}
+          keyExtractor={(item, index) => index}
+        />
+      </View>
     );
   }
   render() {
@@ -86,7 +88,7 @@ class MessageBox extends Component {
           {(buttons) ? <Buttons buttons={buttons} /> : null }
           {(tabs && tabs[selectedTab].buttons) ?
             <Buttons buttons={tabs[selectedTab].buttons} /> :
-            <View style={{ padding: 24 }} /> }
+            <View style={{ flex: 1 }} /> }
         </View>
       </View>
     );
@@ -107,9 +109,10 @@ const styles = StyleSheet.create({
   },
   innerView: {
     height: height * 0.70,
-    borderRadius: 30,
+    // flex: 1,
+    // borderRadius: 30,
     backgroundColor: 'transparent',
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
   title: {
     fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
@@ -123,7 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingVertical: 5,
   },
 });
 

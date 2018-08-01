@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import DeviceInfo from 'react-native-device-info';
 
 const initialState = {
-  plays: [],
+  prizes: null,
   play: [],
   delivery: {},
   logistic: {
@@ -20,34 +20,31 @@ const initialState = {
 };
 
 function misReducer(state = initialState, action) {
-  state = fromJS(state);
+  const immuteState = fromJS(state);
   switch (action.type) {
-    case 'STORE_PLAYS':
-      return state
-        .setIn(['plays'], action.value)
+    case 'STORE_PRIZES':
+      return immuteState
+        .setIn(['prizes'], action.value)
         .toJS();
-    case 'CLEAR_PLAYS':
-      return state
-        .setIn(['plays'], [])
+    case 'CLEAR_PRIZES':
+      return immuteState
+        .setIn(['prizes'], [])
         .toJS();
     case 'SELECT_PLAY':
-      return state
+      return immuteState
         .updateIn(['play'], array => array.push(action.value))
         .toJS();
     case 'UNSELECT_PLAY':
-      return state
-        .updateIn(['play'], array => array.filter((data) => {
-          if (data.getIn(['playId']) !== action.value) {
-            return data;
-          }
-        }))
+      return immuteState
+        .updateIn(['play'], array => array.filter(data =>
+          (data.getIn(['playId']) !== action.value)))
         .toJS();
     case 'CLEAR_PLAY':
-      return state
+      return immuteState
         .setIn(['play'], [])
         .toJS();
     case 'RESET_DELIVERY':
-      return state
+      return immuteState
         .setIn(['play'], [])
         .setIn(['delivery'], {})
         .setIn(['logistic'], {
@@ -57,63 +54,63 @@ function misReducer(state = initialState, action) {
         })
         .toJS();
     case 'CHANGE_LOGISTIC_TARGET':
-      return state
+      return immuteState
         .setIn(['logistic', 'target'], action.value)
         .toJS();
     case 'LOGISTIC_ADDRESS_1':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'line1'], action.value)
         .toJS();
     case 'LOGISTIC_ADDRESS_2':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'line2'], action.value)
         .toJS();
     case 'LOGISTIC_CITY':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'city'], action.value)
         .toJS();
     case 'LOGISTIC_STATE':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'state'], action.value)
         .toJS();
     case 'LOGISTIC_PHONE':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'phone'], action.value)
         .toJS();
     case 'LOGISTIC_COUNTRY_CODE':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'countryCode'], action.value)
         .toJS();
     case 'LOGISTIC_POSTAL_CODE':
-      return state
+      return immuteState
         .setIn(['logistic', 'address', 'postalCode'], action.value)
         .toJS();
     case 'STORE_QUOTES':
-      return state
+      return immuteState
         .setIn(['logistic', 'quotes'], action.value)
         .toJS();
     case 'SELECT_ISSUE_TYPE':
-      return state
+      return immuteState
         .setIn(['issue', 'type'], action.value)
         .toJS();
     case 'AMEND_ISSUE':
-      return state
+      return immuteState
         .setIn(['issue'].concat(action.keys), action.value)
         .toJS();
     case 'SELECT_QUOTE':
-      return state
+      return immuteState
         .setIn(['logistic', 'quote'], action.value)
         .toJS();
     case 'STORE_DELIVERY':
-      return state
+      return immuteState
         .setIn(['delivery'], action.value)
         .toJS();
     case 'STORE_VERSION':
-      return state
+      return immuteState
         .setIn(['version'], action.value)
         .toJS();
     default:
-      return state.toJS();
+      return state;
   }
 }
 

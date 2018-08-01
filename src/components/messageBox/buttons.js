@@ -16,11 +16,12 @@ const Buttons = ({ buttons }) =>
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 5,
+    flex: 1,
     flexDirection: 'row',
     alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',
+    // borderWidth: 1,
   },
 });
 

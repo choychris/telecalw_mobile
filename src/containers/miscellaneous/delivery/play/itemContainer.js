@@ -1,114 +1,154 @@
-import React, { PropTypes, Component } from 'react';
-import { ActivityIndicator , ListView , View ,  StyleSheet , Text , TouchableOpacity , Dimensions , Image , Platform } from 'react-native';
+import React, { Component } from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+  Platform,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-const width = Dimensions.get('window').width;
 import { formatTimeStamp } from '../../../../utils/format';
-import { selectPlay , unselectPlay } from '../../actions';
+import { selectPlay, unselectPlay } from '../../actions';
+
+const ticket = require('../../../../../assets/utilities/ticket.png');
+
+const { width } = Dimensions.get('window');
 
 class PlayItem extends Component {
-	shouldComponentUpdate(nextProps){
-		const { play , deliveryId } = this.props;
-		return JSON.stringify(play) !== JSON.stringify(nextProps.play) ||  (deliveryId == undefined && nextProps.deliveryId !== undefined);
-	}
-	_productName(name){
-		const { locale } = this.props;
-		return (name[locale]) ? name[locale] : name['en'];
-	}
-	_checkSelected(play,id){
-		let selected = false;
-		play.map((item)=>(item.playId === id) ? selected = true : null);
-		return selected;
-	}
-	_selectedAction(selected,id,productId){
-		const { selectPlay , unselectPlay } = this.props;
-		(selected) ? unselectPlay(id) : selectPlay(id,productId);
-	}
-	render(){
-		const { 
-			product , 
-			created , 
-			ended , 
-			play , 
-			id , 
-			deliveryId ,
-			nextState
-		} = this.props;
-		const { name , images } = product;
-		const send = !!deliveryId;
-		const selected = this._checkSelected(play,id);
-		const selectedBorder = (send === false && selected === true) ? styles.selectedBorder : null;
-		const btnStyle = (send === true) ? styles.sendContainer : null;
-		//console.warn(JSON.stringify(images));
-		//console.warn(deliveryId);
-		return (
-			<TouchableOpacity
-				style={[styles.container,btnStyle,selectedBorder]}
-				onPress={()=>(send === true) ? nextState({ id , created , product , ended , deliveryId }) : this._selectedAction(selected,id,product.id)}
-			>
-				<Text style={styles.text}>
-					{formatTimeStamp(ended)}
-				</Text>
-				<Image
-					style={styles.image}
-					source={(images && images.thumbnail) ? { uri : images.thumbnail } : null}
-					resizeMode={'contain'}
-				/>
-				<Text style={styles.text}>
-					{this._productName(name)}
-				</Text>
-			</TouchableOpacity>	
-		)
-	}
+  _checkSelected(play, id) {
+    let selected = false;
+    play.map(item => ((item.playId === id) ? selected = true : null));
+    return selected;
+  }
+  _selectedAction(selected, id, productId) {
+    const { selectPlay, unselectPlay } = this.props;
+    (selected) ? unselectPlay(id) : selectPlay(id, productId);
+  }
+  onItemPress() {
+    this._selectedAction(selected, id, product.id);
+  }
+
+  render() {
+    const {
+      product,
+      expires,
+      locale,
+    } = this.props;
+    const { name, images, ticketPrice } = product;
+    return (
+      <View
+        style={styles.container}
+      >
+        <View style={styles.productView}>
+          <Image
+            style={styles.image}
+            source={(images && images.thumbnail) ? { uri: images.thumbnail } : null}
+            resizeMode="contain"
+          />
+          <Text style={styles.text}>
+            {name[locale] || name.en}
+          </Text>
+        </View>
+        <View style={styles.infoView}>
+          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.btnText}>
+              Select
+            </Text>
+            <Icon name="circle-outline" size={20} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnStyle}>
+            <Icon name="swap-horizontal" size={20} color="white" />
+            <Image
+              source={ticket}
+              style={styles.ticketImage}
+            />
+            <Text style={styles.btnText}>
+              { ticketPrice * 0.9 }
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.text}>
+            Expires: {formatTimeStamp(expires)}
+          </Text>
+        </View>
+      </View>
+    );
+  }
 }
 
+const fontFamily = (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold';
 const styles = StyleSheet.create({
-	container : {
-		alignItems : 'center',
-		justifyContent : 'center',
-		borderRadius : 10,
-		backgroundColor : 'black',
-		width : width / 2 - 35,
-		padding : 10,
-		margin : 5
-	},
-	sendContainer : {
-		opacity : 0.6
-	},
-	text : {
-		fontFamily : (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-		color : '#30D64A',
-		fontSize : 16,
-		marginVertical : 2
-	},
-	image : {
-		width : 30,
-		height : 30,
-		marginRight : 10
-	},
-	selectedBorder : {
-		borderColor : '#CF333F',
-		borderWidth : 5
-	},
-	image : {
-		width : width * 0.15,
-		height : width * 0.15,
-		marginVertical : 5
-	}
+  container: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    borderRadius: 10,
+    backgroundColor: 'black',
+    padding: 10,
+    margin: 5,
+    marginHorizontal: 10,
+  },
+  productView: {
+    flex: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoView: {
+    flex: 3,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  text: {
+    fontFamily,
+    color: '#30D64A',
+    fontSize: 16,
+    marginVertical: 2,
+    textAlign: 'right',
+  },
+  btnText: {
+    fontFamily,
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'right',
+    marginHorizontal: 2,
+  },
+  image: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
+  },
+  ticketImage: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  btnStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 4,
+    marginVertical: 8,
+    padding: 2,
+  },
 });
 
 function mapStateToProps(state) {
-	return {
-		locale : state.preference.language.locale,
-		play : state.mis.play
-	}
+  return {
+    locale: state.preference.language.locale,
+    play: state.mis.play,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ 
-		selectPlay,
-		unselectPlay
-	}, dispatch)
+  return bindActionCreators({
+    selectPlay,
+    unselectPlay,
+  }, dispatch);
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PlayItem)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayItem);
