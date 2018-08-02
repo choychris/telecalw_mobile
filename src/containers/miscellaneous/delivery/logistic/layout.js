@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Dimensions } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  // Dimensions,
+  View,
+} from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AddressForm from './form/address';
@@ -7,7 +12,7 @@ import PhoneForm from './form/phone';
 import TargetForm from './form/target';
 import { fillLogisticForm, changeLogisticTarget } from '../../actions';
 
-const { height } = Dimensions.get('window');
+// const { height } = Dimensions.get('window');
 
 class LogisticForm extends Component {
   shouldComponentUpdate(nextProps) {
@@ -25,27 +30,36 @@ class LogisticForm extends Component {
     // console.warn(JSON.stringify(logistic));
     // console.warn(JSON.stringify(user));
     return (
-      <ScrollView style={styles.form}>
-        <TargetForm
-          dispatchFunction={changeLogisticTarget}
-        />
-        <AddressForm
-          dispatchFunction={fillLogisticForm}
-          value={(this.props[target].address) ? this.props[target].address : {}}
-        />
-        <PhoneForm
-          dispatchFunction={fillLogisticForm}
-          value={(this.props[target].address) ? this.props[target].address.phone : ''}
-        />
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView style={styles.form}>
+          <TargetForm
+            dispatchFunction={changeLogisticTarget}
+          />
+          <AddressForm
+            dispatchFunction={fillLogisticForm}
+            value={(this.props[target].address) ? this.props[target].address : {}}
+          />
+          <PhoneForm
+            dispatchFunction={fillLogisticForm}
+            value={(this.props[target].address) ? this.props[target].address.phone : ''}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'stretch',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    marginVertical: 5,
+    flex: 5,
+  },
   form: {
     // height: height * 0.4,
-    flex: 5,
+    flex: 1,
     backgroundColor: 'transparent',
     marginVertical: 5,
     alignSelf: 'stretch',

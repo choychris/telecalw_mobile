@@ -71,6 +71,13 @@ class MessageBox extends Component {
       tabs,
     } = this.props;
     const { selectedTab } = this.state;
+    let button;
+    if (buttons) {
+      button = buttons;
+    }
+    if (tabs && tabs[selectedTab].buttons) {
+      button = tabs[selectedTab].buttons;
+    }
     return (
       <View style={styles.container}>
         <Image
@@ -79,15 +86,19 @@ class MessageBox extends Component {
           resizeMode="stretch"
         />
         <View style={styles.innerView}>
-          {(title) ? <Text style={styles.title}>{string[title]}</Text> : null}
+          {(title) ?
+            <View style={{ flex: 1 }}>
+              <Text style={styles.title}>
+                {string[title]}
+              </Text>
+            </View> : null}
           {(tabs) ? this.renderTabs(tabs) : null }
           {(promptString) ? <Prompt promptString={promptString} /> : null }
           {(content) || null }
           {(tabs && tabs[selectedTab] && tabs[selectedTab].content) ?
             tabs[selectedTab].content : null}
-          {(buttons) ? <Buttons buttons={buttons} /> : null }
-          {(tabs && tabs[selectedTab].buttons) ?
-            <Buttons buttons={tabs[selectedTab].buttons} /> :
+          {button ?
+            <Buttons buttons={button} /> :
             <View style={{ flex: 1 }} /> }
         </View>
       </View>
@@ -119,6 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 10,
     textAlign: 'center',
+    alignSelf: 'center',
     backgroundColor: 'transparent',
   },
   tabContent: {

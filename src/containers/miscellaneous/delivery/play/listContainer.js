@@ -14,9 +14,9 @@ import PrizeItem from './itemContainer';
 
 class GamePlaySelect extends Component {
   componentDidMount() {
-    const { winResult, navigator } = this.props;
+    const { navigator } = this.props;
     // Fetch Play Result from Backend
-    winResult(navigator);
+    this.props.winResult(navigator);
   }
   shouldComponentUpdate(nextProps) {
     const { prizes } = this.props;
@@ -44,6 +44,8 @@ class GamePlaySelect extends Component {
             keyExtractor={item => item.id}
             renderItem={({ item }) => (
               <PrizeItem
+                id={item.id}
+                selected={item.selected}
                 product={item.product}
                 expires={item.expires}
                 nextState={nextState}
@@ -54,7 +56,7 @@ class GamePlaySelect extends Component {
       );
     }
     return (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         <Text style={styles.text}>{string.noRecord}</Text>
       </View>
     );
@@ -66,8 +68,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'stretch',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
     flex: 5,
+    // borderWidth: 1,
   },
   listContainer: {
     // paddingVertical: 10,

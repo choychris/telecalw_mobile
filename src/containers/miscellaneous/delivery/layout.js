@@ -20,7 +20,7 @@ import {
 } from '../actions';
 import QuoteSelect from './quote/listContainer';
 import Receipt from './receipt/layout';
-import { trackScreen } from '../../../utils/analytic';
+// import { trackScreen } from '../../../utils/analytic';
 
 const emoji = require('node-emoji');
 
@@ -44,10 +44,10 @@ class Delivery extends Component {
     });
     this._animation = new Animated.Value(0);
   }
-  componentWillMount() {
-    const { trackScreen } = this.props;
-    trackScreen('Delivery');
-  }
+  // componentWillMount() {
+  //   const { trackScreen } = this.props;
+  //   trackScreen('Delivery');
+  // }
   componentDidMount() {
     const { getUserInfo, playUISound } = this.props;
     getUserInfo();
@@ -332,7 +332,7 @@ function mapDispatchToProps(dispatch) {
     confirmDelivery,
     showTracking,
     playUISound,
-    trackScreen,
+    // trackScreen,
   }, dispatch);
 }
 

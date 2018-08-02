@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Dimensions,
   Image,
   Platform,
 } from 'react-native';
@@ -12,24 +11,26 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { formatTimeStamp } from '../../../../utils/format';
-import { selectPlay, unselectPlay } from '../../actions';
+import { selectPrize, unselectPrize } from '../../actions';
 
 const ticket = require('../../../../../assets/utilities/ticket.png');
 
-const { width } = Dimensions.get('window');
-
 class PlayItem extends Component {
-  _checkSelected(play, id) {
-    let selected = false;
-    play.map(item => ((item.playId === id) ? selected = true : null));
-    return selected;
-  }
-  _selectedAction(selected, id, productId) {
-    const { selectPlay, unselectPlay } = this.props;
-    (selected) ? unselectPlay(id) : selectPlay(id, productId);
+  constructor() {
+    super();
+    this.toggleSelect = this.toggleSelect.bind(this);
   }
   onItemPress() {
     this._selectedAction(selected, id, product.id);
+  }
+
+  toggleSelect() {
+    const { selected, id } = this.props;
+    if (!selected) {
+      this.props.selectPrize(id);
+    } else {
+      this.props.unselectPrize(id);
+    }
   }
 
   render() {
@@ -37,8 +38,10 @@ class PlayItem extends Component {
       product,
       expires,
       locale,
+      selected,
     } = this.props;
     const { name, images, ticketPrice } = product;
+    const icon = selected ? 'check-circle-outline' : 'circle-outline';
     return (
       <View
         style={styles.container}
@@ -54,14 +57,20 @@ class PlayItem extends Component {
           </Text>
         </View>
         <View style={styles.infoView}>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.btnText}>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onPress={this.toggleSelect}
+          >
+            <Text style={[styles.btnText, { color: 'white' }]}>
               Select
             </Text>
-            <Icon name="circle-outline" size={20} color="white" />
+            <Icon name={icon} size={25} color="white" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnStyle}>
-            <Icon name="swap-horizontal" size={20} color="white" />
+            <Icon name="swap-horizontal" size={20} color="#30D64A" />
             <Image
               source={ticket}
               style={styles.ticketImage}
@@ -70,7 +79,7 @@ class PlayItem extends Component {
               { ticketPrice * 0.9 }
             </Text>
           </TouchableOpacity>
-          <Text style={styles.text}>
+          <Text style={[styles.text, { alignSelf: 'flex-start' }]}>
             Expires: {formatTimeStamp(expires)}
           </Text>
         </View>
@@ -111,26 +120,28 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily,
-    color: 'white',
+    color: '#30D64A',
     fontSize: 20,
     textAlign: 'right',
     marginHorizontal: 2,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     resizeMode: 'contain',
   },
   ticketImage: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     resizeMode: 'contain',
+    marginHorizontal: 2,
   },
   btnStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'flex-start',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: '#30D64A',
     borderRadius: 4,
     marginVertical: 8,
     padding: 2,
@@ -146,8 +157,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    selectPlay,
-    unselectPlay,
+    selectPrize,
+    unselectPrize,
   }, dispatch);
 }
 

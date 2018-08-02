@@ -3,7 +3,7 @@ import DeviceInfo from 'react-native-device-info';
 
 const initialState = {
   prizes: null,
-  play: [],
+  prizeToShip: [],
   delivery: {},
   logistic: {
     target: 'user',
@@ -30,18 +30,21 @@ function misReducer(state = initialState, action) {
       return immuteState
         .setIn(['prizes'], [])
         .toJS();
-    case 'SELECT_PLAY':
+    case 'CLEAR_SHIP':
       return immuteState
-        .updateIn(['play'], array => array.push(action.value))
+        .setIn(['prizeToShip'], [])
         .toJS();
-    case 'UNSELECT_PLAY':
+    case 'SELECT_PRIZE':
       return immuteState
-        .updateIn(['play'], array => array.filter(data =>
-          (data.getIn(['playId']) !== action.value)))
+        .setIn(['prizes', action.index, 'selected'], true)
         .toJS();
-    case 'CLEAR_PLAY':
+    case 'UNSELECT_PRIZE':
       return immuteState
-        .setIn(['play'], [])
+        .setIn(['prizes', action.index, 'selected'], false)
+        .toJS();
+    case 'TO_SHIP':
+      return immuteState
+        .setIn(['prizeToShip'], action.value)
         .toJS();
     case 'RESET_DELIVERY':
       return immuteState

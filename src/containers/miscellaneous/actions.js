@@ -3,13 +3,13 @@ import { userPrize } from '../../common/api/request/prize';
 import { getDeliveryQuote, postDelivery, getDelivery } from '../../common/api/request/delivery';
 import { postIssue } from '../../common/api/request/issue';
 import { updateUser } from '../../common/api/request/user';
-import { loading, message, insufficientFundMessage } from '../utilities/actions';
+import { loading, message, insufficientFundMessage, errorMessage } from '../utilities/actions';
 import { languageSetting, preferenceSetting } from '../../utils/language';
 import { trackEvent } from '../../utils/analytic';
 
 // const Sound = require('react-native-sound');
 
-export function winResult(navigator) {
+export function winResult() {
   return (dispatch, getState) => {
     const { userId, id } = getState().auth.token.lbToken;
     // loading('show', navigator);
@@ -28,27 +28,32 @@ export function winResult(navigator) {
   };
 }
 
-export function selectPlay(playId, productId) {
-  return (dispatch, getState) => (dispatch({
-    type: 'SELECT_PLAY',
-    value: {
-      playId,
-      id: productId,
-    },
-  }));
+export function selectPrize(prizeId) {
+  return (dispatch, getState) => {
+    const { prizes } = getState().mis;
+    const index = prizes.findIndex(item => item.id === prizeId);
+    dispatch({
+      type: 'SELECT_PRIZE',
+      index,
+    });
+  };
 }
 
-export function unselectPlay(playId) {
-  return (dispatch, getState) => (dispatch({
-    type: 'UNSELECT_PLAY',
-    value: playId,
-  }));
+export function unselectPrize(prizeId) {
+  return (dispatch, getState) => {
+    const { prizes } = getState().mis;
+    const index = prizes.findIndex(item => item.id === prizeId);
+    dispatch({
+      type: 'UNSELECT_PRIZE',
+      index,
+    });
+  };
 }
 
 export function fillLogisticForm(field, value) {
   return (dispatch, getState) => {
     let action = '';
-    const target = getState().mis.logistic.target;
+    const { target } = getState().mis.logistic;
     // console.warn(target);
     if (target === 'user') {
       action += 'USER_';
@@ -64,13 +69,30 @@ export function fillLogisticForm(field, value) {
 
 export function confirmPlaySelect(nextState) {
   return (dispatch, getState) => {
-    const play = getState().mis.play;
-    if (play.length > 0) nextState();
+    const { prizes } = getState().mis;
+    const toShip = prizes.map((item) => {
+      if (item.selected) {
+        return {
+          prizeId: item.id,
+          id: item.productId,
+        };
+      }
+      return undefined;
+    })
+      .filter(item => !!item);
+
+    if (toShip.length > 0) {
+      dispatch({
+        type: 'TO_SHIP',
+        value: toShip,
+      });
+      nextState();
+    }
   };
 }
 
 export function changeLogisticTarget(value) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: 'CHANGE_LOGISTIC_TARGET',
       value,
@@ -80,18 +102,21 @@ export function changeLogisticTarget(value) {
 
 export function getLogisticQuote(navigator, nextState) {
   return (dispatch, getState) => {
-    const logistic = getState().mis.logistic;
+    const { logistic } = getState().mis;
     const { target } = logistic;
     const data = {};
     const address = (target === 'user') ? getState().auth.user.address : logistic.address;
-    const valid = !!((address.line1 && address.phone && address.countryCode && address.postalCode && address.city));
-    if (valid === true) {
+    const {
+      line1, phone, countryCode, postalCode, city,
+    } = address;
+    const valid = (line1 && phone && countryCode && postalCode && city);
+    if (valid) {
       loading('show', navigator);
-      const play = getState().mis.play;
+      const { prizeToShip } = getState().mis;
       const { id } = getState().auth.token.lbToken;
       data.postalCode = address.postalCode;
       data.countryCode = address.countryCode;
-      data.products = play;
+      data.products = prizeToShip;
       // console.warn(JSON.stringify(play));
       // console.warn(JSON.stringify(data));
       getDeliveryQuote({
@@ -109,12 +134,8 @@ export function getLogisticQuote(navigator, nextState) {
               value: result,
             });
             nextState();
-          } else {
-
           }
         });
-    } else {
-
     }
   };
 }
@@ -123,23 +144,22 @@ export function confirmDelivery(navigator, nextState) {
   return (dispatch, getState) => {
     // Step 1 : Check Wallet Balance and Quote Method is Selected
     const { balance } = getState().auth.wallet;
-    const logistic = getState().mis.logistic;
+    const { logistic } = getState().mis;
     const { target, quote } = logistic;
     if (quote !== null && balance >= quote.coins_value) {
-      const { id, userId } = getState().auth.token.lbToken;
-      const play = getState().mis.play;
+      const { user, token } = getState().auth;
+      const { id, userId } = token.lbToken;
+      const prizeToShip = getState().mis;
       // Step 2 : Post Delivery Request to Backend
       const data = {
         cost: quote.coins_value,
         status: 'pending',
         userId,
-        products: play,
+        products: prizeToShip,
         courier: quote,
         target,
       };
-      const user = getState().auth.user;
-      const address = (target === 'user') ? getState().auth.user.address : logistic.address;
-      address.countryCode = address.countryCode;
+      const address = (target === 'user') ? user.address : logistic.address;
       address.name = user.name;
       data.address = address;
       // console.warn(JSON.stringify(user));
@@ -157,15 +177,33 @@ export function confirmDelivery(navigator, nextState) {
           loading('hide', navigator);
           console.log('response', res);
           // console.log('error', JSON.stringify(err));
+          message(
+            'show',
+            navigator,
+            {
+              type: 'happy',
+              header: 'Ya!',
+              title: 'Shippment Processed!',
+              message: 'Thank you!',
+            },
+          );
 
           dispatch({
-            type: 'CLEAR_PLAY',
+            type: 'CLEAR_SHIP',
           });
           nextState();
         })
         .catch((err) => {
           loading('hide', navigator);
-          console.warn(JSON.stringify(err));
+          console.log(JSON.stringify(err));
+          errorMessage(
+            'show',
+            navigator,
+            {
+              title: 'Some error occur',
+              message: 'tryAgain',
+            },
+          );
         });
     } else {
       insufficientFundMessage(navigator);
@@ -180,20 +218,20 @@ export function clearPrizes() {
 }
 
 export function resetLogistic() {
-  return (dispatch, getState) => dispatch({
+  return dispatch => dispatch({
     type: 'RESET_DELIVERY',
   });
 }
 
 export function selectIssueType(value) {
-  return (dispatch, getState) => dispatch({
+  return dispatch => dispatch({
     type: 'SELECT_ISSUE_TYPE',
     value,
   });
 }
 
 export function selectQuote(quote) {
-  return (dispatch, getState) => dispatch({
+  return dispatch => dispatch({
     type: 'SELECT_QUOTE',
     value: quote,
   });
@@ -207,7 +245,7 @@ export function getDeliveryData(navigator, deliveryId) {
       token: id,
       deliveryId,
     }, Request)
-      .then((res, err) => {
+      .then((res) => {
         // console.warn(JSON.stringify(res));
         // console.warn(JSON.stringify(err));
         loading('hide', navigator);
@@ -237,12 +275,13 @@ export function setUserLanguage(locale, navigator) {
         // console.warn(JSON.stringify(err));
         loading('hide', navigator);
         if (!err) {
-				 	dispatch(languageSetting(res.language));
+          dispatch(languageSetting(res.language));
           return dispatch({
             type: 'STORE_USER_INFO',
             value: res,
           });
         }
+        return null;
       })
       .catch((err) => {
         loading('hide', navigator);
@@ -254,7 +293,7 @@ export function setUserLanguage(locale, navigator) {
 export function setUserPreference(navigator, key, value) {
   return (dispatch, getState) => {
     const { id, userId } = getState().auth.token.lbToken;
-    const preference = getState().preference.preference;
+    const { preference } = getState().preference;
     preference[key] = value;
     const data = { preference };
     const params = {
@@ -270,15 +309,16 @@ export function setUserPreference(navigator, key, value) {
         // console.warn(JSON.stringify(err));
         loading('hide', navigator);
         if (!err) {
-				 	dispatch(preferenceSetting(res.preference));
-          if (res.preference.sound === false) {
+          dispatch(preferenceSetting(res.preference));
+          // if (!res.preference.sound === false) {
 
-          }
+          // }
           return dispatch({
             type: 'STORE_USER_INFO',
             value: res,
           });
         }
+        return null;
       })
       .catch((err) => {
         loading('hide', navigator);
@@ -288,7 +328,7 @@ export function setUserPreference(navigator, key, value) {
 }
 
 export function showTracking(navigator) {
-  return (dispatch, getState) => {
+  return (getState) => {
     const { delivery } = getState().mis;
     if (delivery.tracking) {
       navigator.showLightBox({
@@ -345,7 +385,7 @@ export function createIssue(navigator) {
         token: id,
         data: issue,
       }, Request)
-        .then((res, err) => {
+        .then((res) => {
           // console.warn(JSON.stringify(res));
           // console.warn(JSON.stringify(err));
           loading('hide', navigator);
@@ -353,7 +393,7 @@ export function createIssue(navigator) {
           navigator.pop();
         })
         .catch((err) => {
-          // console.warn(JSON.stringify(err));
+          console.log(JSON.stringify(err));
           loading('hide', navigator);
         });
     }
@@ -362,7 +402,7 @@ export function createIssue(navigator) {
 
 
 export function inputIssue(keys, value) {
-  return (dispatch, getState) => dispatch({
+  return dispatch => dispatch({
     type: 'AMEND_ISSUE',
     keys,
     value,
