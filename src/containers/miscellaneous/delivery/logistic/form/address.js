@@ -101,6 +101,18 @@ class AddressForm extends Component {
           placeholder={`${string.inputAddress}(line2)`}
           onChangeText={text => dispatchFunction('ADDRESS_2', text)}
         />
+        <TextInput
+          style={styles.input}
+          value={(value.name) ? value.name : ''}
+          placeholder={string.fullName}
+          onChangeText={text => dispatchFunction('FULL_NAME', text)}
+        />
+        <TextInput
+          style={styles.input}
+          value={(value.email) ? value.email : ''}
+          placeholder={string.inputEmail}
+          onChangeText={text => dispatchFunction('EMAIL', text)}
+        />
       </View>
     );
   }

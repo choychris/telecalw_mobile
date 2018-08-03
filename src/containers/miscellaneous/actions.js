@@ -149,7 +149,7 @@ export function confirmDelivery(navigator, nextState) {
     if (quote !== null && balance >= quote.coins_value) {
       const { user, token } = getState().auth;
       const { id, userId } = token.lbToken;
-      const prizeToShip = getState().mis;
+      const { prizeToShip } = getState().mis;
       // Step 2 : Post Delivery Request to Backend
       const data = {
         cost: quote.coins_value,
@@ -160,7 +160,8 @@ export function confirmDelivery(navigator, nextState) {
         target,
       };
       const address = (target === 'user') ? user.address : logistic.address;
-      address.name = user.name;
+      address.name = address.name || user.name;
+      address.email = address.email || user.contactEmail;
       data.address = address;
       // console.warn(JSON.stringify(user));
       // console.warn(JSON.stringify(logistic));
@@ -328,7 +329,7 @@ export function setUserPreference(navigator, key, value) {
 }
 
 export function showTracking(navigator) {
-  return (getState) => {
+  return (dispatch, getState) => {
     const { delivery } = getState().mis;
     if (delivery.tracking) {
       navigator.showLightBox({

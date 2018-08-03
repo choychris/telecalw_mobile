@@ -17,6 +17,7 @@ import { getUserInfo } from '../../auth/actions';
 import {
   getLogisticQuote, resetLogistic,
   confirmDelivery, confirmPlaySelect, showTracking,
+  getDeliveryData,
 } from '../actions';
 import QuoteSelect from './quote/listContainer';
 import Receipt from './receipt/layout';
@@ -43,6 +44,7 @@ class Delivery extends Component {
       y: height * 0.1,
     });
     this._animation = new Animated.Value(0);
+    this._renderShip = this._renderShip.bind(this);
   }
   // componentWillMount() {
   //   const { trackScreen } = this.props;
@@ -57,8 +59,8 @@ class Delivery extends Component {
     }, 1000);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    const { display, data } = this.state;
-    return display !== nextState.display || data !== nextState.data;
+    const { display } = this.state;
+    return display !== nextState.display;
   }
   componentWillUnmount() {
     // Clear Selected Play / Reset
@@ -93,30 +95,52 @@ class Delivery extends Component {
   }
   _renderContent(display) {
     const { navigator } = this.props;
-    const { data } = this.state;
     switch (display) {
       case 'gamePlaySelect':
         return <GamePlaySelect
           navigator={navigator}
-          nextState={data => this.setState({ display: 'deliveryReceipt', data })}
+          didMount={() => { this.setState({ display: 'gamePlaySelect' }); }}
         />;
       case 'logisticForm':
         return <LogisticForm />;
       case 'quoteSelect':
         return <QuoteSelect />;
+      default:
+        return <GamePlaySelect
+          navigator={navigator}
+          didMount={() => { this.setState({ display: 'gamePlaySelect' }); }}
+        />;
+    }
+  }
+  _renderShip(display) {
+    const { navigator, getDeliveryData } = this.props;
+    switch (display) {
+      case 'gamePlaySelect':
+        return <GamePlaySelect
+          nextState={(id) => {
+            if (id) getDeliveryData(navigator, id);
+            this.setState({ display: 'deliveryReceipt' });
+           }}
+          navigator={navigator}
+          didMount={() => { this.setState({ display: 'gamePlaySelect' }); }}
+        />;
       case 'deliveryReceipt':
         return <Receipt
-          {...data}
           navigator={navigator}
         />;
       default:
         return <GamePlaySelect
+          nextState={(id) => {
+            if (id) getDeliveryData(navigator, id);
+            this.setState({ display: 'deliveryReceipt' });
+          }}
           navigator={navigator}
-          nextState={data => this.setState({ display: 'deliveryReceipt', data })}
+          didMount={() => { this.setState({ display: 'gamePlaySelect' }); }}
         />;
     }
   }
-  _renderBtn(display) {
+  _renderBtn(display, ship) {
+    if (ship && display === 'gamePlaySelect') return [];
     const {
       confirmPlaySelect,
       getLogisticQuote,
@@ -124,105 +148,77 @@ class Delivery extends Component {
       showTracking,
       navigator,
     } = this.props;
+    const normal = (action, text, margin) => [
+      {
+        text,
+        textStyle: {
+          color: 'white',
+          fontSize: 20,
+          fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+        },
+        btnStyle: {
+          backgroundColor: '#4C4C4C',
+          paddingVertical: 8,
+          paddingHorizontal: 10,
+          marginHorizontal: margin,
+        },
+        onPressFunction: action,
+      },
+    ];
+    const withBack = (previous, action, text, margin) => [
+      {
+        text: 'back',
+        textStyle: {
+          color: '#4C4C4C',
+          fontSize: 20,
+          fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+        },
+        borderColor: '#AFAFAF',
+        btnStyle: {
+          backgroundColor: '#EFEFEF',
+          paddingVertical: 8,
+          paddingHorizontal: 10,
+          marginHorizontal: margin,
+        },
+        onPressFunction: () => this.setState({ display: previous }),
+      },
+      normal(action, text, margin)[0],
+    ];
     switch (display) {
       case 'gamePlaySelect':
-        return [
-          {
-            text: 'ship',
-            textStyle: {
-              color: 'white',
-              fontSize: 20,
-              fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-            },
-            btnStyle: {
-              backgroundColor: '#4C4C4C',
-              paddingVertical: 8,
-              paddingHorizontal: 10,
-            },
-            onPressFunction: () => confirmPlaySelect(() => this.setState({ display: 'logisticForm' })),
-          },
-        ];
+        return normal(
+          () => confirmPlaySelect(() => this.setState({ display: 'logisticForm' })),
+          'ship',
+          0,
+        );
       case 'logisticForm':
-        return [
-          {
-            text: 'back',
-            textStyle: {
-              color: '#4C4C4C',
-              fontSize: 20,
-              fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-            },
-            borderColor: '#AFAFAF',
-            btnStyle: {
-              backgroundColor: '#EFEFEF',
-              paddingVertical: 8,
-              paddingHorizontal: 10,
-              marginHorizontal: 5,
-            },
-            onPressFunction: () => this.setState({ display: 'gamePlaySelect' }),
+        return withBack(
+          'gamePlaySelect',
+          () => {
+            if (!this.state.alertShown) {
+              Alert.alert(
+                `Address Correct ? ${emoji.get('truck')}`,
+                `Otherwise, you prize(s) will be lost ${emoji.get('worried')}` ,
+                [
+                  { text: 'Let me check!', onPress: () => this.setState({ alertShown: true }) },
+                ],
+                { cancelable: false },
+              );
+            } else {
+              getLogisticQuote(navigator, () => this.setState({ display: 'quoteSelect' }));
+            }
           },
-          {
-            text: 'confirm',
-            textStyle: {
-              color: 'white',
-              fontSize: 20,
-              fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-            },
-            btnStyle: {
-              backgroundColor: '#4C4C4C',
-              paddingVertical: 8,
-              paddingHorizontal: 10,
-              marginHorizontal: 5,
-            },
-            onPressFunction: () => {
-              if (!this.state.alertShown) {
-                Alert.alert(
-                  `Address Correct ? ${emoji.get('truck')}`,
-                  `Otherwise, you prize(s) will be lost ${emoji.get('worried')}` ,
-                  [
-                    { text: 'Let me check!', onPress: () => this.setState({ alertShown: true }) },
-                  ],
-                  { cancelable: false },
-                );
-              } else {
-                getLogisticQuote(navigator, () => this.setState({ display: 'quoteSelect' }));
-              }
-            },
-          },
-        ];
+          'confirm',
+          5,
+        );
       case 'quoteSelect':
-        return [
-          {
-            text: 'back',
-            textStyle: {
-              color: '#4C4C4C',
-              fontSize: 20,
-              fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-            },
-            borderColor: '#AFAFAF',
-            btnStyle: {
-              backgroundColor: '#EFEFEF',
-              paddingVertical: 8,
-              paddingHorizontal: 10,
-              marginHorizontal: 5,
-            },
-            onPressFunction: () => this.setState({ display: 'logisticForm' }),
-          },
-          {
-            text: 'confirm',
-            textStyle: {
-              color: 'white',
-              fontSize: 20,
-              fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
-            },
-            btnStyle: {
-              backgroundColor: '#4C4C4C',
-              paddingVertical: 8,
-              paddingHorizontal: 10,
-              marginHorizontal: 5,
-            },
-            onPressFunction: () => confirmDelivery(navigator, () => this.setState({ display: 'gamePlaySelect' })),
-          },
-        ];
+        return withBack(
+          'logisticForm',
+          () => confirmDelivery(navigator, () => this.setState({ display: 'gamePlaySelect' })),
+          'confirm',
+          5,
+        );
+      // user check the delivery details of the prize
       case 'deliveryReceipt':
         return [
           {
@@ -269,8 +265,18 @@ class Delivery extends Component {
   render() {
     const { navigator } = this.props;
     const { display } = this.state;
-    const displayContent = this._renderContent(display);
-    const displayBtn = this._renderBtn(display);
+    const tabs = [
+      {
+        name: 'ready',
+        content: this._renderContent(display),
+        buttons: this._renderBtn(display),
+      },
+      {
+        name: 'sent',
+        content: this._renderShip(display),
+        buttons: this._renderBtn(display, true),
+      },
+    ];
     return (
       <View style={styles.container}>
         <StatusBar hidden />
@@ -287,11 +293,9 @@ class Delivery extends Component {
         >
           <Animated.View style={[this._opacityAnimation()]}>
             <MessageBox
-              title="delivery"
               type="left"
+              tabs={tabs}
               promptString="deliveryPrompt"
-              content={displayContent}
-              buttons={displayBtn}
             />
           </Animated.View>
           <Animated.View style={[this._position.getLayout()]}>
@@ -332,6 +336,7 @@ function mapDispatchToProps(dispatch) {
     confirmDelivery,
     showTracking,
     playUISound,
+    getDeliveryData,
     // trackScreen,
   }, dispatch);
 }

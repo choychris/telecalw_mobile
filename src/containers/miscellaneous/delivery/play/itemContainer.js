@@ -20,10 +20,6 @@ class PlayItem extends Component {
     super();
     this.toggleSelect = this.toggleSelect.bind(this);
   }
-  onItemPress() {
-    this._selectedAction(selected, id, product.id);
-  }
-
   toggleSelect() {
     const { selected, id } = this.props;
     if (!selected) {

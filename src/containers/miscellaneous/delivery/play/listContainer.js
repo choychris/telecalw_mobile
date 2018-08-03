@@ -11,22 +11,24 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { winResult, clearPrizes } from '../../actions';
 import PrizeItem from './itemContainer';
+import ShippedItem from './shippedItem';
 
 class GamePlaySelect extends Component {
   componentDidMount() {
-    const { navigator } = this.props;
+    const { navigator, didMount } = this.props;
     // Fetch Play Result from Backend
     this.props.winResult(navigator);
+    didMount();
   }
   shouldComponentUpdate(nextProps) {
-    const { prizes } = this.props;
-    return prizes !== nextProps.prizes;
+    const { nextState, prizes } = this.props;
+    return nextState !== nextProps.nextState || prizes !== nextProps.prizes;
   }
   componentWillUnmount() {
     this.props.clearPrizes();
   }
   render() {
-    const { prizes, string } = this.props;
+    let { prizes } = this.props;
     if (!prizes) {
       return (
         <View style={styles.container}>
@@ -34,23 +36,36 @@ class GamePlaySelect extends Component {
         </View>
       );
     }
+    const { nextState, string } = this.props;
+    if (nextState) {
+      prizes = prizes.filter(item => item.status !== 'normal');
+    } else {
+      prizes = prizes.filter(item => item.status === 'normal');
+    }
+    const numColumns = !nextState ? 1 : 2;
     if (prizes.length > 0) {
-      const { nextState } = this.props;
-
       return (
         <View style={styles.container}>
           <FlatList
             data={prizes}
+            numColumns={numColumns}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <PrizeItem
-                id={item.id}
-                selected={item.selected}
+            key={numColumns}
+            renderItem={({ item }) => {
+              if (!nextState) {
+                return <PrizeItem
+                  id={item.id}
+                  selected={item.selected}
+                  product={item.product}
+                  expires={item.expires}
+                />;
+              }
+              return <ShippedItem
                 product={item.product}
-                expires={item.expires}
-                nextState={nextState}
-              />
-            )}
+                status={item.status}
+                nextState={() => { nextState(item.deliveryId); }}
+              />;
+            }}
           />
         </View>
       );

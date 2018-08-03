@@ -86,7 +86,7 @@ class TopUp extends Component {
       inputRange: [0, 0.25, 0.5, 0.9, 1],
       outputRange: ['0deg', '15deg', '0deg', '-5deg', '0deg'],
     });
-    if (version.release === true) {
+    if (version.release) {
       tabs.unshift({
         name: 'coins',
         content: <RateListContainer navigator={navigator} />,

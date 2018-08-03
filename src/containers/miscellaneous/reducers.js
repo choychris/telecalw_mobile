@@ -80,6 +80,14 @@ function misReducer(state = initialState, action) {
       return immuteState
         .setIn(['logistic', 'address', 'phone'], action.value)
         .toJS();
+    case 'LOGISTIC_EMAIL':
+      return state
+        .setIn(['logistic', 'address', 'email'], action.value)
+        .toJS();
+    case 'LOGISTIC_FULL_NAME':
+      return state
+        .setIn(['logistic', 'address', 'name'], action.value)
+        .toJS();
     case 'LOGISTIC_COUNTRY_CODE':
       return immuteState
         .setIn(['logistic', 'address', 'countryCode'], action.value)
