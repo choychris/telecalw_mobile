@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View, Animated, StatusBar } from 'react-native';
 import BackgroundImage from '../components/utilities/backgroundImage';
+import StarsImage from '../components/utilities/starsImage';
 import BackButton from '../components/navBar/container';
 import Playground from './components/playGround/playLayout';
 import Buttons from './components/home/buttons';
@@ -179,6 +180,7 @@ class Home extends Component {
       <View style={{ flex: 1, overflow: 'hidden' }}>
         <BackgroundImage />
         <StatusBar hidden />
+        <StarsImage />
         <Animated.View
           style={{
             transform: [

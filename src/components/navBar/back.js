@@ -20,7 +20,7 @@ class Back extends Component {
         }}
       >
         <Icon
-          name="angle-left"
+          name="caret-left"
           size={40}
           color="white"
         />
@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'transparent',
     paddingHorizontal: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

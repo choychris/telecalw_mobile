@@ -36,7 +36,7 @@ class GamePlaySelect extends Component {
         </View>
       );
     }
-    const { nextState, string } = this.props;
+    const { nextState, string, navigator } = this.props;
     if (nextState) {
       prizes = prizes.filter(item => item.status !== 'normal');
     } else {
@@ -58,6 +58,7 @@ class GamePlaySelect extends Component {
                   selected={item.selected}
                   product={item.product}
                   expires={item.expires}
+                  navigator={navigator}
                 />;
               }
               return <ShippedItem
@@ -96,6 +97,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
+    alignSelf: 'center',
+    textAlign: 'center',
     fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
   },
 });

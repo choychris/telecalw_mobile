@@ -46,10 +46,10 @@ class BarContainer extends Component {
     const { navigator } = this.props;
     const renderMenu = [
 
-      { icon: 'basket', name: 'bag', navigate: 'app.Delivery' },
+      { icon: 'rocket', name: 'delivery', navigate: 'app.Delivery' },
       { icon: 'currency-usd', name: 'shop', navigate: 'app.TopUp' },
       { icon: 'gift', name: 'reward', navigate: 'app.Reward' },
-      { icon: 'cat', name: 'center', navigate: 'app.Support' },
+      { icon: 'cat', name: 'center', navigate: 'app.PrizeShop' },
 
     ];
     return (

@@ -14,10 +14,13 @@ export default StyleSheet.create({
     minHeight: 32,
   },
   image: {
-    width: 22,
-    height: 22,
-    marginHorizontal: 5,
-    opacity: 1,
+    width: 26,
+    height: 26,
+    // marginHorizontal: 5,
+  },
+  ticket: {
+    width: 30,
+    height: 30,
   },
   text: {
     fontSize: 18,

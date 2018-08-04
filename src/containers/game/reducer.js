@@ -6,7 +6,7 @@ const gameTag = {
   index: 0,
   game: true,
   name: {
-    en: 'Planet of Game',
+    en: 'Game Planet!',
     zhHant: '游戲星球',
   },
   images: arcadePlanet,

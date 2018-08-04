@@ -4,6 +4,7 @@ import preferenceReducer from '../../common/reducers/preference';
 import gameReducer from '../game/reducer';
 import transactionReducer from '../transaction/reducers';
 import misReducer from '../miscellaneous/reducers';
+import prizeCenterReducer from '../prizesShop/reducer';
 import BananaGameReducer from '../../banana_game/store/rootReducer';
 import StackerGameReducer from '../../stacker_game/store/rootReducer';
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   mis: misReducer,
   bananaGame: BananaGameReducer,
   stackerGame: StackerGameReducer,
+  center: prizeCenterReducer,
 });
 
 export default rootReducer;

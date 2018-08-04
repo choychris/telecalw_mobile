@@ -1,5 +1,5 @@
 import Request from '../../utils/fetch';
-import { userPrize } from '../../common/api/request/prize';
+import { userPrize, exchangePrize } from '../../common/api/request/prize';
 import { getDeliveryQuote, postDelivery, getDelivery } from '../../common/api/request/delivery';
 import { postIssue } from '../../common/api/request/issue';
 import { updateUser } from '../../common/api/request/user';
@@ -8,7 +8,47 @@ import { languageSetting, preferenceSetting } from '../../utils/language';
 import { trackEvent } from '../../utils/analytic';
 
 // const Sound = require('react-native-sound');
-
+export function exchange(navigator, prizeId) {
+  return (dispatch, getState) => {
+    const { userId, id } = getState().auth.token.lbToken;
+    loading('show', navigator);
+    exchangePrize(userId, prizeId, undefined, id)
+      .then((res) => {
+        loading('hide', navigator);
+        if (res.res.ticket > 0) {
+          dispatch({
+            type: 'UPDATE_WALLET_TICKET',
+            value: res.res.ticket,
+          });
+          dispatch({
+            type: 'UPDATE_PRIZES',
+            id: prizeId,
+          });
+        } else {
+          errorMessage(
+            'show',
+            navigator,
+            {
+              title: 'Some error occur',
+              message: 'tryAgain',
+            },
+          );
+        }
+      })
+      .catch((err) => {
+        loading('hide', navigator);
+        errorMessage(
+          'show',
+          navigator,
+          {
+            title: 'Some error occur',
+            message: 'tryAgain',
+          },
+        );
+        console.log(err);
+      });
+  }
+}
 export function winResult() {
   return (dispatch, getState) => {
     const { userId, id } = getState().auth.token.lbToken;

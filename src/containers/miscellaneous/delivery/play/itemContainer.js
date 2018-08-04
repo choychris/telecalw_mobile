@@ -6,12 +6,15 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  Alert,
 } from 'react-native';
+import emoji from 'node-emoji';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { formatTimeStamp } from '../../../../utils/format';
-import { selectPrize, unselectPrize } from '../../actions';
+import { selectPrize, unselectPrize, exchange } from '../../actions';
+
 
 const ticket = require('../../../../../assets/utilities/ticket.png');
 
@@ -19,6 +22,26 @@ class PlayItem extends Component {
   constructor() {
     super();
     this.toggleSelect = this.toggleSelect.bind(this);
+    this.getTickets = this.getTickets.bind(this);
+  }
+  getTickets(name, ticketPrice) {
+    const { id, navigator } = this.props;
+    Alert.alert(
+      `Get Tickets ${emoji.get('ticket')}`,
+      `Want to exhcnage "${name}" for ${ticketPrice} tickets ${emoji.get('question')}`,
+      [
+        {
+          text: `No ${emoji.get('heavy_multiplication_x')}`,
+          style: 'cancel',
+        },
+        {
+          text: `Yes ${emoji.get('heavy_check_mark')}`,
+          onPress: () => {
+            this.props.exchange(navigator, id);
+          },
+        },
+      ],
+    );
   }
   toggleSelect() {
     const { selected, id } = this.props;
@@ -28,7 +51,6 @@ class PlayItem extends Component {
       this.props.unselectPrize(id);
     }
   }
-
   render() {
     const {
       product,
@@ -37,6 +59,7 @@ class PlayItem extends Component {
       selected,
     } = this.props;
     const { name, images, ticketPrice } = product;
+    const productName = name[locale] || name.en;
     const icon = selected ? 'check-circle-outline' : 'circle-outline';
     return (
       <View
@@ -49,7 +72,7 @@ class PlayItem extends Component {
             resizeMode="contain"
           />
           <Text style={styles.text}>
-            {name[locale] || name.en}
+            {productName}
           </Text>
         </View>
         <View style={styles.infoView}>
@@ -65,7 +88,10 @@ class PlayItem extends Component {
             </Text>
             <Icon name={icon} size={25} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnStyle}>
+          <TouchableOpacity
+            style={styles.btnStyle}
+            onPress={() => { this.getTickets(productName, ticketPrice); }}
+          >
             <Icon name="swap-horizontal" size={20} color="#30D64A" />
             <Image
               source={ticket}
@@ -155,6 +181,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPrize,
     unselectPrize,
+    exchange,
   }, dispatch);
 }
 

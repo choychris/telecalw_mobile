@@ -30,6 +30,10 @@ function misReducer(state = initialState, action) {
       return immuteState
         .setIn(['prizes'], [])
         .toJS();
+    case 'UPDATE_PRIZES':
+      return immuteState
+        .updateIn(['prizes'], array => array.filter(item => item.get('id') !== action.id))
+        .toJS();
     case 'CLEAR_SHIP':
       return immuteState
         .setIn(['prizeToShip'], [])

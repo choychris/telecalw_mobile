@@ -26,6 +26,10 @@ function authReducer(state = initialState, action) {
       return state
         .setIn(['wallet', 'balance'], action.value)
         .toJS();
+    case 'UPDATE_WALLET_TICKET':
+      return state
+        .setIn(['wallet', 'ticket'], action.value)
+        .toJS();
     case 'UPDATE_RESERVATION':
       return state
         .setIn(['reservation'], action.value)
