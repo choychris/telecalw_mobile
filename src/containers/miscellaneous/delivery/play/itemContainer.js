@@ -60,6 +60,7 @@ class PlayItem extends Component {
     } = this.props;
     const { name, images, ticketPrice } = product;
     const productName = name[locale] || name.en;
+    const image = (images.icon === '') ? images.thumbnail : images.icon;
     const icon = selected ? 'check-circle-outline' : 'circle-outline';
     return (
       <View
@@ -68,7 +69,7 @@ class PlayItem extends Component {
         <View style={styles.productView}>
           <Image
             style={styles.image}
-            source={(images && images.thumbnail) ? { uri: images.thumbnail } : null}
+            source={{ uri: image }}
             resizeMode="contain"
           />
           <Text style={styles.text}>
