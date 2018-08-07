@@ -28,7 +28,7 @@ class PlayItem extends Component {
     const { id, navigator } = this.props;
     Alert.alert(
       `Get Tickets ${emoji.get('ticket')}`,
-      `Want to exhcnage "${name}" for ${ticketPrice} tickets ${emoji.get('question')}`,
+      `Want to exhcnage "${name}" for ${ticketPrice * 0.9} tickets ${emoji.get('question')}`,
       [
         {
           text: `No ${emoji.get('heavy_multiplication_x')}`,

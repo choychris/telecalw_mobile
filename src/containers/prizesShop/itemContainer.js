@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Image,
@@ -6,92 +6,66 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import emoji from 'node-emoji';
 
 const ticket = require('../../../assets/utilities/ticket.png');
 
-class PrizeItem extends Component {
-  constructor() {
-    super();
-    this.exchange = this.exchange.bind(this);
-  }
-  exchange(productName, ticketPrice) {
-    const { id, navigator, buy } = this.props;
-    Alert.alert(
-      `Acquire Prize ${emoji.get('bear')}`,
-      `Want to use ${ticketPrice} tickets to get 1 "${productName}" ${emoji.get('question')}`,
-      [
-        {
-          text: `No ${emoji.get('heavy_multiplication_x')}`,
-          style: 'cancel',
-        },
-        {
-          text: `Yes ${emoji.get('heavy_check_mark')}`,
-          onPress: () => {
-            buy(navigator, id, ticketPrice, productName);
-          },
-        },
-      ],
-    );
-  }
-  render() {
-    const {
-      images, name, sku, ticketPrice,
-    } = this.props;
-    const outOfStock = (sku <= 0);
-    const OOSStyle = outOfStock ? { opacity: 0.5, textDecorationLine: 'line-through' } : null;
-    return (
-      <View style={styles.conatiner}>
-        <Image
-          source={{ uri: images.icon }}
-          style={styles.imageStyle}
-        />
-        <Text style={styles.textStyle}>
-          { name.en }
+const PrizeItem = ({
+  id, images, name, sku, ticketPrice, buy, showDetails,
+}) => {
+  const outOfStock = (sku <= 0);
+  const OOSStyle = outOfStock ? { opacity: 0.5, textDecorationLine: 'line-through' } : null;
+  const OOSBtn = outOfStock ? { opacity: 0.5 } : null;
+  return (
+    <View style={styles.conatiner}>
+      <Image
+        source={{ uri: images.icon }}
+        style={styles.imageStyle}
+      />
+      <Text style={styles.textStyle}>
+        { name.en }
+      </Text>
+      <View style={{ flexDirection: 'row' }}>
+        <Text style={[styles.textStyle, OOSStyle]}>
+          Stock: { sku }
         </Text>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={[styles.textStyle, OOSStyle]}>
-            Stock: { sku }
-          </Text>
-          { 
-            outOfStock ?
-              <Text style={[styles.textStyle, { color: '#FF8360' }]}>
-                Out Of Stock
-              </Text> : null
-          }
-        </View>
-        <View style={styles.btnWrapper}>
-          <TouchableOpacity
-            style={styles.btnStyle}
-          >
-            <Text style={styles.btnText}>
-              {'Prize\nDetails'}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnStyle}
-            disabled={outOfStock}
-            onPress={() => { this.exchange(name.en, ticketPrice); }}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Icon name="swap-horizontal" size={24} color="#30D64A" />
-              <Image
-                source={ticket}
-                style={styles.ticketImage}
-              />
-            </View>
-            <Text style={styles.btnText}>
-              { ticketPrice }
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {
+          outOfStock ?
+            <Text style={[styles.textStyle, { color: '#FF8360' }]}>
+              Out Of Stock
+            </Text> : null
+        }
       </View>
-    );
-  }
-}
+      <View style={styles.btnWrapper}>
+        <TouchableOpacity
+          style={styles.btnStyle}
+          onPress={showDetails}
+        >
+          <Text style={styles.btnText}>
+            {'Prize\nDetails'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.btnStyle, OOSBtn]}
+          disabled={outOfStock}
+          onPress={() => { buy(id, name.en, ticketPrice); }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name="swap-horizontal" size={24} color="#30D64A" />
+            <Image
+              source={ticket}
+              style={styles.ticketImage}
+            />
+          </View>
+          <Text style={styles.btnText}>
+            { ticketPrice }
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({

@@ -6,9 +6,11 @@ import {
   StatusBar,
   Image,
   Text,
+  Alert,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import emoji from 'node-emoji';
 import BackgroundImage from '../../components/utilities/backgroundImage';
 import StarsImage from '../../components/utilities/starsImage';
 import NavBar from '../../components/navBar/container';
@@ -22,12 +24,32 @@ class PrizeShop extends Component {
   constructor() {
     super();
     this.animation = new Animated.Value(0);
+    this.exchange = this.exchange.bind(this);
   }
   componentDidMount() {
     this.props.getPrizeList();
   }
+  exchange(id, productName, ticketPrice) {
+    const { navigator, buy } = this.props;
+    Alert.alert(
+      `Acquire Prize ${emoji.get('bear')}`,
+      `Want to use ${ticketPrice} tickets to get 1 "${productName}" ${emoji.get('question')}`,
+      [
+        {
+          text: `No ${emoji.get('heavy_multiplication_x')}`,
+          style: 'cancel',
+        },
+        {
+          text: `Yes ${emoji.get('heavy_check_mark')}`,
+          onPress: () => {
+            buy(navigator, id, ticketPrice, productName);
+          },
+        },
+      ],
+    );
+  }
   render() {
-    const { prizes, buy, navigator } = this.props;
+    const { prizes, navigator } = this.props;
     return (
       <View style={styles.container}>
         <StatusBar hidden />
@@ -49,8 +71,7 @@ class PrizeShop extends Component {
           (prizes.length > 0) ?
             <PrizeList
               prizes={prizes}
-              buy={buy}
-              navigator={navigator}
+              buy={this.exchange}
             /> : <Loading />
         }
       </View>
@@ -62,12 +83,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    overflow: 'hidden',
   },
   botStyle: {
     height: 80,
     width: 80,
     resizeMode: 'contain',
     alignSelf: 'center',
+    margin: 8,
   },
   textStyle: {
     backgroundColor: 'transparent',

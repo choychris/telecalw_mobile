@@ -39,8 +39,8 @@ export const buyPrizes = (navigator, productId, prizeTicket, productName) =>
   (dispatch, getState) => {
     const { userId, id } = getState().auth.token.lbToken;
     const { ticket } = getState().auth.wallet;
-    loading('show', navigator);
     if (ticket >= prizeTicket) {
+      loading('show', navigator);
       exchangePrize(userId, undefined, productId, id)
         .then((res) => {
           loading('hide', navigator);
@@ -83,7 +83,7 @@ export const buyPrizes = (navigator, productId, prizeTicket, productName) =>
           );
         });
     } else {
-      loading('hide', navigator);
+      // loading('hide', navigator);
       errorMessage(
         'show',
         navigator,
@@ -93,6 +93,6 @@ export const buyPrizes = (navigator, productId, prizeTicket, productName) =>
         },
       );
     }
-  }
+  };
 
 export default null;
