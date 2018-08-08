@@ -4,9 +4,10 @@ import {
   View,
   StyleSheet,
   StatusBar,
-  Image,
+  // Image,
   Text,
   Alert,
+  Easing,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -18,16 +19,31 @@ import PrizeList from './listContainer';
 import Loading from '../utilities/loading/layout';
 import { getPrizeList, buyPrizes } from './actions';
 
-const Telebot = require('../../../assets/telebuddies/telebot/telebot_front.png');
+const Telebot = require('../../../assets/telebuddies/telebot/telebot_love.png');
 
 class PrizeShop extends Component {
   constructor() {
     super();
     this.animation = new Animated.Value(0);
+    this.swing = new Animated.Value(0);
     this.exchange = this.exchange.bind(this);
+    this.swingStart = this.swingStart.bind(this);
   }
   componentDidMount() {
     this.props.getPrizeList();
+    this.swingStart();
+  }
+  swingStart() {
+    const move = Animated.timing(
+      this.swing,
+      {
+        toValue: 1,
+        duration: 5000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      },
+    );
+    Animated.loop(move).start();
   }
   exchange(id, productName, ticketPrice) {
     const { navigator, buy } = this.props;
@@ -50,6 +66,10 @@ class PrizeShop extends Component {
   }
   render() {
     const { prizes, navigator } = this.props;
+    const rotate = this.swing.interpolate({
+      inputRange: [0, 0.25, 0.75, 1],
+      outputRange: ['0deg', '-10deg', '10deg', '0deg'],
+    });
     return (
       <View style={styles.container}>
         <StatusBar hidden />
@@ -60,9 +80,9 @@ class PrizeShop extends Component {
           coins
           navigator={navigator}
         />
-        <Image
+        <Animated.Image
           source={Telebot}
-          style={styles.botStyle}
+          style={[styles.botStyle, { transform: [{ rotate }] }]}
         />
         <Text style={styles.textStyle}>
           Welcome to Prize Center!
@@ -86,8 +106,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   botStyle: {
-    height: 80,
-    width: 80,
+    height: 110,
+    width: 110,
     resizeMode: 'contain',
     alignSelf: 'center',
     margin: 8,
@@ -97,7 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: 'PixelOperator8-Bold',
     alignSelf: 'center',
     textAlign: 'center',
-    color: '#D8D8D8',
+    color: 'white',
     fontSize: 20,
   },
 });

@@ -91,7 +91,7 @@ export const styles = StyleSheet.create({
     height: height * 0.7,
     width: width * (7 / 8),
     borderRadius: 15,
-    backgroundColor: '#D8D8D8',
+    backgroundColor: 'rgba(255,255,255,0.6)',
     justifyContent: 'flex-start',
   },
   iconStyle: {

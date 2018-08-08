@@ -41,10 +41,10 @@ class HomeButtons extends Component {
         />
         <NavBtn
           color="orange"
-          text={`${emoji.get('moneybag')}\nToday's\nWinners`}
+          text={`${emoji.get('medal')}\nWeekly\nWinners`}
           onPress={winner}
         />
-        <NavBtn color="orange" text={'How\nto\nPlay'} onPress={how} />
+        <NavBtn color="orange" text={`${emoji.get('question')}\nHow to\nPlay`} onPress={how} />
       </View>
     );
   }

@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   AsyncStorage,
-  Dimensions,
+  // Dimensions,
   Platform,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
@@ -16,7 +16,7 @@ import { videoRewardPrompt } from '../../actions';
 import request from '../../../../utils/fetch';
 import { videoAdsReward } from '../../../../common/api/request/reward';
 
-const { height } = Dimensions.get('window');
+// const { height } = Dimensions.get('window');
 const videoAdUnit = (Platform.OS === 'ios') ? 'ca-app-pub-5094396211239311/8858858109' : 'ca-app-pub-5094396211239311/6761585487';
 class RewardedVideoListContainer extends Component {
   constructor(props) {
@@ -24,8 +24,8 @@ class RewardedVideoListContainer extends Component {
     this.state = {
       ready: false,
       amount: null,
-      firstFinish: false,
-      secondFinish: false,
+      // firstFinish: false,
+      // secondFinish: false,
       firstTimer: null,
       secondTimer: null,
     };
@@ -176,7 +176,7 @@ class RewardedVideoListContainer extends Component {
     } = this.state;
     const { string } = this.props;
     return (
-      <View style={[styles.container, styles.listWrapper]}>
+      <View style={styles.container}>
 
         {firstTimer ? this._renderCounter(firstTimer, string.nextVideo) : <VideoAdList ready={ready} amount={amount} />}
         {secondTimer ? this._renderCounter(secondTimer, string.nextVideo) : <VideoAdList ready={ready} amount={amount} />}
@@ -193,11 +193,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 30,
-  },
-  listWrapper: {
-    alignSelf: 'stretch',
-    height: height * 0.4,
-    marginBottom: height * 0.1,
+    flex: 5,
   },
   itemContainer: {
     flex: 1,

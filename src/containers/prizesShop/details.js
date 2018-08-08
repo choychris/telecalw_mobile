@@ -47,6 +47,9 @@ class PrizeDetails extends Component {
       closeDetails,
     } = this.props;
     const { pic } = this.state;
+    const outOfStock = (sku <= 0);
+    const OOSStyle = outOfStock ? { opacity: 0.5, textDecorationLine: 'line-through' } : null;
+    const OOSBtn = outOfStock ? { opacity: 0.5 } : null;
     const uri = (pic !== null) ? images.product[pic] : images.icon;
     const imageArray = images.product.filter(item => item !== '');
     return (
@@ -55,7 +58,7 @@ class PrizeDetails extends Component {
           styles.container,
           {
             transform: [
-              { translateY: -100 },
+              { translateY: -120 },
               { translateX: 500 },
             ],
           },
@@ -72,28 +75,38 @@ class PrizeDetails extends Component {
           source={{ uri }}
           style={styles.thumbnail}
         />
-        <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+        <View style={{ flexDirection: 'row', marginBottom: 5, opacity: 0.8 }}>
           { this.renderImageList(images.icon, null) }
           {
             imageArray.map((src, i) => this.renderImageList(src, i))
           }
         </View>
-        <Text style={styles.textStyle}>
-          Description:
-        </Text>
-        <Text style={styles.textStyle}>
-          { description.en }
-        </Text>
-        <Text style={styles.textStyle}>
-          Stocks: { sku }
-        </Text>
+        <View style={{ margin: 5 }}>
+          <Text style={styles.textStyle}>
+            Description:
+          </Text>
+          <Text style={styles.textStyle}>
+            { description.en }
+          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={[styles.textStyle, OOSStyle]}>
+              Stock: { sku }
+            </Text>
+            {
+              outOfStock ?
+                <Text style={[styles.textStyle, { color: '#FF8360' }]}>
+                  Out Of Stock
+                </Text> : null
+            }
+          </View>
+        </View>
         <View style={{ alignItems: 'center', margin: 10 }}>
           <Text style={styles.textStyle}>
             { `Get ${name.en} with ${ticketPrice} tickets` }
           </Text>
           <TouchableOpacity
-            style={styles.btnStyle}
-            // disabled={outOfStock}
+            style={[styles.btnStyle, OOSBtn]}
+            disabled={outOfStock}
             onPress={() => { buy(id, name.en, ticketPrice); }}
           >
             <Icon name="swap-horizontal" size={24} color="#30D64A" />
