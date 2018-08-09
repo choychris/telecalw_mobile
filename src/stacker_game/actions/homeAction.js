@@ -6,12 +6,13 @@ import {
   insufficientFundMessage,
   errorMessage,
 } from '../../containers/utilities/actions';
+import { coins } from '../config/constants';
 
 export const switchGameState = (start, navigator, animate) =>
   (dispatch, getState) => {
     if (start) {
       // hard coding 15 coins per play
-      const coins = 15;
+      // const coins = 25;
       const { gameId } = getState().game;
       const { userId, id } = getState().auth.token.lbToken;
       loading('show', navigator);
@@ -49,7 +50,7 @@ export const switchGameState = (start, navigator, animate) =>
 export const restartGame = (navigator, animate, callback) =>
   (dispatch, getState) => {
     if (navigator) {
-      const coins = 15;
+      // const coins = 15;
       const { gameId } = getState().game;
       const { userId, id } = getState().auth.token.lbToken;
       loading('show', navigator);

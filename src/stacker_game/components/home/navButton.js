@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
+    fontFamily: 'PixelOperator-Bold',
+    fontSize: 20,
   },
   image: {
     resizeMode: 'contain',

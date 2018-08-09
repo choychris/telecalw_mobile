@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Image, StyleSheet, Animated, Platform } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { playCount } from '../../actions/leaderboardAction';
 import { changeLocale } from '../../utils/i18n/language';
+import CurrentReward from './currentReward';
 import Config from '../../utils/config';
 
 const en1 = require('../../images/en_details1.png');
@@ -16,8 +20,8 @@ const zh4 = require('../../images/zh_details4.png');
 
 const { deviceWidth, deviceHeight } = Config;
 const posters = {
-  en: [en1, en2, en3, en4],
-  zhHant: [zh1, zh2, zh3, zh4],
+  en: [0, en1, en2, en3, en4],
+  zhHant: [0, zh1, zh2, zh3, zh4],
 };
 
 class DetailSwiper extends Component {
@@ -27,6 +31,7 @@ class DetailSwiper extends Component {
   }
 
   componentDidMount() {
+    this.props.playCount();
     this.animate();
   }
 
@@ -42,7 +47,7 @@ class DetailSwiper extends Component {
   }
 
   render() {
-    const { lang } = this.props;
+    const { lang, playerCount } = this.props;
     const translateX = this.animateValue.interpolate({
       inputRange: [0, 0.2, 0.4, 0.43, 0.53, 0.7, 0.8, 0.9, 1],
       outputRange: [400, 0, -30, -30, 0, -15, 0, -4, 0],
@@ -58,12 +63,24 @@ class DetailSwiper extends Component {
           onPress={this.props.onPress}
         />
         <Swiper style={styles.wrapper} loop={false}>
-          { detailSlide.map(slide =>
-            <Image
-              key={Math.random()}
-              source={slide}
-              style={styles.imageStyle}
-            />) }
+          { detailSlide.map((slide) => {
+            if (slide === 0) {
+              return (
+                <CurrentReward
+                  key={Math.random()}
+                  playerCount={playerCount}
+                  containerStyle={styles.reward}
+                />
+              );
+            }
+            return (
+              <Image
+                key={Math.random()}
+                source={slide}
+                style={styles.imageStyle}
+              />
+            );
+          })}
         </Swiper>
       </Animated.View>
     );
@@ -93,6 +110,19 @@ const styles = StyleSheet.create({
     height: (deviceHeight / 1.2) - 20,
     width: (deviceWidth * (7 / 8)) - 20,
   },
+  reward: {
+    height: (deviceHeight / 1.2) - 20,
+    width: (deviceWidth * (7 / 8)) - 20,
+  },
 });
 
-export default DetailSwiper;
+const mapStateToProps = state => ({
+  playerCount: state.bananaGame.leaderboard.totalPlayer,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    playCount,
+  }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailSwiper);

@@ -28,7 +28,7 @@ class WinHistory extends Component {
     if (winners.length === 0) {
       return (
         <Text
-          style={styles.headerStyle}
+          style={[styles.headerStyle, { fontFamily: 'PixelOperator-Bold' }]}
         >
           No player history yet.
         </Text>
@@ -101,8 +101,9 @@ export const styles = StyleSheet.create({
   },
   headerStyle: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     paddingBottom: 10,
+    fontFamily: 'PixelOperator8-Bold',
   },
   section: {
     alignSelf: 'stretch',
@@ -110,8 +111,11 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   sectionText: {
-    color: 'yellow',
+    color: '#30D64A',
     textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'PixelOperator-Bold',
+    padding: 5,
   },
 
 });

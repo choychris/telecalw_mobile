@@ -6,9 +6,10 @@ import {
 } from 'react-native';
 import emoji from 'node-emoji';
 import NavBtn from './navButton';
+import { coins } from '../../config/constants';
 
 const coin = require('../../../../assets/utilities/coins/telecoins_single.png');
-const coins = require('../../../../assets/utilities/coins/telecoins_multi.png');
+const coinsMulti = require('../../../../assets/utilities/coins/telecoins_multi.png');
 
 const toTopUp = (navigator) => {
   navigator.push({
@@ -32,11 +33,11 @@ class HomeButtons extends Component {
     } = this.props;
     return (
       <View style={styles.constainer}>
-        <NavBtn color="#E0CF18" text={'15\nPlay'} pic={coin} onPress={start} />
+        <NavBtn color="#E0CF18" text={`${coins}\nPlay`} pic={coin} onPress={start} />
         <NavBtn
           color="#50E3C2"
           text={'Buy\nCoins'}
-          pic={coins}
+          pic={coinsMulti}
           onPress={() => { toTopUp(navigator); }}
         />
         <NavBtn

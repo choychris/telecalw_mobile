@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 // import * as Animatable from 'react-native-animatable';
 import sample from 'lodash/sample';
 import ResBtn from './btnComponent';
-import Config from '../../../config/constants';
+import Config, { rewards } from '../../../config/constants';
 
 const cryFace = require('../../../images/cry.png');
 const cuteFace = require('../../../images/cute.png');
@@ -31,7 +31,7 @@ function randomSpeak(end, lastRow, winning) {
     'Nicely Done!',
     'Excellent!',
   ];
-  if (lastRow === 1 && winning >= 1000) return 'Congration!\nYou get the biggest Prize!\nOne more win?';
+  if (lastRow === 1 && winning >= rewards.major) return 'Congration!\nYou get the biggest Prize!\nOne more win?';
   if (end) return 'So close!\nOne more game?';
   if (lastRow === 12) return "Let's get started.";
   if (lastRow === 3) return 'You just win\nthe first prize !';
@@ -89,6 +89,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 25,
     backgroundColor: 'transparent',
+    fontFamily: 'PixelOperator-Bold',
+    fontSize: 18,
     color: 'black',
   },
 });
