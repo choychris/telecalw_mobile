@@ -3,6 +3,7 @@ import { Animated, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import BigWin from './bigWin';
 import Config, { rewards } from '../../config/constants';
+import Strings from '../../config/i18n';
 
 const ticket = require('../../../../assets/utilities/ticket.png');
 
@@ -73,7 +74,7 @@ class RewardLine extends Component {
   }
 
   render() {
-    const { win, index } = this.props;
+    const { win, index, locale } = this.props;
     let opacity = this.blink;
     const mini = (index === 4);
     const images = mini ? new Array(1) : new Array(3);
@@ -94,7 +95,7 @@ class RewardLine extends Component {
         { (win >= rewards.major && !mini) ? this.makeItRain(false) : null }
         { (win >= rewards.major && !mini) ? this.makeItRain(true) : null }
         <Text style={styles.textStyle}>
-          { mini ? `${rewards.mini} Tickets!` : `Big Prize! ${rewards.major} Tickets!`}
+          { mini ? `${rewards.mini} Tickets!` : `${Strings(locale, 'bigPrize')} ${rewards.major} Tickets!`}
         </Text>
         {
           images.fill().map(() => <Animated.Image
@@ -139,6 +140,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   win: state.stackerGame.game.win,
   gameStarted: state.stackerGame.home.start,
+  locale: state.preference.language.locale,
 });
 
 export default connect(mapStateToProps)(RewardLine);

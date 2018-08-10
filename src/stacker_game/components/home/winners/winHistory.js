@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import emoji from 'node-emoji';
 import ListItem from './listItem';
 import Config from '../../../config/constants';
+import Strings from '../../../config/i18n';
 
 const gift = emoji.get('gift');
 class WinHistory extends Component {
@@ -49,7 +50,8 @@ class WinHistory extends Component {
   }
 
   render() {
-    const { onClose } = this.props;
+    const { onClose, locale } = this.props;
+    console.log(locale);
     return (
       <View style={styles.container}>
         <Icon
@@ -59,12 +61,12 @@ class WinHistory extends Component {
           style={styles.iconStyle}
           onPress={onClose}
         />
-        <Text style={styles.headerStyle}>Winners of this Week</Text>
+        <Text style={styles.headerStyle}>{ Strings(locale, 'wins') }</Text>
         <View style={styles.section}>
           <Text
             style={styles.sectionText}
           >
-            {`Win Win Win! Fantastic!\n${gift}${gift}${gift}${gift}`}
+            {`${Strings(locale, 'prompt')}\n${gift}${gift}${gift}${gift}`}
           </Text>
         </View>
         <View style={{
@@ -113,8 +115,8 @@ export const styles = StyleSheet.create({
   sectionText: {
     color: '#30D64A',
     textAlign: 'center',
-    fontSize: 20,
-    fontFamily: 'PixelOperator-Bold',
+    fontSize: 18,
+    fontFamily: 'PixelOperatorSC-Bold',
     padding: 5,
   },
 

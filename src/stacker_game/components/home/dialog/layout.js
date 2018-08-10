@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import sample from 'lodash/sample';
 import ResBtn from './btnComponent';
 import Config, { rewards } from '../../../config/constants';
+import Strings from '../../../config/i18n';
 
 const cryFace = require('../../../images/cry.png');
 const cuteFace = require('../../../images/cute.png');
@@ -20,7 +21,7 @@ const bubble = require('../../../images/bubble.png');
 const faceArray = [cryFace, cuteFace, smiFace, screFace];
 
 
-function randomSpeak(end, lastRow, winning) {
+function randomSpeak(end, lastRow, winning, locale) {
   const normal = [
     'Wonderful!',
     'Good Job!',
@@ -31,15 +32,15 @@ function randomSpeak(end, lastRow, winning) {
     'Nicely Done!',
     'Excellent!',
   ];
-  if (lastRow === 1 && winning >= rewards.major) return 'Congration!\nYou get the biggest Prize!\nOne more win?';
-  if (end) return 'So close!\nOne more game?';
-  if (lastRow === 12) return "Let's get started.";
-  if (lastRow === 3) return 'You just win\nthe first prize !';
+  if (lastRow === 1 && winning >= rewards.major) return Strings(locale, 'congrat');
+  if (end) return Strings(locale, 'soClose');
+  if (lastRow === 12) return Strings(locale, 'start');
+  if (lastRow === 3) return Strings(locale, 'miniWin');
   return sample(normal);
 }
 
 const Dialog = ({
-  ended, onYesPress, onNoPress, row, win,
+  ended, onYesPress, onNoPress, row, win, locale,
 }) => (
   <View style={styles.constainer}>
     <View
@@ -53,7 +54,7 @@ const Dialog = ({
     <View style={{ flex: 0.7 }}>
       <Image source={bubble} style={styles.imageStyle} />
       <Text style={styles.textStyle}>
-        { randomSpeak(ended, row, win) }
+        { randomSpeak(ended, row, win, locale) }
       </Text>
       { ended ?
         <ResBtn onYesPress={onYesPress} onNoPress={onNoPress} /> :

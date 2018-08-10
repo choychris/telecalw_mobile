@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   Image,
   TouchableOpacity,
@@ -8,7 +9,9 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Strings from '../miscellaneous/i18n';
 
+const { width, height } = Dimensions.get('window');
 const ticket = require('../../../assets/utilities/ticket.png');
 
 class PrizeDetails extends Component {
@@ -43,8 +46,11 @@ class PrizeDetails extends Component {
       sku,
       ticketPrice,
       description,
+      size,
+      weight,
       buy,
       closeDetails,
+      locale,
     } = this.props;
     const { pic } = this.state;
     const outOfStock = (sku <= 0);
@@ -58,72 +64,77 @@ class PrizeDetails extends Component {
           styles.container,
           {
             transform: [
-              { translateY: -120 },
+              { translateY: -120 - (20000 / height) },
               { translateX: 500 },
             ],
           },
         ]}
       >
-        <Icon
-          name="close"
-          size={36}
-          color="white"
-          style={styles.iconStyle}
-          onPress={closeDetails}
-        />
-        <Image
-          source={{ uri }}
-          style={styles.thumbnail}
-        />
-        <View style={{ flexDirection: 'row', marginBottom: 5, opacity: 0.8 }}>
-          { this.renderImageList(images.icon, null) }
-          {
-            imageArray.map((src, i) => this.renderImageList(src, i))
-          }
-        </View>
-        <View style={{ margin: 5 }}>
-          <Text style={styles.textStyle}>
-            Description:
-          </Text>
-          <Text style={styles.textStyle}>
-            { description.en }
-          </Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={[styles.textStyle, OOSStyle]}>
-              Stock: { sku }
-            </Text>
+        <ScrollView>
+          <Icon
+            name="close"
+            size={36}
+            color="white"
+            style={styles.iconStyle}
+            onPress={closeDetails}
+          />
+          <Image
+            source={{ uri }}
+            style={styles.thumbnail}
+          />
+          <View style={{ flexDirection: 'row', marginBottom: 5, opacity: 0.8 }}>
+            { this.renderImageList(images.icon, null) }
             {
-              outOfStock ?
-                <Text style={[styles.textStyle, { color: '#FF8360' }]}>
-                  Out Of Stock
-                </Text> : null
+              imageArray.map((src, i) => this.renderImageList(src, i))
             }
           </View>
-        </View>
-        <View style={{ alignItems: 'center', margin: 10 }}>
-          <Text style={styles.textStyle}>
-            { `Get ${name.en} with ${ticketPrice} tickets` }
-          </Text>
-          <TouchableOpacity
-            style={[styles.btnStyle, OOSBtn]}
-            disabled={outOfStock}
-            onPress={() => { buy(id, name.en, ticketPrice); }}
-          >
-            <Icon name="swap-horizontal" size={24} color="#30D64A" />
-            <Image
-              source={ticket}
-              style={styles.ticketImage}
-            />
-            <Text style={styles.btnText}>
-              { ticketPrice }
+          <View style={{ margin: 5 }}>
+            <Text style={styles.textStyle}>
+              {Strings(locale, 'desc')}
             </Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={styles.textStyle}>
+              { description[locale] }
+            </Text>
+            <Text style={styles.textStyle}>
+              Size: {size.width}x{size.height}x{size.length} cm / Weight: {weight.value} kg
+            </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={[styles.textStyle, OOSStyle]}>
+                Stock: { sku }
+              </Text>
+              {
+                outOfStock ?
+                  <Text style={[styles.textStyle, { color: '#FF8360' }]}>
+                    Out Of Stock
+                  </Text> : null
+              }
+            </View>
+          </View>
+          <View style={{ alignItems: 'center', margin: 10 }}>
+            <Text style={styles.textStyle}>
+              { `Get ${name[locale]} with ${ticketPrice} tickets` }
+            </Text>
+            <TouchableOpacity
+              style={[styles.btnStyle, OOSBtn]}
+              disabled={outOfStock}
+              onPress={() => { buy(id, name[locale], ticketPrice); }}
+            >
+              <Icon name="swap-horizontal" size={24} color="#30D64A" />
+              <Image
+                source={ticket}
+                style={styles.ticketImage}
+              />
+              <Text style={styles.btnText}>
+                { ticketPrice }
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
-const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -153,7 +164,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontFamily: 'PixelOperator8-Bold',
-    fontSize: 12,
+    fontSize: 10,
     margin: 3,
   },
   btnText: {

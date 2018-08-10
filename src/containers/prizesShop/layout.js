@@ -18,6 +18,7 @@ import NavBar from '../../components/navBar/container';
 import PrizeList from './listContainer';
 import Loading from '../utilities/loading/layout';
 import { getPrizeList, buyPrizes } from './actions';
+import Strings from '../miscellaneous/i18n';
 
 const Telebot = require('../../../assets/telebuddies/telebot/telebot_love.png');
 
@@ -46,17 +47,17 @@ class PrizeShop extends Component {
     Animated.loop(move).start();
   }
   exchange(id, productName, ticketPrice) {
-    const { navigator, buy } = this.props;
+    const { navigator, buy, locale } = this.props;
     Alert.alert(
-      `Acquire Prize ${emoji.get('bear')}`,
+      `${Strings(locale, 'acquire')} ${emoji.get('bear')}`,
       `Want to use ${ticketPrice} tickets to get 1 "${productName}" ${emoji.get('question')}`,
       [
         {
-          text: `No ${emoji.get('heavy_multiplication_x')}`,
+          text: `${Strings(locale, 'no')} ${emoji.get('heavy_multiplication_x')}`,
           style: 'cancel',
         },
         {
-          text: `Yes ${emoji.get('heavy_check_mark')}`,
+          text: `${Strings(locale, 'no')} ${emoji.get('heavy_check_mark')}`,
           onPress: () => {
             buy(navigator, id, ticketPrice, productName);
           },
@@ -65,7 +66,7 @@ class PrizeShop extends Component {
     );
   }
   render() {
-    const { prizes, navigator } = this.props;
+    const { prizes, navigator, locale } = this.props;
     const rotate = this.swing.interpolate({
       inputRange: [0, 0.25, 0.75, 1],
       outputRange: ['0deg', '-10deg', '10deg', '0deg'],
@@ -92,6 +93,7 @@ class PrizeShop extends Component {
             <PrizeList
               prizes={prizes}
               buy={this.exchange}
+              locale={locale}
             /> : <Loading />
         }
       </View>
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   prizes: state.center.prizes,
+  locale: state.preference.language.locale,
 });
 
 const mapDispatchToProps = dispatch =>

@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { formatTimeStamp } from '../../../../utils/format';
 import { selectPrize, unselectPrize, exchange } from '../../actions';
+import Strings from '../../i18n';
 
 
 const ticket = require('../../../../../assets/utilities/ticket.png');
@@ -25,17 +26,17 @@ class PlayItem extends Component {
     this.getTickets = this.getTickets.bind(this);
   }
   getTickets(name, ticketPrice) {
-    const { id, navigator } = this.props;
+    const { id, navigator, locale } = this.props;
     Alert.alert(
-      `Get Tickets ${emoji.get('ticket')}`,
+      `${Strings(locale, 'getTicket')} ${emoji.get('ticket')}`,
       `Want to exhcnage "${name}" for ${ticketPrice * 0.9} tickets ${emoji.get('question')}`,
       [
         {
-          text: `No ${emoji.get('heavy_multiplication_x')}`,
+          text: `${Strings(locale, 'no')} ${emoji.get('heavy_multiplication_x')}`,
           style: 'cancel',
         },
         {
-          text: `Yes ${emoji.get('heavy_check_mark')}`,
+          text: `${Strings(locale, 'yes')} ${emoji.get('heavy_check_mark')}`,
           onPress: () => {
             this.props.exchange(navigator, id);
           },
@@ -85,7 +86,7 @@ class PlayItem extends Component {
             onPress={this.toggleSelect}
           >
             <Text style={[styles.btnText, { color: 'white' }]}>
-              Select
+              { Strings(locale, 'select') }
             </Text>
             <Icon name={icon} size={25} color="white" />
           </TouchableOpacity>
@@ -103,7 +104,7 @@ class PlayItem extends Component {
             </Text>
           </TouchableOpacity>
           <Text style={[styles.text, { alignSelf: 'flex-start' }]}>
-            Expires: {formatTimeStamp(expires)}
+            { Strings(locale, 'expires') }: {formatTimeStamp(expires)}
           </Text>
         </View>
       </View>
@@ -171,13 +172,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    locale: state.preference.language.locale,
-    play: state.mis.play,
-  };
-}
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectPrize,
@@ -186,4 +180,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayItem);
+export default connect(null, mapDispatchToProps)(PlayItem);

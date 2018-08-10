@@ -5,7 +5,7 @@ const en = {
   items: 'Items:',
   buyCoins: 'Buy\nCoins',
   lb: 'Leader\nboard',
-  speak: 'Welcome to MY Game >w< \n \nBefore you start, click here to learn the details.',
+  speak: 'Welcome to MY Game >w< \n \nClick here to learn current rewards and how to play!',
   current: 'Current\nPeriod',
   last: 'Last\nPeriod',
   weekly: 'Weekly\nBest',
@@ -20,6 +20,9 @@ const en = {
   bonusOffer: "You did great!\nFor users didn't win last two days\nYou can use a special item :",
   noThx: 'No Thanks',
   moreScore: 'Score X 1.5 !',
+  rewards: 'Current Reward',
+  how: 'How to Play?',
+  eachScore: 'Each Play score higher than 70:',
 };
 
 export default en;

@@ -36,7 +36,9 @@ class GamePlaySelect extends Component {
         </View>
       );
     }
-    const { nextState, string, navigator } = this.props;
+    const {
+      nextState, string, navigator, locale,
+    } = this.props;
     if (nextState) {
       prizes = prizes.filter(item => item.status !== 'normal');
     } else {
@@ -59,11 +61,13 @@ class GamePlaySelect extends Component {
                   product={item.product}
                   expires={item.expires}
                   navigator={navigator}
+                  locale={locale}
                 />;
               }
               return <ShippedItem
                 product={item.product}
                 status={item.status}
+                locale={locale}
                 nextState={() => { nextState(item.deliveryId); }}
               />;
             }}
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
+    locale: state.preference.language.locale,
     string: state.preference.language.string,
     prizes: state.mis.prizes,
   };

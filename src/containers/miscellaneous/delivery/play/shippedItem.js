@@ -6,15 +6,18 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import Strings from '../../i18n';
 
-const ShippedItem = ({ product, nextState, status }) =>
+const ShippedItem = ({
+  locale, product, nextState, status,
+}) =>
   <View style={styles.container}>
     <Image
       source={{ uri: product.images.thumbnail }}
       style={styles.imageStyle}
     />
     <Text style={styles.text}>
-      {product.name.en}
+      {product.name[locale]}
     </Text>
     <View style={{
       flexDirection: 'row',
@@ -28,11 +31,11 @@ const ShippedItem = ({ product, nextState, status }) =>
         style={styles.btnStyle}
       >
         <Text style={styles.text}>
-          Details
+          {Strings(locale, 'details')}
         </Text>
       </TouchableOpacity>
       <Text style={[styles.text, { textAlign: 'right' }]}>
-        {`Status:\n${status}`}
+        {`${Strings(locale, 'status')}:\n${Strings(locale, status)}`}
       </Text>
     </View>
   </View>;

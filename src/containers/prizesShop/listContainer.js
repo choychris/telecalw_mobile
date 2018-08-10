@@ -61,7 +61,7 @@ class PrizeList extends Component {
   }
 
   render() {
-    const { prizes, buy } = this.props;
+    const { prizes, buy, locale } = this.props;
     const { details } = this.state;
     return (
       <Animated.View
@@ -82,6 +82,7 @@ class PrizeList extends Component {
             <PrizeItem
               {...item}
               buy={buy}
+              locale={locale}
               showDetails={() => this.showDetails(index)}
             />
           }
@@ -91,6 +92,7 @@ class PrizeList extends Component {
             closeDetails={this.closeDetails}
             {...details}
             buy={buy}
+            locale={locale}
           /> : null }
       </Animated.View>
     );

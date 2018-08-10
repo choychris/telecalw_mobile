@@ -54,11 +54,13 @@ class Home extends Component {
 
   getDetailInformation() {
     const { winner, how } = this.state;
+    const { locale } = this.props;
     if (winner) {
       return <WinHistory
         onClose={() => this.showDetails(false)}
         getWinners={this.props.getWinHistory}
         winners={this.props.winners}
+        locale={locale}
       />;
     } else if (how) {
       return <Instruction onClose={() => this.showDetails(false)} />;
@@ -167,7 +169,9 @@ class Home extends Component {
   }
 
   render() {
-    const { gameStarted, gameEnded, navigator } = this.props;
+    const {
+      gameStarted, gameEnded, navigator, locale,
+    } = this.props;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
       outputRange: [height / 3, -600],
@@ -241,11 +245,13 @@ class Home extends Component {
               navigator={navigator}
               winner={() => { this.showDetails(true, 'winner'); }}
               how={() => { this.showDetails(true, 'how'); }}
+              locale={locale}
             /> :
             <Dialog
               ended={this.state.buttonShow}
               onYesPress={this.restart}
               onNoPress={this.endPlay}
+              locale={locale}
             />}
         </Animated.View>
       </View>
@@ -257,6 +263,7 @@ const mapStateToProps = state => ({
   gameStarted: state.stackerGame.home.start,
   winners: state.stackerGame.home.winners,
   gameEnded: state.stackerGame.game.end,
+  locale: state.preference.language.locale,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

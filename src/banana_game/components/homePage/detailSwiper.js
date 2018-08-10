@@ -12,16 +12,14 @@ import Config from '../../utils/config';
 const en1 = require('../../images/en_details1.png');
 const en2 = require('../../images/en_details2.png');
 const en3 = require('../../images/en_details3.png');
-const en4 = require('../../images/en_details4.png');
 const zh1 = require('../../images/zh_details1.png');
 const zh2 = require('../../images/zh_details2.png');
 const zh3 = require('../../images/zh_details3.png');
-const zh4 = require('../../images/zh_details4.png');
 
 const { deviceWidth, deviceHeight } = Config;
 const posters = {
-  en: [0, en1, en2, en3, en4],
-  zhHant: [0, zh1, zh2, zh3, zh4],
+  en: [0, en1, en2, en3],
+  zhHant: [0, zh1, zh2, zh3],
 };
 
 class DetailSwiper extends Component {
@@ -70,6 +68,7 @@ class DetailSwiper extends Component {
                   key={Math.random()}
                   playerCount={playerCount}
                   containerStyle={styles.reward}
+                  lang={lang}
                 />
               );
             }

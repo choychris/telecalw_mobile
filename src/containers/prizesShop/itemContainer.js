@@ -8,11 +8,12 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Strings from '../miscellaneous/i18n';
 
 const ticket = require('../../../assets/utilities/ticket.png');
 
 const PrizeItem = ({
-  id, images, name, sku, ticketPrice, buy, showDetails,
+  id, images, name, sku, ticketPrice, buy, showDetails, locale,
 }) => {
   const outOfStock = (sku <= 0);
   const OOSStyle = outOfStock ? { opacity: 0.5, textDecorationLine: 'line-through' } : null;
@@ -24,18 +25,15 @@ const PrizeItem = ({
         style={styles.imageStyle}
       />
       <Text style={styles.textStyle}>
-        { name.en }
+        { name[locale] }
       </Text>
-      <View style={{ flexDirection: 'row' }}>
+      <View>
         <Text style={[styles.textStyle, OOSStyle]}>
           Stock: { sku }
         </Text>
-        {
-          outOfStock ?
-            <Text style={[styles.textStyle, { color: '#FF8360' }]}>
-              Out Of Stock
-            </Text> : null
-        }
+        <Text style={[styles.textStyle, { color: '#FF8360' }]}>
+          { outOfStock ? 'Out Of Stock' : ' '}
+        </Text>
       </View>
       <View style={styles.btnWrapper}>
         <TouchableOpacity
@@ -43,13 +41,13 @@ const PrizeItem = ({
           onPress={showDetails}
         >
           <Text style={styles.btnText}>
-            {'Prize\nDetails'}
+            {Strings(locale, 'prizeDetails')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnStyle, OOSBtn]}
           disabled={outOfStock}
-          onPress={() => { buy(id, name.en, ticketPrice); }}
+          onPress={() => { buy(id, name[locale], ticketPrice); }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon name="swap-horizontal" size={24} color="#30D64A" />
