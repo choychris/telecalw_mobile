@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Button from '../../../components/utilities/buttons';
+import Button from '../utilities/buttons';
 
 function toLogin(navigator) {
   navigator.resetTo({
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     backgroundColor: '#3B5998',
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 20,
     marginVertical: 5,
   },

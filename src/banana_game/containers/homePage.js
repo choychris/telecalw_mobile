@@ -6,7 +6,7 @@ import DetailsButton from '../components/homePage/detailsButton';
 import NavButtonGroup from '../components/homePage/navigate/buttonGroup';
 import ItemButtonGroup from '../components/homePage/items/itemButtonGroup';
 import DetailSwiper from '../components/homePage/detailSwiper';
-import LoginButton from '../components/homePage/loginButton';
+import LoginButton from '../../components/utilities/loginButton';
 import BackButton from '../../components/navBar/container';
 import Config from '../utils/config';
 import { chooseGame } from '../../containers/game/actions';

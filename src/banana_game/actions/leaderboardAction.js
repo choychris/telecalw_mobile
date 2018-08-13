@@ -48,9 +48,10 @@ export const getWeeklyBest = () =>
 
 export const playCount = () =>
   (dispatch, getState) => {
-    const { id } = getState().auth.token.lbToken;
+    const { lbToken } = getState().auth.token;
+    if (!lbToken) return;
     const { gameId } = getState().game;
-    countPlayers(gameId, id)
+    countPlayers(gameId, lbToken.id)
       .then((res) => {
         dispatch({
           type: 'UPDATE_PLAYERCOUNT',

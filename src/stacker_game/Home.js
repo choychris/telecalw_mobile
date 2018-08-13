@@ -63,7 +63,10 @@ class Home extends Component {
         locale={locale}
       />;
     } else if (how) {
-      return <Instruction onClose={() => this.showDetails(false)} />;
+      return <Instruction
+        onClose={() => this.showDetails(false)}
+        locale={locale}
+      />;
     }
     return null;
   }
@@ -170,8 +173,9 @@ class Home extends Component {
 
   render() {
     const {
-      gameStarted, gameEnded, navigator, locale,
+      gameStarted, gameEnded, navigator, locale, accessToken,
     } = this.props;
+    const loggedIn = !!accessToken;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
       outputRange: [height / 3, -600],
@@ -241,6 +245,7 @@ class Home extends Component {
         >
           { !gameStarted ?
             <Buttons
+              loggedIn={loggedIn}
               start={() => this.switchingState(true, navigator)}
               navigator={navigator}
               winner={() => { this.showDetails(true, 'winner'); }}
@@ -264,6 +269,7 @@ const mapStateToProps = state => ({
   winners: state.stackerGame.home.winners,
   gameEnded: state.stackerGame.game.end,
   locale: state.preference.language.locale,
+  accessToken: state.auth.token.lbToken,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

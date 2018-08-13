@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import locale from '../../utils/i18n/language';
 
@@ -70,70 +71,72 @@ class Rewards extends Component {
     });
     const array = new Array(3).fill();
     return (
-      <View style={styles.constainer}>
-        <Text style={styles.title}>{locale(lang, 'rewards')}</Text>
-        <View style={styles.ticketRow}>
-          {
-            array.map(() =>
-              <Animated.Image
-                key={Math.random()}
-                source={ticket}
-                style={[
-                  styles.ticketImage,
-                  {
-                    transform: [{ rotateY }],
-                  },
-                ]}
-              />)
-          }
-        </View>
-        {
-          rewards.map((reward) => {
-            const bonus = (playerCount >= 50) ? reward.extra : 0;
-            const amount = ticketCount(reward.amt, playerCount);
-            return (
-              <View key={reward.amt} style={styles.ticketRow}>
-                <Image
-                  source={reward.image}
-                  style={styles.imageStyle}
-                />
-                <View style={{ flex: 5 }}>
-                  <Text style={styles.text}>{reward.word}</Text>
-                  <Text style={[styles.text, { color: '#0049D8'}]}>
-                    { `${amount} \n+ ${bonus} Bonus` }
-                  </Text>
-                </View>
-                <Image
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={styles.constainer}>
+          <Text style={styles.title}>{locale(lang, 'rewards')}</Text>
+          <View style={styles.ticketRow}>
+            {
+              array.map(() =>
+                <Animated.Image
+                  key={Math.random()}
                   source={ticket}
-                  style={[styles.ticketImage, { flex: 1 }]}
-                />
-              </View>
-            );
-          })
-        }
-        <View style={styles.ticketRow}>
-          <Image
-            source={star}
-            style={styles.imageStyle}
-          />
-          <View style={{ flex: 5 }}>
-            <Text style={styles.text}>{locale(lang, 'eachScore')}</Text>
-            <Text style={[styles.text, { color: '#0049D8' }]}>
-              10
+                  style={[
+                    styles.ticketImage,
+                    {
+                      transform: [{ rotateY }],
+                    },
+                  ]}
+                />)
+            }
+          </View>
+          {
+            rewards.map((reward) => {
+              const bonus = (playerCount >= 50) ? reward.extra : 0;
+              const amount = ticketCount(reward.amt, playerCount);
+              return (
+                <View key={reward.amt} style={styles.ticketRow}>
+                  <Image
+                    source={reward.image}
+                    style={styles.imageStyle}
+                  />
+                  <View style={{ flex: 5 }}>
+                    <Text style={styles.text}>{reward.word}</Text>
+                    <Text style={[styles.text, { color: '#0049D8' }]}>
+                      { `${amount} \n+ ${bonus} Bonus` }
+                    </Text>
+                  </View>
+                  <Image
+                    source={ticket}
+                    style={[styles.ticketImage, { flex: 1 }]}
+                  />
+                </View>
+              );
+            })
+          }
+          <View style={styles.ticketRow}>
+            <Image
+              source={star}
+              style={styles.imageStyle}
+            />
+            <View style={{ flex: 5 }}>
+              <Text style={styles.text}>{locale(lang, 'eachScore')}</Text>
+              <Text style={[styles.text, { color: '#0049D8' }]}>
+                10
+              </Text>
+            </View>
+            <Image
+              source={ticket}
+              style={[styles.ticketImage, { flex: 1 }]}
+            />
+          </View>
+          <View style={{ alignSelf: 'flex-end' }}>
+            <Text
+              style={{ alignSelf: 'flex-end', fontWeight: 'bold' }}
+            >
+              {`${locale(lang, 'how')} >>`}
             </Text>
           </View>
-          <Image
-            source={ticket}
-            style={[styles.ticketImage, { flex: 1 }]}
-          />
-        </View>
-        <View style={{ alignSelf: 'flex-end' }}>
-          <Text
-            style={{ alignSelf: 'flex-end', fontWeight: 'bold' }}
-          >
-            {`${locale(lang, 'how')} >>`}
-          </Text>
-        </View>
+        </ScrollView>
       </View>
     );
   }
@@ -144,7 +147,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     // borderWidth: 1,
     alignItems: 'center',
-    flex: 1,
   },
   ticketRow: {
     flexDirection: 'row',
