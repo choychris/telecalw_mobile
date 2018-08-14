@@ -34,7 +34,8 @@ class HomeButtons extends Component {
 
   render() {
     const {
-      start, navigator, winner, how, locale, loggedIn, playSound,
+      start, navigator, winner, how,
+      locale, loggedIn, playSound, release,
     } = this.props;
     if (!loggedIn) {
       return <LoginButton navigator={navigator} />;
@@ -50,12 +51,14 @@ class HomeButtons extends Component {
             start();
           }}
         />
-        <NavBtn
-          color="#4A90E2"
-          text={Strings(locale, 'buyCoin')}
-          pic={coinsMulti}
-          onPress={() => { toTopUp(navigator); }}
-        />
+        { release ?
+          <NavBtn
+            color="#4A90E2"
+            text={Strings(locale, 'buyCoin')}
+            pic={coinsMulti}
+            onPress={() => { toTopUp(navigator); }}
+          /> : null
+        }
         <NavBtn
           color="#4A90E2"
           text={`${emoji.get('medal')}\n${Strings(locale, 'weeklyWin')}`}
@@ -86,9 +89,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const mapStateToProps = state => ({
+  release: state.mis.version.release,
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     playSound: playUISound,
   }, dispatch);
 
-export default connect(null, mapDispatchToProps)(HomeButtons);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeButtons);
