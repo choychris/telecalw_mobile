@@ -42,12 +42,12 @@ const Instruction = ({ onClose, locale }) => (
 const { width, height } = Config;
 const styles = StyleSheet.create({
   container: {
-    height: height / 1.2,
-    top: height / 40,
+    height: height * 0.7,
+    top: height / 12,
   },
   imageStyle: {
     width: width * 0.85,
-    height: height / 1.35,
+    height: height * 0.6,
     resizeMode: 'contain',
     alignSelf: 'center',
     borderWidth: 1,

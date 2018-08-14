@@ -16,6 +16,7 @@ import {
   getWinHistory,
   saveGameSore,
 } from './actions/homeAction';
+import { playUISound, stackerGameSound } from '../utils/sound';
 import WinHistory from './components/home/winners/winHistory';
 import Instruction from './components/instruction';
 import { chooseGame } from '../containers/game/actions';
@@ -32,13 +33,14 @@ class Home extends Component {
     };
     props.chooseGame('B0001');
     this.buttonDrop = new Animated.Value(300);
-    this.playgroundDrop = new Animated.Value(600);
+    this.playgroundDrop = new Animated.Value(800);
     this.detailsAnimate = new Animated.Value(600);
     this.getDetailInformation = this.getDetailInformation.bind(this);
     this.restart = this.restart.bind(this);
     this.switchingState = this.switchingState.bind(this);
     this.showDetails = this.showDetails.bind(this);
     this.endPlay = this.endPlay.bind(this);
+    this.endingBounceUp = this.endingBounceUp.bind(this);
   }
 
   componentDidMount() {
@@ -74,6 +76,7 @@ class Home extends Component {
   endingBounceUp() {
     const jumpValue = [20, -200, -100, (-height / 2) + 50];
     const animateArray = [];
+    this.props.stackerGameSound('buddy');
     for (let i = 0; i < jumpValue.length; i += 1) {
       animateArray.push(Animated.timing(
         this.buttonDrop,
@@ -87,6 +90,7 @@ class Home extends Component {
 
     Animated.sequence(animateArray).start(() => {
       this.setState({ buttonShow: true });
+      this.props.stackerGameSound('buddy');
     });
   }
 
@@ -108,6 +112,7 @@ class Home extends Component {
         },
       );
       this.props.switchGameState(start, navigator, animate);
+      this.props.stackerGameSound('box');
     });
   }
 
@@ -131,6 +136,7 @@ class Home extends Component {
   }
 
   endPlay() {
+    this.props.playUISound('cancel');
     this.switchingState(false);
     this.setState({ buttonShow: false });
     this.props.restartGame();
@@ -138,6 +144,7 @@ class Home extends Component {
 
   restart() {
     const { navigator } = this.props;
+    this.props.playUISound('start');
     const animate = Animated.timing(
       this.buttonDrop,
       {
@@ -168,6 +175,7 @@ class Home extends Component {
         useNativeDriver: true,
       },
     );
+    this.props.stackerGameSound('box');
     Animated.sequence([playground, button]).start();
   }
 
@@ -278,6 +286,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getWinHistory,
   chooseGame,
   saveGameSore,
+  playUISound,
+  stackerGameSound,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

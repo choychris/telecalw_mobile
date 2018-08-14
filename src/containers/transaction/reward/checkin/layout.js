@@ -64,7 +64,7 @@ class CheckinReward extends Component {
               resizeMode="contain"
             />
           </View>
-          <UpdatePrompt string={string.checkIn} />
+          {/* <UpdatePrompt string={string.checkIn} /> */}
         </View>
       </TouchableWithoutFeedback >
     );

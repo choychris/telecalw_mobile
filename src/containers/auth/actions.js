@@ -262,6 +262,7 @@ export function logout(token, navigator) {
         LoginManager.logOut(fbtoken);
         // Step 2 : Deprecate Remote Backend Access Token
         userLogout(token, Request);
+        dispatch({ type: 'STORE_AUTH_TOKEN', value: {} });
         // Step 3 : Navigate to Login UI
         navigator.resetTo({
           screen: 'app.Auth',

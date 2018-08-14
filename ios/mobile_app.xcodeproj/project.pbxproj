@@ -37,6 +37,19 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mobile_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobile_appTests.m */; };
 		2E1F056220DCF140007C1A9A /* count.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E1F056120DCF13F007C1A9A /* count.m4a */; };
+		2E40979B212295B5001DA00D /* buddy_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2E409769212295B4001DA00D /* buddy_up.wav */; };
+		2E40979C212295B5001DA00D /* minor_win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2E409798212295B5001DA00D /* minor_win.wav */; };
+		2E40979D212295B5001DA00D /* major_win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E409799212295B5001DA00D /* major_win.mp3 */; };
+		2E40979E212295B5001DA00D /* stack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E40979A212295B5001DA00D /* stack.mp3 */; };
+		2E4097A02122C4F0001DA00D /* box_move.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E40979F2122C4F0001DA00D /* box_move.m4a */; };
+		2E4097A92122D675001DA00D /* keyboard_button.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A12122D673001DA00D /* keyboard_button.m4a */; };
+		2E4097AA2122D675001DA00D /* electric_razor.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A22122D674001DA00D /* electric_razor.m4a */; };
+		2E4097AB2122D675001DA00D /* drill_short.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A32122D674001DA00D /* drill_short.m4a */; };
+		2E4097AC2122D675001DA00D /* game_startup.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A42122D674001DA00D /* game_startup.m4a */; };
+		2E4097AD2122D675001DA00D /* laser_zap.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A52122D674001DA00D /* laser_zap.m4a */; };
+		2E4097AE2122D675001DA00D /* 8bit_disappear.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A62122D674001DA00D /* 8bit_disappear.m4a */; };
+		2E4097AF2122D675001DA00D /* click_03.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A72122D675001DA00D /* click_03.m4a */; };
+		2E4097B02122D675001DA00D /* falling_spaceship.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E4097A82122D675001DA00D /* falling_spaceship.m4a */; };
 		2E4AE73220E4E41D00042CED /* happyloop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2E4AE73120E4E41C00042CED /* happyloop.wav */; };
 		2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */; };
 		2E64BAEB208B438800FF8AB7 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E64BAEA208B432D00FF8AB7 /* libRNAdMobManager.a */; };
@@ -505,6 +518,19 @@
 		2D02E47B1E0B4A5D006451C7 /* mobile_app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile_app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mobile_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobile_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1F056120DCF13F007C1A9A /* count.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = count.m4a; path = ../sounds/count.m4a; sourceTree = "<group>"; };
+		2E409769212295B4001DA00D /* buddy_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = buddy_up.wav; path = "../../../_teleclaw Materials/sounds/toStacker/buddy_up.wav"; sourceTree = "<group>"; };
+		2E409798212295B5001DA00D /* minor_win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = minor_win.wav; path = "../../../_teleclaw Materials/sounds/toStacker/minor_win.wav"; sourceTree = "<group>"; };
+		2E409799212295B5001DA00D /* major_win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major_win.mp3; path = "../../../_teleclaw Materials/sounds/toStacker/major_win.mp3"; sourceTree = "<group>"; };
+		2E40979A212295B5001DA00D /* stack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = stack.mp3; path = "../../../_teleclaw Materials/sounds/toStacker/stack.mp3"; sourceTree = "<group>"; };
+		2E40979F2122C4F0001DA00D /* box_move.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = box_move.m4a; path = ../android/app/src/main/res/raw/box_move.m4a; sourceTree = "<group>"; };
+		2E4097A12122D673001DA00D /* keyboard_button.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = keyboard_button.m4a; path = ../../../../Downloads/keyboard_button.m4a; sourceTree = "<group>"; };
+		2E4097A22122D674001DA00D /* electric_razor.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = electric_razor.m4a; path = ../../../../Downloads/electric_razor.m4a; sourceTree = "<group>"; };
+		2E4097A32122D674001DA00D /* drill_short.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = drill_short.m4a; path = ../../../../Downloads/drill_short.m4a; sourceTree = "<group>"; };
+		2E4097A42122D674001DA00D /* game_startup.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = game_startup.m4a; path = ../../../../Downloads/game_startup.m4a; sourceTree = "<group>"; };
+		2E4097A52122D674001DA00D /* laser_zap.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = laser_zap.m4a; path = ../../../../Downloads/laser_zap.m4a; sourceTree = "<group>"; };
+		2E4097A62122D674001DA00D /* 8bit_disappear.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = 8bit_disappear.m4a; path = ../../../../Downloads/8bit_disappear.m4a; sourceTree = "<group>"; };
+		2E4097A72122D675001DA00D /* click_03.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = click_03.m4a; path = ../../../../Downloads/click_03.m4a; sourceTree = "<group>"; };
+		2E4097A82122D675001DA00D /* falling_spaceship.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = falling_spaceship.m4a; path = ../../../../Downloads/falling_spaceship.m4a; sourceTree = "<group>"; };
 		2E4AE73120E4E41C00042CED /* happyloop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = happyloop.wav; path = ../sounds/happyloop.wav; sourceTree = "<group>"; };
 		2E64BAB9208B358E00FF8AB7 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		2E64BAE5208B432D00FF8AB7 /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAdMobManager.xcodeproj; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; };
@@ -898,6 +924,19 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				2E4097A62122D674001DA00D /* 8bit_disappear.m4a */,
+				2E4097A72122D675001DA00D /* click_03.m4a */,
+				2E4097A32122D674001DA00D /* drill_short.m4a */,
+				2E4097A22122D674001DA00D /* electric_razor.m4a */,
+				2E4097A82122D675001DA00D /* falling_spaceship.m4a */,
+				2E4097A42122D674001DA00D /* game_startup.m4a */,
+				2E4097A12122D673001DA00D /* keyboard_button.m4a */,
+				2E4097A52122D674001DA00D /* laser_zap.m4a */,
+				2E40979F2122C4F0001DA00D /* box_move.m4a */,
+				2E409769212295B4001DA00D /* buddy_up.wav */,
+				2E409799212295B5001DA00D /* major_win.mp3 */,
+				2E409798212295B5001DA00D /* minor_win.wav */,
+				2E40979A212295B5001DA00D /* stack.mp3 */,
 				2E4AE73120E4E41C00042CED /* happyloop.wav */,
 				2E1F056120DCF13F007C1A9A /* count.m4a */,
 				2ED67BA020DBC4DD002FE606 /* background.mp3 */,
@@ -1651,14 +1690,21 @@
 				D6B78B861FD131E70045EEEE /* Ionicons.ttf in Resources */,
 				2ED67BA420DBC4DD002FE606 /* click1.mp3 in Resources */,
 				2E4AE73220E4E41D00042CED /* happyloop.wav in Resources */,
+				2E40979D212295B5001DA00D /* major_win.mp3 in Resources */,
 				D6B78B871FD131E70045EEEE /* MaterialCommunityIcons.ttf in Resources */,
 				D6B78B741FD122290045EEEE /* Silom.ttf in Resources */,
 				D6B78B831FD131E70045EEEE /* Feather.ttf in Resources */,
 				2E1F056220DCF140007C1A9A /* count.m4a in Resources */,
 				2ED67BAB20DBC4DD002FE606 /* spaceship.mp3 in Resources */,
+				2E4097B02122D675001DA00D /* falling_spaceship.m4a in Resources */,
+				2E40979C212295B5001DA00D /* minor_win.wav in Resources */,
 				D6B78B821FD131E70045EEEE /* EvilIcons.ttf in Resources */,
 				2ED67BA620DBC4DD002FE606 /* end.wav in Resources */,
+				2E4097AC2122D675001DA00D /* game_startup.m4a in Resources */,
+				2E4097AA2122D675001DA00D /* electric_razor.m4a in Resources */,
+				2E4097AF2122D675001DA00D /* click_03.m4a in Resources */,
 				D6B78B8A1FD131E70045EEEE /* SimpleLineIcons.ttf in Resources */,
+				2E4097A92122D675001DA00D /* keyboard_button.m4a in Resources */,
 				D6B78B851FD131E70045EEEE /* Foundation.ttf in Resources */,
 				2ED67BB120DBC4DD002FE606 /* background.mp3 in Resources */,
 				2ED67BA120DBC4DD002FE606 /* fail.mp3 in Resources */,
@@ -1672,23 +1718,29 @@
 				2ED67BA820DBC4DD002FE606 /* cancel_error.mp3 in Resources */,
 				2ED67BAE20DBC4DD002FE606 /* incorrect.wav in Resources */,
 				D6B78B891FD131E70045EEEE /* Octicons.ttf in Resources */,
+				2E4097AE2122D675001DA00D /* 8bit_disappear.m4a in Resources */,
 				D6B78B811FD131E70045EEEE /* Entypo.ttf in Resources */,
 				332EB008DBF34E99AAED769F /* Pixel Operator 8 Bold.ttf in Resources */,
+				2E40979E212295B5001DA00D /* stack.mp3 in Resources */,
 				19157B4E18A14F6193CBAD25 /* Pixel Operator 8.ttf in Resources */,
 				3B9D08096F70493A84E9AE27 /* Pixel Operator Bold.ttf in Resources */,
 				4CEC645506F247B099694A19 /* Pixel Operator SC Bold.ttf in Resources */,
 				5F30462FC2AD4D53A29F397D /* Pixel Operator SC.ttf in Resources */,
 				2ED67BAC20DBC4DD002FE606 /* whoosh.mp3 in Resources */,
 				2ED67BA720DBC4DD002FE606 /* start.wav in Resources */,
+				2E4097A02122C4F0001DA00D /* box_move.m4a in Resources */,
 				7B8888D9C98B42668EBCE7A7 /* Entypo.ttf in Resources */,
 				C75A09C0481D4B4EA4CC6002 /* EvilIcons.ttf in Resources */,
 				2ED67BA520DBC4DD002FE606 /* count_down.mp3 in Resources */,
 				FC50A1CEF82F4D559A376EB0 /* Feather.ttf in Resources */,
+				2E40979B212295B5001DA00D /* buddy_up.wav in Resources */,
 				CB30AE5B8EBC434493870907 /* FontAwesome.ttf in Resources */,
 				C5136B898CE44A2E847B8EBD /* Foundation.ttf in Resources */,
 				2ED67BA220DBC4DD002FE606 /* correct.wav in Resources */,
 				4137CA7A787B4D68A166E464 /* Ionicons.ttf in Resources */,
 				A0A0614BF54F4BB287222C5E /* MaterialCommunityIcons.ttf in Resources */,
+				2E4097AD2122D675001DA00D /* laser_zap.m4a in Resources */,
+				2E4097AB2122D675001DA00D /* drill_short.m4a in Resources */,
 				2ED67BAA20DBC4DD002FE606 /* happy.mp3 in Resources */,
 				4180B10C2F6147E59C6AA377 /* MaterialIcons.ttf in Resources */,
 				09A919C85F434658A48921A8 /* Octicons.ttf in Resources */,
