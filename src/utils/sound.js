@@ -61,6 +61,43 @@ export function bananaGameSound(sound) {
   };
 }
 
+export function stackerGameSound(sound) {
+  return (dispatch, getState) => {
+    const soundPre = getState().preference.preference.sound;
+    if (soundPre) {
+      let soundTrack;
+      switch (sound) {
+        case 'box':
+          soundTrack = 'box_move.m4a';
+          break;
+        case 'buddy':
+          soundTrack = 'buddy_up.wav';
+          break;
+        case 'major':
+          soundTrack = 'major_win.mp3';
+          break;
+        case 'minor':
+          soundTrack = 'minor_win.wav';
+          break;
+        case 'stack':
+          soundTrack = 'stack.mp3';
+          break;
+        default:
+          break;
+      }
+      Sound.setCategory('Ambient');
+      const soundObj = new Sound(soundTrack, Sound.MAIN_BUNDLE, (error) => {
+        if (!error) {
+          soundObj.setVolume(0.3);
+          soundObj.play(() => {
+            soundObj.release();
+          });
+        }
+      });
+    }
+  };
+}
+
 export function playUISound(sound) {
   return (dispatch, getState) => {
     let soundPre = getState().preference.preference.sound;

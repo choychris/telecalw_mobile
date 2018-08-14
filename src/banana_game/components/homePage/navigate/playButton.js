@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, Image, StyleSheet, View } from 'react-native';
-import Config from '../../../utils/config';
+import { shadow } from '../../../utils/config';
 
 // const coins = require('../../../images/telecoins_single.png');
 const coins = require('../../../../../assets/utilities/coins/telecoins_single.png');
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0CF18',
     paddingVertical: 15,
     borderRadius: 50,
-    ...Config.shadow,
+    ...shadow,
   },
   rowContainer: {
     flexDirection: 'row',

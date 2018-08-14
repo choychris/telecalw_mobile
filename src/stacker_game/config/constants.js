@@ -17,9 +17,11 @@ const margin = (width - playWidth - borderWidth);
 
 // reward details:
 export const rewards = {
-  mini: 100,
-  major: 1000,
+  mini: 15,
+  major: 2600,
 };
+
+export const coins = 25;
 
 export default {
   width,

@@ -9,9 +9,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles as style } from './home/winners/winHistory';
 import Config from '../config/constants';
 
-const insturc = require('../images/instruction.png');
+const en = require('../images/instruc_en.png');
+const zhHant = require('../images/instruc_zh.png');
 
-const Instruction = ({ onClose }) => (
+const images = {
+  en,
+  zhHant,
+};
+
+const Instruction = ({ onClose, locale }) => (
   <View
     style={[
       style.container,
@@ -27,7 +33,7 @@ const Instruction = ({ onClose }) => (
     />
     {/* <Text style={style.headerStyle}>How to Play?</Text> */}
     <Image
-      source={insturc}
+      source={images[locale]}
       style={styles.imageStyle}
     />
   </View>
@@ -36,12 +42,12 @@ const Instruction = ({ onClose }) => (
 const { width, height } = Config;
 const styles = StyleSheet.create({
   container: {
-    height: height / 1.2,
-    top: height / 40,
+    height: height * 0.7,
+    top: height / 12,
   },
   imageStyle: {
     width: width * 0.85,
-    height: height / 1.35,
+    height: height * 0.6,
     resizeMode: 'contain',
     alignSelf: 'center',
     borderWidth: 1,

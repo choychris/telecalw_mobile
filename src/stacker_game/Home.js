@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { View, Animated, StatusBar } from 'react-native';
 import BackgroundImage from '../components/utilities/backgroundImage';
+import StarsImage from '../components/utilities/starsImage';
 import BackButton from '../components/navBar/container';
 import Playground from './components/playGround/playLayout';
 import Buttons from './components/home/buttons';
@@ -13,28 +14,33 @@ import {
   switchGameState,
   restartGame,
   getWinHistory,
+  saveGameSore,
 } from './actions/homeAction';
+import { playUISound, stackerGameSound } from '../utils/sound';
 import WinHistory from './components/home/winners/winHistory';
 import Instruction from './components/instruction';
+import { chooseGame } from '../containers/game/actions';
 
 const { height } = Config;
 
 class Home extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       buttonShow: false,
       winner: false,
       how: false,
     };
+    props.chooseGame('B0001');
     this.buttonDrop = new Animated.Value(300);
-    this.playgroundDrop = new Animated.Value(600);
+    this.playgroundDrop = new Animated.Value(800);
     this.detailsAnimate = new Animated.Value(600);
     this.getDetailInformation = this.getDetailInformation.bind(this);
     this.restart = this.restart.bind(this);
     this.switchingState = this.switchingState.bind(this);
     this.showDetails = this.showDetails.bind(this);
     this.endPlay = this.endPlay.bind(this);
+    this.endingBounceUp = this.endingBounceUp.bind(this);
   }
 
   componentDidMount() {
@@ -43,20 +49,26 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.gameEnded) {
+      this.props.saveGameSore();
       this.endingBounceUp();
     }
   }
 
   getDetailInformation() {
     const { winner, how } = this.state;
+    const { locale } = this.props;
     if (winner) {
       return <WinHistory
         onClose={() => this.showDetails(false)}
         getWinners={this.props.getWinHistory}
         winners={this.props.winners}
+        locale={locale}
       />;
     } else if (how) {
-      return <Instruction onClose={() => this.showDetails(false)} />;
+      return <Instruction
+        onClose={() => this.showDetails(false)}
+        locale={locale}
+      />;
     }
     return null;
   }
@@ -64,6 +76,7 @@ class Home extends Component {
   endingBounceUp() {
     const jumpValue = [20, -200, -100, (-height / 2) + 50];
     const animateArray = [];
+    this.props.stackerGameSound('buddy');
     for (let i = 0; i < jumpValue.length; i += 1) {
       animateArray.push(Animated.timing(
         this.buttonDrop,
@@ -77,10 +90,11 @@ class Home extends Component {
 
     Animated.sequence(animateArray).start(() => {
       this.setState({ buttonShow: true });
+      this.props.stackerGameSound('buddy');
     });
   }
 
-  switchingState() {
+  switchingState(start, navigator) {
     Animated.timing(
       this.buttonDrop,
       {
@@ -89,15 +103,16 @@ class Home extends Component {
         useNativeDriver: true,
       },
     ).start(() => {
-      this.props.switchGameState();
-      Animated.timing(
+      const animate = Animated.timing(
         this.buttonDrop,
         {
           toValue: 0,
           duration: 800,
           useNativeDriver: true,
         },
-      ).start();
+      );
+      this.props.switchGameState(start, navigator, animate);
+      this.props.stackerGameSound('box');
     });
   }
 
@@ -121,22 +136,25 @@ class Home extends Component {
   }
 
   endPlay() {
-    this.switchingState();
+    this.props.playUISound('cancel');
+    this.switchingState(false);
     this.setState({ buttonShow: false });
     this.props.restartGame();
   }
 
   restart() {
-    this.setState({ buttonShow: false });
-    this.props.restartGame();
-    Animated.timing(
+    const { navigator } = this.props;
+    this.props.playUISound('start');
+    const animate = Animated.timing(
       this.buttonDrop,
       {
         toValue: 0,
+        delay: 200,
         duration: 300,
         useNativeDriver: true,
       },
-    ).start();
+    );
+    this.props.restartGame(navigator, animate, () => this.setState({ buttonShow: false }));
   }
 
   startAnimation() {
@@ -157,11 +175,15 @@ class Home extends Component {
         useNativeDriver: true,
       },
     );
+    this.props.stackerGameSound('box');
     Animated.sequence([playground, button]).start();
   }
 
   render() {
-    const { gameStarted, gameEnded, navigator } = this.props;
+    const {
+      gameStarted, gameEnded, navigator, locale, accessToken,
+    } = this.props;
+    const loggedIn = !!accessToken;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
       outputRange: [height / 3, -600],
@@ -174,6 +196,7 @@ class Home extends Component {
       <View style={{ flex: 1, overflow: 'hidden' }}>
         <BackgroundImage />
         <StatusBar hidden />
+        <StarsImage />
         <Animated.View
           style={{
             transform: [
@@ -230,15 +253,18 @@ class Home extends Component {
         >
           { !gameStarted ?
             <Buttons
-              start={this.switchingState}
+              loggedIn={loggedIn}
+              start={() => this.switchingState(true, navigator)}
               navigator={navigator}
               winner={() => { this.showDetails(true, 'winner'); }}
               how={() => { this.showDetails(true, 'how'); }}
+              locale={locale}
             /> :
             <Dialog
               ended={this.state.buttonShow}
               onYesPress={this.restart}
               onNoPress={this.endPlay}
+              locale={locale}
             />}
         </Animated.View>
       </View>
@@ -250,12 +276,18 @@ const mapStateToProps = state => ({
   gameStarted: state.stackerGame.home.start,
   winners: state.stackerGame.home.winners,
   gameEnded: state.stackerGame.game.end,
+  locale: state.preference.language.locale,
+  accessToken: state.auth.token.lbToken,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   switchGameState,
   restartGame,
   getWinHistory,
+  chooseGame,
+  saveGameSore,
+  playUISound,
+  stackerGameSound,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -5,10 +5,13 @@ import { connect } from 'react-redux';
 import { getUserWallet } from '../../containers/auth/actions';
 import styles from './styles';
 
-const coins = {
-  single: require('../../../assets/utilities/coins/telecoins_single.png'),
-  multi: require('../../../assets/utilities/coins/telecoins_multi.png'),
-};
+
+const single = require('../../../assets/utilities/coins/telecoins_single.png');
+const ticket = require('../../../assets/utilities/ticket.png');
+// const coins = {
+//   single: require('../../../assets/utilities/coins/telecoins_single.png'),
+//   multi: require('../../../assets/utilities/coins/telecoins_multi.png'),
+// };
 
 class Coins extends Component {
   constructor() {
@@ -48,11 +51,19 @@ class Coins extends Component {
       >
         <Image
           style={styles.image}
-          source={coins.single}
+          source={single}
           resizeMode="contain"
         />
         {(wallet.balance !== undefined) ?
-          <Text style={styles.text}>{Math.round(wallet.balance)}</Text> :
+          <Text style={styles.text}>{Math.round(wallet.balance)} |</Text> :
+          <ActivityIndicator size="small" color="white" />}
+        <Image
+          style={styles.ticket}
+          source={ticket}
+          resizeMode="contain"
+        />
+        {(wallet.ticket !== undefined) ?
+          <Text style={styles.text}>{Math.round(wallet.ticket)}</Text> :
           <ActivityIndicator size="small" color="white" />}
       </TouchableOpacity>
     )

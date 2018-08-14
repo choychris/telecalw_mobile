@@ -42,7 +42,7 @@ export const navigateGame = (start, navigator) =>
         .catch((err) => {
           loading('hide', navigator);
           errorMessage('show', navigator);
-          console.warn(err);
+          console.log(err);
         });
     } else {
       dispatch({

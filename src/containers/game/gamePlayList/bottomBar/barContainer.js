@@ -47,14 +47,14 @@ class BarContainer extends Component {
     const renderMenu = [
 
       { icon: 'rocket', name: 'delivery', navigate: 'app.Delivery' },
-      { icon: 'dollar', name: 'wallet', navigate: 'app.TopUp' },
+      { icon: 'currency-usd', name: 'shop', navigate: 'app.TopUp' },
       { icon: 'gift', name: 'reward', navigate: 'app.Reward' },
-      { icon: 'question-circle', name: 'support', navigate: 'app.Support' },
+      { icon: 'cat', name: 'center', navigate: 'app.PrizeShop' },
 
     ];
     return (
       <FlatList
-        style={{ paddingHorizontal: 10 }}
+        style={{ paddingHorizontal: 8 }}
         horizontal
         data={renderMenu}
         renderItem={({ item }) =>
@@ -88,7 +88,7 @@ class BarContainer extends Component {
             }}
           >
             <Telebot
-              status="setting"
+              status="settingMain"
               style={{ margin: 5 }}
               height={screenWidth}
               width={screenWidth}

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SelectType from '../selectTab';
 import Ranking from './ranking';
-import Config from '../../utils/config';
+import Config, { shadow } from '../../utils/config';
 import { navigateGame } from '../../actions/startGameAction';
 import {
   viewLeaderBoard, getRankData,
@@ -12,7 +12,7 @@ import {
 } from '../../actions/leaderboardAction';
 import locale from '../../utils/i18n/language';
 
-const { deviceWidth, shadow } = Config;
+const { deviceWidth } = Config;
 
 const offSet = ((deviceWidth * (7 / 8)) - 40) / 3;
 

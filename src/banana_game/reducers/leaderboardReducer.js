@@ -27,6 +27,11 @@ const Reducer = (state = initialState, action) => {
         ...state,
         showBoard: action.open,
       };
+    case 'UPDATE_PLAYERCOUNT':
+      return {
+        ...state,
+        totalPlayer: action.totalPlayer,
+      };
     case 'CLEAR_RANK_DATA':
       return {
         ...state,

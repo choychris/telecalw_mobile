@@ -13,7 +13,7 @@ const ReponseBtn = ({ onYesPress, onNoPress }) => (
       style={styles.button}
       onPress={onYesPress}
     >
-      <Text>
+      <Text style={styles.textStyle}>
         YES
       </Text>
     </TouchableOpacity>
@@ -21,7 +21,7 @@ const ReponseBtn = ({ onYesPress, onNoPress }) => (
       style={styles.button}
       onPress={onNoPress}
     >
-      <Text>
+      <Text style={styles.textStyle}>
         NO
       </Text>
     </TouchableOpacity>
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textStyle: {
+    fontFamily: 'PixelOperator-Bold',
+    fontSize: 18,
   },
 });
 

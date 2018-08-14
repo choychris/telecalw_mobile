@@ -1,4 +1,5 @@
 import { rewards } from '../config/constants';
+import { stackerGameSound } from '../../utils/sound';
 
 const getRewards = amount => ({ type: 'STACKER_REWARD', amount });
 
@@ -16,6 +17,9 @@ export const saveLastIndex = (lastIndex, rowNumber) => (dispatch, getState) => {
   });
   if (rowNumber === 4) {
     dispatch(getRewards(rewards.mini));
+    dispatch(stackerGameSound('minor'));
+  } else {
+    dispatch(stackerGameSound('stack'));
   }
 };
 
@@ -28,6 +32,7 @@ export const endGame = (lastIndex, rowNumber, major) => (dispatch, getState) => 
   });
   if (major) {
     dispatch(getRewards(rewards.major));
+    dispatch(stackerGameSound('major'));
   }
 };
 

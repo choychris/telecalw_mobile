@@ -5,7 +5,7 @@ const zhHant = {
   items: '道具:',
   buyCoins: '買金幣',
   lb: '排行榜',
-  speak: '歡迎參加屬於我的遊戲 >w< \n \n開始前可以點選這裡了解玩法喔。',
+  speak: '歡迎參加屬於我的遊戲 >w< \n \n點選這裡得知現時 獎品 及 玩法 喔。',
   current: '本日\n得分',
   last: '上日\n得分',
   weekly: '本周\n最強',
@@ -20,6 +20,9 @@ const zhHant = {
   bonusOffer: '加油!\n前兩天沒有獎品的玩家\n可以使用特別道具 :',
   noThx: '不用了',
   moreScore: '分數 X 1.5 !',
+  rewards: 'Current Reward',
+  how: '怎樣玩?',
+  eachScore: '每次得分大於70:',
 };
 
 export default zhHant;

@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import emoji from 'node-emoji';
 import ListItem from './listItem';
 import Config from '../../../config/constants';
+import Strings from '../../../config/i18n';
 
 const gift = emoji.get('gift');
 class WinHistory extends Component {
@@ -18,29 +19,39 @@ class WinHistory extends Component {
     this.props.getWinners();
   }
 
+  keyExtractor = item => item.id;
+
   winnerList() {
     const { winners } = this.props;
     if (!winners) {
       return <ActivityIndicator />;
     }
     if (winners.length === 0) {
-      return <Text>No player history yet.</Text>;
+      return (
+        <Text
+          style={[styles.headerStyle, { fontFamily: 'PixelOperator-Bold' }]}
+        >
+          No player history yet.
+        </Text>
+      );
     }
     return <FlatList
       data={winners}
+      keyExtractor={this.keyExtractor}
       renderItem={({ item, index }) => (
         <ListItem
-          id={item.key}
+          id={item.id}
           index={index}
-          name={item.name}
-          wins={item.wins}
+          name={item.username || 'Unknown'}
+          wins={item.score}
         />
       )}
     />;
   }
 
   render() {
-    const { onClose } = this.props;
+    const { onClose, locale } = this.props;
+    console.log(locale);
     return (
       <View style={styles.container}>
         <Icon
@@ -50,12 +61,12 @@ class WinHistory extends Component {
           style={styles.iconStyle}
           onPress={onClose}
         />
-        <Text style={styles.headerStyle}>Winners of Today</Text>
+        <Text style={styles.headerStyle}>{ Strings(locale, 'wins') }</Text>
         <View style={styles.section}>
           <Text
             style={styles.sectionText}
           >
-            {`Win Win Win! Fantastic!\n${gift}${gift}${gift}${gift}`}
+            {`${Strings(locale, 'prompt')}\n${gift}${gift}${gift}${gift}`}
           </Text>
         </View>
         <View style={{
@@ -82,7 +93,7 @@ export const styles = StyleSheet.create({
     height: height * 0.7,
     width: width * (7 / 8),
     borderRadius: 15,
-    backgroundColor: '#D8D8D8',
+    backgroundColor: 'rgba(255,255,255,0.6)',
     justifyContent: 'flex-start',
   },
   iconStyle: {
@@ -92,8 +103,9 @@ export const styles = StyleSheet.create({
   },
   headerStyle: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 16,
     paddingBottom: 10,
+    fontFamily: 'PixelOperator8-Bold',
   },
   section: {
     alignSelf: 'stretch',
@@ -101,9 +113,13 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   sectionText: {
-    color: 'yellow',
+    color: '#30D64A',
     textAlign: 'center',
+    fontSize: 18,
+    fontFamily: 'PixelOperatorSC-Bold',
+    padding: 5,
   },
+
 });
 
 export default WinHistory;

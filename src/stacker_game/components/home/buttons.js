@@ -5,10 +5,16 @@ import {
   StyleSheet,
 } from 'react-native';
 import emoji from 'node-emoji';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import NavBtn from './navButton';
+import { playUISound } from '../../../utils/sound';
+import LoginButton from '../../../components/utilities/loginButton';
+import { coins } from '../../config/constants';
+import Strings from '../../config/i18n';
 
 const coin = require('../../../../assets/utilities/coins/telecoins_single.png');
-const coins = require('../../../../assets/utilities/coins/telecoins_multi.png');
+const coinsMulti = require('../../../../assets/utilities/coins/telecoins_multi.png');
 
 const toTopUp = (navigator) => {
   navigator.push({
@@ -28,23 +34,44 @@ class HomeButtons extends Component {
 
   render() {
     const {
-      start, navigator, winner, how,
+      start, navigator, winner, how, locale, loggedIn, playSound,
     } = this.props;
+    if (!loggedIn) {
+      return <LoginButton navigator={navigator} />;
+    }
     return (
       <View style={styles.constainer}>
-        <NavBtn color="#E0CF18" text={'15\nPlay'} pic={coin} onPress={start} />
         <NavBtn
-          color="#50E3C2"
-          text={'Buy\nCoins'}
-          pic={coins}
+          color="#E0CF18"
+          text={`${coins}\n${Strings(locale, 'play')}`}
+          pic={coin}
+          onPress={() => {
+            playSound('start');
+            start();
+          }}
+        />
+        <NavBtn
+          color="#4A90E2"
+          text={Strings(locale, 'buyCoin')}
+          pic={coinsMulti}
           onPress={() => { toTopUp(navigator); }}
         />
         <NavBtn
-          color="orange"
-          text={`${emoji.get('moneybag')}\nToday's\nWinners`}
-          onPress={winner}
+          color="#4A90E2"
+          text={`${emoji.get('medal')}\n${Strings(locale, 'weeklyWin')}`}
+          onPress={() => {
+            playSound('spaceship');
+            winner();
+          }}
         />
-        <NavBtn color="orange" text={'How\nto\nPlay'} onPress={how} />
+        <NavBtn
+          color="#4A90E2"
+          text={`${emoji.get('question')}\n${Strings(locale, 'how')}`}
+          onPress={() => {
+            playSound('spaceship');
+            how();
+          }}
+        />
       </View>
     );
   }
@@ -59,4 +86,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeButtons;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    playSound: playUISound,
+  }, dispatch);
+
+export default connect(null, mapDispatchToProps)(HomeButtons);

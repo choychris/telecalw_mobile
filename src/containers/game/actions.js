@@ -300,8 +300,8 @@ export function navigateToGameRoom(productId, status, navigator) {
         'show',
         navigator,
         {
-          title: string.maintenance,
-          message: string.tryAgainLater,
+          title: 'maintenance',
+          message: 'tryAgainLater',
         },
       );
     } else {
@@ -361,8 +361,8 @@ export function navigateToGameRoom(productId, status, navigator) {
             'show',
             navigator,
             {
-              title: string.error,
-              message: string.tryAgain,
+              title: 'error',
+              message: 'tryAgain',
             },
           );
         }
@@ -499,8 +499,8 @@ export function initGamePlay(navigator, loadState, mobileData) {
                 'show',
                 navigator,
                 {
-                  title: string.error,
-                  message: string.tryAgain,
+                  title: 'error',
+                  message: 'tryAgain',
                 },
               );
             }

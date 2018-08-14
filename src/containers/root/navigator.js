@@ -16,6 +16,7 @@ import Reward from '../transaction/reward/layout';
 import CheckinReward from '../transaction/reward/checkin/layout';
 import CustomerSupport from '../miscellaneous/cs/layout';
 import Setting from '../miscellaneous/setting/layout';
+import PrizeShop from '../prizesShop/layout';
 import InsufficientFundSuggest from '../utilities/popup/fundSuggest';
 import PlayMobileData from '../utilities/popup/playUnderCellular';
 import BananaGame from '../../banana_game/root';
@@ -44,6 +45,7 @@ export function registerScreens(store, Provider) {
   Navigation.registerComponent('app.PlayMobileData', () => PlayMobileData, store, Provider);
   Navigation.registerComponent('app.BananaGame', () => BananaGame, store, Provider);
   Navigation.registerComponent('app.StackerGame', () => StackerGame, store, Provider);
+  Navigation.registerComponent('app.PrizeShop', () => PrizeShop, store, Provider);
 }
 
 export default null;

@@ -1,4 +1,4 @@
-import { getSelfRank, getWeeklyRank } from '../../common/api/request/miniGame/leaderboard';
+import { getSelfRank, getWeeklyRank, countPlayers } from '../../common/api/request/miniGame/leaderboard';
 
 export const getRankData = currentPeriod =>
   (dispatch, getState) => {
@@ -39,6 +39,23 @@ export const getWeeklyBest = () =>
           data: res.response,
           // weekHigh: weeklyTopThree,
           // weekWinners: allWinner,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+export const playCount = () =>
+  (dispatch, getState) => {
+    const { lbToken } = getState().auth.token;
+    if (!lbToken) return;
+    const { gameId } = getState().game;
+    countPlayers(gameId, lbToken.id)
+      .then((res) => {
+        dispatch({
+          type: 'UPDATE_PLAYERCOUNT',
+          totalPlayer: res.count,
         });
       })
       .catch((err) => {
