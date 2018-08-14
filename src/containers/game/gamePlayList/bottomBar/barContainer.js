@@ -47,7 +47,7 @@ class BarContainer extends Component {
     const renderMenu = [
 
       { icon: 'rocket', name: 'delivery', navigate: 'app.Delivery' },
-      { icon: 'currency-usd', name: 'shop', navigate: 'app.TopUp' },
+      { icon: 'currency-usd', name: 'coins', navigate: 'app.TopUp' },
       { icon: 'gift', name: 'reward', navigate: 'app.Reward' },
       { icon: 'cat', name: 'center', navigate: 'app.PrizeShop' },
 
