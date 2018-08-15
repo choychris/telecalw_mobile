@@ -62,11 +62,9 @@ class Coins extends Component {
           source={ticket}
           resizeMode="contain"
         />
-        {(wallet.ticket !== undefined) ?
-          <Text style={styles.text}>{Math.round(wallet.ticket)}</Text> :
-          <ActivityIndicator size="small" color="white" />}
+        <Text style={styles.text}>{Math.round(wallet.ticket || 0)}</Text>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
