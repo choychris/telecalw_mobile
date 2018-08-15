@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: (Platform.OS === 'ios') ? 'Silom' : 'PixelOperator-Bold',
+    alignSelf: 'center',
   },
 });
 
