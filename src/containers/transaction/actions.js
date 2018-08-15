@@ -199,7 +199,7 @@ export function transactions(navigator) {
     };
     // loading('show', navigator);
     userTransactions(params, Request)
-      .then((res, err) => {
+      .then((res) => {
         // console.warn(JSON.stringify(res));
         // console.warn(JSON.stringify(err));
         // loading('hide', navigator);
