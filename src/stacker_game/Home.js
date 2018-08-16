@@ -22,7 +22,7 @@ import Instruction from './components/instruction';
 import { chooseGame } from '../containers/game/actions';
 
 const { height, width } = Config;
-const playGroundWrap = Platform.OS !== 'iOS' ? {
+const playGroundWrap = Platform.OS !== 'ios' ? {
   width,
   backgroundColor: 'transparent',
 } : null;

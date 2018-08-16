@@ -21,7 +21,7 @@ const Button = ({ end, onPress }) => (
     </Text>
   </TouchableHighlight>
 );
-const isIOS = (Platform.OS === 'iOS');
+const isIOS = (Platform.OS === 'ios');
 const right = isIOS ? -(margin + 4) : 0;
 const height = isIOS ? (margin - 4) : boxSize;
 const styles = StyleSheet.create({

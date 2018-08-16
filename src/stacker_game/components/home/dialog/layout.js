@@ -65,8 +65,8 @@ const Dialog = ({
   </View>
 );
 
-const android = (Platform.OS === 'iOS') ? 0 : 30;
-const marginTop = (Platform.OS === 'iOS') ? 20 : 0;
+const android = (Platform.OS === 'ios') ? 0 : 30;
+const marginTop = (Platform.OS === 'ios') ? 20 : 0;
 const { playWidth } = Config;
 const styles = StyleSheet.create({
   constainer: {

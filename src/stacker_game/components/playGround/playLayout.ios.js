@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     zIndex: 1,
-    borderWidth: 1,
   },
   playView: {
     justifyContent: 'flex-end',
