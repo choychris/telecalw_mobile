@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   View,
-  // Text,
+  Animated,
   StyleSheet,
   Image,
 } from 'react-native';
@@ -17,11 +17,12 @@ const images = {
   zhHant,
 };
 
-const Instruction = ({ onClose, locale }) => (
-  <View
+const Instruction = ({ onClose, locale, translateX }) => (
+  <Animated.View
     style={[
       style.container,
       styles.container,
+      { transform: [{ translateX }] },
     ]}
   >
     <Icon
@@ -36,23 +37,21 @@ const Instruction = ({ onClose, locale }) => (
       source={images[locale]}
       style={styles.imageStyle}
     />
-  </View>
+  </Animated.View>
 );
 
 const { width, height } = Config;
 const styles = StyleSheet.create({
   container: {
-    height: height * 0.7,
+    height: height * 0.8,
     top: height / 12,
   },
   imageStyle: {
     width: width * 0.85,
-    height: height * 0.6,
+    height: height * 0.7,
     resizeMode: 'contain',
     alignSelf: 'center',
-    borderWidth: 1,
-    borderColor: 'transparent',
-    borderRadius: 50,
+    borderRadius: 30,
   },
 });
 

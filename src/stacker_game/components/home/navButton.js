@@ -9,7 +9,7 @@ import {
 import Config from '../../config/constants';
 
 const NavButton = ({
-  text, onPress, color, pic,
+  text, onPress, color, pic, end,
 }) => (
   <View style={styles.container}>
     <TouchableOpacity
@@ -18,6 +18,7 @@ const NavButton = ({
         styles.button,
         { backgroundColor: color },
       ]}
+      disabled={end}
     >
       { pic ? <Image source={pic} style={styles.image} /> : null }
       <Text style={styles.textStyle}>

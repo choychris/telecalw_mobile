@@ -15,6 +15,7 @@ export function exchange(navigator, prizeId) {
     exchangePrize(userId, prizeId, undefined, id)
       .then((res) => {
         loading('hide', navigator);
+        console.log(res)
         if (res.res.ticket > 0) {
           dispatch({
             type: 'UPDATE_WALLET_TICKET',

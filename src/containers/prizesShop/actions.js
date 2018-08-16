@@ -22,6 +22,7 @@ export const getPrizeList = () =>
           gt: 0,
         },
       },
+      order: 'created DESC',
     };
     getProductWithFilter(JSON.stringify(filter), id)
       .then((res) => {

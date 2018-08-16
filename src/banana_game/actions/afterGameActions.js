@@ -22,8 +22,13 @@ export const saveScoreToDb = (score, resend) =>
 
 export const addTime = coins =>
   (dispatch, getState) => {
-    const { userId, id } = getState().auth.token.lbToken;
+    const { token, wallet } = getState().auth;
+    const { userId, id } = token.lbToken;
     retry(userId, coins, id);
+    dispatch({
+      type: 'UPDATE_WALLET_BALANCE',
+      value: (wallet.balance - coins),
+    });
   };
 
 export const scoreBonus = score =>

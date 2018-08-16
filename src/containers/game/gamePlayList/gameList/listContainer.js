@@ -22,8 +22,8 @@ class ListContainer extends Component {
 
   toGame(screen) {
     const { navigator, playUISound, stop } = this.props;
+    playUISound('start');
     if (screen === 'app.BananaGame') {
-      playUISound('start');
       stop();
     }
     navigator.push({

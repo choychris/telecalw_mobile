@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontFamily: 'PixelOperator-Bold',
     fontSize: 18,
+    color: 'black',
   },
 });
 

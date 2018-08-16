@@ -28,7 +28,7 @@ const allStrings = {
     zhHant: '勝利! 勝利! 勝利! 太棒了!',
   },
   congrat: {
-    en: 'Congratulations!!!!\nBiggest Prize Acquired!!!\nOne more WIN?!!',
+    en: 'Congratulations!!\nBiggest Prize !!!\nOne more WIN?!!',
     zhHant: '贏了大獎啊!恭喜!!!\n要贏多一次嗎?!',
   },
   soClose: {

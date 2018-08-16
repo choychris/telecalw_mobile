@@ -3,6 +3,7 @@ import {
   View,
   Text,
   FlatList,
+  Animated,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
@@ -50,10 +51,13 @@ class WinHistory extends Component {
   }
 
   render() {
-    const { onClose, locale } = this.props;
-    console.log(locale);
+    const { onClose, locale, translateX } = this.props;
     return (
-      <View style={styles.container}>
+      <Animated.View style={[
+        styles.container,
+        { transform: [{ translateX }] },
+        ]}
+      >
         <Icon
           name="times"
           size={22}
@@ -77,7 +81,7 @@ class WinHistory extends Component {
         >
           { this.winnerList() }
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }
@@ -103,6 +107,7 @@ export const styles = StyleSheet.create({
   },
   headerStyle: {
     textAlign: 'center',
+    color: 'black',
     fontSize: 16,
     paddingBottom: 10,
     fontFamily: 'PixelOperator8-Bold',

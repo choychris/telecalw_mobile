@@ -13,7 +13,7 @@ const Box = ({
   boxSize, pos, animateV, size, show,
 }) => {
   const backgroundColor = (show && pos >= animateV && pos < animateV + size) ?
-    'rgba(62,19,226,0.7)' : null;
+    'rgb(62,19,226)' : null;
   return (
     <View style={[
       styles.container,
@@ -35,6 +35,8 @@ const styles = StyleSheet.create({
     margin: 1,
     borderRadius: 3,
     justifyContent: 'center',
+    opacity: 0.7,
+    zIndex: 1,
   },
   imageStyle: {
     resizeMode: 'contain',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { View, Animated, StatusBar } from 'react-native';
+import { View, Animated, StatusBar, Platform } from 'react-native';
 import BackgroundImage from '../components/utilities/backgroundImage';
 import StarsImage from '../components/utilities/starsImage';
 import BackButton from '../components/navBar/container';
@@ -21,7 +21,11 @@ import WinHistory from './components/home/winners/winHistory';
 import Instruction from './components/instruction';
 import { chooseGame } from '../containers/game/actions';
 
-const { height } = Config;
+const { height, width } = Config;
+const playGroundWrap = Platform.OS !== 'iOS' ? {
+  width,
+  backgroundColor: 'transparent',
+} : null;
 
 class Home extends Component {
   constructor(props) {
@@ -63,11 +67,13 @@ class Home extends Component {
         getWinners={this.props.getWinHistory}
         winners={this.props.winners}
         locale={locale}
+        translateX={this.detailsAnimate}
       />;
     } else if (how) {
       return <Instruction
         onClose={() => this.showDetails(false)}
         locale={locale}
+        translateX={this.detailsAnimate}
       />;
     }
     return null;
@@ -186,14 +192,14 @@ class Home extends Component {
     const loggedIn = !!accessToken;
     const logoDrop = this.buttonDrop.interpolate({
       inputRange: [0, 300],
-      outputRange: [height / 3, -600],
+      outputRange: [height / 2.5, -600],
     });
     const logoPositionX = this.detailsAnimate.interpolate({
       inputRange: [0, 600],
       outputRange: [-600, 0],
     });
     return (
-      <View style={{ flex: 1, overflow: 'hidden' }}>
+      <View style={{ flex: 1, overflow: 'hidden', zIndex: 1 }}>
         <BackgroundImage />
         <StatusBar hidden />
         <StarsImage />
@@ -204,41 +210,24 @@ class Home extends Component {
             ],
           }}
         >
-          { gameStarted ?
-            <View style={{ height: 45 }} /> :
-            <BackButton
-              back
-              coins
-              navigator={navigator}
-            />
-          }
+          <BackButton
+            coins
+            back={!gameStarted}
+            coinsDisable={gameStarted}
+            navigator={navigator}
+          />
         </Animated.View>
+        { this.getDetailInformation() }
+        { gameStarted ? null : <StackerLogo translateX={logoPositionX} translateY={logoDrop} /> }
         <Animated.View
-          style={{
-            transform: [{ translateX: this.detailsAnimate }],
-            zIndex: 3,
-          }}
-        >
-          { this.getDetailInformation() }
-        </Animated.View>
-        <Animated.View
-          style={{
-            transform: [
-              { translateY: logoDrop },
-              { translateX: logoPositionX },
-            ],
-            zIndex: 3,
-          }}
-        >
-          { gameStarted ? null : <StackerLogo /> }
-        </Animated.View>
-        <Animated.View
-          style={{
+          style={[
+            playGroundWrap,
+            {
             transform: [
               { translateY: this.playgroundDrop },
               { translateX: logoPositionX },
             ],
-          }}
+          }]}
         >
           <Playground gameStarted={gameStarted} />
         </Animated.View>

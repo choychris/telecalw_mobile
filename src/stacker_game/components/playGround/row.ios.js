@@ -103,6 +103,7 @@ class Row extends Component {
         end(index, rowIndex, true);
       } else {
         end(index, rowIndex);
+        // end(index, rowIndex, true);
       }
     } else if (rowIndex === rowNum) {
       saveIndex(index, rowIndex);
@@ -136,7 +137,7 @@ class Row extends Component {
     const reward = (rowIndex === 4 || rowIndex === 1);
     const list = new Array(boxNum);
     return (
-      <View>
+      <View style={{ zIndex: 1 }}>
         { reward ?
           <RewardLine index={rowIndex} /> :
           null
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-end',
+    zIndex: 1,
   },
 });
 

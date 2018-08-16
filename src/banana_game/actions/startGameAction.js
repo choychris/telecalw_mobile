@@ -22,7 +22,8 @@ export const navigateGame = (start, navigator) =>
     if (start) {
       const { coins } = getState().bananaGame.startGame;
       const { gameId } = getState().game;
-      const { userId, id } = getState().auth.token.lbToken;
+      const { token, wallet } = getState().auth;
+      const { userId, id } = token.lbToken;
       loading('show', navigator);
       newGame(userId, gameId, coins, id)
         .then((res) => {
@@ -37,6 +38,10 @@ export const navigateGame = (start, navigator) =>
               trialId: res.response.trialId,
             });
             loading('hide', navigator);
+            dispatch({
+              type: 'UPDATE_WALLET_BALANCE',
+              value: (wallet.balance - coins),
+            });
           }
         })
         .catch((err) => {

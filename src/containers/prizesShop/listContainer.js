@@ -14,9 +14,6 @@ class PrizeList extends Component {
       details: null,
     };
     this.animate = new Animated.Value(0);
-    this.slideIn = new Animated.Value(0);
-    this.showDetails = this.showDetails.bind(this);
-    this.closeDetails = this.closeDetails.bind(this);
   }
 
   componentDidMount() {
@@ -33,35 +30,10 @@ class PrizeList extends Component {
   // shouldComponentUpdate(nextProps) {
   //   return this.props.prizes !== nextProps.prizes;
   // }
-
-  showDetails(i) {
-    const { prizes } = this.props;
-    this.setState({ details: prizes[i] });
-    Animated.timing(
-      this.slideIn,
-      {
-        toValue: -500,
-        duration: 600,
-        useNativeDriver: true,
-      },
-    ).start();
-  }
-
-  closeDetails() {
-    Animated.timing(
-      this.slideIn,
-      {
-        toValue: 0,
-        duration: 600,
-        useNativeDriver: true,
-      },
-    ).start(() => {
-      this.setState({ details: null });
-    });
-  }
-
   render() {
-    const { prizes, buy, locale } = this.props;
+    const {
+      prizes, buy, locale, showDetails, translateX,
+    } = this.props;
     const { details } = this.state;
     return (
       <Animated.View
@@ -69,7 +41,7 @@ class PrizeList extends Component {
           styles.container,
           {
             opacity: this.animate,
-            transform: [{ translateX: this.slideIn }],
+            transform: [{ translateX }],
           },
         ]}
       >
@@ -83,7 +55,7 @@ class PrizeList extends Component {
               {...item}
               buy={buy}
               locale={locale}
-              showDetails={() => this.showDetails(index)}
+              showDetails={() => showDetails(index)}
             />
           }
         />
@@ -105,6 +77,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
     marginVertical: 10,
+    backgroundColor: 'transparent',
   },
 });
 

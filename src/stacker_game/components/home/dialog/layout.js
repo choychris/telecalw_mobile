@@ -4,6 +4,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 // import * as Animatable from 'react-native-animatable';
@@ -64,14 +65,16 @@ const Dialog = ({
   </View>
 );
 
+const android = (Platform.OS === 'iOS') ? 0 : 30;
+const marginTop = (Platform.OS === 'iOS') ? 20 : 0;
 const { playWidth } = Config;
 const styles = StyleSheet.create({
   constainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginTop: 20,
-    height: playWidth / 5,
+    marginTop,
+    height: (playWidth / 5) + android,
   },
   faceStyle: {
     resizeMode: 'contain',
@@ -87,11 +90,11 @@ const styles = StyleSheet.create({
   textStyle: {
     position: 'absolute',
     textAlign: 'left',
-    padding: 10,
+    padding: 8,
     paddingHorizontal: 25,
     backgroundColor: 'transparent',
     fontFamily: 'PixelOperator-Bold',
-    fontSize: 18,
+    fontSize: 17,
     color: 'black',
   },
 });

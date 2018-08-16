@@ -21,7 +21,7 @@ class Playground extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log(nextProps);
     if (nextProps.gameStarted) {
-      this.startAnimate(0, margin / 2);
+      this.startAnimate(0, 0);
     }
     if (!nextProps.gameStarted) {
       this.startAnimate(margin / 2, 0);
@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
     height: playHeight + margin,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    zIndex: 1,
+    borderWidth: 1,
   },
   playView: {
     justifyContent: 'flex-end',
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     borderColor: '#D8D8D8',
     borderWidth,
     borderRadius: 3,
+    zIndex: 1,
   },
 });
 

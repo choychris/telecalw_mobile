@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Strings from '../miscellaneous/i18n';
@@ -51,6 +52,7 @@ class PrizeDetails extends Component {
       buy,
       closeDetails,
       locale,
+      translateX,
     } = this.props;
     const { pic } = this.state;
     const outOfStock = (sku <= 0);
@@ -59,15 +61,10 @@ class PrizeDetails extends Component {
     const uri = (pic !== null) ? images.product[pic] : images.icon;
     const imageArray = images.product.filter(item => item !== '');
     return (
-      <View
+      <Animated.View
         style={[
           styles.container,
-          {
-            transform: [
-              { translateY: -120 - (20000 / height) },
-              { translateX: 500 },
-            ],
-          },
+          { transform: [{ translateX }] },
         ]}
       >
         <ScrollView>
@@ -130,7 +127,7 @@ class PrizeDetails extends Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-      </View>
+      </Animated.View>
     );
   }
 }
@@ -139,9 +136,13 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: (width - 50),
+    height: (height * 0.85),
+    bottom: (height / 20),
     alignSelf: 'center',
     backgroundColor: 'rgba(37, 47, 100, 0.6)',
     borderRadius: 5,
+    zIndex: 3,
+    flex: 1,
     // borderBottomRightRadius: 5,
   },
   iconStyle: {

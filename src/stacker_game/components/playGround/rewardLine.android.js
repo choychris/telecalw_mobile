@@ -1,29 +1,22 @@
 import React, { Component } from 'react';
 import { Animated, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import BigWin from './bigWin';
 import Config, { rewards } from '../../config/constants';
 import Strings from '../../config/i18n';
 
 const ticket = require('../../../../assets/utilities/ticket.png');
 
-const { width, boxSize, margin } = Config;
+const { playWidth, boxSize } = Config;
 class RewardLine extends Component {
   constructor() {
     super();
-    this.animate = new Animated.Value(-margin / 2);
     this.blink = new Animated.Value(0.6);
     this.flipping = new Animated.Value(0);
-    this.makeItRain = this.makeItRain.bind(this);
+    this.startBlink = this.startBlink.bind(this);
     this.count = 20;
   }
 
   componentDidMount() {
-    if (this.props.gameStarted) {
-      this.reposition(0);
-    } else {
-      this.reposition(-margin / 2);
-    }
     this.flip();
   }
 
@@ -44,7 +37,7 @@ class RewardLine extends Component {
       {
         duration: 200,
         toValue: 1,
-        useNativeDriver: true,
+        // useNativeDriver: true,
       },
     )).start();
   }
@@ -61,17 +54,17 @@ class RewardLine extends Component {
     ).start();
   }
 
-  makeItRain(second) {
-    if (second) this.startBlink();
-    const tickets = new Array(this.count);
-    return tickets.fill().map((emt, i) =>
-      <BigWin
-        i={i}
-        key={i}
-        count={this.count}
-        second={second}
-      />);
-  }
+  // makeItRain(second) {
+  //   if (second) this.startBlink();
+  //   const tickets = new Array(this.count);
+  //   return tickets.fill().map((emt, i) =>
+  //     <BigWin
+  //       i={i}
+  //       key={i}
+  //       count={this.count}
+  //       second={second}
+  //     />);
+  // }
 
   render() {
     const { win, index, locale } = this.props;
@@ -81,6 +74,10 @@ class RewardLine extends Component {
     if (mini && win > 0) {
       opacity = 0.9;
     }
+    if (win >= rewards.major) {
+      opacity = this.blink;
+      this.startBlink();
+    }
     const rotateY = this.flipping.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg'],
@@ -89,11 +86,9 @@ class RewardLine extends Component {
       <Animated.View
         style={[
           styles.border,
-          { opacity, transform: [{ translateX: this.animate }] },
+          { opacity },
         ]}
       >
-        { (win >= rewards.major && !mini) ? this.makeItRain(false) : null }
-        { (win >= rewards.major && !mini) ? this.makeItRain(true) : null }
         <Text style={styles.textStyle}>
           { mini ? `${rewards.mini} Tickets!` : `${Strings(locale, 'bigPrize')} ${rewards.major} Tickets!`}
         </Text>
@@ -113,12 +108,12 @@ const styles = StyleSheet.create({
   border: {
     flexDirection: 'row',
     position: 'absolute',
-    left: -7,
-    bottom: -1,
     height: boxSize + 2,
-    width,
-    borderRadius: 50,
-    borderWidth: 6,
+    width: playWidth - 6,
+    borderTopWidth: 6,
+    borderBottomWidth: 6,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
     borderColor: '#FF7B0F',
     justifyContent: 'center',
     alignItems: 'center',
@@ -139,7 +134,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   win: state.stackerGame.game.win,
-  gameStarted: state.stackerGame.home.start,
   locale: state.preference.language.locale,
 });
 
