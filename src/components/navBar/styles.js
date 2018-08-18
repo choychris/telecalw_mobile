@@ -14,8 +14,8 @@ export default StyleSheet.create({
     minHeight: 32,
   },
   image: {
-    width: 26,
-    height: 26,
+    width: 24,
+    height: 24,
     // marginHorizontal: 5,
   },
   ticket: {

@@ -11,7 +11,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Telebot from '../../../../components/telebuddies/telebot';
-import UpdatePrompt from './update';
+// import UpdatePrompt from './update';
 import { playUISound } from '../../../../utils/sound';
 import { vibrate } from '../../../../utils/vibrate';
 

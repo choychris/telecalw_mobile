@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles';
@@ -25,7 +25,7 @@ class Signal extends Component {
     const { status } = this.props;
     const signalIcon = (status === true) ?
       { color: '#2ECC71', name: 'signal' } :
-      { color: '#E63946', name: 'times' };
+      { color: '#E63946', name: 'signal-off' };
     return (
       <View style={[styles.container, { backgroundColor: 'transparent' }]}>
         <Icon

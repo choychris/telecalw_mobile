@@ -55,7 +55,7 @@ class Coins extends Component {
           resizeMode="contain"
         />
         {(wallet.balance !== undefined) ?
-          <Text style={styles.text}>{Math.round(wallet.balance)} |</Text> :
+          <Text style={styles.text}>{Math.round(wallet.balance)} /</Text> :
           <ActivityIndicator size="small" color="white" />}
         <Image
           style={styles.ticket}

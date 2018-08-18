@@ -14,7 +14,8 @@ export const switchGameState = (start, navigator, animate) =>
       // hard coding 15 coins per play
       // const coins = 25;
       const { gameId } = getState().game;
-      const { userId, id } = getState().auth.token.lbToken;
+      const { token, wallet } = getState().auth;
+      const { userId, id } = token.lbToken;
       loading('show', navigator);
       newGame(userId, gameId, coins, id)
         .then((res) => {
@@ -28,6 +29,10 @@ export const switchGameState = (start, navigator, animate) =>
             dispatch({
               type: 'STACTER_START',
               trialId: res.response.trialId,
+            });
+            dispatch({
+              type: 'UPDATE_WALLET_BALANCE',
+              value: (wallet.balance - coins),
             });
             if (animate) animate.start();
           }
@@ -52,7 +57,8 @@ export const restartGame = (navigator, animate, callback) =>
     if (navigator) {
       // const coins = 15;
       const { gameId } = getState().game;
-      const { userId, id } = getState().auth.token.lbToken;
+      const { token, wallet } = getState().auth;
+      const { userId, id } = token.lbToken;
       loading('show', navigator);
       newGame(userId, gameId, coins, id)
         .then((res) => {
@@ -66,6 +72,10 @@ export const restartGame = (navigator, animate, callback) =>
             dispatch({
               type: 'STACKER_NEW_TRIAL',
               trialId: res.response.trialId,
+            });
+            dispatch({
+              type: 'UPDATE_WALLET_BALANCE',
+              value: (wallet.balance - coins),
             });
             if (animate) animate.start();
             if (callback) callback();
