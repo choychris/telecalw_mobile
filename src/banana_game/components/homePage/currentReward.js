@@ -25,13 +25,13 @@ const rewards = [
   {
     image: second,
     word: '1st Runner-up:',
-    extra: 100,
+    extra: 150,
     amt: 40,
   },
   {
     image: third,
     word: '2nd Runner-up:',
-    extra: 50,
+    extra: 100,
     amt: 30,
   },
 ];
