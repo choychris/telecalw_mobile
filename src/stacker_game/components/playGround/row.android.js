@@ -67,7 +67,7 @@ class Row extends Component {
         const { move } = this.state;
         this.setState({ index: index + move });
       }
-    }, (max([2, this.props.rowIndex - 1.5]) - 0.8) * rand(36, 42));
+    }, (max([2, this.props.rowIndex - 1.6]) - 1) * rand(36, 42));
   }
 
   animation() {
@@ -94,7 +94,7 @@ class Row extends Component {
       setTimeout(() => {
         clearInterval(this.timer);
         end(this.state.index, rowIndex);
-      }, 36);
+      }, 40);
       return;
     }
     clearInterval(this.timer);
