@@ -57,7 +57,13 @@ const gameReducer = (state = initialState, action) => {
       };
     }
     case 'STACTER_RESTART': {
-      return initialState;
+      return {
+        rows: rowList(rowNum),
+        activeRow: rowNum,
+        lastIndex: null,
+        win: 0,
+        end: null,
+      };
     }
     default: {
       return state;

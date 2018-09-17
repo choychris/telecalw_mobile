@@ -229,7 +229,7 @@ class Home extends Component {
             ],
           }]}
         >
-          <Playground gameStarted={gameStarted} />
+          <Playground gameStarted={gameStarted} gameEnded={gameEnded} />
         </Animated.View>
         <Animated.View
           style={{

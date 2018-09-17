@@ -15,6 +15,7 @@ class Row extends Component {
     super(props);
     this.state = {
       index: props.game.rows[props.rowIndex - 1].index,
+      // index: null,
       move: 1,
     };
     this.drop = new Animated.Value(0);
@@ -39,9 +40,10 @@ class Row extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const { rowIndex, game } = this.props;
     const stateChange = this.state !== nextState;
+    const rowChange = game.rows !== nextProps.game.rows;
     const activeRowChanged = nextProps.game.activeRow !== game.activeRow;
     const rowMatch = nextProps.game.activeRow === rowIndex;
-    return (stateChange || activeRowChanged || rowMatch);
+    return (stateChange || activeRowChanged || rowMatch || rowChange);
   }
 
   componentWillUnmount() {
@@ -49,6 +51,7 @@ class Row extends Component {
   }
 
   startMove() {
+    // this.setState({ index: this.props.game.rows[this.props.rowIndex - 1].index });
     this.timer = setInterval(() => {
       const { index } = this.state;
       const { game, rowIndex } = this.props;

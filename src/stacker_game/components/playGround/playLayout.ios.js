@@ -29,7 +29,9 @@ class Playground extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.gameStarted !== this.props.gameStarted;
+    const end = nextProps.gameEnded !== this.props.gameEnded;
+    const start = nextProps.gameStarted !== this.props.gameStarted;
+    return (end || start);
   }
 
   startAnimate(x, y) {
