@@ -9,7 +9,8 @@ export function baseApi() {
     local: 'http://192.168.1.8:3000/api',
     development: 'http://teleclawbackendapi-staging.ap-southeast-1.elasticbeanstalk.com/api',
   };
-  return (__DEV__) ? backendApi[devMode] : backendApi.production;
+  // return (__DEV__) ? backendApi[devMode] : backendApi.production;
+  return backendApi.production;
 }
 
 export function pusherConfig() {
@@ -38,5 +39,5 @@ export function segmentKey() {
 }
 
 export function serverlessUrl() {
-  return 'https://quw8838zec.execute-api.ap-southeast-1.amazonaws.com/prod';
+  return 'https://pyml5rbhu4.execute-api.ap-southeast-1.amazonaws.com/prod';
 }

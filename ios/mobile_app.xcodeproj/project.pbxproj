@@ -37,6 +37,10 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mobile_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mobile_appTests.m */; };
 		2E1F056220DCF140007C1A9A /* count.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E1F056120DCF13F007C1A9A /* count.m4a */; };
+		2E368E34224294EF00A19505 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E368E33224294EF00A19505 /* FBSDKShareKit.framework */; };
+		2E368E36224294FD00A19505 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E368E35224294FD00A19505 /* FBSDKCoreKit.framework */; };
+		2E368E382242950C00A19505 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E368E372242950C00A19505 /* FBSDKLoginKit.framework */; };
+		2E368E3A2242951500A19505 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E368E392242951500A19505 /* Bolts.framework */; };
 		2E40979B212295B5001DA00D /* buddy_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2E409769212295B4001DA00D /* buddy_up.wav */; };
 		2E40979C212295B5001DA00D /* minor_win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2E409798212295B5001DA00D /* minor_win.wav */; };
 		2E40979D212295B5001DA00D /* major_win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E409799212295B5001DA00D /* major_win.mp3 */; };
@@ -119,14 +123,6 @@
 		D6B78B891FD131E70045EEEE /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B7E1FD131E70045EEEE /* Octicons.ttf */; };
 		D6B78B8A1FD131E70045EEEE /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B7F1FD131E70045EEEE /* SimpleLineIcons.ttf */; };
 		D6B78B8B1FD131E70045EEEE /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B78B801FD131E70045EEEE /* Zocial.ttf */; };
-		D6B8366D1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B836691FCFB976004566FB /* FBSDKShareKit.framework */; };
-		D6B8366E1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B836691FCFB976004566FB /* FBSDKShareKit.framework */; };
-		D6B8366F1FCFB977004566FB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */; };
-		D6B836701FCFB977004566FB /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */; };
-		D6B836711FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */; };
-		D6B836721FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */; };
-		D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366C1FCFB977004566FB /* Bolts.framework */; };
-		D6B836741FCFB977004566FB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8366C1FCFB977004566FB /* Bolts.framework */; };
 		D6B8367B1FCFBBDC004566FB /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B8367A1FCFBB7E004566FB /* libRCTFBSDK.a */; };
 		D6B836851FCFF69C004566FB /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B836821FCFF681004566FB /* libRNDeviceInfo.a */; };
 		D6E8E7E1200DA3E900C41395 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E8E7E0200DA15F00C41395 /* libRNSound.a */; };
@@ -518,6 +514,10 @@
 		2D02E47B1E0B4A5D006451C7 /* mobile_app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mobile_app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mobile_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobile_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1F056120DCF13F007C1A9A /* count.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = count.m4a; path = ../sounds/count.m4a; sourceTree = "<group>"; };
+		2E368E33224294EF00A19505 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		2E368E35224294FD00A19505 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		2E368E372242950C00A19505 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		2E368E392242951500A19505 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2E409769212295B4001DA00D /* buddy_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = buddy_up.wav; path = "../../../_teleclaw Materials/sounds/toStacker/buddy_up.wav"; sourceTree = "<group>"; };
 		2E409798212295B5001DA00D /* minor_win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = minor_win.wav; path = "../../../_teleclaw Materials/sounds/toStacker/minor_win.wav"; sourceTree = "<group>"; };
 		2E409799212295B5001DA00D /* major_win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = major_win.mp3; path = "../../../_teleclaw Materials/sounds/toStacker/major_win.mp3"; sourceTree = "<group>"; };
@@ -605,10 +605,6 @@
 		D6B78B7E1FD131E70045EEEE /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		D6B78B7F1FD131E70045EEEE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		D6B78B801FD131E70045EEEE /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
-		D6B836691FCFB976004566FB /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
-		D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		D6B8366C1FCFB977004566FB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../../../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		D6B836751FCFBB7E004566FB /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		D6B8367C1FCFF681004566FB /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		D6E8E7DB200DA15F00C41395 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
@@ -625,10 +621,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6B836741FCFB977004566FB /* Bolts.framework in Frameworks */,
-				D6B8366E1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */,
-				D6B836701FCFB977004566FB /* FBSDKCoreKit.framework in Frameworks */,
-				D6B836721FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 				9A91C950031D2EE6E776B00F /* libPods-mobile_appTests.a in Frameworks */,
 			);
@@ -638,6 +630,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E368E3A2242951500A19505 /* Bolts.framework in Frameworks */,
+				2E368E382242950C00A19505 /* FBSDKLoginKit.framework in Frameworks */,
+				2E368E36224294FD00A19505 /* FBSDKCoreKit.framework in Frameworks */,
+				2E368E34224294EF00A19505 /* FBSDKShareKit.framework in Frameworks */,
 				2E6501E3209C5B4300EDF5D8 /* libRCTWebRTC.a in Frameworks */,
 				2E8DC8722091D1E900D1C10C /* FBAudienceNetwork.framework in Frameworks */,
 				2E64BABA208B358E00FF8AB7 /* GoogleMobileAds.framework in Frameworks */,
@@ -654,16 +650,13 @@
 				D64874B51FB83BE400ABC458 /* CoreVideo.framework in Frameworks */,
 				D64874AB1FB83BA000ABC458 /* GLKit.framework in Frameworks */,
 				2EB2DD9720E3B1CF00DF54D3 /* WebRTC.framework in Frameworks */,
-				D6B8366D1FCFB977004566FB /* FBSDKShareKit.framework in Frameworks */,
 				D64874AA1FB83B9B00ABC458 /* CoreGraphics.framework in Frameworks */,
 				D64874A91FB83B9400ABC458 /* AudioToolbox.framework in Frameworks */,
 				D64874A81FB83B8E00ABC458 /* AVFoundation.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				D6B836711FCFB977004566FB /* FBSDKLoginKit.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				D6B836731FCFB977004566FB /* Bolts.framework in Frameworks */,
 				D64874B21FB83BC900ABC458 /* libsqlite3.tbd in Frameworks */,
 				D64874B41FB83BD400ABC458 /* libstdc++.tbd in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -675,7 +668,6 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				D6B8366F1FCFB977004566FB /* FBSDKCoreKit.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				E33AF5F33DCC9E15EE3BC9F0 /* libPods-mobile_app.a in Frameworks */,
 				F08A292CB145443A96303651 /* libRNVectorIcons.a in Frameworks */,
@@ -1033,13 +1025,13 @@
 		D64874A31FB83B5E00ABC458 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E368E392242951500A19505 /* Bolts.framework */,
+				2E368E372242950C00A19505 /* FBSDKLoginKit.framework */,
+				2E368E35224294FD00A19505 /* FBSDKCoreKit.framework */,
+				2E368E33224294EF00A19505 /* FBSDKShareKit.framework */,
 				D6EB5ABA2025797100E453A9 /* WebKit.framework */,
 				2E8DC8712091D1E900D1C10C /* FBAudienceNetwork.framework */,
-				D6B8366C1FCFB977004566FB /* Bolts.framework */,
 				2E8DC89E2091D1EE00D1C10C /* FacebookAdapter.framework */,
-				D6B8366A1FCFB977004566FB /* FBSDKCoreKit.framework */,
-				D6B8366B1FCFB977004566FB /* FBSDKLoginKit.framework */,
-				D6B836691FCFB976004566FB /* FBSDKShareKit.framework */,
 				D64874B31FB83BD400ABC458 /* libstdc++.tbd */,
 				D64874B11FB83BC900ABC458 /* libsqlite3.tbd */,
 				D64874AF1FB83BC300ABC458 /* libc.tbd */,
@@ -2012,6 +2004,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/**",
+					"$(SRCROOT)/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)",
 					"~/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/**",
@@ -2058,6 +2051,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/../node_modules/react-native-webrtc/ios/**",
+					"$(SRCROOT)/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)",
 					"~/Documents/FacebookSDK/**",
 					"$(PROJECT_DIR)/Pods/Google-Mobile-Ads-SDK/Frameworks/frameworks/**",
