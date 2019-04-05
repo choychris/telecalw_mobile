@@ -69,12 +69,8 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Camera Permission</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need your microphone permission in order to perform in-app chatting and webrtc usage</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialIcons.ttf</string>

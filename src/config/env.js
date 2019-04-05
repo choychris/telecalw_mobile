@@ -6,11 +6,11 @@ export function baseApi() {
   // 3. Development Server
   const backendApi = {
     production: 'https://api.teleclawapi.live/api',
-    local: 'http://192.168.1.8:3000/api',
+    local: 'http://192.168.1.6:8080/api',
     development: 'http://teleclawbackendapi-staging.ap-southeast-1.elasticbeanstalk.com/api',
   };
-  // return (__DEV__) ? backendApi[devMode] : backendApi.production;
-  return backendApi.production;
+  return (__DEV__) ? backendApi[devMode] : backendApi.production;
+  // return backendApi.production;
 }
 
 export function pusherConfig() {

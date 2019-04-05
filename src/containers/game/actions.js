@@ -15,7 +15,6 @@ import { playUISound } from '../../utils/sound';
 import Request from '../../utils/fetch';
 import { pusherConfig, baseApi } from '../../config/env';
 import { api } from '../../common/api/url';
-import { closeWebrtc } from '../../utils/webrtc';
 import { trackEvent } from '../../utils/analytic';
 import { checkInRewardChecking, loginFacebook } from '../auth/actions';
 
@@ -580,16 +579,6 @@ export function lastMachineMove(action) {
       type: 'LAST_PLAY_ACTION',
       value: action,
     });
-  };
-}
-
-export function closeAllWebrtc() {
-  return (dispatch, getState) => {
-    const { webrtcUrl } = getState().game.play;
-    const { front, top } = webrtcUrl;
-    if (front && front.pc !== undefined) closeWebrtc(front.pc, front.rtsp, front.webrtcServer);
-    if (top && top.pc !== undefined) closeWebrtc(top.pc, top.rtsp, top.webrtcServer);
-    dispatch({ type: 'CLEAR_WEBRTC_URL' });
   };
 }
 

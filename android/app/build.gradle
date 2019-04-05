@@ -157,7 +157,6 @@ android {
 //compile project(':react-native-video')
 dependencies {
     compile project(':react-native-code-push')
-    compile project(':react-native-webrtc')
     compile project(':react-native-braintree-xplat')
     compile project(':react-native-admob')
     compile project(':react-native-sound')
